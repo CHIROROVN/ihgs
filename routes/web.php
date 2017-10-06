@@ -21,6 +21,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	|--------------------------------------------------------------------------
 	*/
 	Route::get('/static_search', ['as' => 'backend.search.index', 'uses' => 'SearchController@index']);
+	Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);
 	Route::get('/login', ['as' => 'auth.login', 'uses' => 'UsersController@login']);
 	Route::post('/login', ['as' => 'auth.login', 'uses' => 'UsersController@postLogin']);
 	Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'UsersController@logout']);
