@@ -21,12 +21,23 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	|--------------------------------------------------------------------------
 	*/
 	Route::get('/static_search', ['as' => 'backend.search.index', 'uses' => 'SearchController@index']);
-	Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);
+
 	Route::get('/login', ['as' => 'auth.login', 'uses' => 'UsersController@login']);
 	Route::post('/login', ['as' => 'auth.login', 'uses' => 'UsersController@postLogin']);
 	Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'UsersController@logout']);
-
-	
+    //
+    Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);
+    Route::get('/division_regist', ['as' => 'backend.division.regist', 'uses' => 'DivisionController@regist']);
+    Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);
+    Route::get('/timecard_edit', ['as' => 'backend.timecard.edit', 'uses' => 'TimecardController@edit']);
+    Route::get('/section', ['as' => 'backend.section.index', 'uses' => 'SectionController@index']);
+    Route::get('/section_regist', ['as' => 'backend.section.regist', 'uses' => 'SectionController@regist']);
+    Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);
+    Route::get('/door_regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@regist']);
+    Route::get('/staff', ['as' => 'backend.staff.index', 'uses' => 'StaffController@index']);
+    Route::get('/staff_regist', ['as' => 'backend.staff.regist', 'uses' => 'StaffController@regist']);
+    Route::get('/staff_import', ['as' => 'backend.staff.import', 'uses' => 'StaffController@import']);
+	Route::get('/staff_search', ['as' => 'backend.staff.search', 'uses' => 'StaffController@search']);
 
 });
 

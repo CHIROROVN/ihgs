@@ -6,12 +6,12 @@ use Validator;
 use Session;
 use Config;
 
-class DivisionController extends BackendController
+class SectionController extends BackendController
 {
 	public function index(){
-		return view('backend.division.index');
+		return view('backend.section.index');
 	}
 	public function regist(){
-		return view('backend.division.regist');
+		return view('backend.section.regist');
 	}
 }
