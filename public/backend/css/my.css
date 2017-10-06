@@ -1,0 +1,139 @@
+.fl-right {
+  float: right!important;
+}
+
+.fl-left {
+  float: left;
+}
+
+.gn-menu-main .admin-pic {
+  padding-top: 13px;
+  margin-right: 45px;
+  margin-left: 15px;
+  border-right: none;
+  min-width: 120px;
+}
+
+.gn-menu-main .admin-pic a {
+  text-align: left!important;
+}
+
+.intro {
+  margin-bottom: 10px;
+}
+
+.mar-bottom15 {
+  margin-bottom: 15px;
+}
+
+.mar-left5 {
+  margin-left: 5px;
+}
+
+.mar-left15 {
+  margin-left: 15px;
+}
+
+.mar-right15 {
+  margin-right: 15px;
+}
+
+.panel-heading {
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  letter-spacing: 0.2px;
+  color: #024;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0 16px;
+  background: #d9e1e2;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+label .f_caution {
+  color: #e53238;
+  margin-left: 5px;
+  font-size: 1em;
+}
+
+.copyright-fixed {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height:62px;
+}
+
+label,
+.text-td {
+  line-height: 35px;
+  margin-bottom: 0;
+}
+
+table .col-title {
+  background: #f4f4f4!important;
+  color: #024!important;
+  font-weight: bold;
+  padding-left: 10px;
+  font-weight: 600;
+  line-height: 54px;
+}
+
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+  vertical-align: middle;
+  border: #d8d4d4;
+}
+
+.table-list-regist th {
+  /*background: #afbec0!important;
+  color: #003c4c;*/
+  background: #cf494d!important;
+  border: none!important;
+}
+
+.note {
+  padding: 20px;
+  background: #f7f2d4;
+  margin: 20px 0;
+}
+
+.bt-browser {
+  float: left;
+  width: 40%;
+  margin-right: 20px;
+}
+
+.bt-browser .input-group {
+  margin-bottom: 0;
+}
+
+.fl-left {
+  float: left;
+}
+
+.line-height30 {
+  line-height: 30px;
+}
+
+.bg-red {
+  background: #e57878!important; 
+}
+
+.bg-yellow {
+  background: #f7f2d4; 
+}
+
+.form-control-date {
+  width: auto;
+  margin-right: 10px;
+  float: left;
+}
+
+@media (max-width: 1240px){
+  .form-control-date {
+    margin-bottom: 10px;
+  }
+}
