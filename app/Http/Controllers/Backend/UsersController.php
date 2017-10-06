@@ -36,16 +36,14 @@ class UsersController extends BackendController
 		$login1['u_login'] =  Input::get('u_login');
 		$login1['password'] =  Input::get('u_passwd');
 		$login1['last_kind'] =  INSERT;
-		$login1['u_flag'] = NULL;
 
 		//last_kind update
 		$login2['u_login'] =  Input::get('u_login');
 		$login2['password'] =  Input::get('u_passwd');
 		$login2['last_kind'] =  UPDATE;
-		$login2['u_flag'] = NULL;
 
 		if (Auth::attempt($login1, false) || Auth::attempt($login2, false)) {
-			return redirect()->route('backend.menu.index');
+			return redirect()->route('backend.search.index');
 		}  else {
 			Session::flash('danger', trans('common.msg_manage_login_danger'));
 			return redirect()->route('auth.login')->withErrors($validator)->withInput();

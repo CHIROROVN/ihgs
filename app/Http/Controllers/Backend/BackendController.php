@@ -6,7 +6,7 @@ class BackendController extends Controller
 {
     public function __construct(){
 
-        //$this->middleware('auth', ['except' => ['postLogin', 'login','logout']]);
+        $this->middleware('auth', ['except' => ['postLogin', 'login','logout']]);
 
         //Define contants
         $configs = Config::get('constants.DEFINE');

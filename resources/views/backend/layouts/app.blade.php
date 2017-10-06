@@ -35,18 +35,18 @@
             </nav>
           </li>
           <!-- //nav_agile -->
-          <li class="second logo"><h1><a href="{route('backend.search.index')}"><i class="fa fa-graduation-cap" aria-hidden="true"></i><img src="images/logo.png" alt="itochu" style="height: 50px;"> </a></h1>
+          <li class="second logo"><h1><a href="{{route('backend.search.index')}}"><i class="fa fa-graduation-cap" aria-hidden="true"></i><img src="images/logo.png" alt="itochu" style="height: 50px;"> </a></h1>
           </li>
           <li class="second admin-pic fl-right">
             <ul class="top_dp_agile">
               <li class="dropdown profile_details_drop">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                   <i class="fa fa-user" aria-hidden="true"></i>
-                  <span class="username">@if(Auth::check()){Auth::user()->u_name}@endif</span>
+                  <span class="username">@if(Auth::check()){{Auth::user()->u_name}}@endif</span>
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu drp-mnu">
-                  <li> <a href="{route('auth.logout')}"><i class="fa fa-sign-out"></i> ログアウト</a> </li>
+                  <li> <a href="{{route('auth.logout')}}"><i class="fa fa-sign-out"></i> ログアウト</a> </li>
                 </ul>
               </li>
             </ul>
