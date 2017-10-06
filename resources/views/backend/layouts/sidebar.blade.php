@@ -12,15 +12,15 @@
       <li class="mini_list_agile">
         <a href="javascript:;"><i class="fa fa-caret-right" aria-hidden="true"></i>「タイムカード」の管理</a>
         <ul class="sub">
-          <li class="mini_list_agile"><a href="{route('backend.timecard.index')}"><i class="fa fa-minus" aria-hidden="true"></i>データの取り込み</a></li>
-          <li class="mini_list_w3"><a href="{route('backend.timecard.edit')}"><i class="fa fa-minus" aria-hidden="true"></i>フォーマットの指定</a></li>
+          <li class="mini_list_agile"><a href="{{route('backend.timecard.index')}}"><i class="fa fa-minus" aria-hidden="true"></i>データの取り込み</a></li>
+          <li class="mini_list_w3"><a href="{{route('backend.timecard.regist')}}"><i class="fa fa-minus" aria-hidden="true"></i>フォーマットの指定</a></li>
         </ul>
       </li>
       <li class="mini_list_w3">
         <a href="javascript:;"><i class="fa fa-caret-right" aria-hidden="true"></i>「入退出」の管理</a>
         <ul class="sub">
-          <li class="mini_list_agile"><a href="{route('backend.door.index')}"><i class="fa fa-minus" aria-hidden="true"></i>データの取り込み</a></li>
-          <li class="mini_list_w3"><a href="{route('backend.door.regist')}"><i class="fa fa-minus" aria-hidden="true"></i>フォーマットの指定</a></li>
+          <li class="mini_list_agile"><a href="{{route('backend.door.index')}}"><i class="fa fa-minus" aria-hidden="true"></i>データの取り込み</a></li>
+          <li class="mini_list_w3"><a href="{{route('backend.door.regist')}}"><i class="fa fa-minus" aria-hidden="true"></i>フォーマットの指定</a></li>
         </ul>
       </li>
       <li class="mini_list_agile">
@@ -35,12 +35,12 @@
   <li>
     <a href="#"><i class="fa fa-table"></i>マスタ管理 <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
     <ul class="gn-submenu">
-      <li class="mini_list_agile"><a href="{route('backend.division.index')}"><i class="fa fa-caret-right" aria-hidden="true"></i>部課マスタの管理</a></li>
+      <li class="mini_list_agile"><a href="{{route('backend.division.index')}}"><i class="fa fa-caret-right" aria-hidden="true"></i>部課マスタの管理</a></li>
       <li class="mini_list_w3">
         <a href="javascript:;"><i class="fa fa-caret-right" aria-hidden="true"></i>社員マスタの管理</a>
         <ul class="sub">
-          <li class="mini_list_agile"><a href="{route('backend.staff.import')}"><i class="fa fa-minus" aria-hidden="true"></i>CSVの取り込み</a></li>
-          <li class="mini_list_w3"><a href="{route('backend.staff.search')}"><i class="fa fa-minus" aria-hidden="true"></i>個別編集</a></li>
+          <li class="mini_list_agile"><a href="{{route('backend.staff.import')}}"><i class="fa fa-minus" aria-hidden="true"></i>CSVの取り込み</a></li>
+          <li class="mini_list_w3"><a href="{{route('backend.staff.search')}}"><i class="fa fa-minus" aria-hidden="true"></i>個別編集</a></li>
         </ul>
       </li>
     </ul>

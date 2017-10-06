@@ -27,9 +27,11 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'UsersController@logout']);
     //
     Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);
-    Route::get('/division_regist', ['as' => 'backend.division.regist', 'uses' => 'DivisionController@regist']);
+    Route::get('/division_regist', ['as' => 'backend.division.regist', 'uses' => 'DivisionController@getRegist']);
+
+
     Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);
-    Route::get('/timecard_edit', ['as' => 'backend.timecard.edit', 'uses' => 'TimecardController@edit']);
+    Route::get('/timecard_regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']);
     Route::get('/section', ['as' => 'backend.section.index', 'uses' => 'SectionController@index']);
     Route::get('/section_regist', ['as' => 'backend.section.regist', 'uses' => 'SectionController@regist']);
     Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);

@@ -8,10 +8,17 @@ use Config;
 
 class TimecardController extends BackendController
 {
+	/*
+	public function __construct()
+    {
+        parent::__construct();
+        $this->middleware('auth');
+    }
+	*/
 	public function index(){
 		return view('backend.timecard.index');
 	}
-	public function edit(){
-		return view('backend.timecard.edit');
+	public function getRegist(){
+		return view('backend.timecard.regist');
 	}
 }

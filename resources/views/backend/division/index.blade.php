@@ -20,7 +20,7 @@
             <div class="w3l-table-info agile_info_shadow">
               <div class="row mar-bottom15">
                 <div class="col-md-12 text-right">
-                  <input onclick="location.href='division_regist.html'" value="部の新規登録" type="button" class="btn btn-primary btn-xs">
+                  <input onclick="location.href='{{ asset('/division_regist') }}'" value="部の新規登録" type="button" class="btn btn-primary btn-xs">
                 </div>
               </div>
               <table id="table">
