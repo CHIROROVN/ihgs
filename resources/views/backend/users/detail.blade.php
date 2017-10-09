@@ -49,7 +49,7 @@
                       <td class="col-title col-md-3"><label for="">所属</label></td>
                       <td class="col-md-9">
                         <div class="col-md-6">
-                          {{$user->u_belong}}
+                          {{$user->belong_name}}
                         </div>
                         <!-- <div class="fl-left mar-left15 line-height30">※ここで指定した部課の配下の社員の勤怠データを表示することができます</div> -->
                       </td>

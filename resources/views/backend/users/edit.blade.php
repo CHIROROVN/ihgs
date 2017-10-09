@@ -91,22 +91,22 @@
                           <input name="u_power01" value="1" id="u_power0" type="checkbox" @if(old('u_power01') == 1) checked @elseif($user->u_power01 == '1') checked @endif > データの抽出と表示
                         </div>
                         <div>
-                          <input name="u_power02" value="2" id="u_power02" type="checkbox" @if(old('u_power02') == 2) checked @elseif($user->u_power02 == '1') checked @endif > 「タイムカード」の管理
+                          <input name="u_power02" value="1" id="u_power02" type="checkbox" @if(old('u_power02') == 1) checked @elseif($user->u_power02 == '1') checked @endif > 「タイムカード」の管理
                         </div>
                         <div>
-                          <input name="u_power03" value="3" id="u_power03" type="checkbox" @if(old('u_power03') == 3) checked @elseif($user->u_power03 == '1') checked  @endif > 「入退出」の管理
+                          <input name="u_power03" value="1" id="u_power03" type="checkbox" @if(old('u_power03') == 1) checked @elseif($user->u_power03 == '1') checked  @endif > 「入退出」の管理
                         </div>
                         <div>
-                          <input name="u_power04" value="4" id="u_power04" type="checkbox" @if(old('u_power04') == 4) checked @elseif($user->u_power04 == '1') checked @endif > 「PCログ」の管理
+                          <input name="u_power04" value="1" id="u_power04" type="checkbox" @if(old('u_power04') == 1) checked @elseif($user->u_power04 == '1') checked @endif > 「PCログ」の管理
                         </div>
                         <div>
-                          <input name="u_power05" value="5" id="u_power05" type="checkbox" @if(old('u_power05') == 5) checked @elseif($user->u_power05 == '1') checked @endif > 部課マスタの管理
+                          <input name="u_power05" value="1" id="u_power05" type="checkbox" @if(old('u_power05') == 1) checked @elseif($user->u_power05 == '1') checked @endif > 部課マスタの管理
                         </div>
                         <div>
-                          <input name="u_power06" value="6" id="u_power06" type="checkbox" @if(old('u_power06') == 6) checked @endif > 社員マスタの管理
+                          <input name="u_power06" value="1" id="u_power06" type="checkbox" @if(old('u_power06') == 1) checked @endif > 社員マスタの管理
                         </div>
                         <div>
-                          <input name="u_power07" value="7" id="u_power7" type="checkbox" @if(old('u_power07') == 7) checked @endif > ユーザー管理
+                          <input name="u_power07" value="1" id="u_power7" type="checkbox" @if(old('u_power07') == 1) checked @endif > ユーザー管理
                         </div>
                       </td>
                     </tr>
