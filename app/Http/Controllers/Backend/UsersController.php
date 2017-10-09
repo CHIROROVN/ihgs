@@ -87,18 +87,66 @@ class UsersController extends BackendController
 		$data['u_name']                 = Input::get('u_name');
 		$data['u_login']                = Input::get('u_login');
 		$data['u_passwd']               = Hash::make(Input::get('u_passwd'));
-		if(!empty(Input::get('u_flag'))){
-			$data['u_flag']             = Input::get('u_flag');
+
+		$data['u_belong']                 = Input::get('u_belong');
+
+		if(!empty(Input::get('u_power01'))){
+			$data['u_power01']             = Input::get('u_power01');
 		}else{
-			$data['u_flag'] = NULL;
+			$data['u_power01'] = NULL;
 		}
+
+		if(!empty(Input::get('u_power02'))){
+			$data['u_power02']             = Input::get('u_power02');
+		}else{
+			$data['u_power02'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power03'))){
+			$data['u_power03']             = Input::get('u_power03');
+		}else{
+			$data['u_power03'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power04'))){
+			$data['u_power04']             = Input::get('u_power04');
+		}else{
+			$data['u_power04'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power05'))){
+			$data['u_power05']             = Input::get('u_power05');
+		}else{
+			$data['u_power05'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power06'))){
+			$data['u_power06']             = Input::get('u_power06');
+		}else{
+			$data['u_power06'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power07'))){
+			$data['u_power07']             = Input::get('u_power07');
+		}else{
+			$data['u_power07'] = NULL;
+		}
+
+
 		$data['last_ipadrs']            = CLIENT_IP_ADRS;
 		$data['last_date']              = date('y-m-d H:i:s');
 		$data['last_user']              = Auth::user()->u_id;
 		$data['last_kind']              = INSERT;
 
-		Session::put('user', $data);
-		return redirect()->route('backend.users.regist_cnf');
+		if ( $clsUser->insert($data) ) {
+			Session::forget('user');
+			Session::flash('success', trans('common.msg_ihgs_regist_success'));
+			return redirect()->route('backend.users.index');
+		} else {
+			Session::flash('danger', trans('common.msg_ihgs_regist_danger'));
+			return redirect()->route('backend.users.regist')->withInput(Input::all());
+		}
+		
 	}
 
 	public function registBack(){
