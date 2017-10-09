@@ -25,7 +25,18 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/login', ['as' => 'auth.login', 'uses' => 'UsersController@login']);
 	Route::post('/login', ['as' => 'auth.login', 'uses' => 'UsersController@postLogin']);
 	Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'UsersController@logout']);
-    //division
+    
+	//Users
+	Route::get('/users', ['as' => 'backend.users.index', 'uses' => 'UsersController@index']);
+	Route::get('/users/regist', ['as' => 'backend.users.regist', 'uses' => 'UsersController@regist']);
+	Route::post('/users/regist', ['as' => 'backend.users.regist', 'uses' => 'UsersController@postRegist']);
+	Route::get('/users/detail/{id}', ['as' => 'backend.users.detail', 'uses' => 'UsersController@detail']);
+	Route::get('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@edit']);
+	Route::post('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@postEdit']);
+	Route::get('/users/delete/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@delete']);
+	Route::get('/users/delete_save/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@deleteSave']);
+
+	 //division
     Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);
     Route::get('/division/regist', ['as' => 'backend.division.regist', 'uses' => 'DivisionController@getRegist']);
     Route::post('/division/regist', ['as' => 'backend.division.regist', 'uses' => 'DivisionController@postRegist']);
@@ -37,21 +48,18 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/division/orderby-up', ['as' => 'backend.division.orderby.up', 'uses' => 'DivisionController@orderby_up']);
 	Route::get('/division/orderby-down', ['as' => 'backend.division.orderby.down', 'uses' => 'DivisionController@orderby_down']);
 
-	//Users
-	Route::get('/users', ['as' => 'backend.users.index', 'uses' => 'UsersController@index']);
-	Route::get('/users/regist', ['as' => 'backend.users.regist', 'uses' => 'UsersController@regist']);
-	Route::post('/users/regist', ['as' => 'backend.users.regist', 'uses' => 'UsersController@postRegist']);
-	Route::get('/users/detail/{id}', ['as' => 'backend.users.detail', 'uses' => 'UsersController@detail']);
-	Route::get('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@edit']);
-	Route::post('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@postEdit']);
-	Route::get('/users/delete/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@delete']);
-	Route::get('/users/delete_save/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@deleteSave']);
+
+    //section
+	Route::get('section/{parent_id}', ['as' => 'backend.section.index', 'uses' => 'SectionController@index']);
+	Route::get('section/{parent_id}/regist', ['as' => 'backend.section.regist', 'uses' => 'SectionController@getRegist']);
+	Route::post('section/{parent_id}/regist', ['as' => 'backend.section.regist', 'uses' => 'SectionController@postRegist']);
+	Route::get('section/{parent_id}/edit/{id}', ['as' => 'backend.section.edit', 'uses' => 'SectionController@getEdit']);
+	Route::post('section/{parent_id}/edit/{id}', ['as' => 'backend.section.edit', 'uses' => 'SectionController@postEdit']);
+	Route::get('section/{parent_id}/delete/{id}', ['as' => 'backend.section.delete', 'uses' => 'SectionController@getDelete']);
 
 
     Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);
-    Route::get('/timecard_regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']);
-    Route::get('/section', ['as' => 'backend.section.index', 'uses' => 'SectionController@index']);
-    Route::get('/section_regist', ['as' => 'backend.section.regist', 'uses' => 'SectionController@regist']);
+    Route::get('/timecard_regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']);   
     Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);
     Route::get('/door_regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@regist']);
     Route::get('/staff', ['as' => 'backend.staff.index', 'uses' => 'StaffController@index']);
