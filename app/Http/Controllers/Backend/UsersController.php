@@ -140,60 +140,15 @@ class UsersController extends BackendController
 
 		if ( $clsUser->insert($data) ) {
 			Session::forget('user');
-			Session::flash('success', trans('common.msg_ihgs_regist_success'));
+			Session::flash('success', trans('common.msg_regist_success'));
 			return redirect()->route('backend.users.index');
 		} else {
-			Session::flash('danger', trans('common.msg_ihgs_regist_danger'));
+			Session::flash('danger', trans('common.msg_regist_danger'));
 			return redirect()->route('backend.users.regist')->withInput(Input::all());
 		}
 		
 	}
 
-	public function registBack(){
-		if (Session::has('user')) {
-			$user = Session::get('user');
-			unset($user['u_passwd']);
-			return redirect()->route('backend.users.regist')->withInput($user);
-		}else{
-			return redirect()->route('backend.users.regist');
-		}
-	}
-
-	/*
-	|-----------------------------------
-	| get user regist confirm
-	|-----------------------------------
-	*/
-	public function registCnf(){
-		$clsUser                = new UserModel();
-		if (Session::has('user')) {
-			$user              =  (object) Session::get('user');
-			return view('backend.users.regist_cnf', compact('user'));
-		}
-		return redirect()->route('backend.users.regist');
-	}
-
-	/*
-	|-----------------------------------
-	| get user regist confirm
-	|-----------------------------------
-	*/
-	public function registSave(){
-		$clsUser                = new UserModel();
-		if (Session::has('user')) {
-			$data               =  (array) Session::get('user');
-			if ( $clsUser->insert($data) ) {
-				Session::forget('user');
-				Session::flash('success', trans('common.msg_cts-adm_regist_success'));
-				return redirect()->route('backend.users.index');
-			} else {
-				Session::flash('danger', trans('common.msg_cts-adm_regist_danger'));
-				return redirect()->route('backend.users.regist_cnf');
-			}
-		}else{
-			return redirect()->route('backend.users.regist');
-		}
-	}
 
 	/*
 	|-----------------------------------
@@ -231,67 +186,66 @@ class UsersController extends BackendController
 			$data['u_passwd']           = Hash::make(Input::get('u_passwd'));
 		}
 
-		if(!empty(Input::get('u_flag'))){
-			$data['u_flag']             = Input::get('u_flag');
+				$data['u_belong']                 = Input::get('u_belong');
+
+		if(!empty(Input::get('u_power01'))){
+			$data['u_power01']             = Input::get('u_power01');
 		}else{
-			$data['u_flag']             = NULL;
+			$data['u_power01'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power02'))){
+			$data['u_power02']             = Input::get('u_power02');
+		}else{
+			$data['u_power02'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power03'))){
+			$data['u_power03']             = Input::get('u_power03');
+		}else{
+			$data['u_power03'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power04'))){
+			$data['u_power04']             = Input::get('u_power04');
+		}else{
+			$data['u_power04'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power05'))){
+			$data['u_power05']             = Input::get('u_power05');
+		}else{
+			$data['u_power05'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power06'))){
+			$data['u_power06']             = Input::get('u_power06');
+		}else{
+			$data['u_power06'] = NULL;
+		}
+
+		if(!empty(Input::get('u_power07'))){
+			$data['u_power07']             = Input::get('u_power07');
+		}else{
+			$data['u_power07'] = NULL;
 		}
 
 		$data['last_ipadrs']            = CLIENT_IP_ADRS;
-		$data['last_date']              = date('y-m-d H:i:s');
+		$data['last_date']              = date('Y-m-d H:i:s');
 		$data['last_user']              = Auth::user()->u_id;
 		$data['last_kind']              = UPDATE;
 
-		Session::put('edit_user', $data);
-		return redirect()->route('backend.users.edit_cnf', $id);
+		if ( $clsUser->update($id, $data) ) {
+			Session::forget('edit_user');
+			Session::flash('success', trans('common.msg_edit_success'));
+			return redirect()->route('backend.users.index');
+		} else {
+			Session::flash('danger', trans('common.msg_edit_danger'));
+			return redirect()->route('backend.users.edit_cnf', $id);
+		}
+
 	}
 
-	/*
-	|-----------------------------------
-	| get user edit confirm
-	|-----------------------------------
-	*/
-	public function editCnf($id){
-		$u_id = $id;
-		$clsUser               = new UserModel();
-		if (Session::has('edit_user')) {
-			$user              =  (object) Session::get('edit_user');
-			return view('backend.users.edit_cnf', compact('user', 'u_id'));
-		}
-		return redirect()->route('backend.users.edit', $id);
-	}
-
-	/*
-	|-----------------------------------
-	| save user edit
-	|-----------------------------------
-	*/
-	public function editSave($id){
-		$clsUser                = new UserModel();
-		if (Session::has('edit_user')) {
-			$data               =  (array) Session::get('edit_user');
-			if ( $clsUser->update($id, $data) ) {
-				Session::forget('edit_user');
-				Session::flash('success', trans('common.msg_cts-adm_edit_success'));
-				return redirect()->route('backend.users.index');
-			} else {
-				Session::flash('danger', trans('common.msg_cts-adm_edit_danger'));
-				return redirect()->route('backend.users.edit_cnf', $id);
-			}
-		}else{
-			return redirect()->route('backend.users.edit',$id);
-		}
-	}
-
-	public function editBack($id){
-		if (Session::has('user')) {
-			$user = Session::get('user');
-			unset($user['u_passwd']);
-			return redirect()->route('backend.users.edit', $id)->withInput($user);
-		}else{
-			return redirect()->route('backend.users.edit', $id);
-		}
-	}
 
 	/*
 	|-----------------------------------
@@ -329,10 +283,10 @@ class UsersController extends BackendController
         $data['last_user']       = Auth::user()->u_id;
         $clsUser                   = new UserModel();
         if ( $clsUser->update($id, $data) ) {
-        	Session::flash('success', trans('common.msg_cts-adm_del_success'));
+        	Session::flash('success', trans('common.msg_del_success'));
             return redirect()->route('backend.users.index');
         } else {
-        	Session::flash('success', trans('common.msg_cts-adm_del_danger'));
+        	Session::flash('success', trans('common.msg_del_danger'));
             return redirect()->route('backend.users.detail',$id);
         }
 	}
