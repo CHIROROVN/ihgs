@@ -8,7 +8,7 @@
             <div class="w3l_agileits_breadcrumbs_inner">
               <ul>
                 <li>データ管理<span>＞</span></li>
-                <li>ユーザーの新規登録</li>
+                <li>ユーザーを変更する</li>
               </ul>
             </div>
           </div>
@@ -16,7 +16,7 @@
         <div class="inner_content_w3_agile_info two_in">
           <div class="forms-main_agileits">
             <header class="panel-heading">
-              ユーザーの新規登録
+              ユーザーを変更する
             </header>
             <div class="graph-form agile_info_shadow">
               <div class="form-body">

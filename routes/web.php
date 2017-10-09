@@ -34,7 +34,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@edit']);
 	Route::post('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@postEdit']);
 	Route::get('/users/delete/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@delete']);
-	Route::get('/users/delete_save/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@deleteSave']);
+	//Route::get('/users/delete_save/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@deleteSave']);
 
 	 //division
     Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);

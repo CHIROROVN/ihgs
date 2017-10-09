@@ -259,23 +259,13 @@ class UsersController extends BackendController
 		return view('backend.users.detail', compact('user', 'u_id'));
 	}
 
-	/*
-	|-----------------------------------
-	| get user delete confirm
-	|-----------------------------------
-	*/
-	public function delete($id){
-		$clsUser                = new UserModel();
-		$user = $clsUser->get_by_id($id);
-		return view('backend.users.delete', compact('user'));
-	}
 
 	/*
 	|-----------------------------------
-	| get user delete save
+	|  delete user
 	|-----------------------------------
 	*/
-	public function deleteSave($id){
+	public function delete($id){
 		$clsUser                = new UserModel();
 		$data['last_kind']       = DELETE;
         $data['last_date']       = date('Y-m-d H:i:s');
@@ -283,10 +273,10 @@ class UsersController extends BackendController
         $data['last_user']       = Auth::user()->u_id;
         $clsUser                   = new UserModel();
         if ( $clsUser->update($id, $data) ) {
-        	Session::flash('success', trans('common.msg_del_success'));
+        	Session::flash('success', trans('common.msg_delete_success'));
             return redirect()->route('backend.users.index');
         } else {
-        	Session::flash('success', trans('common.msg_del_danger'));
+        	Session::flash('success', trans('common.msg_delete_danger'));
             return redirect()->route('backend.users.detail',$id);
         }
 	}
