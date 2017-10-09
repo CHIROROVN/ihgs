@@ -29,7 +29,7 @@
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="belong_name" name="belong_name">
-                          <span class="error-input">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
+                          <span class="help-block">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
                         </div>
                       </td>
                     </tr>
@@ -38,7 +38,7 @@
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="belong_code" name="belong_code">
-                          <span class="error-input">@if ($errors->first('belong_code')) ※{!! $errors->first('belong_code') !!} @endif</span>
+                          <span class="help-block">@if ($errors->first('belong_code')) ※{!! $errors->first('belong_code') !!} @endif</span>
                         </div>
                       </td>
                     </tr>
