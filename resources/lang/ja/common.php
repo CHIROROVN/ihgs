@@ -18,8 +18,6 @@ return [
     'msg_time_danger'                   => '予約可能な予約枠より長い予約時間の予約のため登録できませんでした。',
 
     'msg_manage_login_danger'           => 'ログインに失敗しました。',
-    'msg_ihgs_regist_success'		    => 'ユーザーは正常に追加されました。',
-    'msg_ihgs_regist_danger'			=> 'ユーザーを追加できませんでした。',
 
 
 ];

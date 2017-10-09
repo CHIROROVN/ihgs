@@ -58,8 +58,7 @@
                 @foreach($users as $user)
                   <tr>
                     <td align="center" style="width: 120px;">
-                      <input name="btn_delete" id="btn_delete" value="削除" type="button" class="btn btn-primary btn-xs"
-                      onClick="location.href='{{route('backend.users.delete', $user->u_id)}}'" >
+                      <input name="btn_delete" id="btn_delete" value="削除" type="button" class="btn btn-primary btn-xs" onClick="if (confirm('これを削除してもよろしいですか？')) {location.href='{{ route('backend.users.delete', $user->u_id) }}' }">
                     </td>
                     <td>{{$user->u_name}}</td>
                     <td>{{$user->u_belong}}</td>
@@ -73,6 +72,25 @@
 
                 </tbody>
               </table>
+
+              <div class="modal" id="confirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Delete Confirmation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you, want to delete?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-primary" id="delete-btn">Delete</button>
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
               <div class="row">
                 <div class="col-md-12 text-center">
 
@@ -86,6 +104,5 @@
           </div>
         </div>
 <!-- /CONTENTS -->
-
 
 @endsection

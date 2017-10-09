@@ -61,7 +61,7 @@ class UserModel
     //users get by id
     public function get_by_id($id)
     {
-        return DB::table($this->table)->where('u_id', $id)->first();
+        return DB::table($this->table)->where('u_id', $id)->leftJoin('m_belong', 'm_user.u_belong', '=', 'm_belong.belong_id')->select('m_user.*', 'm_belong.belong_name')->first();
     }
 
     // get u_login by id
