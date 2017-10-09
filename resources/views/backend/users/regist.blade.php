@@ -23,7 +23,7 @@
                 {!! Form::open(array('route' => ['backend.users.regist'], 'class' => 'form-horizontal', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
                   <table class="table table-bordered mar-bottom15">
                     <tr>
-                      <td class="col-title col-md-3"><label for="">ユーザー名</label></td>
+                      <td class="col-title col-md-3"><label for="">ユーザー名<span class="required">必須</span></label></td>
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="u_name" name="u_name" value="{{old('u_name')}}"> 
@@ -36,7 +36,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="col-title col-md-3"><label for="">ログインID</label></td>
+                      <td class="col-title col-md-3"><label for="">ログインID<span class="required">必須</span></label></td>
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="u_login" name="u_login" value="{{old('u_login')}}"> 
@@ -49,7 +49,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="col-title col-md-3"><label for="">パスワード</label></td>
+                      <td class="col-title col-md-3"><label for="">パスワード<span class="required">必須</span></label></td>
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="password" class="form-control" id="u_passwd" name="u_passwd" value="{{old('u_passwd')}}"> 
@@ -75,6 +75,11 @@
                             <option value="6" @if(old('u_belong') == '6') selected @endif >&#12288;├総務課</option>
                             <option value="7" @if(old('u_belong') == '7') selected @endif >&#12288;└人事課</option>
                           </select>
+                          @if ($errors->has('u_belong'))
+	                            <span class="help-block">
+	                                <strong>{{ $errors->first('u_belong') }}</strong>
+	                            </span>
+	                        @endif
                         </div>
                         <div class="fl-left mar-left15 line-height30">※ここで指定した部課の配下の社員の勤怠データを表示することができます</div>
                       </td>

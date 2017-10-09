@@ -12,6 +12,12 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model User
+    |--------------------------------------------------------------------------
+    */
     //Login
     'error_u_login_required'              => 'このフィールドに記入してください。',
     'error_u_passwd_required'             => 'このフィールドに記入してください。',
@@ -20,6 +26,7 @@ return [
     'error_u_name_required'               => 'ユーザー名を入力してください。',
     'error_u_login_required'              => 'ログインIDを入力してください。',
     'error_u_passwd_required'             => 'パスワードを入力してください。',
+    'error_u_belong_required'             => '所属を入力してください。',
 
      /*
     |--------------------------------------------------------------------------

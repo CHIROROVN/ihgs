@@ -17,7 +17,8 @@ class UserModel
             'u_name'                       => 'required',
             'u_login'                      => 'required',
             'u_passwd'                     => 'required',
-        );
+            //'u_belong'                      => 'required',
+         );
     }
 
     public function Messages()
@@ -26,6 +27,7 @@ class UserModel
             'u_name.required'              => trans('validation.error_u_name_required'),
             'u_login.required'             => trans('validation.error_u_login_required'),
             'u_passwd.required'            => trans('validation.error_u_passwd_required'),
+            //'u_belong.required'            => trans('validation.error_u_belong_required'),
         );
     }
 
