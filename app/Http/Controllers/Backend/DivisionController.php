@@ -29,7 +29,7 @@ class DivisionController extends BackendController
 		$clsBelong          = new BelongModel();
         $data['belongs']    = $clsBelong->get_all_division();   
         $data['sections']   = $clsBelong->get_list_section();     
-        print_r($data['sections']);
+        
 		return view('backend.division.index',$data);
 	}
 

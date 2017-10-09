@@ -63,7 +63,9 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 
 
     Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);
-    Route::get('/timecard_regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']);   
+    Route::get('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']); 
+    Route::post('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@postRegist']); 
+
     Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);
     Route::get('/door_regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@regist']);
     Route::get('/staff', ['as' => 'backend.staff.index', 'uses' => 'StaffController@index']);
