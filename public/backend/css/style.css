@@ -3443,4 +3443,11 @@ span.required {
     padding-left: 8px;
 }
 
+.help-block {
+    color: #D50000;
+    background-image: url('../images/warning-icon_002.png');
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}
+
 /**************/

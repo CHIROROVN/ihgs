@@ -27,13 +27,15 @@ class DivisionController extends BackendController
 	public function index(){
 		$data =array();
 		$clsBelong          = new BelongModel();
-        $data['belongs']    = $clsBelong->get_all();
-
+        $data['belongs']    = $clsBelong->get_all_division();   
+        print_r($data['belongs']);     
 		return view('backend.division.index',$data);
 	}
+
 	public function getRegist(){
 		return view('backend.division.regist');
 	}
+
 	public function postRegist()
     {
         $clsBelong      = new BelongModel();
@@ -46,8 +48,7 @@ class DivisionController extends BackendController
         $max = $clsBelong->get_max();
         $dataInsert             = array(
             'belong_name'       => Input::get('belong_name'),
-            'belong_sort'       => $max + 1,
-            'belong_parent_id'  => '0',
+            'belong_sort'       => $max + 1,            
             'belong_code'       => Input::get('belong_code'),
             'last_date'         => date('Y-m-d H:i:s'),
             'last_kind'         => INSERT,
@@ -92,7 +93,7 @@ class DivisionController extends BackendController
             'last_date'         => date('Y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-            'last_user'         => Auth::user()->id
+            'last_user'         => Auth::user()->u_id 
         );
 
         if ( $clsBelong->update($id, $dataUpdate) ) {
@@ -110,12 +111,12 @@ class DivisionController extends BackendController
     {
         $clsBelong              = new BelongModel();
         $dataUpdate             = array(
-            'last_date'         => date('y-m-d H:i:s'),
+            'last_date'         => date('Y-m-d H:i:s'),
             'last_kind'         => DELETE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-            'last_user'         => Auth::user()->id
+            'last_user'         => Auth::user()->u_id 
         );
-        if ( $clsBelong->update($id, $dataUpdate) ) {
+        if ( $clsBelong->delete($id, $dataUpdate) ) {
             Session::flash('success', trans('common.msg_delete_success'));
         } else {
             Session::flash('danger', trans('common.msg_delete_danger'));
@@ -152,7 +153,7 @@ class DivisionController extends BackendController
     {
         $clsBelong      = new BelongModel();
         $id             = Input::get('id');
-        $belongs        = $clsBelong->get_all();
+        $belongs        = $clsBelong->get_all_division();
         $this->up($clsBelong, $id, $belongs, 'belong_id', 'belong_sort');
         return redirect()->route('backend.division.index');
     }
@@ -164,7 +165,7 @@ class DivisionController extends BackendController
     {
         $clsBelong      = new BelongModel();
         $id             = Input::get('id');
-        $belongs        = $clsBelong->get_all();
+        $belongs        = $clsBelong->get_all_division();
         $this->down($clsBelong, $id, $belongs, 'belong_id', 'belong_sort');
         return redirect()->route('backend.division.index');
     }

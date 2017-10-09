@@ -33,5 +33,85 @@ class BackendController extends Controller
 
         define('CLIENT_IP_ADRS', $ipaddress);
     }
+    protected function top($clsObject, $id, $field_sort,$parent_id='')
+    {
+        $min = $clsObject->get_min($parent_id);
+        // update
+        $dataUpdate = array(
+            $field_sort => $min - 1
+        );
+        $clsObject->update($id, $dataUpdate);
+    }
+
+    protected function last($clsObject, $id, $field_sort,$parent_id='')
+    {
+        $max = $clsObject->get_max($parent_id);
+
+        // update
+        $dataUpdate = array(
+            $field_sort => $max + 1
+        );
+        $clsObject->update($id, $dataUpdate);
+    }
+
+    protected function up($clsObject, $id, $array, $field_primary, $field_sort)
+    {
+        $count = count($array);
+        $cur_belong = NULL;
+        $up_belong = NULL;
+        for($i = 0; $i < $count; $i++)
+        {
+            
+            if($array[$i]->$field_primary == $id)
+            {
+                $cur_belong = $array[$i];
+                $up_belong = $array[$i - 1];
+                break;
+            }
+        }
+
+        // update
+        // swap cur->up
+        $dataUpdate = array(
+            $field_sort => $up_belong->$field_sort
+        );
+        $clsObject->update($cur_belong->$field_primary, $dataUpdate);
+
+        // swap up->cur
+        $dataUpdate = array(
+            $field_sort => $cur_belong->$field_sort
+        );
+        $clsObject->update($up_belong->$field_primary, $dataUpdate);
+    }
+
+    protected function down($clsObject, $id, $array, $field_primary, $field_sort)
+    {
+        $count = count($array);
+        $cur_belong = NULL;
+        $down_belong = NULL;
+        for($i = 0; $i < $count; $i++)
+        {
+            
+            if($array[$i]->$field_primary == $id)
+            {
+                $cur_belong = $array[$i];
+                $down_belong = $array[$i + 1];
+                break;
+            }
+        }
+
+        // update
+        // swap cur->down
+        $dataUpdate = array(
+            $field_sort => $down_belong->$field_sort
+        );
+        $clsObject->update($cur_belong->$field_primary, $dataUpdate);
+
+        // swap down->cur
+        $dataUpdate = array(
+            $field_sort => $cur_belong->$field_sort
+        );
+        $clsObject->update($down_belong->$field_primary, $dataUpdate);
+    }
 
 }

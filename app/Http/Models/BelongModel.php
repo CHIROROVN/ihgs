@@ -31,6 +31,18 @@ class BelongModel
         return $results;
     }
 
+    public function get_all_division()
+    {
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->whereNull('belong_parent_id')->orderBy('belong_sort', 'asc')->get();
+        return $results;
+    }
+
+    public function get_all_section($id)
+    {
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->where('belong_parent_id', '=', $id)->orderBy('belong_sort', 'asc')->get();
+        return $results;
+    }
+
     public function get_for_select($where = array())
     {
         $db = DB::table($this->table)->select('belong_id', 'belong_name', 'belong_code')->where('last_kind', '<>', DELETE);
@@ -61,17 +73,23 @@ class BelongModel
         $results = DB::table($this->table)->where('belong_id', $id)->update($data);
         return $results;
     }
-
-    public function get_min()
+    /*  Delete division and section*/
+    public function delete($id, $data)
     {
-        $results = DB::table($this->table)->min('belong_sort');
+        $results = DB::table($this->table)->where('belong_id', $id)->orWhere('belong_parent_id', '=', $id)->update($data);        
         return $results;
     }
 
-    public function get_max()
+    public function get_min($parent_id='')
     {
-        $results = DB::table($this->table)->max('belong_sort');
+        $results = ($parent_id=='')?DB::table($this->table)->min('belong_sort')->whereNull('belong_parent_id'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->min('belong_sort');
         return $results;
     }
+
+    public function get_max($parent_id='')
+    {
+        $results = ($parent_id=='')?DB::table($this->table)->whereNull('belong_parent_id')->max('belong_sort'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->max('belong_sort');
+        return $results;
+    }   
 
 }

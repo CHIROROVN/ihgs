@@ -37,6 +37,16 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/division/orderby-up', ['as' => 'backend.division.orderby.up', 'uses' => 'DivisionController@orderby_up']);
 	Route::get('/division/orderby-down', ['as' => 'backend.division.orderby.down', 'uses' => 'DivisionController@orderby_down']);
 
+	//Users
+	Route::get('/users', ['as' => 'backend.users.index', 'uses' => 'UsersController@index']);
+	Route::get('/users/regist', ['as' => 'backend.users.regist', 'uses' => 'UsersController@regist']);
+	Route::post('/users/regist', ['as' => 'backend.users.regist', 'uses' => 'UsersController@postRegist']);
+	Route::get('/users/detail/{id}', ['as' => 'backend.users.detail', 'uses' => 'UsersController@detail']);
+	Route::get('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@edit']);
+	Route::post('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@postEdit']);
+	Route::get('/users/delete/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@delete']);
+	Route::get('/users/delete_save/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@deleteSave']);
+
 
     Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);
     Route::get('/timecard_regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']);
