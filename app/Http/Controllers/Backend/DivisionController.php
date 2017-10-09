@@ -17,17 +17,17 @@ use Config;
 
 class DivisionController extends BackendController
 {
-	/*
+	
 	public function __construct()
     {
         parent::__construct();
         $this->middleware('auth');
     }
-	*/
+	
 	public function index(){
 		$data =array();
-		//$clsBelong          = new BelongModel();
-        //$data['belongs']    = $clsBelong->get_all();
+		$clsBelong          = new BelongModel();
+        $data['belongs']    = $clsBelong->get_all();
 
 		return view('backend.division.index',$data);
 	}
@@ -40,7 +40,7 @@ class DivisionController extends BackendController
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.belongs.regist')->withErrors($validator)->withInput();
+            return redirect()->route('backend.division.regist')->withErrors($validator)->withInput();
         }
         // insert
         $max = $clsBelong->get_max();
@@ -49,17 +49,16 @@ class DivisionController extends BackendController
             'belong_sort'       => $max + 1,
             'belong_parent_id'  => '0',
             'belong_code'       => Input::get('belong_code'),
-            'last_date'         => date('y-m-d H:i:s'),
+            'last_date'         => date('Y-m-d H:i:s'),
             'last_kind'         => INSERT,
             'last_ipadrs'       => CLIENT_IP_ADRS,
-            //'last_user'         => Auth::user()->id
-            'last_user'         => '1'
+            'last_user'         => Auth::user()->u_id            
         );
         
         if ( $clsBelong->insert($dataInsert) ) {
-            Session::flash('success', trans('common.message_regist_success'));
+            Session::flash('success', trans('common.msg_regist_success'));
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
+            Session::flash('danger', trans('common.msg_regist_danger'));
         }
         return redirect()->route('backend.division.index');
     }
@@ -90,16 +89,16 @@ class DivisionController extends BackendController
         $dataUpdate = array(
             'belong_name'       => Input::get('belong_name'),
             'belong_code'       => Input::get('belong_code'),
-            'last_date'         => date('y-m-d H:i:s'),
+            'last_date'         => date('Y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
 
         if ( $clsBelong->update($id, $dataUpdate) ) {
-            Session::flash('success', trans('common.message_edit_success'));
+            Session::flash('success', trans('common.msg_edit_success'));
         } else {
-            Session::flash('danger', trans('common.message_edit_danger'));
+            Session::flash('danger', trans('common.msg_edit_danger'));
         }
         return redirect()->route('backend.division.index');
     }
@@ -117,9 +116,9 @@ class DivisionController extends BackendController
             'last_user'         => Auth::user()->id
         );
         if ( $clsBelong->update($id, $dataUpdate) ) {
-            Session::flash('success', trans('common.message_delete_success'));
+            Session::flash('success', trans('common.msg_delete_success'));
         } else {
-            Session::flash('danger', trans('common.message_delete_danger'));
+            Session::flash('danger', trans('common.msg_delete_danger'));
         }
         return redirect()->route('backend.division.index');
     }
