@@ -75,8 +75,11 @@
               </table>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <input name="submit2" disabled="" value="前の20件を表示" type="submit" class="btn btn-primary btn-sm">
-                  <input name="submit3" id="submit3" value="次の20件を表示" type="submit" class="btn btn-primary btn-sm mar-left15">
+
+                  {{ $users->links() }}
+
+                  <!-- <input name="submit2" disabled="" value="前の20件を表示" type="submit" class="btn btn-primary btn-sm">
+                  <input name="submit3" id="submit3" value="次の20件を表示" type="submit" class="btn btn-primary btn-sm mar-left15"> -->
                 </div>
               </div>
             </div>
