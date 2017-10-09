@@ -10,6 +10,7 @@
       </ul>
     </div>
   </div>
+  
   {!! Form::open(array('url' => 'division/regist', 'method' => 'post')) !!}
         <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
