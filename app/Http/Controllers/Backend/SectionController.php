@@ -75,6 +75,7 @@ class SectionController extends BackendController
     {
         $clsBelong          = new BelongModel();
         $data['belong']     = $clsBelong->get_by_id($id);
+        $data['parent']     = $clsBelong->get_by_id($parent_id);
         return view('backend.section.edit', $data);
     }
 

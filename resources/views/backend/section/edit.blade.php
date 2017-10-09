@@ -21,7 +21,7 @@
       </header>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">      
-      {!! Form::open(array('url' => 'section/'. $parent->belong_id.'/regist', 'method' => 'post')) !!} 
+      {!! Form::open(array('url' => 'section/'. $parent->belong_id.'/edit/'.$belong->belong_id, 'method' => 'post')) !!} 
         <table class="table table-bordered mar-bottom15">
           <tr>
             <td class="col-title col-md-3"><label for="">部の名称</label></td>
@@ -31,7 +31,8 @@
             <td class="col-title col-md-3"><label for="">課の名称<span class="f_caution">(*)</span></label></td>
               <td class="col-md-9">
                 <div class="col-md-6">
-                  <input type="text" class="form-control" id="belong_name" name="belong_name">
+                  <input type="text" class="form-control" id="belong_name" name="belong_name" value="{{ $belong->belong_name }}">
+                   <span class="error-input">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
                 </div>
               </td>
           </tr>
@@ -39,14 +40,15 @@
               <td class="col-title col-md-3"><label for="">課のコード<span class="f_caution">(*)</span></label></td>
               <td class="col-md-9">
                 <div class="col-md-6">
-                  <input type="text" class="form-control" id="belong_code" name="belong_code">
+                  <input type="text" class="form-control" id="belong_code" name="belong_code" value="{{ $belong->belong_code }}">
+                  <span class="error-input">@if ($errors->first('belong_code')) ※{!! $errors->first('belong_code') !!} @endif</span>
                 </div>
               </td>
           </tr>
         </table>
         <div class="row mar-bottom15">
           <div class="col-md-12 text-center">
-            <input name="button" value="登録する" type="submit" class="btn btn-primary btn-sm">
+            <input name="btnSubmit" value="登録する" type="submit" class="btn btn-primary btn-sm">
             <input name="btnReset" value="クリア" type="reset" class="btn btn-primary btn-sm mar-left15">
           </div>
         </div>

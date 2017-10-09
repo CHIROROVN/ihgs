@@ -68,7 +68,12 @@
                         <td align="center"><input name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="if (confirm('Are you sure delete')) {location.href='{{ asset('division/delete/' . $belong->belong_id) }}' }"></td>
                         <td>{{ $belong->belong_code }}</td>
                         <td>{{ $belong->belong_name }}</td>
-                        <td><!--営業一課<br />営業二課<br/>営業三課<br />特殊営業課--></td>
+                        <td>@foreach($sections as $section)
+                               @if($section->belong_parent_id==$belong->belong_id)
+                               {{ $section->belong_name }}
+                               @endif 
+                            <br />
+                            @endforeach</td>
                         <td align="center"><input onclick="location.href='{{ asset('section/' . $belong->belong_id) }}'" value="配下の課の編集" type="button" class="btn btn-primary btn-xs"></td>
                         <td align="center"><input onclick="location.href='{{ asset('division/edit/' . $belong->belong_id) }}'" value="編集" type="button" class="btn btn-primary btn-xs"></td>
                         <td style="width: 50px;"><input name="btnTop" id="btnTop" value="TOP" type="button" class="btn btn-primary btn-xs @if($i < 2) {{'hidden'}} @endif" onclick="location.href='{{ asset('division/orderby-top?id=' . $belong->belong_id) }}'" ></td>

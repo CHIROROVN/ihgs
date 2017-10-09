@@ -71,14 +71,14 @@
                   @foreach($belongs as $belong)
                     <?php $i++; ?>           
                   <tr>
-                    <td align="center"><input name="button2" id="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
+                    <td align="center"><input name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="if (confirm('Are you sure delete')) {location.href='{{ asset('section/' . $belong->belong_parent_id.'/delete/'.$belong->belong_id) }}' }"></td>
                     <td>{{ $belong->belong_code }}</td>
                     <td>{{ $belong->belong_name }}</td>
-                    <td align="center"><input onclick="location.href='{{ asset('division/' . $belong->belong_parent_id.'/edit/'.$belong->belong_id) }}'" value="編集" type="button" class="btn btn-primary btn-xs"></td>
-                    <td><input name="btnTop" id="btnTop" value="TOP" type="button" class="btn btn-primary btn-xs"></td>
-                    <td><input name="btnUp" id="btnUp" value="↑" type="button" class="btn btn-primary btn-xs"></td>
-                    <td><input name="btnDown" id="btnDown" value="↓" type="button" class="btn btn-primary btn-xs"></td>
-                    <td><input name="btnLast" id="btnLast" value="LAST" type="button" class="btn btn-primary btn-xs"></td>
+                    <td align="center"><input onclick="location.href='{{ asset('section/' . $belong->belong_parent_id.'/edit/'.$belong->belong_id) }}'" value="編集" type="button" class="btn btn-primary btn-xs"></td>
+                    <td style="width: 50px;"><input name="btnTop" id="btnTop" value="TOP" type="button" class="btn btn-primary btn-xs @if($i < 2) {{'hidden'}} @endif" onclick="location.href='{{ asset('section/'.$belong->belong_parent_id.'/orderby-top?id=' . $belong->belong_id) }}'"></td>
+                    <td style="width: 50px;"><input name="btnUp" id="btnUp" value="↑" type="button" class="btn btn-primary btn-xs @if($i < 2) {{'hidden'}} @endif" onclick="location.href='{{ asset('section/'.$belong->belong_parent_id.'/orderby-up?id=' . $belong->belong_id) }}'"></td>
+                    <td style="width: 50px;"><input name="btnDown" id="btnDown" value="↓" type="button" class="btn btn-primary btn-xs @if($i == $max) {{'hidden'}} @endif" onclick="location.href='{{ asset('section/'.$belong->belong_parent_id.'/orderby-down?id=' . $belong->belong_id) }}'"></td>
+                    <td style="width: 50px;"><input name="btnLast" id="btnLast" value="LAST" type="button" class="btn btn-primary btn-xs @if($i == $max) {{'hidden'}} @endif" onclick="location.href='{{ asset('section/'.$belong->belong_parent_id.'/orderby-last?id=' . $belong->belong_id) }}'"></td>
                   </tr>
                  @endforeach
                  @endif 

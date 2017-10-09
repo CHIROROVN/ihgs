@@ -56,6 +56,10 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('section/{parent_id}/edit/{id}', ['as' => 'backend.section.edit', 'uses' => 'SectionController@getEdit']);
 	Route::post('section/{parent_id}/edit/{id}', ['as' => 'backend.section.edit', 'uses' => 'SectionController@postEdit']);
 	Route::get('section/{parent_id}/delete/{id}', ['as' => 'backend.section.delete', 'uses' => 'SectionController@getDelete']);
+	Route::get('section/{parent_id}/orderby-top', ['as' => 'backend.division.orderby.top', 'uses' => 'DivisionController@orderby_top']);
+	Route::get('section/{parent_id}/orderby-last', ['as' => 'backend.division.orderby.last', 'uses' => 'DivisionController@orderby_last']);
+	Route::get('section/{parent_id}/orderby-up', ['as' => 'backend.division.orderby.up', 'uses' => 'DivisionController@orderby_up']);
+	Route::get('section/{parent_id}/orderby-down', ['as' => 'backend.division.orderby.down', 'uses' => 'DivisionController@orderby_down']);
 
 
     Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);

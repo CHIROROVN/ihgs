@@ -34,6 +34,8 @@ class BelongModel
     public function get_all_division()
     {
         $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->whereNull('belong_parent_id')->orderBy('belong_sort', 'asc')->get();
+
+
         return $results;
     }
 
@@ -90,6 +92,10 @@ class BelongModel
     {
         $results = ($parent_id=='')?DB::table($this->table)->whereNull('belong_parent_id')->max('belong_sort'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->max('belong_sort');
         return $results;
-    }   
+    } 
+    public function get_list_section()
+    {
+        return DB::table($this->table)->where('last_kind', '<>', DELETE)->whereNotNull('belong_parent_id')->orderBy('belong_sort', 'asc')->get();
+    }  
 
 }
