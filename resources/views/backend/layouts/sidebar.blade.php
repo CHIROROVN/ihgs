@@ -46,9 +46,9 @@
     </ul>
   </li>
   <li>
-    <a href="#"><i class="fa fa-user" aria-hidden="true"></i>ユーザー管理 <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
+    <a href="{{route('backend.users.index')}}"><i class="fa fa-user" aria-hidden="true"></i>ユーザー管理 <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
     <ul class="gn-submenu">
-      <li class="mini_list_agile"><a href="user_list.html"><i class="fa fa-caret-right" aria-hidden="true"></i>ユーザーの一覧／新規登録／変更／削除</a></li>
+      <li class="mini_list_agile"><a href="{{route('backend.users.index')}}"><i class="fa fa-caret-right" aria-hidden="true"></i>ユーザーの一覧／新規登録／変更／削除</a></li>
     </ul>
   </li>
 </ul>

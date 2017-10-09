@@ -83,7 +83,7 @@ class UsersController extends BackendController
 		if ($validator->fails()) {
 			return redirect()->route('backend.users.regist')->withErrors($validator)->withInput();
 		}
-
+		//$data['u_id']                   = 2;
 		$data['u_name']                 = Input::get('u_name');
 		$data['u_login']                = Input::get('u_login');
 		$data['u_passwd']               = Hash::make(Input::get('u_passwd'));
@@ -134,7 +134,7 @@ class UsersController extends BackendController
 
 
 		$data['last_ipadrs']            = CLIENT_IP_ADRS;
-		$data['last_date']              = date('y-m-d H:i:s');
+		$data['last_date']              = date('Y-m-d H:i:s');
 		$data['last_user']              = Auth::user()->u_id;
 		$data['last_kind']              = INSERT;
 

@@ -14,6 +14,25 @@
           </div>
         <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
+
+          <div class="flash-messages">
+                @if($message = Session::get('danger'))
+
+                    <div id="error" class="message">
+                        <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+                        <span>{{$message}}</span>
+                    </div>
+
+                @elseif($message = Session::get('success'))
+
+                    <div id="success" class="message">
+                        <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                        <span>{{$message}}</span>
+                    </div>
+
+                @endif  
+          </div>
+          
           <p class="intro">**件が登録されています。</p>
           <!-- tables -->
           <div class="agile-tables">
@@ -34,62 +53,24 @@
                   </tr>
                 </thead>
                 <tbody>
+
+                @if(count($users) > 0)
+                @foreach($users as $user)
                   <tr>
-                    <td align="center" style="width: 120px;"><input name="submit" id="submit" value="削除" type="submit" class="btn btn-primary btn-xs"></td>
-                    <td>山田太郎</td>
-                    <td>営業部営業一課</td>
-                    <td>1234567890</td>
-                    <td align="center" style="width: 120px;"><input name="button" id="button" value="編集" type="button" class="btn btn-primary btn-xs"></td>
+                    <td align="center" style="width: 120px;">
+                      <input name="btn_delete" id="btn_delete" value="削除" type="button" class="btn btn-primary btn-xs"
+                      onClick="location.href='{{route('backend.users.delete', $user->u_id)}}'" >
+                    </td>
+                    <td>{{$user->u_name}}</td>
+                    <td>{{$user->u_belong}}</td>
+                    <td>{{$user->u_login}}</td>
+                    <td align="center" style="width: 120px;">
+                      <input name="btn_detail" id="btn_detail" value="編集" type="button" class="btn btn-primary btn-xs" onClick="location.href='{{route('backend.users.detail', $user->u_id)}}'">
+                    </td>
                   </tr>
-                  <tr>
-                    <td align="center"><input name="submit" id="submit" value="削除" type="submit" class="btn btn-primary btn-xs"></td>
-                    <td>山田太郎</td>
-                    <td>営業部営業一課</td>
-                    <td>1234567890</td>
-                    <td align="center"><input name="button" id="button" value="編集" type="button" class="btn btn-primary btn-xs"></td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="submit" id="submit" value="削除" type="submit" class="btn btn-primary btn-xs"></td>
-                    <td>山田太郎</td>
-                    <td>営業部営業一課</td>
-                    <td>1234567890</td>
-                    <td align="center"><input name="button" id="button" value="編集" type="button" class="btn btn-primary btn-xs"></td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="submit" id="submit" value="削除" type="submit" class="btn btn-primary btn-xs"></td>
-                    <td>山田太郎</td>
-                    <td>営業部営業一課</td>
-                    <td>1234567890</td>
-                    <td align="center"><input name="button" id="button" value="編集" type="button" class="btn btn-primary btn-xs"></td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="submit" id="submit" value="削除" type="submit" class="btn btn-primary btn-xs"></td>
-                    <td>山田太郎</td>
-                    <td>営業部営業一課</td>
-                    <td>1234567890</td>
-                    <td align="center"><input name="button" id="button" value="編集" type="button" class="btn btn-primary btn-xs"></td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="submit" id="submit" value="削除" type="submit" class="btn btn-primary btn-xs"></td>
-                    <td>山田太郎</td>
-                    <td>営業部営業一課</td>
-                    <td>1234567890</td>
-                    <td align="center"><input name="button" id="button" value="編集" type="button" class="btn btn-primary btn-xs"></td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="submit" id="submit" value="削除" type="submit" class="btn btn-primary btn-xs"></td>
-                    <td>山田太郎</td>
-                    <td>営業部営業一課</td>
-                    <td>1234567890</td>
-                    <td align="center"><input name="button" id="button" value="編集" type="button" class="btn btn-primary btn-xs"></td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="submit" id="submit" value="削除" type="submit" class="btn btn-primary btn-xs"></td>
-                    <td>山田太郎</td>
-                    <td>営業部営業一課</td>
-                    <td>1234567890</td>
-                    <td align="center"><input name="button" id="button" value="編集" type="button" class="btn btn-primary btn-xs"></td>
-                  </tr>
+                  @endforeach
+                  @endif
+
                 </tbody>
               </table>
               <div class="row">

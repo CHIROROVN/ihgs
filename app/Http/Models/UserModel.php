@@ -65,10 +65,10 @@ class UserModel
     }
 
     // get u_login by id
-    public function uLoginByID($id)
-    {
-        return DB::table($this->table)->select('u_login')->where('u_id', $id)->first();
-    }
+    // public function uBelong($id)
+    // {
+    //     return DB::table($this->table)->select('u_login')->where('u_id', $id)->first();
+    // }
 
     //users update
     public function update($id, $data)
