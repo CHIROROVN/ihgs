@@ -35,7 +35,7 @@
             </nav>
           </li>
           <!-- //nav_agile -->
-          <li class="second logo"><h1><a href="{{route('backend.search.index')}}"><i class="fa fa-graduation-cap" aria-hidden="true"></i><img src="images/logo.png" alt="itochu" style="height: 50px;"> </a></h1>
+          <li class="second logo"><h1><a href="{{route('backend.search.index')}}"><i class="fa fa-graduation-cap" aria-hidden="true"></i><img src="{{ asset('') }}public/backend/images/logo.png" alt="itochu" style="height: 50px;"> </a></h1>
           </li>
           <li class="second admin-pic fl-right">
             <ul class="top_dp_agile">
