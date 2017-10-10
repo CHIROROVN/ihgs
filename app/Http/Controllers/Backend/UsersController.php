@@ -19,6 +19,7 @@ class UsersController extends BackendController
 	|-----------------------------------
 	*/
 	public function login(){
+		if(Auth::check()) return redirect()->route('backend.search.index');
 		return view('auth.login');
 	}
 
