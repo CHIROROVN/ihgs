@@ -96,6 +96,11 @@ class BelongModel
     public function get_list_section()
     {
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->whereNotNull('belong_parent_id')->orderBy('belong_sort', 'asc')->get();
+    }
+
+    static function get_division_by_id($belong_id)
+    {
+        return DB::table('m_belong')->select('belong_name')->where('last_kind', '<>', DELETE)->where('belong_id', '=', $belong_id)->first();
     }  
 
 }

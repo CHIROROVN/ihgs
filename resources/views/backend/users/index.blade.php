@@ -61,7 +61,7 @@
                       <input name="btn_delete" id="btn_delete" value="削除" type="button" class="btn btn-primary btn-xs" onClick="if (confirm('これを削除してもよろしいですか？')) {location.href='{{ route('backend.users.delete', $user->u_id) }}' }">
                     </td>
                     <td>{{$user->u_name}}</td>
-                    <td>{{$user->u_belong}}</td>
+                    <td>{{@division($user->u_belong)}}</td>
                     <td>{{$user->u_login}}</td>
                     <td align="center" style="width: 120px;">
                       <input name="btn_detail" id="btn_detail" value="編集" type="button" class="btn btn-primary btn-xs" onClick="location.href='{{route('backend.users.detail', $user->u_id)}}'">

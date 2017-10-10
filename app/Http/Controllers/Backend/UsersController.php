@@ -3,6 +3,8 @@ use App\Http\Controllers\Backend\BackendController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Models\UserModel;
+use App\Http\Models\BelongModel;
+
 use Input;
 use Validator;
 use Session;
@@ -56,9 +58,13 @@ class UsersController extends BackendController
 	|-----------------------------------
 	*/
 	public function index(){
-		$clsUser = new UserModel();
+		$clsUser = new UserModel();		
 		$users = $clsUser->getAllUser();
-		return view('backend.users.index', compact('users'));
+
+		$clsBelong = new BelongModel();
+		$divisions = $clsBelong->get_all();
+
+		return view('backend.users.index', compact('users', 'divisions'));
 	}
 
 	/*
@@ -67,8 +73,10 @@ class UsersController extends BackendController
 	|-----------------------------------
 	*/
 	public function regist(){
-		if (Session::has('user')) Session::forget('user');
-		return view('backend.users.regist');
+		$clsBelong = new BelongModel();
+		$divisions = $clsBelong->get_all();
+
+		return view('backend.users.regist', compact('divisions'));
 	}
 
 	/*
