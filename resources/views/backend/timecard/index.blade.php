@@ -24,7 +24,7 @@
           </p>
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
-              {!! Form::open(array('route' => 'backend.timecard.import', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!} 
+              {!! Form::open(array('route' => 'backend.timecard.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!} 
                 <table class="table table-bordered">
                   <tr>
                     <td class="col-title col-md-3"><label for="">データ名称</label></td>
@@ -82,16 +82,22 @@
               </table>
             </div>
           </div>
+
 <script type="text/javascript">
 $("#btnSend").on("click",function() {
-   
+  if (!$("#tt_dataname").val().replace(/ /g, "")) {  
+    $("#error_upload").html('<?php echo $message_upload?>');             
+    $("#error_upload").css('display','block');
+    return false;
+  }  
+  $( "#frmUpload" ).submit(); 
 });
+/*
 $(document).ready(function(){
   $('input[type="file"]').change(function(e){
-    var fileName = e.target.files[0].name;
-    alert(fileName);
-    $("#tt_dataname").val(fileName);
+    var fileName = e.target.files[0].name;    
+    $("#tt_dataname").val(fileName);    
   });
-});
+});*/
 </script>
 @endsection

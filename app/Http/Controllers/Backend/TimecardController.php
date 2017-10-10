@@ -14,6 +14,7 @@ use Validator;
 use URL;
 use Session;
 use Config;
+use Excel;
 
 class TimecardController extends BackendController
 {
@@ -35,13 +36,89 @@ class TimecardController extends BackendController
     public function import()
     {
         $dataInput              = array();
-        $clsForum               = new TimecardImportModel();
+        $clsTimecard            = new TimecardImportModel();
         $inputs                 = Input::all();
-        $rules                  = $clsForum->Rules();
-        if(!Input::hasFile('forum_file_path')){
-            unset($rules['forum_file_path']);
-            unset($rules['forum_file_name']);
+        $rules                  = $clsTimecard->Rules();
+        if(!Input::hasFile('file_path')){
+            unset($rules['file_path']);
+            unset($rules['file_path']);
         }
+        $validator              = Validator::make($inputs, $rules, $clsTimecard->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('backend.timecard.index')->withErrors($validator)->withInput();
+        }
+        if (Input::hasFile('file_path'))
+        {
+            $upload_file = Input::file('file_path');
+            $extFile  = $upload_file->getClientOriginalExtension();
+
+            if(!empty(Input::get('tt_dataname'))){
+               /* $flag  = $clsTimecard->checkFileValid(trim(Input::get('file_path')));
+                if($flag == true){
+                    $fn = Input::get('tt_dataname').'.'.$extFile;
+                }else{
+                    $fn = Input::get('tt_dataname').'_'.rand(time(),time()).'.'.$extFile;
+                }*/
+                $fn = Input::get('tt_dataname').'_'.rand(time(),time()).'.'.$extFile;
+            }else{
+                $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
+            }
+
+            $path = '/uploads/';
+            $upload_file->move(public_path().$path, $fn);
+            $data = array();
+           /* Excel::batch(public_path().$path, function($rows,$fn) {              
+                $rows->each(function($row) {     
+                    echo $row->staff_id;
+                     $arrData[]  =  $row->staff_id;
+                     $arrData[$row->staff_id]['tt_staff_id_no']  = $row->staff_id;
+                     $arrData[$row->staff_id]['tt_date']  = $row->date;
+                     $arrData[$row->staff_id]['tt_gotime']  = $row->gotime;
+                     $arrData[$row->staff_id]['tt_backtime']  = $row->backtime;         
+                     
+                });
+
+            });
+            Excel::load(public_path().$path.$fn, function($reader) {
+                
+
+                // Getting all results
+                $results = $reader->get();
+
+                // ->all() is a wrapper for ->get() and will work the same
+                $results = $reader->all();
+                $arrData = $results->toArray();         
+                
+
+
+            }, 'UTF-8');  */
+            $i=0;
+            Excel::filter('chunk')->load(public_path().$path.$fn)->chunk(250, function($results)
+            {
+                    foreach($results as $row)
+                    {
+
+                        $data=$row->toArray();  
+                        print_r($data);                     
+                       /* $clsTimecard      = new TimecardImportModel();
+                        $dataInsert             = array(
+                            'tt_staff_id_no'    => $data['staff_id'],
+                            'tt_date'           => date('Y-m-d',$data['date']),           
+                            'tt_gotime'         => $data['gotime'], 
+                            'tt_backtime'       => $data['backtime'],
+                            'tt_dataname'       => Input::get('tt_dataname'),
+                            'last_date'         => date('Y-m-d H:i:s'),
+                            //'last_kind'         => INSERT,
+                            'last_ipadrs'       => CLIENT_IP_ADRS,
+                            'last_user'         => Auth::user()->u_id            
+                        );
+                        $clsTimecard->insert($dataInsert);*/
+
+                    }                    
+            });  
+                            
+        }
+
     }
 
 	public function getRegist(){

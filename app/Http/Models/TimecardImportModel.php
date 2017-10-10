@@ -29,6 +29,11 @@ class TimecardImportModel
         $results = DB::table($this->table)->orderBy('tt_id', 'desc')->get();
         return $results;
     }
+    public function insert($data)
+    {
+        $results = DB::table($this->table)->insert($data);
+        return $results;
+    }
       
 
 }
