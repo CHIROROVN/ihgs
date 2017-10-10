@@ -70,10 +70,7 @@ class UsersController extends BackendController
 	*/
 	public function regist(){
 		$clsBelong = new BelongModel();
-		$divisions = $clsBelong->get_all();
-
-			//print_r($divisions);
-		
+		$divisions = $clsBelong->list_division_tree();
 
 		return view('backend.users.regist', compact('divisions'));
 	}
@@ -170,7 +167,9 @@ class UsersController extends BackendController
 		$u_id = $id;
 		$clsUser                = new UserModel();
 		$user = $clsUser->get_by_id($id);
-		return view('backend.users.edit', compact('user', 'u_id'));
+		$clsBelong = new BelongModel();
+		$divisions = $clsBelong->list_division_tree();		
+		return view('backend.users.edit', compact('user', 'u_id', 'divisions'));
 	}
 
 	/*

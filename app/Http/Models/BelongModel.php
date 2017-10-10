@@ -105,7 +105,7 @@ class BelongModel
 
     static function list_division_tree()
     {
-        return DB::table('m_belong')->select('belong_id', 'belong_name', 'belong_parent_id')->where('last_kind', '<>', DELETE)->get();
+        return DB::table('m_belong')->select('belong_id', 'belong_name', 'belong_parent_id')->where('last_kind', '<>', DELETE)->orderBy('belong_parent_id', 'desc')->get();
     }  
 
 }

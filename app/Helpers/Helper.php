@@ -15,15 +15,14 @@ if (!function_exists('division')) {
     }
 }
 
-if (!function_exists('divisions')) {
-	function divisions()
+if (!function_exists('divi_tree')) {
+	function divi_tree($belong_id, $belong_parent_id)
 	{
-		$division = App\Http\Models\BelongModel::list_division_tree();
-		if(!empty($division)){			
-			return $division;
-	    }else{
-	    	return '';
-	    }
+		if(!empty($belong_parent_id)){
+
+		}else{
+			
+		}
     }
 }
 

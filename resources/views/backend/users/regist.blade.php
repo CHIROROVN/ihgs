@@ -66,10 +66,21 @@
                       <td class="col-md-9">
                         <div class="fl-left">
                           <select name="u_belong" class="form-control">
-                            <option value="" @if(old('u_belong') == '') selected @endif >全社</option>
+                            <!-- <option value="" @if(old('u_belong') == '') selected @endif >全社</option> -->
                             @if(!empty($divisions))
-                              @foreach($divisions as $div)
-                                <option value="{{$div->belong_id}}" @if(old('u_belong') == $div->belong_id) selected @endif > {{$div->belong_name}} </option>
+                              @foreach($divisions as $division)
+
+                                  @if(!empty($division->belong_parent_id))
+                                    @if($division->belong_id == $division->belong_parent_id)
+                                      <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > - {{$division->belong_name}} </option>
+                                    @else
+                                    <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > &#12288;|- {{$division->belong_name}} </option>
+                                    @endif
+
+                                  @else
+                                    <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > {{$division->belong_name}} </option>
+                                  @endif
+
                               @endforeach
                             @endif
                           </select>
