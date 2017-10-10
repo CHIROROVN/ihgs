@@ -7,27 +7,26 @@ use Validator;
 
 class TimecardImportModel
 {
-    protected $table = 't_timecard';
+   
+   protected $table = 't_timecard';
 
     public function Rules()
     {
         return array(
-            'belong_name' => 'required',
-            'belong_code' => 'required',
+            'tt_dataname' => 'required', 
         );
     }
 
     public function Messages()
     {
         return array(
-            'belong_name.required'  => trans('validation.error_belong_name_required'),
-            'belong_code.required'  => trans('validation.error_belong_code_required'),
+            'tt_dataname.required'  => trans('validation.error_tt_dataname_required'),
         );
     }
     
     public function get_all()
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('tt_id', 'desc')->get();
+        $results = DB::table($this->table)->orderBy('tt_id', 'desc')->get();
         return $results;
     }
       

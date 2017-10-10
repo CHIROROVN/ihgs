@@ -7,21 +7,20 @@ use Validator;
 
 class TimecardModel
 {
-    protected $table = 'm_timecard';
+   protected $table = 'm_timecard';
 
     public function Rules()
     {
         return array(
-            'belong_name' => 'required',
-            'belong_code' => 'required',
+            'tt_dataname' => 'required',                      
         );
     }
 
     public function Messages()
     {
         return array(
-            'belong_name.required'  => trans('validation.error_belong_name_required'),
-            'belong_code.required'  => trans('validation.error_belong_code_required'),
+            'tt_dataname.required'  => trans('validation.error_tt_dataname_required'),
+            
         );
     }
     

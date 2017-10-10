@@ -26,14 +26,21 @@ class TimecardController extends BackendController
 	
 	public function index(){
         $data =array();
-        $clsTimecard          = new TimecardModel();
+        $clsTimecard          = new TimecardImportModel();
         $data['timecards']    = $clsTimecard->get_all();
 		return view('backend.timecard.index',$data);
 	}
 
     public function import()
     {
-
+        $dataInput              = array();
+        $clsForum               = new TimecardImportModel();
+        $inputs                 = Input::all();
+        $rules                  = $clsForum->Rules();
+        if(!Input::hasFile('forum_file_path')){
+            unset($rules['forum_file_path']);
+            unset($rules['forum_file_name']);
+        }
     }
 
 	public function getRegist(){
@@ -51,18 +58,18 @@ class TimecardController extends BackendController
             return redirect()->route('backend.timecard.regist')->withErrors($validator)->withInput();
         }
         // insert       
-        $dataInsert             = array(
-            'mt_staff_id_row'   => Input::get('mt_staff_id_row'),                        
-            'mt_date_row'       => Input::get('mt_date_row'), 
-            'mt_date_format'    => Input::get('mt_date_format'),
-            'mt_gotime_row'     => Input::get('mt_gotime_row'),
-            'mt_gotime_format'  => Input::get('mt_gotime_format'),
-            'mt_backtime_row'     => Input::get('mt_backtime_row'),
-            'mt_backtime_format'  => Input::get('mt_backtime_format'),
-            'last_date'         => date('Y-m-d H:i:s'),
-            'last_kind'         => INSERT,
-            'last_ipadrs'       => CLIENT_IP_ADRS,
-            'last_user'         => Auth::user()->u_id            
+        $dataInsert                 = array(
+            'mt_staff_id_row'       => Input::get('mt_staff_id_row'),                        
+            'mt_date_row'           => Input::get('mt_date_row'), 
+            'mt_date_format'        => Input::get('mt_date_format'),
+            'mt_gotime_row'         => Input::get('mt_gotime_row'),
+            'mt_gotime_format'      => Input::get('mt_gotime_format'),
+            'mt_backtime_row'       => Input::get('mt_backtime_row'),
+            'mt_backtime_format'    => Input::get('mt_backtime_format'),
+            'last_date'             => date('Y-m-d H:i:s'),
+            'last_kind'             => INSERT,
+            'last_ipadrs'           => CLIENT_IP_ADRS,
+            'last_user'             => Auth::user()->u_id            
         );
         
         if ( $clsBelong->insert($dataInsert) ) {

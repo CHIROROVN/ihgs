@@ -30,7 +30,7 @@
                     <td class="col-title col-md-3"><label for="">データ名称</label></td>
                     <td class="col-md-9">
                       <div class="col-md-6">
-                        <input type="text" class="form-control" id="upload-file-info">
+                        <input type="text" class="form-control" id="upload-file-info" name="tt_dataname">
                       </div>
                     </td>
                   </tr>
@@ -39,6 +39,7 @@
                     <td class="col-md-9">
                       <div class="bt-browser mar-left15">
                         <button type="file" class="bfs btn btn-primary"  name="btnUpload" id="btnUpload"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
+                        <input type="file"  name="forum_file_path" id="forum_file_path" size="40"  onchange='$("#upload-file-info").html($(this).val());' class="bfs btn btn-primary">
                       </div>
                       <div class="fl-left">
                         <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
