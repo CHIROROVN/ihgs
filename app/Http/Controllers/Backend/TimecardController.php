@@ -6,6 +6,7 @@ use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\TimecardModel;
+use App\Http\Models\TimecardImportModel;
 use Form;
 use Html;
 use Input;
@@ -24,8 +25,17 @@ class TimecardController extends BackendController
     }
 	
 	public function index(){
-		return view('backend.timecard.index');
+        $data =array();
+        $clsTimecard          = new TimecardModel();
+        $data['timecards']    = $clsTimecard->get_all();
+		return view('backend.timecard.index',$data);
 	}
+
+    public function import()
+    {
+
+    }
+
 	public function getRegist(){
         $data['date_formats'] = Config::get('constants.MT_DATE_FORMAT');
         $data['time_formats'] = Config::get('constants.MT_TIME_FORMAT');        

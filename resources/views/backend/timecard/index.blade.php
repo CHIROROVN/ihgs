@@ -1,4 +1,3 @@
-
 @extends('backend.layouts.app')
 @section('content')
 <!-- breadcrumbs -->
@@ -25,13 +24,13 @@
           </p>
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
-              <form> 
+              {!! Form::open(array('route' => 'backend.timecard.import', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!} 
                 <table class="table table-bordered">
                   <tr>
                     <td class="col-title col-md-3"><label for="">データ名称</label></td>
                     <td class="col-md-9">
                       <div class="col-md-6">
-                        <input type="text" class="form-control" id="">
+                        <input type="text" class="form-control" id="upload-file-info">
                       </div>
                     </td>
                   </tr>
@@ -39,15 +38,15 @@
                     <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
                     <td class="col-md-9">
                       <div class="bt-browser mar-left15">
-                        <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
+                        <button type="file" class="bfs btn btn-primary"  name="btnUpload" id="btnUpload"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
                       </div>
                       <div class="fl-left">
-                        <input name="button" value="取り込み開始" type="button" class="btn btn-primary">
+                        <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
                       </div>
                     </td>
                   </tr>
                  </table>
-                </form> 
+                {!! Form::close() !!} 
               </div>
            </div>
           <!-- tables -->
@@ -62,48 +61,34 @@
                   </tr>
                 </thead>
                 <tbody>
+                @if(empty($timecards) || count($timecards) < 1)
+                <tr>
+                <td colspan="3">
+                  <h3 align="center">該当するデータがありません。</h3>
+                </td>
+              </tr>
+                @else  
+                @foreach($timecards as $timecard)
                   <tr>
                     <td align="center" style="width: 150px;"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
                     <td>2017年8月期</td>
                     <td>2017/08/11 12:34:56</td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年7月期</td>
-                    <td>2017/08/11 12:34:56</td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年6月期</td>
-                    <td>2017/08/11 12:34:56</td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年5月期</td>
-                    <td>2017/08/11 12:34:56</td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年4月期</td>
-                    <td>2017/08/11 12:34:56</td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年3月期</td>
-                    <td>2017/08/11 12:34:56</td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年2月期</td>
-                    <td>2017/08/11 12:34:56</td>
-                  </tr>
-                  <tr>
-                    <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年1月期</td>
-                    <td>2017/08/11 12:34:56</td>
-                  </tr>
+                  </tr> 
+                 @endforeach
+                 @endif                      
                 </tbody>
               </table>
             </div>
           </div>
+<script type="text/javascript">
+$("#btnSend").on("click",function() {
+   alert('vao day');
+});
+/*
+onchange='$("#upload-file-info").html($(this).val());'
+*/
+$("#btnUpload").on("click",function() {
+   alert('vao day');
+});
+</script>
 @endsection

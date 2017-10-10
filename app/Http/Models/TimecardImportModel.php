@@ -5,9 +5,9 @@ use Hash;
 use Auth;
 use Validator;
 
-class TimecardModel
+class TimecardImportModel
 {
-    protected $table = 'm_timecard';
+    protected $table = 't_timecard';
 
     public function Rules()
     {
@@ -27,7 +27,7 @@ class TimecardModel
     
     public function get_all()
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('mt_id', 'desc')->get();
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('tt_id', 'desc')->get();
         return $results;
     }
       

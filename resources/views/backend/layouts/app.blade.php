@@ -10,9 +10,11 @@
   addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
   function hideURLbar(){ window.scrollTo(0,1); } 
 </script>
+<script type="text/javascript" src="{{ asset('') }}public/backend/js/jquery-2.1.4.min.js"></script>
 <link href="{{ asset('') }}public/backend/css/import.css" rel="stylesheet" />
 <!-- //font-awesome-icons -->
 <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+
 </head>
 <body>
 <!-- banner -->
@@ -35,7 +37,7 @@
             </nav>
           </li>
           <!-- //nav_agile -->
-          <li class="second logo"><h1><a href="{{route('backend.search.index')}}"><i class="fa fa-graduation-cap" aria-hidden="true"></i><img src="images/logo.png" alt="itochu" style="height: 50px;"> </a></h1>
+          <li class="second logo"><h1><a href="{{route('backend.search.index')}}"><i class="fa fa-graduation-cap" aria-hidden="true"></i><img src="{{ asset('') }}public/backend/images/logo.png" alt="itochu" style="height: 50px;"> </a></h1>
           </li>
           <li class="second admin-pic fl-right">
             <ul class="top_dp_agile">
@@ -79,7 +81,6 @@
   </div>
 <!--copy rights end here-->
 <!-- js -->
-<script type="text/javascript" src="{{ asset('') }}public/backend/js/jquery-2.1.4.min.js"></script>
 <script src="{{ asset('') }}public/backend/js/modernizr.custom.js"></script>
 <script src="{{ asset('') }}public/backend/js/classie.js"></script>
 <script src="{{ asset('') }}public/backend/js/gnmenu.js"></script>
