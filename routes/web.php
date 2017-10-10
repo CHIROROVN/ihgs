@@ -34,7 +34,16 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@edit']);
 	Route::post('/users/edit/{id}', ['as' => 'backend.users.edit', 'uses' => 'UsersController@postEdit']);
 	Route::get('/users/delete/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@delete']);
-	//Route::get('/users/delete_save/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@deleteSave']);
+
+	//Pc format
+	Route::get('/pc-format', ['as' => 'backend.pc_format.index', 'uses' => 'PcFormatController@index']);
+
+	//Pc import
+	Route::get('/pc-import', ['as' => 'backend.pc_import.index', 'uses' => 'PcImportController@index']);
+
+	//Working Time
+	Route::get('/overwork', ['as' => 'backend.workingtime.index', 'uses' => 'WorkingTimeController@index']);
+	Route::get('/overtime-detail', ['as' => 'backend.workingtime.detail', 'uses' => 'WorkingTimeController@detail']);
 
 	 //division
     Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);
@@ -80,6 +89,12 @@ Route::get('/', function(){
 	return redirect()->route('auth.login');
 });
 
+Route::get('/users/login', function(){
+	return redirect()->route('auth.login');
+});
+
 if(Auth::check()){
 	return redirect()->route('backend.search.index');
+}else{
+	return redirect()->route('auth.login');
 }

@@ -26,8 +26,8 @@
       <li class="mini_list_agile">
         <a href="javascript:;"><i class="fa fa-caret-right" aria-hidden="true"></i>「PCログ」の管理</a>
         <ul class="sub">
-          <li class="mini_list_w3"><a href="pc_import.html"><i class="fa fa-minus" aria-hidden="true"></i>データの取り込み</a></li>
-          <li class="mini_list_agile"><a href="pc_format_edit.html"><i class="fa fa-minus" aria-hidden="true"></i>フォーマットの指定</a></li>
+          <li class="mini_list_w3"><a href="{{route('backend.pc_import.index')}}"><i class="fa fa-minus" aria-hidden="true"></i>データの取り込み</a></li>
+          <li class="mini_list_agile"><a href="{{route('backend.pc_format.index')}}"><i class="fa fa-minus" aria-hidden="true"></i>フォーマットの指定</a></li>
         </ul>
       </li>
     </ul>
