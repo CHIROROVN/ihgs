@@ -35,6 +35,9 @@ return [
     */
     'error_belong_name_required'                           => '所属名を入力してください。',
     'error_belong_code_required'                           => '所属コードを選択してください。',
+    'error_belong_name_required'                           => '所属名を入力してください。',
+    /* */
+    'error_tt_dataname_required'                           => '所属名を入力してください。',
 
 
 ];

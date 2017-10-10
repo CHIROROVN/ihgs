@@ -72,6 +72,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 
 
     Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);
+    Route::post('/timecard/import', ['as' => 'backend.timecard.import', 'uses' => 'TimecardController@import']);
     Route::get('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']); 
     Route::post('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@postRegist']); 
 
