@@ -2,8 +2,8 @@
   <li>
     <a href="#"><i class="fa fa-search" aria-hidden="true"></i>データの抽出と表示 <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
     <ul class="gn-submenu">
-      <li class="mini_list_agile"><a href="statics_search.html"><i class="fa fa-caret-right" aria-hidden="true"></i>個人ごと月次集計</a></li>
-      <li class="mini_list_agile"><a href="statics_overwork_list.html"><i class="fa fa-minus" aria-hidden="true"></i>部課ごと残業集計</a></li>
+      <li class="mini_list_agile"><a href="{{route('backend.search.index')}}"><i class="fa fa-caret-right" aria-hidden="true"></i>個人ごと月次集計</a></li>
+      <li class="mini_list_agile"><a href="{{route('backend.workingtime.index')}}"><i class="fa fa-minus" aria-hidden="true"></i>部課ごと残業集計</a></li>
     </ul>
   </li>
   <li>
