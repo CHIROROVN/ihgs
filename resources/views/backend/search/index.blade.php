@@ -15,7 +15,6 @@
         <div class="inner_content_w3_agile_info two_in">
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
-              <form> 
                 <table id="table">
                   <thead>
                     <tr>
@@ -25,50 +24,68 @@
                       <th></th>
                     </tr>
                   </thead>
+                {!! Form::open( ['id' => 'f_search', 'method' => 'get', 'route' => 'backend.search.index', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
                   <tbody>
                   <tr>
                     <td>
-                      <select name="select" id="select" class="form-control">
-                        <option selected="">全社</option>
-                        <option>├営業部</option>
-                        <option>│├営業一課</option>
-                        <option>│├営業二課</option>
-                        <option>│└営業三課</option>
-                        <option>└総務人事部</option>
-                        <option>&#12288;├総務課</option>
-                        <option>&#12288;└人事課</option>
+                      <select name="u_belong" id="u_belong" class="form-control">
+                        @if(!empty($divisions))
+                              @foreach($divisions as $division)
+
+                                @if(!empty($division->belong_parent_id))
+                                  @if($division->belong_id == $division->belong_parent_id)
+                                    <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > - {{$division->belong_name}} </option>
+                                  @else
+                                    <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > &#12288;|- {{$division->belong_name}} </option>
+                                  @endif
+
+                                @else
+                                  <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > {{$division->belong_name}} </option>
+                                @endif
+
+                              @endforeach
+                            @endif
                       </select>
                     </td>
                     <td>
                       <div class="fl-left">
-                        <select name="select2" class="form-control form-control-date">
-                          <option>----年</option>
+                        <select name="year_from" class="form-control form-control-date">
+                          @for($yf=($curr_year-5); $yf<=($curr_year); $yf++)
+                          <option value="{{$yf}}">{{$yf}} 年</option>
+                          @endfor
                         </select>
-                          <select name="select3" class="form-control form-control-date">
-                            <option>--月</option>
+                          <select name="month_from" class="form-control form-control-date">
+                            @for($mf=1; $mf<=12; $mf++)
+                            <option value="{{$mf}}">{{$mf}} 年</option>
+                            @endfor
                           </select>
                           
                           <div class="fl-left mar-left15 line-height30 mar-right15">～</div>
                         </div>
                         <div class="fl-left">
-                          <select name="select5" class="form-control form-control-date">
-                            <option>----年</option>
+                          <select name="year_to" class="form-control form-control-date">
+                            @for($yt=($curr_year-5); $yt<=($curr_year); $yt++)
+                            <option value="{{$yt}}">{{$yt}} 年</option>
+                          @endfor
                           </select>
-                          <select name="select6" class="form-control form-control-date">
-                            <option>--月</option>
+                          <select name="month_to" class="form-control form-control-date">
+                            @for($mt=1; $mt<=12; $mt++)
+                            <option value="{{$mt}}">{{$mt}} 年</option>
+                            @endfor
                           </select>
                           
                         </div>
                      </td>
                      <td>
-                      <input name="textfield" type="text" class="form-control" size="20">
+                      <input name="words" type="text" class="form-control" size="20" value="">
                      </td>
                      <td>
-                        <input name="button" value="抽出する" type="button" class="btn btn-primary btn-sm">
+                        <input value="抽出する" type="submit" class="btn btn-primary btn-sm">
                       </td>
                   </tr>
+                </tbody>
                  </table>
-                </form> 
+                
               </div>
            </div>
           <!-- tables -->
