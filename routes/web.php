@@ -41,6 +41,10 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	//Pc import
 	Route::get('/pc-import', ['as' => 'backend.pc_import.index', 'uses' => 'PcImportController@index']);
 
+	//Working Time
+	Route::get('/overwork', ['as' => 'backend.workingtime.index', 'uses' => 'WorkingTimeController@index']);
+	Route::get('/overtime-detail', ['as' => 'backend.workingtime.detail', 'uses' => 'WorkingTimeController@detail']);
+
 	 //division
     Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);
     Route::get('/division/regist', ['as' => 'backend.division.regist', 'uses' => 'DivisionController@getRegist']);
