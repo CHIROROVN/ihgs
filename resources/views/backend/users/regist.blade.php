@@ -52,7 +52,7 @@
                       <td class="col-title col-md-3"><label for="">パスワード<span class="required">必須</span></label></td>
                       <td class="col-md-9">
                         <div class="col-md-6">
-                          <input type="password" class="form-control" id="u_passwd" name="u_passwd" value="{{old('u_passwd')}}"> 
+                          <input type="password" class="form-control" id="u_passwd" name="u_passwd" value=""> 
                             @if ($errors->has('u_passwd'))
 	                            <span class="help-block">
 	                                <strong>{{ $errors->first('u_passwd') }}</strong>
@@ -66,14 +66,12 @@
                       <td class="col-md-9">
                         <div class="fl-left">
                           <select name="u_belong" class="form-control">
-                            <option selected="" @if(old('u_belong') == '') selected @endif >全社</option>
-                            <option value="1" @if(old('u_belong') == '1') selected @endif >├営業部</option>
-                            <option value="2" @if(old('u_belong') == '2') selected @endif >│├営業一課</option>
-                            <option value="3" @if(old('u_belong') == '3') selected @endif >│├営業二課</option>
-                            <option value="4" @if(old('u_belong') == '4') selected @endif >│└営業三課</option>
-                            <option value="5" @if(old('u_belong') == '5') selected @endif >└総務人事部</option>
-                            <option value="6" @if(old('u_belong') == '6') selected @endif >&#12288;├総務課</option>
-                            <option value="7" @if(old('u_belong') == '7') selected @endif >&#12288;└人事課</option>
+                            <option value="" @if(old('u_belong') == '') selected @endif >全社</option>
+                            @if(!empty($divisions))
+                              @foreach($divisions as $div)
+                                <option value="{{$div->belong_id}}" @if(old('u_belong') == $div->belong_id) selected @endif > {{$div->belong_name}} </option>
+                              @endforeach
+                            @endif
                           </select>
                           @if ($errors->has('u_belong'))
 	                            <span class="help-block">

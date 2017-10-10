@@ -15,6 +15,18 @@ if (!function_exists('division')) {
     }
 }
 
+if (!function_exists('divisions')) {
+	function divisions()
+	{
+		$division = App\Http\Models\BelongModel::list_division_tree();
+		if(!empty($division)){			
+			return $division;
+	    }else{
+	    	return '';
+	    }
+    }
+}
+
 
 if (!function_exists('format_date')) {
 

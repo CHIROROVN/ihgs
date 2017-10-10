@@ -66,7 +66,7 @@
                       <td class="col-md-9">
                         <div class="fl-left">
                           <select name="u_belong" class="form-control">
-                            <option selected="" @if(old('u_belong') == '') selected @elseif($user->u_belong == '') selected @endif >全社</option>
+                            <option value="" @if(old('u_belong') == '') selected @elseif($user->u_belong == '') selected @endif >全社</option>
                             <option value="1" @if(old('u_belong') == '1') selected @elseif($user->u_belong == '1') selected @endif >├営業部</option>
                             <option value="2" @if(old('u_belong') == '2') selected @elseif($user->u_belong == '2') selected  @endif >│├営業一課</option>
                             <option value="3" @if(old('u_belong') == '3') selected @elseif($user->u_belong == '3') selected  @endif >│├営業二課</option>

@@ -60,11 +60,7 @@ class UsersController extends BackendController
 	public function index(){
 		$clsUser = new UserModel();		
 		$users = $clsUser->getAllUser();
-
-		$clsBelong = new BelongModel();
-		$divisions = $clsBelong->get_all();
-
-		return view('backend.users.index', compact('users', 'divisions'));
+		return view('backend.users.index', compact('users'));
 	}
 
 	/*
@@ -75,6 +71,9 @@ class UsersController extends BackendController
 	public function regist(){
 		$clsBelong = new BelongModel();
 		$divisions = $clsBelong->get_all();
+
+			//print_r($divisions);
+		
 
 		return view('backend.users.regist', compact('divisions'));
 	}
@@ -145,6 +144,10 @@ class UsersController extends BackendController
 		$data['last_date']              = date('Y-m-d H:i:s');
 		$data['last_user']              = Auth::user()->u_id;
 		$data['last_kind']              = INSERT;
+
+			echo '<pre>';
+			print_r($data);
+			echo '</pre>';die;
 
 		if ( $clsUser->insert($data) ) {
 			Session::forget('user');
