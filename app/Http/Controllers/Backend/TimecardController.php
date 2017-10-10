@@ -150,11 +150,11 @@ class TimecardController extends BackendController
             'last_user'             => Auth::user()->u_id            
         );
         
-        if ( $clsBelong->insert($dataInsert) ) {
+        if ( $clsTimecard->insert($dataInsert) ) {
             Session::flash('success', trans('common.msg_regist_success'));
         } else {
             Session::flash('danger', trans('common.msg_regist_danger'));
         }
-        return redirect()->route('backend.division.index');
+        return redirect()->route('backend.timecard.index');
     }
 }

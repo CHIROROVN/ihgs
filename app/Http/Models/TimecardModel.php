@@ -12,14 +12,14 @@ class TimecardModel
     public function Rules()
     {
         return array(
-            'tt_dataname' => 'required',                      
+            //'tt_dataname' => 'required',                      
         );
     }
 
     public function Messages()
     {
         return array(
-            'tt_dataname.required'  => trans('validation.error_tt_dataname_required'),
+           // 'tt_dataname.required'  => trans('validation.error_tt_dataname_required'),
             
         );
     }
@@ -27,6 +27,11 @@ class TimecardModel
     public function get_all()
     {
         $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('mt_id', 'desc')->get();
+        return $results;
+    }
+    public function insert($data)
+    {
+        $results = DB::table($this->table)->insert($data);
         return $results;
     }
       

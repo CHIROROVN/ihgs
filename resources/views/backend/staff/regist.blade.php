@@ -1,16 +1,15 @@
 
 @extends('backend.layouts.app')
 @section('content')
- 
-        <!-- breadcrumbs -->
-          <div class="w3l_agileits_breadcrumbs">
-            <div class="w3l_agileits_breadcrumbs_inner">
-              <ul>
-                <li>データ管理<span>＞</span></li>
-                <li>社員データの新規登録</li>
-              </ul>
-            </div>
-          </div>
+<!-- breadcrumbs -->
+<div class="w3l_agileits_breadcrumbs">
+  <div class="w3l_agileits_breadcrumbs_inner">
+    <ul>
+      <li>データ管理<span>＞</span></li>
+      <li>社員データの新規登録</li>
+    </ul>
+  </div>
+</div>
         <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
           <!--/forms-->
@@ -19,8 +18,9 @@
               社員データの新規登録
             </header>
             <div class="graph-form agile_info_shadow">
+            <!--form-->
               <div class="form-body">
-                <form> 
+                {!! Form::open(array('url' => 'division/regist', 'method' => 'post')) !!} 
                   <table class="table table-bordered mar-bottom15">
                     <tr>
                       <td class="col-title col-md-3"><label for="">社員番号</label></td>
@@ -224,9 +224,8 @@
                   </form> 
                 </div>
               </div>
+              <!--form-->
             </div>
-          </div>
-     
-        
+          </div>     
 
 @endsection

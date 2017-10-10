@@ -3,28 +3,28 @@
 use DB;
 use Validator;
 
-class TimecardImportModel
+class StaffModel
 {
    
-   protected $table = 't_timecard';
+   protected $table = 't_staff';
 
     public function Rules()
     {
         return array(
-            'tt_dataname' => 'required', 
+            'mt_staff_id_row' => 'required', 
         );
     }
 
     public function Messages()
     {
         return array(
-            'tt_dataname.required'  => trans('validation.error_tt_dataname_required'),
+            'mt_staff_id_row.required'  => trans('validation.error_tt_dataname_required'),
         );
     }
     
     public function get_all()
     {
-        $results = DB::table($this->table)->orderBy('tt_id', 'desc')->get();
+        $results = DB::table($this->table)->orderBy('staff_id', 'desc')->get();
         return $results;
     }
     public function insert($data)
