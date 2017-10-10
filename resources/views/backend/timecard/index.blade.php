@@ -30,7 +30,8 @@
                     <td class="col-title col-md-3"><label for="">データ名称</label></td>
                     <td class="col-md-9">
                       <div class="col-md-6">
-                        <input type="text" class="form-control" id="upload-file-info" name="tt_dataname">
+                        <input type="text" class="form-control" id="tt_dataname" name="tt_dataname">
+                        <span class="help-block" id="error_upload"></span>
                       </div>
                     </td>
                   </tr>
@@ -38,8 +39,8 @@
                     <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
                     <td class="col-md-9">
                       <div class="bt-browser mar-left15">
-                        <button type="file" class="bfs btn btn-primary"  name="btnUpload" id="btnUpload"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
-                        <input type="file"  name="forum_file_path" id="forum_file_path" size="40"  onchange='$("#upload-file-info").html($(this).val());' class="bfs btn btn-primary">
+                        <div class="bfs btn btn-primary"  id="btn"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <input type="file"  name="file_path" id="file_path" size="40"   class="bfs btn btn-primary" value="ファイルを選ぶ" ></div>
+                        
                       </div>
                       <div class="fl-left">
                         <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
@@ -83,13 +84,14 @@
           </div>
 <script type="text/javascript">
 $("#btnSend").on("click",function() {
-   alert('vao day');
+   
 });
-/*
-onchange='$("#upload-file-info").html($(this).val());'
-*/
-$("#btnUpload").on("click",function() {
-   alert('vao day');
+$(document).ready(function(){
+  $('input[type="file"]').change(function(e){
+    var fileName = e.target.files[0].name;
+    alert(fileName);
+    $("#tt_dataname").val(fileName);
+  });
 });
 </script>
 @endsection
