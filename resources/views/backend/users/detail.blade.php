@@ -49,9 +49,8 @@
                       <td class="col-title col-md-3"><label for="">所属</label></td>
                       <td class="col-md-9">
                         <div class="col-md-6">
-                          {{$user->belong_name}}
+                          {{@division($user->u_belong)}}
                         </div>
-                        <!-- <div class="fl-left mar-left15 line-height30">※ここで指定した部課の配下の社員の勤怠データを表示することができます</div> -->
                       </td>
                     </tr>
                     <tr>
@@ -105,7 +104,7 @@
                   <div class="row">
                     <div class="col-md-12 text-center">
                        <input type="button" id="btn-edit" onClick="location.href='{{route('backend.users.edit', $u_id)}}'" value="編集する">
-		  				<input type="button" id="btn-back" onClick="if (confirm('これを削除してもよろしいですか？')) {location.href='{{ route('backend.users.delete', $user->u_id) }}' }" value="削除する">
+		  				        <input type="button" id="btn-back" onClick="if (confirm('これを削除してもよろしいですか？')) {location.href='{{ route('backend.users.delete', $user->u_id) }}' }" value="削除する">
                     </div>
                   </div>
                  

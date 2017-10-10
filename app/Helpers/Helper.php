@@ -1,8 +1,19 @@
 <?php
-use App\Http\Models\ProductModel;
-use App\Http\Models\CategoryModel;
-use App\Http\Models\CatProModel;
+use App\Http\Models\BelongModel;
+
 use Carbon\Carbon;
+
+if (!function_exists('division')) {
+	function division($belong_id)
+	{
+		$division = App\Http\Models\BelongModel::get_division_by_id($belong_id);
+		if(!empty($division)){
+	        return $division->belong_name;
+	    }else{
+	    	return '';
+	    }
+    }
+}
 
 
 if (!function_exists('format_date')) {
