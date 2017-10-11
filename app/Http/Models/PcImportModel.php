@@ -11,12 +11,16 @@ class PcImportModel
 
     public function Rules()
     {
-        return array();
+        return array(
+            'tp_file_csv'               => 'mimes:csv',
+        );
     }
 
     public function Messages()
     {
-        return array();
+        return array(
+            'tp_file_csv.mimes'         => trans('validation.error_tp_file_csv_mimes'),
+        );
     }
 
    
