@@ -29,7 +29,8 @@ class TimecardController extends BackendController
         $data =array();
         $clsTimecard               = new TimecardImportModel();
         $data['timecards']         = $clsTimecard->get_all();
-        $data['message_upload']    = trans('validation.error_tt_dataname_required');
+        $data['error']['error_tt_dataname_required']    = trans('validation.error_tt_dataname_required');
+        $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
 		return view('backend.timecard.index',$data);
 	}
 
