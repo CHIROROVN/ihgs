@@ -14,23 +14,21 @@
           </div>
         <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
+         <div class="flash-messages">
+            @if($message = Session::get('danger'))
+              <div id="error" class="message">
+                <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+                <span>{{$message}}</span>
+              </div>
+            @elseif($message = Session::get('success'))
+              <div id="success" class="message">
+                <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                  <span>{{$message}}</span>
+              </div>
+            @endif  
+          </div> 
           <p class="intro">登録されている部の名称を一覧表示しています。</p>
-          <!-- tables -->
-          @if ($message = Session::get('success'))
-          <div class="alert alert-success  alert-dismissible fade in" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
-          </div>
-        @elseif($message = Session::get('danger'))
-          <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
-          </div>
-        @endif
+          <!-- tables -->          
           <div class="agile-tables">
             <div class="w3l-table-info agile_info_shadow">
               <div class="row mar-bottom15">

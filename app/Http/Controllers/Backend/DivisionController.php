@@ -34,7 +34,10 @@ class DivisionController extends BackendController
 	}
 
 	public function getRegist(){
-		return view('backend.division.regist');
+        $data =array();
+        $data['error']['error_belong_name_required']    = trans('validation.error_belong_name_required');
+        $data['error']['error_belong_code_required']    = trans('validation.error_belong_code_required');
+		return view('backend.division.regist',$data);
 	}
 
 	public function postRegist()
@@ -72,6 +75,8 @@ class DivisionController extends BackendController
     {
         $clsBelong          = new BelongModel();
         $data['belong']     = $clsBelong->get_by_id($id);
+        $data['error']['error_belong_name_required']    = trans('validation.error_belong_name_required');
+        $data['error']['error_belong_code_required']    = trans('validation.error_belong_code_required');
         return view('backend.division.edit', $data);
     }
 

@@ -9,9 +9,8 @@
         <li>部の新規登録</li>
       </ul>
     </div>
-  </div>
-  
-  {!! Form::open(array('url' => 'division/regist', 'method' => 'post')) !!}
+  </div>  
+  {!! Form::open(array('url' => 'division/regist','id'=>'frmRegist', 'method' => 'post')) !!}
         <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
           <p class="intro">部を新規登録します。</p>
@@ -29,7 +28,7 @@
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="belong_name" name="belong_name">
-                          <span class="help-block">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
+                          <span class="help-block" id="error-belong-name">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
                         </div>
                       </td>
                     </tr>
@@ -38,14 +37,14 @@
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="belong_code" name="belong_code">
-                          <span class="help-block">@if ($errors->first('belong_code')) ※{!! $errors->first('belong_code') !!} @endif</span>
+                          <span class="help-block" id="error-belong_code">@if ($errors->first('belong_code')) ※{!! $errors->first('belong_code') !!} @endif</span>
                         </div>
                       </td>
                     </tr>
                   </table>
                   <div class="row mar-bottom15">
                     <div class="col-md-12 text-center">
-                      <input name="button" value="登録する" type="submit" class="btn btn-primary btn-sm">
+                      <input name="btnSubmit" id="btnSubmit" value="登録する" type="button" class="btn btn-primary btn-sm">
                       <input name="button" value="クリア" type="reset" class="btn btn-primary btn-sm mar-left15">
                     </div>
                   </div>
@@ -60,5 +59,22 @@
             </div>
           </div>  
   {!! Form::close() !!}     
-
+<script type="text/javascript">
+$("#btnSubmit").on("click",function() {  
+  var flag = true;
+  if (!$("#belong_name").val().replace(/ /g, "")) {  
+    $("#error-belong-name").html('<?php echo $error['error_belong_name_required'];?>');             
+    $("#error-belong-name").css('display','block');   
+    $('#belong_name').focus();
+    flag = false;    
+  } 
+  if (!$("#belong_code").val().replace(/ /g, "")) {  
+    $("#error-belong_code").html('<?php echo $error['error_belong_code_required'];?>');             
+    $("#error-belong_code").css('display','block');   
+    $('#belong_code').focus();
+    flag = false; 
+  }  
+  if(flag) $( "#frmRegist" ).submit(); 
+});
+</script>
 @endsection
