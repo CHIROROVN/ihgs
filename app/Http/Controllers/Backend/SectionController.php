@@ -36,7 +36,9 @@ class SectionController extends BackendController
     /* */
 	public function getRegist($parent_id){
 		$clsBelong          = new BelongModel();
-		$data['parent']     = $clsBelong->get_by_id($parent_id);  
+		$data['parent']     = $clsBelong->get_by_id($parent_id);
+        $data['error']['error_belong_name_required']    = trans('validation.error_belong_name_required');
+        $data['error']['error_belong_code_required']    = trans('validation.error_belong_code_required');  
 		return view('backend.section.regist',$data);
 	}
     /* */
@@ -76,6 +78,8 @@ class SectionController extends BackendController
         $clsBelong          = new BelongModel();
         $data['belong']     = $clsBelong->get_by_id($id);
         $data['parent']     = $clsBelong->get_by_id($parent_id);
+        $data['error']['error_belong_name_required']    = trans('validation.error_belong_name_required');
+        $data['error']['error_belong_code_required']    = trans('validation.error_belong_code_required');
         return view('backend.section.edit', $data);
     }
 
