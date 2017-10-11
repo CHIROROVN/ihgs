@@ -31,9 +31,25 @@ class TimecardModel
     }
     public function insert($data)
     {
-        $results = DB::table($this->table)->insert($data);
+        $results = DB::table($this->table)->insert($data);        
         return $results;
     }
-      
+    public function get_by_id($id)
+    {
+        $results = DB::table($this->table)->where('mt_id', $id)->first();        
+        return $results;
+    }
+    public function get_last_insert($staff_id='')    
+    {
+        if(!empty($staff_id))
+            return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('mt_staff_id_row', '=', $staff_id)->orderBy('mt_id', 'desc')->take(1)->get()->toArray();
+        else
+            return DB::table($this->table)->where('last_kind', '<>', DELETE)->take(1)->orderBy('mt_id', 'desc')->get()->toArray();
+    }  
+    public function update($id, $data)
+    {
+        $results = DB::table($this->table)->where('mt_id', $id)->update($data);
+        return $results;
+    }
 
 }
