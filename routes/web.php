@@ -36,11 +36,11 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/users/delete/{id}', ['as' => 'backend.users.delete', 'uses' => 'UsersController@delete']);
 
 	//Pc format
-	Route::get('/pc-format', ['as' => 'backend.pc_format.index', 'uses' => 'PcFormatController@index']);
-	Route::post('/pc-format', ['as' => 'backend.pc_format.index', 'uses' => 'PcFormatController@postIndex']);
+	Route::get('/pc/format', ['as' => 'backend.pc.format', 'uses' => 'PcFormatController@format']);
+	Route::post('/pc/format', ['as' => 'backend.pc.format', 'uses' => 'PcFormatController@postFormat']);
 
 	//Pc import
-	Route::get('/pc-import', ['as' => 'backend.pc_import.index', 'uses' => 'PcImportController@index']);
+	Route::get('/pc/import', ['as' => 'backend.pc.import', 'uses' => 'PcController@import']);
 
 	//Working Time
 	Route::get('/overwork', ['as' => 'backend.workingtime.index', 'uses' => 'WorkingTimeController@index']);
