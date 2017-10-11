@@ -12,6 +12,19 @@
   </div>
   <!-- //breadcrumbs -->
   <div class="inner_content_w3_agile_info two_in">
+  <div class="flash-messages">
+            @if($message = Session::get('danger'))
+              <div id="error" class="message">
+                <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+                <span>{{$message}}</span>
+              </div>
+            @elseif($message = Session::get('success'))
+              <div id="success" class="message">
+                <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                  <span>{{$message}}</span>
+              </div>
+            @endif  
+          </div> 
     <p class="intro">取り込む「入退出」のデータのフォーマットを指定します。</p>
     <!--/forms-->          
       <div class="forms-main_agileits">
@@ -53,6 +66,7 @@
                   <div class="fl-left text-td text-center mar-left15">値が</div>
                     <div class="col-md-6"><input name="md_door_format" id="md_door_format" type="text" class="form-control"></div>
                     <div class="fl-left text-td">と一致するもの</div>
+                   <span class="help-block" id="error-door_format">@if ($errors->first('md_door_format')) ※{!! $errors->first('md_door_format') !!} @endif</span>
                 </td>
               </tr>
               <tr>
@@ -68,29 +82,34 @@
                 <td class="col-md-6">
                 <div class="col-md-6">
                   <select name="md_touchtime_format" id="md_touchtime_format" class="form-control">
-                          <option selected="">YYYY/MM/DD 13:45:02</option>
-                          <option>YYYY/MM/DD 01:45:02 PM</option>
-                          <option>YYYY/MM/DD 13:45</option>
-                          <option>YYYY/MM/DD 1:45 PM</option>
-                          <option>YYYY年MM月DD日 13時45分</option>
-                        </select>
-                      </div>
-                    </tr>
-                  </table>
-                  <div class="row">
-                    <div class="col-md-12 text-center">
-                      <input name="btnSubmit" id="btnSubmit" value="保存する" type="button" class="btn btn-primary btn-sm">
-                      <input name="reset" value="元に戻す" type="reset" class="btn btn-primary btn-sm mar-left15">
-                    </div>
-                  </div>
-                   {!! Form::close() !!} 
-                </div>
+                    @foreach($date_formats as $key=>$date_format)                           
+                      <option value="{{ $key }}">{{ $date_format }}</option>
+                    @endforeach
+                  </select>
+                </div></td>
+              </tr>
+            </table>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <input name="btnSubmit" id="btnSubmit" value="保存する" type="button" class="btn btn-primary btn-sm">
+                <input name="reset" value="元に戻す" type="reset" class="btn btn-primary btn-sm mar-left15">
               </div>
             </div>
-          </div>    
+          {!! Form::close() !!} 
+        </div>
+      </div>
+    </div>
+ </div>    
 <script type="text/javascript">
-$("#btnSubmit").on("click",function() {  
-   $( "#frmRegist" ).submit(); 
+$("#btnSubmit").on("click",function() { 
+  var flag = true;
+  if (!$("#md_door_format").val().replace(/ /g, "")) {  
+    $("#error-door_format").html('<?php echo $error['error_door_format_required'];?>');             
+    $("#error-door_format").css('display','block');   
+    $('#md_door_format').focus();
+    flag = false;    
+  } 
+  if(flag) $( "#frmRegist" ).submit(); 
 });
 </script> 
 @endsection

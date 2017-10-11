@@ -127,6 +127,7 @@ class TimecardController extends BackendController
     }
 
 	public function getRegist(){
+        $data =array();
         $data['date_formats'] = Config::get('constants.MT_DATE_FORMAT');
         $data['time_formats'] = Config::get('constants.MT_TIME_FORMAT');        
 		return view('backend.timecard.regist',$data);

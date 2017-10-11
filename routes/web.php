@@ -80,6 +80,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
     //door
     Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);
     Route::get('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@getRegist']);
+    Route::post('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@postRegist']);
 
     Route::get('/staff', ['as' => 'backend.staff.index', 'uses' => 'StaffController@index']);
     Route::get('/staff/regist', ['as' => 'backend.staff.regist', 'uses' => 'StaffController@getRegist']);

@@ -31,13 +31,13 @@
 			'3' => '13:45',	
 			'4' => '1:45 PM',
 			'5' => '13時45分',			
-	    )
+	    ),
 	    'MD_TOUCHTIME_FORMAT' => array(
 			'1' => 'YYYY/MM/DD 13:45:02',
 			'2' => 'YYYY/MM/DD 01:45:02 PM',
 			'3' => 'YYYY/MM/DD 13:45',	
 			'4' => 'YYYY/MM/DD 1:45 PM',
 			'5' => 'YYYY年MM月DD日 13時45分',			
-	    ),
+	    )
 
     ];
