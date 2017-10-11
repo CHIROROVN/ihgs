@@ -70,17 +70,17 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('section/{parent_id}/orderby-last', ['as' => 'backend.division.orderby.last', 'uses' => 'DivisionController@orderby_last']);
 	Route::get('section/{parent_id}/orderby-up', ['as' => 'backend.division.orderby.up', 'uses' => 'DivisionController@orderby_up']);
 	Route::get('section/{parent_id}/orderby-down', ['as' => 'backend.division.orderby.down', 'uses' => 'DivisionController@orderby_down']);
-
-
+    //timecard
     Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);
     Route::post('/timecard/import', ['as' => 'backend.timecard.import', 'uses' => 'TimecardController@import']);
     Route::get('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']); 
     Route::post('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@postRegist']); 
     Route::get('/timecard/edit/{id}', ['as' => 'backend.timecard.edit', 'uses' => 'TimecardController@getEdit']); 
     Route::post('/timecard/edit/{id}', ['as' => 'backend.timecard.edit', 'uses' => 'TimecardController@postEdit']); 
-
+    //door
     Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);
-    Route::get('/door_regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@regist']);
+    Route::get('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@getRegist']);
+
     Route::get('/staff', ['as' => 'backend.staff.index', 'uses' => 'StaffController@index']);
     Route::get('/staff/regist', ['as' => 'backend.staff.regist', 'uses' => 'StaffController@getRegist']);
     Route::post('/staff/regist', ['as' => 'backend.staff.regist', 'uses' => 'StaffController@postregist']);
