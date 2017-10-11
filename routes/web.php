@@ -85,7 +85,9 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
     Route::get('/staff', ['as' => 'backend.staff.index', 'uses' => 'StaffController@index']);
     Route::get('/staff/regist', ['as' => 'backend.staff.regist', 'uses' => 'StaffController@getRegist']);
     Route::post('/staff/regist', ['as' => 'backend.staff.regist', 'uses' => 'StaffController@postregist']);
-    Route::get('/staff/import', ['as' => 'backend.staff.import', 'uses' => 'StaffController@import']);
+    Route::get('/staff/import', ['as' => 'backend.staff.import', 'uses' => 'StaffController@getImport']);
+    Route::post('/staff/import', ['as' => 'backend.staff.import', 'uses' => 'StaffController@postImport']);
+
 	Route::get('/staff/search', ['as' => 'backend.staff.search', 'uses' => 'StaffController@search']);
 	Route::post('/staff/search', ['as' => 'backend.staff.search', 'uses' => 'StaffController@index']);
 	Route::get('/staff/delete/{id}', ['as' => 'backend.staff.delete', 'uses' => 'StaffController@getDelete']);

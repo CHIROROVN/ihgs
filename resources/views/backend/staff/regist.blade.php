@@ -20,13 +20,14 @@
             <div class="graph-form agile_info_shadow">
             <!--form-->
               <div class="form-body">
-                {!! Form::open(array('url' => 'division/regist','id'=>'frmRegist', 'method' => 'post')) !!} 
+                {!! Form::open(array('url' => 'staff/regist','id'=>'frmRegist', 'method' => 'post')) !!} 
                   <table class="table table-bordered mar-bottom15">
                     <tr>
                       <td class="col-title col-md-3"><label for="">社員番号</label></td>
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="staff_id_no" name="staff_id_no">
+                          <span class="help-block" id="error-staff_id_no">@if ($errors->first('staff_id_no')) ※{!! $errors->first('staff_id_no') !!} @endif</span>
                         </div>
                       </td>
                     </tr>
@@ -35,6 +36,7 @@
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="staff_name" name="staff_name">
+                          <span class="help-block" id="error-staff_name">@if ($errors->first('staff_name')) ※{!! $errors->first('staff_name') !!} @endif</span>
                         </div>
                       </td>
                     </tr>
@@ -45,7 +47,6 @@
                           <select name="staff_belong" id="staff_belong" class="form-control">
                              @if(!empty($divisions))
                               @foreach($divisions as $division)
-
                                   @if(!empty($division->belong_parent_id))
                                     @if($division->belong_id == $division->belong_parent_id)
                                       <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > - {{$division->belong_name}} </option>
@@ -243,9 +244,21 @@
             </div>
           </div>     
 <script type="text/javascript">
-$("#btnSubmit").on("click",function() {
-   
-  $( "#frmRegist" ).submit(); 
+$("#btnSubmit").on("click",function() {   
+  var flag = true;
+  if (!$("#belong_name").val().replace(/ /g, "")) {  
+    $("#error-belong-name").html('<?php echo $error['error_belong_name_required'];?>');             
+    $("#error-belong-name").css('display','block');   
+    $('#belong_name').focus();
+    flag = false;    
+  } 
+  if (!$("#belong_code").val().replace(/ /g, "")) {  
+    $("#error-belong_code").html('<?php echo $error['error_belong_code_required'];?>');             
+    $("#error-belong_code").css('display','block');   
+    $('#belong_code').focus();
+    flag = false; 
+  }  
+  if(flag) $( "#frmRegist" ).submit(); 
 });
 </script>
 @endsection

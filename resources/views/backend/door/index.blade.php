@@ -48,7 +48,8 @@
               <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
               <td class="col-md-9">
                 <div class="bt-browser mar-left15">
-                  <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ<input type="file"  name="file_path" id="file_path" size="40"   class="bfs btn btn-primary"  ></button>
+                  <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l" id="file_path"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
+                  <span class="help-block" id="error_file_path"></span>
                 </div>
                 <div class="fl-left">
                   <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
@@ -105,5 +106,11 @@ $("#btnSend").on("click",function() {
   }
   if(flag)   $( "#frmUpload" ).submit(); 
 });
+</script>
+@endsection
+@section('js')
+<script src="{{ asset('') }}public/backend/js/bootstrap-button-to-input-file.js"></script>
+<script>
+  var filestyler = new buttontoinputFile();
 </script>
 @endsection

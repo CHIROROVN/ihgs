@@ -25,14 +25,16 @@ class StaffController extends BackendController
 	
 	public function index(){
 		$data =array();
+        $inputs            = Input::all();
 		$clsStaff          = new StaffModel();
-        $data['staffs']    = $clsStaff->get_all();   
+        $data['staffs']    = $clsStaff->get_all($inputs);   
 		return view('backend.staff.index',$data);
 	}
 	public function getRegist(){
 		$clsBelong = new BelongModel();
-		$divisions = $clsBelong->list_division_tree(); 
-		return view('backend.staff.regist', compact('divisions'));
+		$data['divisions'] = $clsBelong->list_division_tree(); 
+        $data['error']
+		return view('backend.staff.regist', $data);
 	}
 
 	public function postRegist()
@@ -83,12 +85,42 @@ class StaffController extends BackendController
         return redirect()->route('backend.staff.index');
     }
 
-	public function import(){
-		return view('backend.staff.import');
+	public function getImport(){
+        $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
+		return view('backend.staff.import',$data);
 	}
 
+    public function postImport(){
+        $dataInput              = array();
+        $clsStaff      = new StaffModel();
+        $inputs                 = Input::all();
+        $rules                  = $clsStaff->Rules();
+        $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
+        if(!Input::hasFile('file_path')){
+            unset($rules['file_path']);
+            unset($rules['file_path']);
+        }
+        /*$validator              = Validator::make($inputs, $rules, $clsStaff->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('backend.staff.import',$data)->withErrors($validator)->withInput();
+        }*/
+        
+        if (Input::hasFile('file_path'))
+        {
+            $upload_file = Input::file('file_path');
+            $extFile  = $upload_file->getClientOriginalExtension();
+            $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
+            $path = '/uploads/';
+            $upload_file->move(public_path().$path, $fn);
+            Session::flash('success', trans('common.msg_regist_success'));
+        }else Session::flash('danger', trans('common.msg_regist_danger'));
+        return redirect()->route('backend.staff.import',$data);    
+    }
+
 	public function search(){
-		return view('backend.staff.search');
+        $clsBelong = new BelongModel();
+        $data['divisions'] = $clsBelong->list_division_tree(); 
+		return view('backend.staff.search',$data);
 	}
 
 	public function getDelete()

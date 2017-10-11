@@ -43,5 +43,7 @@ return [
     /* doorcard*/
     'error_door_format_required'           => '所属名を入力してください。',
     'error_td_dataname_required'           => '所属名を入力してください。',
-
+    /* staff*/
+    'error_staff_id_no_required'           => '所属名を入力してください。',
+    'error_staff_name_required'           => '所属名を入力してください。',
 ];

@@ -11,18 +11,20 @@ class StaffModel
     public function Rules()
     {
         return array(
-            'mt_staff_id_row' => 'required', 
+            'staff_id_no' => 'required', 
+            'staff_name' => 'required', 
         );
     }
 
     public function Messages()
     {
         return array(
-            'mt_staff_id_row.required'  => trans('validation.error_tt_dataname_required'),
+            'staff_id_no.required'  => trans('validation.error_staff_id_no_required'),
+            'staff_name.required'  => trans('validation.error_staff_name_required'),
         );
     }
     
-    public function get_all()
+    public function get_all($belong_id=null, $staff_name=null,$staff_id_no=null)
     {
         $results = DB::table($this->table)->orderBy('staff_id', 'desc')->get();
         return $results;
