@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('') }}public/backend/css/table-style.css" />
 <link rel="stylesheet" type="text/css" href="{{ asset('') }}public/backend/css/basictable.css" />
 <link href="{{ asset('') }}public/backend/css/component.css" rel="stylesheet" type="text/css" media="all" />
-<link href="{{ asset('') }}public/backend/css/style_grid.css" rel="stylesheet" type="text/css" media="all" />
+<!-- <link href="{{ asset('') }}public/backend/css/style_grid.css" rel="stylesheet" type="text/css" media="all" /> -->
 <link href="{{ asset('') }}public/backend/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="{{ asset('') }}public/backend/css/my.css" rel="stylesheet" type="text/css" media="all" />
 
@@ -40,7 +40,7 @@
                 @elseif($message = Session::get('success'))
 
                     <div id="success" class="message">
-                        <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                        <a id="close" title="Message"  href="javascript:void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
                         <span>{{$message}}</span>
                     </div>
 
@@ -81,10 +81,8 @@
 <script src="{{ asset('') }}public/backend/js/modernizr.custom.js"></script>
 
 <script src="{{ asset('') }}public/backend/js/classie.js"></script>
-<script src="{{ asset('') }}public/backend/js/gnmenu.js"></script>
-<script>
-  new gnMenu( document.getElementById( 'gn-menu' ) );
-</script>
+
+
   
 <!-- //js -->
 <script src="{{ asset('') }}public/backend/js/screenfull.js"></script>
@@ -101,21 +99,8 @@
 </script>
 <script src="{{ asset('') }}public/backend/js/jquery.nicescroll.js"></script>
 <script src="{{ asset('') }}public/backend/js/scripts.js"></script>
-<script src="{{ asset('') }}public/backend/js/snow.js"></script>
-<script type="text/javascript">
+<!-- <script src="{{ asset('') }}public/backend/js/snow.js"></script> -->
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-36251023-1']);
-  _gaq.push(['_setDomainName', 'jqueryscript.net']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 <script type="text/javascript" src="{{ asset('') }}public/backend/js/bootstrap-3.1.1.min.js"></script>
 </body>
 </html>

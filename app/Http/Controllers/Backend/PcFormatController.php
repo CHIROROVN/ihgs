@@ -11,7 +11,17 @@ class PcFormatController extends BackendController
 {
 	public function index(){
 		$clsPc            = new PcModel();
-		
-		return view('backend.pc_format.index');
+		$mpc = $clsPc->getPc();		
+		return view('backend.pc_format.index', compact('mpc'));
+	}
+
+
+	public function postIndex(){
+		$clsPc            = new PcModel();
+
+			echo '<pre>';
+			print_r(Input::all());
+			echo '</pre>';die;
+
 	}
 }
