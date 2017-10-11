@@ -12,6 +12,25 @@
     </div>
   <!-- //breadcrumbs -->
   <div class="inner_content_w3_agile_info two_in">
+
+    <div class="flash-messages">
+      @if($message = Session::get('danger'))
+
+          <div id="error" class="message">
+              <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+              <span>{{$message}}</span>
+          </div>
+
+      @elseif($message = Session::get('success'))
+
+          <div id="success" class="message">
+              <a id="close" title="Message"  href="javascript:void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+              <span>{{$message}}</span>
+          </div>
+
+      @endif  
+    </div>
+
     <p class="intro">「PCログ」のデータを取り込みます。ファイルを指定し、「取り込み開始」をクリックしてください。<br />
       ※過去のデータを削除する場合は、一覧表内の「削除」ボタンをクリックしてください。<br />
       ※ユニークキーがないため、データは重複されて取り込まれます。データ変更（差し替え）の場合は、必ず、削除して登録してください。</p>
@@ -23,13 +42,18 @@
     </p>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">
-        <form> 
+        {!! Form::open(array('route' => ['backend.pc.import'], 'class' => 'form-horizontal', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
           <table class="table table-bordered">
             <tr>
               <td class="col-title col-md-3"><label for="">データ名称</label></td>
                <td class="col-md-9">
                 <div class="col-md-6">
-                  <input type="text" class="form-control" id="">
+                  <input type="text" name="tp_dataname" class="form-control" id="tp_dataname" value="@if(old('tp_dataname')){{old('tp_dataname')}}@endif">
+                  @if ($errors->has('tp_dataname'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('tp_dataname') }}</strong>
+                      </span>
+                  @endif
                 </div>
               </td>
             </tr>
@@ -37,10 +61,17 @@
               <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
               <td class="col-md-9">
                 <div class="bt-browser mar-left15">
-                  <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
+                  <input type="file" name="tp_file_csv" class="filestyle" data-btnClass="btn-primary" data-text="ファイルを選ぶ" data-placeholder="csvファイルを選択">
+
+                  @if ($errors->has('tp_file_csv'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('tp_file_csv') }}</strong>
+                      </span>
+                  @endif
+
                 </div>
                 <div class="fl-left">
-                  <input name="button" value="取り込み開始" type="button" class="btn btn-primary">
+                  <input name="btn_submit" value="取り込み開始" type="submit" class="btn btn-primary">
                 </div>
               </td>
             </tr>
@@ -109,8 +140,9 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('') }}public/backend/js/bootstrap-button-to-input-file.js"></script>
+<script src="{{ asset('') }}public/backend/js/bootstrap-filestyle.min.js"></script>
 <script>
-  var filestyler = new buttontoinputFile();
+  //var filestyler = new buttontoinputFile();
+  $(":file").filestyle({htmlIcon : '<span class="glyphicon glyphicon-folder-open"></span>', btnClass: "btn-primary", text: " ファイルを選ぶ", placeholder: "csvファイルを選択"});
 </script>
 @endsection

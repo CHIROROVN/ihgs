@@ -41,6 +41,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 
 	//Pc import
 	Route::get('/pc/import', ['as' => 'backend.pc.import', 'uses' => 'PcController@import']);
+	Route::post('/pc/import', ['as' => 'backend.pc.import', 'uses' => 'PcController@postImport']);
 
 	//Working Time
 	Route::get('/overwork', ['as' => 'backend.workingtime.index', 'uses' => 'WorkingTimeController@index']);
