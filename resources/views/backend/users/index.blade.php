@@ -15,23 +15,23 @@
         <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
 
-          <div class="flash-messages">
-                @if($message = Session::get('danger'))
+        <div class="flash-messages">
+              @if($message = Session::get('danger'))
 
-                    <div id="error" class="message">
-                        <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
-                        <span>{{$message}}</span>
-                    </div>
+                  <div id="error" class="message">
+                      <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+                      <span>{{$message}}</span>
+                  </div>
 
-                @elseif($message = Session::get('success'))
+              @elseif($message = Session::get('success'))
 
-                    <div id="success" class="message">
-                        <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
-                        <span>{{$message}}</span>
-                    </div>
+                  <div id="success" class="message">
+                      <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                      <span>{{$message}}</span>
+                  </div>
 
-                @endif  
-          </div>
+              @endif  
+        </div>
           
           <p class="intro">**件が登録されています。</p>
           <!-- tables -->

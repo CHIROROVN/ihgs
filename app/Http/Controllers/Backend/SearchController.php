@@ -11,7 +11,7 @@ class SearchController extends BackendController
 	public function index(){
 		$data = array();
 		$clsBelong = new BelongModel();
-		$divisions = $clsBelong->list_division_tree();
+		$data['divisions'] = $clsBelong->list_division_tree();
 
 		$data['curr_year'] = date('Y');
 		$data['curr_month'] = date('m');

@@ -37,6 +37,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 
 	//Pc format
 	Route::get('/pc-format', ['as' => 'backend.pc_format.index', 'uses' => 'PcFormatController@index']);
+	Route::post('/pc-format', ['as' => 'backend.pc_format.index', 'uses' => 'PcFormatController@postIndex']);
 
 	//Pc import
 	Route::get('/pc-import', ['as' => 'backend.pc_import.index', 'uses' => 'PcImportController@index']);

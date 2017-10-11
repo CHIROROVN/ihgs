@@ -12,15 +12,36 @@
           </div>
         <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
+
+          <div class="flash-messages">
+                @if($message = Session::get('danger'))
+
+                    <div id="error" class="message">
+                        <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+                        <span>{{$message}}</span>
+                    </div>
+
+                @elseif($message = Session::get('success'))
+
+                    <div id="success" class="message">
+                        <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                        <span>{{$message}}</span>
+                    </div>
+
+                @endif  
+          </div>
+
           <p class="intro">取り込む「PCログ」のデータのフォーマットを指定します。</p>
           <!--/forms-->
           <div class="forms-main_agileits">
             <header class="panel-heading">
               フォーマットの指定
             </header>
+
             <div class="graph-form agile_info_shadow">
               <div class="form-body">
-                <form> 
+                {!! Form::open(array('route' => ['backend.pc_format.index'], 'class' => 'form-horizontal', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
+                <input type="hidden" name="mp_id" value="{{@$mpc->mp_id}}">
                   <table class="table table-bordered table-list-regist mar-bottom15">
                     <thead>
                       <tr>
@@ -28,51 +49,14 @@
                         <th>元データの列</th>
                         <th>元データの形式</th>
                       </tr>
-                    </thead>
+                    </thead>                
                     <tr>
                       <td class="col-title col-md-3"><label for="">PC番号</label></td>
                       <td class="col-md-2">
-                        <select name="select" id="select" class="form-control">
-                          <option selected="">1列目</option>
-                          <option>2列目</option>
-                          <option>3列目</option>
-                          <option>4列目</option>
-                          <option>5列目</option>
-                          <option>6列目</option>
-                          <option>7列目</option>
-                          <option>8列目</option>
-                          <option>9列目</option>
-                          <option>10列目</option>
-                          <option>11列目</option>
-                          <option>12列目</option>
-                          <option>13列目</option>
-                          <option>14列目</option>
-                          <option>15列目</option>
-                          <option>16列目</option>
-                          <option>17列目</option>
-                          <option>18列目</option>
-                          <option>19列目</option>
-                          <option>20列目</option>
-                          <option>21列目</option>
-                          <option>22列目</option>
-                          <option>23列目</option>
-                          <option>24列目</option>
-                          <option>25列目</option>
-                          <option>26列目</option>
-                          <option>27列目</option>
-                          <option>28列目</option>
-                          <option>29列目</option>
-                          <option>30列目</option>
-                          <option>31列目</option>
-                          <option>32列目</option>
-                          <option>33列目</option>
-                          <option>34列目</option>
-                          <option>35列目</option>
-                          <option>36列目</option>
-                          <option>37列目</option>
-                          <option>38列目</option>
-                          <option>39列目</option>
-                          <option>40列目</option>
+                        <select name="mp_pc_no_row" id="mp_pc_no_row" class="form-control">
+                          @for($i=1; $i<=40; $i++)
+                            <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                          @endfor                          
                         </select>
                       </td>
                       <td class="col-md-6"></td>
@@ -80,57 +64,20 @@
                     <tr>
                       <td class="col-title col-md-3"><label for="">アクション</label></td>
                       <td class="col-md-2">
-                        <select name="select" id="select"  class="form-control">
-                          <option selected="">1列目</option>
-                          <option>2列目</option>
-                          <option>3列目</option>
-                          <option>4列目</option>
-                          <option>5列目</option>
-                          <option>6列目</option>
-                          <option>7列目</option>
-                          <option>8列目</option>
-                          <option>9列目</option>
-                          <option>10列目</option>
-                          <option>11列目</option>
-                          <option>12列目</option>
-                          <option>13列目</option>
-                          <option>14列目</option>
-                          <option>15列目</option>
-                          <option>16列目</option>
-                          <option>17列目</option>
-                          <option>18列目</option>
-                          <option>19列目</option>
-                          <option>20列目</option>
-                          <option>21列目</option>
-                          <option>22列目</option>
-                          <option>23列目</option>
-                          <option>24列目</option>
-                          <option>25列目</option>
-                          <option>26列目</option>
-                          <option>27列目</option>
-                          <option>28列目</option>
-                          <option>29列目</option>
-                          <option>30列目</option>
-                          <option>31列目</option>
-                          <option>32列目</option>
-                          <option>33列目</option>
-                          <option>34列目</option>
-                          <option>35列目</option>
-                          <option>36列目</option>
-                          <option>37列目</option>
-                          <option>38列目</option>
-                          <option>39列目</option>
-                          <option>40列目</option>
+                        <select name="mp_action_row" id="mp_action_row"  class="form-control">
+                          @for($y=1; $y<=40; $y++)
+                            <option value="{{$y}}" @if(isset($mpc->mp_action_row) && $mpc->mp_action_row == $y) selected @endif>{{$y}}列目</option>
+                          @endfor
                         </select>
                       </td>
                       <td class="col-md-6">
                         <div class="fl-left text-td text-center mar-left15">値が</div>
                         <div class="col-md-3">
-                           <input name="textfield" id="textfield" type="text"  class="form-control">
+                           <input name="mp_action_format1" id="mp_action_format1" type="text"  class="form-control" value="@if(isset($mpc->mp_action_format1)){{$mpc->mp_action_format1}}@endif">
                         </div>
                         <div class="fl-left text-td">または</div>
                         <div class="col-md-3 text-td">
-                          <input name="textfield" id="textfield" type="text"  class="form-control">
+                          <input name="mp_action_format2" id="mp_action_format2" type="text"  class="form-control" value="@if(isset($mpc->mp_action_format2)){{$mpc->mp_action_format2}}@endif">
                         </div>
                         <div class="fl-left text-td">と一致するもの</div>
                       </td>
@@ -138,64 +85,27 @@
                     <tr>
                       <td class="col-title col-md-3"><label for="">日時</label></td>
                       <td class="col-md-2">
-                        <select name="select" id="select"  class="form-control">
-                          <option selected="">1列目</option>
-                          <option>2列目</option>
-                          <option>3列目</option>
-                          <option>4列目</option>
-                          <option>5列目</option>
-                          <option>6列目</option>
-                          <option>7列目</option>
-                          <option>8列目</option>
-                          <option>9列目</option>
-                          <option>10列目</option>
-                          <option>11列目</option>
-                          <option>12列目</option>
-                          <option>13列目</option>
-                          <option>14列目</option>
-                          <option>15列目</option>
-                          <option>16列目</option>
-                          <option>17列目</option>
-                          <option>18列目</option>
-                          <option>19列目</option>
-                          <option>20列目</option>
-                          <option>21列目</option>
-                          <option>22列目</option>
-                          <option>23列目</option>
-                          <option>24列目</option>
-                          <option>25列目</option>
-                          <option>26列目</option>
-                          <option>27列目</option>
-                          <option>28列目</option>
-                          <option>29列目</option>
-                          <option>30列目</option>
-                          <option>31列目</option>
-                          <option>32列目</option>
-                          <option>33列目</option>
-                          <option>34列目</option>
-                          <option>35列目</option>
-                          <option>36列目</option>
-                          <option>37列目</option>
-                          <option>38列目</option>
-                          <option>39列目</option>
-                          <option>40列目</option>
+                        <select name="mp_actiontime_row" id="mp_actiontime_row"  class="form-control">
+                          @for($h=1; $h<=40; $h++)
+                            <option value="{{$h}}" @if(isset($mpc->mp_actiontime_row) && $mpc->mp_actiontime_row == $h) selected @endif>{{$h}}列目</option>
+                          @endfor
                         </select>
                       </td>
                       <td class="col-md-6">
                       <div class="col-md-6">
-                        <select name="select6" class="form-control">
-                          <option selected="">YYYY/MM/DD 13:45:02</option>
-                          <option>YYYY/MM/DD 01:45:02 PM</option>
-                          <option>YYYY/MM/DD 13:45</option>
-                          <option>YYYY/MM/DD 1:45 PM</option>
-                          <option>YYYY年MM月DD日 13時45分</option>
+                        <select name="mp_actiontime_format" class="form-control">
+                          <option value="1" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 1) selected @endif >YYYY/MM/DD 13:45:02</option>
+                          <option value="2" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 2) selected @endif >YYYY/MM/DD 01:45:02 PM</option>
+                          <option value="3" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 3) selected @endif >YYYY/MM/DD 13:45</option>
+                          <option value="4" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 4) selected @endif >YYYY/MM/DD 1:45 PM</option>
+                          <option value="5" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 5) selected @endif >YYYY年MM月DD日 13時45分</option>
                         </select>
                       </div>
                     </tr>
                   </table>
                   <div class="row">
                     <div class="col-md-12 text-center">
-                      <input name="button3" value="保存する" type="button" class="btn btn-primary btn-sm">
+                      <input name="btn_submit" value="保存する" type="submit" class="btn btn-primary btn-sm">
                       <input name="reset" value="元に戻す" type="reset" class="btn btn-primary btn-sm mar-left15">
                     </div>
                   </div>

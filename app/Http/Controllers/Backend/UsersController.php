@@ -143,10 +143,6 @@ class UsersController extends BackendController
 		$data['last_user']              = Auth::user()->u_id;
 		$data['last_kind']              = INSERT;
 
-			echo '<pre>';
-			print_r($data);
-			echo '</pre>';die;
-
 		if ( $clsUser->insert($data) ) {
 			Session::forget('user');
 			Session::flash('success', trans('common.msg_regist_success'));

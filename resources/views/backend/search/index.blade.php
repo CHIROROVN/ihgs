@@ -51,12 +51,12 @@
                       <div class="fl-left">
                         <select name="year_from" class="form-control form-control-date">
                           @for($yf=($curr_year-5); $yf<=($curr_year); $yf++)
-                          <option value="{{$yf}}">{{$yf}} 年</option>
+                          <option value="{{$yf}}">{{$yf}}年</option>
                           @endfor
                         </select>
                           <select name="month_from" class="form-control form-control-date">
                             @for($mf=1; $mf<=12; $mf++)
-                            <option value="{{$mf}}">{{$mf}} 年</option>
+                            <option value="{{$mf}}">{{$mf}}年</option>
                             @endfor
                           </select>
                           
@@ -65,12 +65,12 @@
                         <div class="fl-left">
                           <select name="year_to" class="form-control form-control-date">
                             @for($yt=($curr_year-5); $yt<=($curr_year); $yt++)
-                            <option value="{{$yt}}">{{$yt}} 年</option>
+                            <option value="{{$yt}}">{{$yt}}年</option>
                           @endfor
                           </select>
                           <select name="month_to" class="form-control form-control-date">
                             @for($mt=1; $mt<=12; $mt++)
-                            <option value="{{$mt}}">{{$mt}} 年</option>
+                            <option value="{{$mt}}">{{$mt}}年</option>
                             @endfor
                           </select>
                           
