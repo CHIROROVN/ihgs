@@ -10,14 +10,14 @@ use Auth;
 
 class PcFormatController extends BackendController
 {
-	public function index(){
+	public function format(){
 		$clsPc            = new PcModel();
 		$mpc = $clsPc->getPc();		
-		return view('backend.pc_format.index', compact('mpc'));
+		return view('backend.pc.format', compact('mpc'));
 	}
 
 
-	public function postIndex(){
+	public function postFormat(){
 		$clsPc            = new PcModel();
 
 		if(!empty(Input::get('mp_id'))){
@@ -36,10 +36,10 @@ class PcFormatController extends BackendController
 
 			if ( $clsPc->update(Input::get('mp_id'), $data) ) {
 				Session::flash('success', trans('common.msg_edit_success'));
-				return redirect()->route('backend.pc_format.index');
+				return redirect()->route('backend.pc.format');
 			} else {
 				Session::flash('danger', trans('common.msg_edit_danger'));
-				return redirect()->route('backend.pc_format.index');
+				return redirect()->route('backend.pc.format');
 			}
 
 		}else{
@@ -58,10 +58,10 @@ class PcFormatController extends BackendController
 
 			if ( $clsPc->insert($data) ) {
 				Session::flash('success', trans('common.msg_edit_success'));
-				return redirect()->route('backend.pc_format.index');
+				return redirect()->route('backend.pc.format');
 			} else {
 				Session::flash('danger', trans('common.msg_edit_danger'));
-				return redirect()->route('backend.pc_format.index');
+				return redirect()->route('backend.pc.format');
 			}
 		}
 		

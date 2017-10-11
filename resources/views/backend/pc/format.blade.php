@@ -24,7 +24,7 @@
                 @elseif($message = Session::get('success'))
 
                     <div id="success" class="message">
-                        <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                        <a id="close" title="Message"  href="javascript:void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
                         <span>{{$message}}</span>
                     </div>
 
@@ -40,7 +40,7 @@
 
             <div class="graph-form agile_info_shadow">
               <div class="form-body">
-                {!! Form::open(array('route' => ['backend.pc_format.index'], 'class' => 'form-horizontal', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
+                {!! Form::open(array('route' => ['backend.pc.format'], 'class' => 'form-horizontal', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
                 <input type="hidden" name="mp_id" value="{{@$mpc->mp_id}}">
                   <table class="table table-bordered table-list-regist mar-bottom15">
                     <thead>
