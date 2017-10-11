@@ -24,7 +24,7 @@
                 @elseif($message = Session::get('success'))
 
                     <div id="success" class="message">
-                        <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                        <a id="close" title="Message"  href="javascript:void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
                         <span>{{$message}}</span>
                     </div>
 
