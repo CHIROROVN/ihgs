@@ -1,35 +1,30 @@
 @extends('backend.layouts.app')
 @section('content') 
-       
-        <!-- breadcrumbs -->
-          <div class="w3l_agileits_breadcrumbs">
-            <div class="w3l_agileits_breadcrumbs_inner">
-              <ul>
-                <li>データ管理<span>＞</span></li>
-                <li>登録済み社員データの検索結果一覧</li>
-              </ul>
-            </div>
-          </div>
-        <!-- //breadcrumbs -->
-        <div class="inner_content_w3_agile_info two_in">
-        <div class="flash-messages">
-                @if($message = Session::get('danger'))
-
-                    <div id="error" class="message">
-                        <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
-                        <span>{{$message}}</span>
-                    </div>
-
-                @elseif($message = Session::get('success'))
-
-                    <div id="success" class="message">
-                        <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
-                        <span>{{$message}}</span>
-                    </div>
-
-                @endif  
-          </div>
-          <p class="intro">検索の結果、**件が該当しました。うち、1～20件を表示しています。</p>
+<!-- breadcrumbs -->
+<div class="w3l_agileits_breadcrumbs">
+  <div class="w3l_agileits_breadcrumbs_inner">
+    <ul>
+      <li>データ管理<span>＞</span></li>
+      <li>登録済み社員データの検索結果一覧</li>
+    </ul>
+  </div>
+</div>
+<!-- //breadcrumbs -->
+<div class="inner_content_w3_agile_info two_in">
+  <div class="flash-messages">
+    @if($message = Session::get('danger'))
+      <div id="error" class="message">
+        <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+        <span>{{$message}}</span>
+      </div>
+    @elseif($message = Session::get('success'))
+      <div id="success" class="message">
+        <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+        <span>{{$message}}</span>
+      </div>
+    @endif  
+  </div>
+  <p class="intro">検索の結果、**件が該当しました。うち、1～20件を表示しています。</p>
           <!-- tables -->
           <div class="agile-tables">
             <div class="w3l-table-info agile_info_shadow">

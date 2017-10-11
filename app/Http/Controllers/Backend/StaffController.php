@@ -33,7 +33,8 @@ class StaffController extends BackendController
 	public function getRegist(){
 		$clsBelong = new BelongModel();
 		$data['divisions'] = $clsBelong->list_division_tree(); 
-        $data['error']
+        $data['error']['error_staff_id_no_required'] = trans('validation.error_staff_id_no_required');
+        $data['error']['error_staff_name_required'] = trans('validation.error_staff_name_required');
 		return view('backend.staff.regist', $data);
 	}
 
@@ -123,13 +124,80 @@ class StaffController extends BackendController
 		return view('backend.staff.search',$data);
 	}
 
-	public function getDelete()
+	public function getDelete($id)
 	{
-
+        $clsStaff      = new StaffModel();   
+        $dataUpdate             = array(
+            'last_date'         => date('Y-m-d H:i:s'),
+            'last_kind'         => DELETE,
+            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_user'         => Auth::user()->u_id 
+        );   
+        if ( $clsStaff->update($id,$dataUpdate) ) {
+            Session::flash('success', trans('common.msg_delete_success'));
+        } else {
+            Session::flash('danger', trans('common.msg_delete_danger'));
+        }
+        return redirect()->route('backend.staff.index');
 	}
 
-	public function getEdit()
+	public function getEdit($id)
 	{
-		
+        $clsStaff      = new StaffModel();
+        $clsBelong     = new BelongModel();
+        $data['divisions'] = $clsBelong->list_division_tree(); 
+        $data['staff']     = $clsStaff->get_by_id($id);
+		$data['error']['error_staff_id_no_required'] = trans('validation.error_staff_id_no_required');
+        $data['error']['error_staff_name_required'] = trans('validation.error_staff_name_required');
+        return view('backend.staff.edit', $data);
 	}
+
+    public function postEdit($id)
+    {
+        $clsStaff      = new StaffModel();
+        $inputs         = Input::all();
+        $validator      = Validator::make($inputs, $clsStaff->Rules(), $clsStaff->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('backend.staff.edit', [$id])->withErrors($validator)->withInput();
+        }
+
+        // update
+        $dataUpdate = array(
+            'staff_id_no'       => Input::get('staff_id_no'),
+            'staff_name'        => Input::get('staff_name'),           
+            'staff_belong'      => Input::get('staff_belong'),
+            'staff_card1'      => Input::get('staff_card1'),
+            'staff_card2'      => Input::get('staff_card2'),
+            'staff_card3'      => Input::get('staff_card3'),
+            'staff_card4'      => Input::get('staff_card4'),
+            'staff_card5'      => Input::get('staff_card5'),
+            'staff_card6'      => Input::get('staff_card6'),
+            'staff_card7'      => Input::get('staff_card7'),
+            'staff_card8'      => Input::get('staff_card8'),
+            'staff_card9'      => Input::get('staff_card9'),
+            'staff_card10'      => Input::get('staff_card10'),
+            'staff_pc1'         => Input::get('staff_pc1'),
+            'staff_pc2'         => Input::get('staff_pc2'),
+            'staff_pc3'         => Input::get('staff_pc3'),
+            'staff_pc4'         => Input::get('staff_pc4'),
+            'staff_pc5'         => Input::get('staff_pc5'),
+            'staff_pc6'         => Input::get('staff_pc6'),
+            'staff_pc7'         => Input::get('staff_pc7'),
+            'staff_pc8'         => Input::get('staff_pc8'),
+            'staff_pc9'         => Input::get('staff_pc9'),
+            'staff_pc10'         => Input::get('staff_pc10'),
+            'last_date'             => date('Y-m-d H:i:s'),
+            'last_kind'             => UPDATE,
+            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+            'last_user'             => Auth::user()->u_id 
+        );
+
+        if ( $clsStaff->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.msg_edit_success'));
+        } else {
+            Session::flash('danger', trans('common.msg_edit_danger'));
+        }
+        return redirect()->route('backend.staff.index');    
+    }
+
 }
