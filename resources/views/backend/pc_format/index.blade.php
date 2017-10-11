@@ -30,7 +30,7 @@
 
                 @endif  
           </div>
-          
+
           <p class="intro">取り込む「PCログ」のデータのフォーマットを指定します。</p>
           <!--/forms-->
           <div class="forms-main_agileits">
@@ -87,7 +87,7 @@
                       <td class="col-md-2">
                         <select name="mp_actiontime_row" id="mp_actiontime_row"  class="form-control">
                           @for($h=1; $h<=40; $h++)
-                            <option value="{{$y}}" @if(isset($mpc->mp_actiontime_row) && $mpc->mp_actiontime_row == $h) selected @endif>{{$h}}列目</option>
+                            <option value="{{$h}}" @if(isset($mpc->mp_actiontime_row) && $mpc->mp_actiontime_row == $h) selected @endif>{{$h}}列目</option>
                           @endfor
                         </select>
                       </td>
