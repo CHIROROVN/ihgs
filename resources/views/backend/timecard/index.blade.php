@@ -52,7 +52,7 @@
                     <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
                     <td class="col-md-9">
                       <div class="bt-browser mar-left15">
-                        <div class="bfs btn btn-primary"  id="btn"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <input type="file"  name="file_path" id="file_path" size="40"   class="bfs btn btn-primary" value="ファイルを選ぶ" ></div>
+                        <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l" id="file_path"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
                         <span class="help-block" id="error_file_path"></span>
                       </div>
                       <div class="fl-left">
@@ -85,9 +85,9 @@
                 @else  
                 @foreach($timecards as $timecard)
                   <tr>
-                    <td align="center" style="width: 150px;"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年8月期</td>
-                    <td>2017/08/11 12:34:56</td>
+                    <td align="center" style="width: 150px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="if (confirm('Are you sure delete')) {location.href='{{ asset('timecard/delete/' . $timecard->tt_dataname) }}' }"></td>
+                    <td>{{$timecard->tt_dataname}}</td>
+                    <td>{{$timecard->last_date}}</td>
                   </tr> 
                  @endforeach
                  @endif                      
@@ -95,7 +95,6 @@
               </table>
             </div>
           </div>
-
 <script type="text/javascript">
 $("#btnSend").on("click",function() {
   var flag = true;
@@ -118,5 +117,11 @@ $(document).ready(function(){
     $("#tt_dataname").val(fileName);    
   });
 });*/
+</script>
+@endsection
+@section('js')
+<script src="{{ asset('') }}public/backend/js/bootstrap-button-to-input-file.js"></script>
+<script>
+  var filestyler = new buttontoinputFile();
 </script>
 @endsection

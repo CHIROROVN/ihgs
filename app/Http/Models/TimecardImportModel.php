@@ -32,6 +32,10 @@ class TimecardImportModel
         $results = DB::table($this->table)->insert($data);
         return $results;
     }
-      
+     public function delete($dataname)
+    {
+        $results = DB::table($this->table)->where('tt_dataname', $dataname)->delete();        
+        return $results;
+    }      
 
 }
