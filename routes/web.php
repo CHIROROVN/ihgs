@@ -74,6 +74,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
     Route::post('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@postRegist']); 
     Route::get('/timecard/edit/{id}', ['as' => 'backend.timecard.edit', 'uses' => 'TimecardController@getEdit']); 
     Route::post('/timecard/edit/{id}', ['as' => 'backend.timecard.edit', 'uses' => 'TimecardController@postEdit']); 
+    Route::get('/timecard/delete/{dataname}', ['as' => 'backend.timecard.delete', 'uses' => 'TimecardController@getDelete']);
     //door
     Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);
     Route::post('/door/import', ['as' => 'backend.door.import', 'uses' => 'DoorController@importDoorcard']);

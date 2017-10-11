@@ -85,9 +85,9 @@
                 @else  
                 @foreach($timecards as $timecard)
                   <tr>
-                    <td align="center" style="width: 150px;"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-                    <td>2017年8月期</td>
-                    <td>2017/08/11 12:34:56</td>
+                    <td align="center" style="width: 150px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="if (confirm('Are you sure delete')) {location.href='{{ asset('timecard/delete/' . $timecard->tt_dataname) }}' }"></td>
+                    <td>{{$timecard->tt_dataname}}</td>
+                    <td>{{$timecard->last_date}}</td>
                   </tr> 
                  @endforeach
                  @endif                      
@@ -95,7 +95,6 @@
               </table>
             </div>
           </div>
-
 <script type="text/javascript">
 $("#btnSend").on("click",function() {
   var flag = true;

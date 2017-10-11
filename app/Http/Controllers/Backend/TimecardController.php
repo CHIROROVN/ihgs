@@ -68,6 +68,7 @@ class TimecardController extends BackendController
 
             $path = '/uploads/';
             $upload_file->move(public_path().$path, $fn);
+            Session::flash('success', trans('common.msg_regist_success')); 
             $data = array();
            /* Excel::batch(public_path().$path, function($rows,$fn) {              
                 $rows->each(function($row) {     
@@ -93,7 +94,7 @@ class TimecardController extends BackendController
                 
 
 
-            }, 'UTF-8');  */
+            }, 'UTF-8');  
             $timecardModel = $clsTimecardModel->get_last_insert();
             $i=0;
             Excel::filter('chunk')->load(public_path().$path.$fn)->chunk(250, function($results)
@@ -105,7 +106,7 @@ class TimecardController extends BackendController
                         print_r($data);     
                         
                         print_r($timecardModel);                
-                       /* $clsTimecard      = new TimecardImportModel();
+                        $clsTimecard      = new TimecardImportModel();
                         $dataInsert             = array(
                             'tt_staff_id_no'    => $data['staff_id'],
                             'tt_date'           => date('Y-m-d',$data['date']),           
@@ -117,13 +118,13 @@ class TimecardController extends BackendController
                             'last_ipadrs'       => CLIENT_IP_ADRS,
                             'last_user'         => Auth::user()->u_id            
                         );
-                        $clsTimecard->insert($dataInsert);*/
+                        $clsTimecard->insert($dataInsert);
 
                     }                    
-            });  
+            }); */ 
                             
-        }
-
+        }else Session::flash('danger', trans('common.msg_regist_danger'));
+        return redirect()->route('backend.timecard.index');
     }
 
 	public function getRegist(){
@@ -205,5 +206,15 @@ class TimecardController extends BackendController
             Session::flash('danger', trans('common.msg_edit_danger'));
         }
         return redirect()->route('backend.timecard.edit', [$id]);
-    }    
+    }   
+    public function getDelete($dataname)
+    {
+        $clsTimecard            = new TimecardImportModel();       
+        if ( $clsTimecard->delete($dataname) ) {
+            Session::flash('success', trans('common.msg_delete_success'));
+        } else {
+            Session::flash('danger', trans('common.msg_delete_danger'));
+        }
+        return redirect()->route('backend.timecard.index');
+    } 
 }
