@@ -105,4 +105,12 @@
       </div>
     </div>
   </div>
+
+@endsection
+
+@section('js')
+<script src="{{ asset('') }}public/backend/js/bootstrap-button-to-input-file.js"></script>
+<script>
+  var filestyler = new buttontoinputFile();
+</script>
 @endsection

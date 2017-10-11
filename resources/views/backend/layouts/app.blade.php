@@ -81,6 +81,7 @@
   </div>
 <!--copy rights end here-->
 <!-- js -->
+<script type="text/javascript" src="{{ asset('') }}public/backend/js/jquery-2.1.4.min.js"></script>
 <script src="{{ asset('') }}public/backend/js/modernizr.custom.js"></script>
 <script src="{{ asset('') }}public/backend/js/classie.js"></script>
 <script src="{{ asset('') }}public/backend/js/gnmenu.js"></script>
@@ -104,5 +105,11 @@
 <script type="text/javascript" src="{{ asset('') }}public/backend/js/bootstrap-3.1.1.min.js"></script>
 <script src="{{ asset('') }}public/backend/js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="{{ asset('') }}public/backend/js/scripts.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+
+<!-- Js -->
+  @yield('js')
+<!-- /Js -->
+
 </body>
 </html>
