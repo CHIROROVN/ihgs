@@ -52,7 +52,7 @@
                     <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
                     <td class="col-md-9">
                       <div class="bt-browser mar-left15">
-                        <div class="bfs btn btn-primary"  id="btn"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <input type="file"  name="file_path" id="file_path" size="40"   class="bfs btn btn-primary" value="ファイルを選ぶ" ></div>
+                        <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l" id="file_path"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
                         <span class="help-block" id="error_file_path"></span>
                       </div>
                       <div class="fl-left">
@@ -118,5 +118,11 @@ $(document).ready(function(){
     $("#tt_dataname").val(fileName);    
   });
 });*/
+</script>
+@endsection
+@section('js')
+<script src="{{ asset('') }}public/backend/js/bootstrap-button-to-input-file.js"></script>
+<script>
+  var filestyler = new buttontoinputFile();
 </script>
 @endsection

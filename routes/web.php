@@ -24,8 +24,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 
 	Route::get('/login', ['as' => 'auth.login', 'uses' => 'UsersController@login']);
 	Route::post('/login', ['as' => 'auth.login', 'uses' => 'UsersController@postLogin']);
-	Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'UsersController@logout']);
-    
+	Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'UsersController@logout']);    
 	//Users
 	Route::get('/users', ['as' => 'backend.users.index', 'uses' => 'UsersController@index']);
 	Route::get('/users/regist', ['as' => 'backend.users.regist', 'uses' => 'UsersController@regist']);
@@ -57,8 +56,6 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/division/orderby-last', ['as' => 'backend.division.orderby.last', 'uses' => 'DivisionController@orderby_last']);
 	Route::get('/division/orderby-up', ['as' => 'backend.division.orderby.up', 'uses' => 'DivisionController@orderby_up']);
 	Route::get('/division/orderby-down', ['as' => 'backend.division.orderby.down', 'uses' => 'DivisionController@orderby_down']);
-
-
     //section
 	Route::get('section/{parent_id}', ['as' => 'backend.section.index', 'uses' => 'SectionController@index']);
 	Route::get('section/{parent_id}/regist', ['as' => 'backend.section.regist', 'uses' => 'SectionController@getRegist']);
@@ -79,8 +76,10 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
     Route::post('/timecard/edit/{id}', ['as' => 'backend.timecard.edit', 'uses' => 'TimecardController@postEdit']); 
     //door
     Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);
+    Route::post('/door/import', ['as' => 'backend.door.import', 'uses' => 'DoorController@importDoorcard']);
     Route::get('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@getRegist']);
     Route::post('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@postRegist']);
+    Route::get('/door/delete/{dataname}', ['as' => 'backend.door.delete', 'uses' => 'DoorController@getDelete']);
 
     Route::get('/staff', ['as' => 'backend.staff.index', 'uses' => 'StaffController@index']);
     Route::get('/staff/regist', ['as' => 'backend.staff.regist', 'uses' => 'StaffController@getRegist']);

@@ -3,6 +3,7 @@ use App\Http\Controllers\Backend\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Models\DoorcardModel;
+use App\Http\Models\DoorcardImportModel;
 use Auth;
 use Hash;
 use Form;
@@ -23,7 +24,12 @@ class DoorController extends BackendController
     }
 
 	public function index(){
-		return view('backend.door.index');
+		$data =array();
+        $clsDoorcard               = new DoorcardImportModel();
+        $data['doorcards']         = $clsDoorcard->get_all();
+        $data['error']['error_td_dataname_required']    = trans('validation.error_td_dataname_required');
+        $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
+		return view('backend.door.index',$data);
 	}
 
 	public function getRegist(){
@@ -58,8 +64,50 @@ class DoorController extends BackendController
             Session::flash('success', trans('common.msg_regist_success'));
         } else {
             Session::flash('danger', trans('common.msg_regist_danger'));
-        }        
+        }       
         
         return redirect()->route('backend.door.regist');
+    }
+    public function importDoorcard()
+    {
+    	$dataInput              = array();
+        $clsDoorcard            = new DoorcardImportModel();
+        $clsDoorcardModel       = new DoorcardModel();
+        $inputs                 = Input::all();
+        $rules                  = $clsDoorcard->Rules();
+        if(!Input::hasFile('file_path')){
+            unset($rules['file_path']);
+            unset($rules['file_path']);
+        }
+        $validator              = Validator::make($inputs, $rules, $clsDoorcard->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('backend.door.index')->withErrors($validator)->withInput();
+        }
+        if (Input::hasFile('file_path'))
+        {
+            $upload_file = Input::file('file_path');
+            $extFile  = $upload_file->getClientOriginalExtension();
+
+            if(!empty(Input::get('td_dataname'))){
+               $fn = Input::get('td_dataname').'_'.rand(time(),time()).'.'.$extFile;
+            }else{
+                $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
+            }
+
+            $path = '/uploads/';
+            $upload_file->move(public_path().$path, $fn);                  
+            Session::flash('success', trans('common.msg_regist_success'));                
+        }else Session::flash('danger', trans('common.msg_regist_danger'));
+        return redirect()->route('backend.door.index');
+    }
+    public function getDelete($dataname)
+    {
+    	$clsDoorcard            = new DoorcardImportModel();        
+        if ( $clsDoorcard->delete($dataname) ) {
+            Session::flash('success', trans('common.msg_delete_success'));
+        } else {
+            Session::flash('danger', trans('common.msg_delete_danger'));
+        }
+        return redirect()->route('backend.door.index');
     }
 }

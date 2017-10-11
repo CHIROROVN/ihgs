@@ -4,7 +4,7 @@
 // Build Date: Feb 29, 2016
 
 function buttontoinputFile() {
-    var a,b,c,d,e,f,g,h,j,k,l,m,n,o;
+    var a,b,c,d,e,f,g,h,j,k,l,m,n,o;    
 	a = $('.bfs');
 	a.each(function() {
 		b = $(this);
@@ -23,27 +23,27 @@ function buttontoinputFile() {
             m = "bfs-text";
         }
     	if(g === 'sm'){
-    		h = "<input type='text' class='bfs-disabled form-control input-sm "+m+"'>";
+    		h = "<input type='text' name='file_path' id='file_path' class='bfs-disabled form-control input-sm "+m+"'>";
     		b.addClass('btn-sm');
     	}else if(g === 'lg'){
-    		h = "<input type='text' class='bfs-disabled form-control input-lg "+m+"'>";
+    		h = "<input type='text' name='file_path' id='file_path' class='bfs-disabled form-control input-lg "+m+"'>";
     		b.addClass('btn-lg');
     	}else{
-    		h = "<input type='text' class='bfs-disabled form-control "+m+"'>";
+    		h = "<input type='text' name='file_path' id='file_path' class='bfs-disabled form-control "+m+"'>";
     	}
     	if(d === 'fileStyle-r'){
     		b.wrap(f);
     		b.after(h);
     		b.wrap(e);
-            b.after("<input type='file' id='"+c+"' class='bfs-input' style='display:none;'>");
+            b.after("<input type='file' id='"+c+"' class='bfs-input' style='display:none;' name='file_path'>");
     	}else if(d === 'fileStyle-l'){
     		b.wrap(f);
     		b.before(h);
     		b.wrap(e);
-            b.before("<input type='file' id='"+c+"' class='bfs-input' style='display:none;'>");
+            b.before("<input type='file' id='"+c+"' class='bfs-input' style='display:none;' name='file_path'>");
     	}else{
             b.wrap(k);
-    		b.after("<input type='file' id='"+c+"' class='bfs-input' style='display:none;'>");
+    		b.after("<input type='file' id='"+c+"' class='bfs-input' style='display:none;' name='file_path'>");
     	}
         if(j === true){
             b.closest('div').find(':text').prop("disabled",false);

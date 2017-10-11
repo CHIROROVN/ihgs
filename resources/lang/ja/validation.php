@@ -42,5 +42,6 @@ return [
     'error_file_path_required'             => 'Please choose file upload。',
     /* doorcard*/
     'error_door_format_required'           => '所属名を入力してください。',
+    'error_td_dataname_required'           => '所属名を入力してください。',
 
 ];
