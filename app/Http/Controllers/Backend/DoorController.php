@@ -52,7 +52,7 @@ class DoorController extends BackendController
 
         // insert       
         $dataInsert                 = array(
-            'md_card_no_row'       => Input::get('md_card_no_row'),                        
+            'md_card_no_row'        => Input::get('md_card_no_row'),                        
             'md_door_row'           => Input::get('md_door_row'), 
             'md_door_format'        => Input::get('md_door_format'),
             'md_touchtime_row'      => Input::get('md_touchtime_row'),

@@ -26,7 +26,7 @@ class StaffModel
     
     public function get_all($belong_id=null, $staff_name=null,$staff_id_no=null)
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('staff_id', 'desc')->get();
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('staff_id', 'desc')->simplePaginate(LIMIT_PAGE);
         return $results;
     }
 
