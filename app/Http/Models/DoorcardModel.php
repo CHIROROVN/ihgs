@@ -31,7 +31,7 @@ class DoorcardModel
     }
     public function insert($data)
     {
-        $results = DB::table($this->table)->insert($data);        
+        $results = DB::table($this->table)->insert($data);               
         return $results;
     }
     public function get_by_id($id)

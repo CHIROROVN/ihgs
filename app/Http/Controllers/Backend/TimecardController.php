@@ -36,6 +36,7 @@ class TimecardController extends BackendController
 
     public function import()
     {
+
         $dataInput              = array();
         $clsTimecard            = new TimecardImportModel();
         $clsTimecardModel       = new TimecardModel();
@@ -45,10 +46,12 @@ class TimecardController extends BackendController
             unset($rules['file_path']);
             unset($rules['file_path']);
         }
+
         $validator              = Validator::make($inputs, $rules, $clsTimecard->Messages());
         if ($validator->fails()) {
             return redirect()->route('backend.timecard.index')->withErrors($validator)->withInput();
         }
+        
         if (Input::hasFile('file_path'))
         {
             $upload_file = Input::file('file_path');
@@ -65,9 +68,11 @@ class TimecardController extends BackendController
             }else{
                 $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
             }
-
-            $path = '/uploads/';
-            $upload_file->move(public_path().$path, $fn);
+            
+            
+            $path = '/uploads/';          
+           $upload_file->move(public_path().$path, $fn);
+            //move_uploaded_file($upload_file->getPathName(),public_path().$path.$fn);           
             Session::flash('success', trans('common.msg_regist_success')); 
             $data = array();
            /* Excel::batch(public_path().$path, function($rows,$fn) {              
@@ -124,6 +129,8 @@ class TimecardController extends BackendController
             }); */ 
                             
         }else Session::flash('danger', trans('common.msg_regist_danger'));
+
+
         return redirect()->route('backend.timecard.index');
     }
 

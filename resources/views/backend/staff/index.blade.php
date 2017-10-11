@@ -80,7 +80,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <input onclick="location.href='staff_search.html'" value="条件を変えて再検索" type="button" class="btn btn-primary btn-sm">
+                  <input onclick="location.href='{{ asset('staff/search' ) }}'" value="条件を変えて再検索" type="button" class="btn btn-primary btn-sm">
                 </div>
               </div>
             </div>

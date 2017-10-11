@@ -42,12 +42,14 @@ class DoorController extends BackendController
 
 	public function postRegist()
     {
+
         $clsDoorcard      = new DoorcardModel();
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsDoorcard->Rules(), $clsDoorcard->Messages());
         if ($validator->fails()) {
             return redirect()->route('backend.door.regist')->withErrors($validator)->withInput();
         }
+
         // insert       
         $dataInsert                 = array(
             'md_card_no_row'       => Input::get('md_card_no_row'),                        
@@ -59,7 +61,8 @@ class DoorController extends BackendController
             'last_kind'             => INSERT,
             'last_ipadrs'           => CLIENT_IP_ADRS,
             'last_user'             => Auth::user()->u_id            
-        );        
+        ); 
+               
         if ( $clsDoorcard->insert($dataInsert)  ) {
             Session::flash('success', trans('common.msg_regist_success'));
         } else {

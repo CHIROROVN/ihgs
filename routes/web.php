@@ -70,7 +70,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('section/{parent_id}/orderby-down', ['as' => 'backend.division.orderby.down', 'uses' => 'DivisionController@orderby_down']);
     //timecard
     Route::get('/timecard', ['as' => 'backend.timecard.index', 'uses' => 'TimecardController@index']);
-    Route::post('/timecard/import', ['as' => 'backend.timecard.import', 'uses' => 'TimecardController@import']);
+    Route::post('timecard/import', ['as' => 'backend.timecard.import', 'uses' => 'TimecardController@import']);
     Route::get('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@getRegist']); 
     Route::post('/timecard/regist', ['as' => 'backend.timecard.regist', 'uses' => 'TimecardController@postRegist']); 
     Route::get('/timecard/edit/{id}', ['as' => 'backend.timecard.edit', 'uses' => 'TimecardController@getEdit']); 
