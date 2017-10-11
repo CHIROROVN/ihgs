@@ -21,7 +21,7 @@
       </header>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">      
-      {!! Form::open(array('url' => 'section/'. $parent->belong_id.'/regist', 'method' => 'post')) !!} 
+      {!! Form::open(array('url' => 'section/'. $parent->belong_id.'/regist','id'=>'frmRegist', 'method' => 'post')) !!} 
         <table class="table table-bordered mar-bottom15">
           <tr>
             <td class="col-title col-md-3"><label for="">部の名称</label></td>
@@ -32,7 +32,7 @@
               <td class="col-md-9">
                 <div class="col-md-6">
                   <input type="text" class="form-control" id="belong_name" name="belong_name">
-                  <span class="error-input">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
+                  <span class="help-block" id="error-belong-name">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
                 </div>
               </td>
           </tr>
@@ -41,14 +41,14 @@
               <td class="col-md-9">
                 <div class="col-md-6">
                   <input type="text" class="form-control" id="belong_code" name="belong_code">
-                  <span class="error-input">@if ($errors->first('belong_code')) ※{!! $errors->first('belong_code') !!} @endif</span>
+                  <span class="help-block" id="error-belong_code">@if ($errors->first('belong_code')) ※{!! $errors->first('belong_code') !!} @endif</span>
                 </div>
               </td>
           </tr>
         </table>
         <div class="row mar-bottom15">
           <div class="col-md-12 text-center">
-            <input name="button" value="登録する" type="submit" class="btn btn-primary btn-sm">
+            <input name="btnSubmit" id="btnSubmit" value="登録する" type="button" class="btn btn-primary btn-sm">
             <input name="btnReset" value="クリア" type="reset" class="btn btn-primary btn-sm mar-left15">
           </div>
         </div>
@@ -61,5 +61,23 @@
       </div>
     </div>
   </div>
-</div>  
+</div> 
+<script type="text/javascript">
+$("#btnSubmit").on("click",function() {  
+  var flag = true;
+  if (!$("#belong_name").val().replace(/ /g, "")) {  
+    $("#error-belong-name").html('<?php echo $error['error_belong_name_required'];?>');             
+    $("#error-belong-name").css('display','block');   
+    $('#belong_name').focus();
+    flag = false;    
+  } 
+  if (!$("#belong_code").val().replace(/ /g, "")) {  
+    $("#error-belong_code").html('<?php echo $error['error_belong_code_required'];?>');             
+    $("#error-belong_code").css('display','block');   
+    $('#belong_code').focus();
+    flag = false; 
+  }  
+  if(flag) $( "#frmRegist" ).submit(); 
+});
+</script> 
 @endsection

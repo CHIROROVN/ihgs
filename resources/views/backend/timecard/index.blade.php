@@ -12,6 +12,19 @@
           </div>
         <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
+          <div class="flash-messages">
+            @if($message = Session::get('danger'))
+              <div id="error" class="message">
+                <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+                <span>{{$message}}</span>
+              </div>
+            @elseif($message = Session::get('success'))
+              <div id="success" class="message">
+                <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+                  <span>{{$message}}</span>
+              </div>
+            @endif  
+          </div>  
           <p class="intro">「タイムカード」のデータを取り込みます。ファイルを指定し、「取り込み開始」をクリックしてください。<br />
             ※過去のデータを削除する場合は、一覧表内の「削除」ボタンをクリックしてください。<br />
             ※ユニークキーがないため、データは重複されて取り込まれます。データ変更（差し替え）の場合は、必ず、削除して登録してください。</p>
