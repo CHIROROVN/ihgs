@@ -11,7 +11,7 @@ class DoorController extends BackendController
 	public function index(){
 		return view('backend.door.index');
 	}
-	public function regist(){
+	public function getRegist(){
 		return view('backend.door.regist');
 	}
 }
