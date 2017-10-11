@@ -44,7 +44,7 @@
                     <td class="col-md-9">
                       <div class="col-md-6">
                         <input type="text" class="form-control" id="tt_dataname" name="tt_dataname">
-                        <span class="help-block" id="error_upload"></span>
+                        <span class="help-block" id="error_dataname"></span>
                       </div>
                     </td>
                   </tr>
@@ -53,7 +53,7 @@
                     <td class="col-md-9">
                       <div class="bt-browser mar-left15">
                         <div class="bfs btn btn-primary"  id="btn"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <input type="file"  name="file_path" id="file_path" size="40"   class="bfs btn btn-primary" value="ファイルを選ぶ" ></div>
-                        
+                        <span class="help-block" id="error_file_path"></span>
                       </div>
                       <div class="fl-left">
                         <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
@@ -98,12 +98,18 @@
 
 <script type="text/javascript">
 $("#btnSend").on("click",function() {
+  var flag = true;
   if (!$("#tt_dataname").val().replace(/ /g, "")) {  
-    $("#error_upload").html('<?php echo $message_upload?>');             
-    $("#error_upload").css('display','block');
-    return false;
+    $("#error_dataname").html('<?php echo $error['error_tt_dataname_required']?>');             
+    $("#error_dataname").css('display','block');  
+    flag = false;  
   }  
-  $( "#frmUpload" ).submit(); 
+  if (!$("#file_path").val().replace(/ /g, "")) {  
+    $("#error_file_path").html('<?php echo $error['error_file_path_required']?>');             
+    $("#error_file_path").css('display','block');    
+    flag = false; 
+  }
+  if(flag)   $( "#frmUpload" ).submit(); 
 });
 /*
 $(document).ready(function(){

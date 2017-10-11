@@ -38,6 +38,7 @@ class TimecardController extends BackendController
     {
         $dataInput              = array();
         $clsTimecard            = new TimecardImportModel();
+        $clsTimecardModel       = new TimecardModel();
         $inputs                 = Input::all();
         $rules                  = $clsTimecard->Rules();
         if(!Input::hasFile('file_path')){
@@ -93,6 +94,7 @@ class TimecardController extends BackendController
 
 
             }, 'UTF-8');  */
+            $timecardModel = $clsTimecardModel->get_last_insert();
             $i=0;
             Excel::filter('chunk')->load(public_path().$path.$fn)->chunk(250, function($results)
             {
@@ -100,7 +102,9 @@ class TimecardController extends BackendController
                     {
 
                         $data=$row->toArray();  
-                        print_r($data);                     
+                        print_r($data);     
+                        
+                        print_r($timecardModel);                
                        /* $clsTimecard      = new TimecardImportModel();
                         $dataInsert             = array(
                             'tt_staff_id_no'    => $data['staff_id'],
