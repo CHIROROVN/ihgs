@@ -94,11 +94,11 @@
                       <td class="col-md-6">
                       <div class="col-md-6">
                         <select name="mp_actiontime_format" class="form-control">
-                          <option value="1" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 1) selected @endif >YYYY/MM/DD 13:45:02</option>
-                          <option value="2" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 2) selected @endif >YYYY/MM/DD 01:45:02 PM</option>
-                          <option value="3" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 3) selected @endif >YYYY/MM/DD 13:45</option>
-                          <option value="4" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 4) selected @endif >YYYY/MM/DD 1:45 PM</option>
-                          <option value="5" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 5) selected @endif >YYYY年MM月DD日 13時45分</option>
+                          @if(!empty($pc_date_format))
+                            @foreach($pc_date_format as $key=>$pc_format)
+                              <option value="{{$key}}" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 1) selected @endif >{{$pc_format}}</option>
+                            @endforeach
+                          @endif                          
                         </select>
                       </div>
                     </tr>
