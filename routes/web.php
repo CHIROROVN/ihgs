@@ -112,3 +112,7 @@ if(Auth::check()){
 }else{
 	return redirect()->route('auth.login');
 }
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
