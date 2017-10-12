@@ -1,35 +1,34 @@
 
 @extends('backend.layouts.app')
 @section('content')
-
-        <!-- breadcrumbs -->
-          <div class="w3l_agileits_breadcrumbs">
-            <div class="w3l_agileits_breadcrumbs_inner">
-              <ul>
-                <li>データ管理<span>＞</span></li>
-                <li>部課の管理<span>＞</span></li>
-                <li>登録済み部の一覧</li>
-              </ul>
-            </div>
-          </div>
-        <!-- //breadcrumbs -->
-        <div class="inner_content_w3_agile_info two_in">
-         <div class="flash-messages">
-            @if($message = Session::get('danger'))
-              <div id="error" class="message">
-                <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
-                <span>{{$message}}</span>
-              </div>
-            @elseif($message = Session::get('success'))
-              <div id="success" class="message">
-                <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
-                  <span>{{$message}}</span>
-              </div>
-            @endif  
-          </div> 
-          <p class="intro">登録されている部の名称を一覧表示しています。</p>
-          <!-- tables -->          
-          <div class="agile-tables">
+<!-- breadcrumbs -->
+<div class="w3l_agileits_breadcrumbs">
+  <div class="w3l_agileits_breadcrumbs_inner">
+    <ul>
+      <li>データ管理<span>＞</span></li>
+      <li>部課の管理<span>＞</span></li>
+      <li>登録済み部の一覧</li>
+    </ul>
+  </div>
+</div>
+<!-- //breadcrumbs -->
+  <div class="inner_content_w3_agile_info two_in">
+    <div class="flash-messages">
+      @if($message = Session::get('danger'))
+        <div id="error" class="message">
+          <a id="close" title="Message"  href="#" onClick="document.getElementById('error').setAttribute('style','display: none;');">&times;</a>
+            <span>{{$message}}</span>
+        </div>
+        @elseif($message = Session::get('success'))
+        <div id="success" class="message">
+          <a id="close" title="Message"  href="javascript::void(0);" onClick="document.getElementById('success').setAttribute('style','display: none;');">&times;</a>
+            <span>{{$message}}</span>
+        </div>
+        @endif  
+    </div> 
+    <p class="intro">登録されている部の名称を一覧表示しています。</p>
+      <!-- tables -->          
+    <div class="agile-tables">
             <div class="w3l-table-info agile_info_shadow">
               <div class="row mar-bottom15">
                 <div class="col-md-12 text-right">
@@ -62,8 +61,8 @@
                 <tbody>
                   @foreach($belongs as $belong)
                     <?php $i++; ?>
-                      <tr>
-                        <td align="center"><input name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="if (confirm('Are you sure delete')) {location.href='{{ asset('division/delete/' . $belong->belong_id) }}' }"></td>
+                      <tr data-id='{{$belong->belong_id}}'>
+                        <td align="center"><input name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$belong->belong_id}}');"></td>
                         <td>{{ $belong->belong_code }}</td>
                         <td>{{ $belong->belong_name }}</td>
                         <td>@foreach($sections as $section)
@@ -85,7 +84,47 @@
                 </tbody>
               </table>
             </div>
-          </div>
-      
+          </div></div>
+<!-- start: Delete Coupon Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="myModalLabel">Warning!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure you want to DELETE?</h4>
+
+            </div>
+            <!--/modal-body-collapse -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnDelteYes" href="#">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+            <!--/modal-footer-collapse -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script type="text/javascript">
+  $('#btnDelete').on('click', function (e) {    
+    var id = $(this).closest('tr').data('id');
+    $('#myModal').data('id', id).modal('show');
+});
+function btnDelete($id)
+ {
+      var id = $id;
+    $('#myModal').data('id', id).modal('show');
+ } 
+$('#btnDelteYes').click(function () {
+    var id = $('#myModal').data('id');   
+    location.href='{{ asset('division/delete/') }}'+'/'+ id ;    
+});
+</script>    
 
 @endsection
