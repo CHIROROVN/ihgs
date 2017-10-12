@@ -24,7 +24,7 @@
       </div>
     @endif  
   </div>
-  <p class="intro">検索の結果、{{$staffs['count']}}件が該当しました。うち、1～20件を表示しています。</p>
+  <p class="intro">検索の結果、{{$staffs['count']}}件が該当しました。うち、{{$staffs['start']}}～{{$staffs['end']}} 件を表示しています。</p>
           <!-- tables -->
           <div class="agile-tables">
             <div class="w3l-table-info agile_info_shadow">

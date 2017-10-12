@@ -26,9 +26,13 @@ class StaffController extends BackendController
 	public function index(){
 		$data =array();
         $inputs            = Input::all();
-		$clsStaff          = new StaffModel();
+		$clsStaff          = new StaffModel();      
         $data['staffs']    = $clsStaff->get_all(Input::get('staff_belong', null),Input::get('txtstaff_name', null),Input::get('txtstaff_id_no', null));   
-        //echo "<pre>";print_r($data['staffs']);echo "</pre>";
+        $data['staffs']['page']         = (isset($_GET['page'])) ? $_GET['page'] : 1;
+        $data['staffs']['start']        = (($data['staffs']['page'] - 1) * LIMIT_PAGE) +1 ;
+        $data['staffs']['total_page']   = ceil($data['staffs']['count']/ LIMIT_PAGE) ;
+        $data['staffs']['end']          = ($data['staffs']['page']==$data['staffs']['total_page'])?$data['staffs']['count']: $data['staffs']['start'] + LIMIT_PAGE -1;
+        // /echo "<pre>";print_r($data['staffs']);echo "</pre>";
 		return view('backend.staff.index',$data);
 	}
 	public function getRegist(){
