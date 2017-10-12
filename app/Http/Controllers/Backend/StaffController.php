@@ -27,14 +27,15 @@ class StaffController extends BackendController
 		$data =array();
         $inputs            = Input::all();
 		$clsStaff          = new StaffModel();
-        $data['staffs']    = $clsStaff->get_all($inputs);   
+        $data['staffs']    = $clsStaff->get_all(Input::get('staff_belong', null),Input::get('txtstaff_name', null),Input::get('txtstaff_id_no', null));   
+        //echo "<pre>";print_r($data['staffs']);echo "</pre>";
 		return view('backend.staff.index',$data);
 	}
 	public function getRegist(){
-		$clsBelong = new BelongModel();
-		$data['divisions'] = $clsBelong->list_division_tree(); 
+		$clsBelong            = new BelongModel();
+		$data['divisions']    = $clsBelong->list_division_tree(); 
         $data['error']['error_staff_id_no_required'] = trans('validation.error_staff_id_no_required');
-        $data['error']['error_staff_name_required'] = trans('validation.error_staff_name_required');
+        $data['error']['error_staff_name_required']  = trans('validation.error_staff_name_required');
 		return view('backend.staff.regist', $data);
 	}
 
@@ -52,15 +53,15 @@ class StaffController extends BackendController
             'staff_id_no'       => Input::get('staff_id_no'),
             'staff_name'        => Input::get('staff_name'),           
             'staff_belong'      => Input::get('staff_belong'),
-            'staff_card1'      => Input::get('staff_card1'),
-            'staff_card2'      => Input::get('staff_card2'),
-            'staff_card3'      => Input::get('staff_card3'),
-            'staff_card4'      => Input::get('staff_card4'),
-            'staff_card5'      => Input::get('staff_card5'),
-            'staff_card6'      => Input::get('staff_card6'),
-            'staff_card7'      => Input::get('staff_card7'),
-            'staff_card8'      => Input::get('staff_card8'),
-            'staff_card9'      => Input::get('staff_card9'),
+            'staff_card1'       => Input::get('staff_card1'),
+            'staff_card2'       => Input::get('staff_card2'),
+            'staff_card3'       => Input::get('staff_card3'),
+            'staff_card4'       => Input::get('staff_card4'),
+            'staff_card5'       => Input::get('staff_card5'),
+            'staff_card6'       => Input::get('staff_card6'),
+            'staff_card7'       => Input::get('staff_card7'),
+            'staff_card8'       => Input::get('staff_card8'),
+            'staff_card9'       => Input::get('staff_card9'),
             'staff_card10'      => Input::get('staff_card10'),
             'staff_pc1'         => Input::get('staff_pc1'),
             'staff_pc2'         => Input::get('staff_pc2'),
@@ -71,7 +72,7 @@ class StaffController extends BackendController
             'staff_pc7'         => Input::get('staff_pc7'),
             'staff_pc8'         => Input::get('staff_pc8'),
             'staff_pc9'         => Input::get('staff_pc9'),
-            'staff_pc10'         => Input::get('staff_pc10'),
+            'staff_pc10'        => Input::get('staff_pc10'),
             'last_date'         => date('Y-m-d H:i:s'),
             'last_kind'         => INSERT,
             'last_ipadrs'       => CLIENT_IP_ADRS,
@@ -93,7 +94,7 @@ class StaffController extends BackendController
 
     public function postImport(){
         $dataInput              = array();
-        $clsStaff      = new StaffModel();
+        $clsStaff               = new StaffModel();
         $inputs                 = Input::all();
         $rules                  = $clsStaff->Rules();
         $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
@@ -109,9 +110,9 @@ class StaffController extends BackendController
         if (Input::hasFile('file_path'))
         {
             $upload_file = Input::file('file_path');
-            $extFile  = $upload_file->getClientOriginalExtension();
-            $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
-            $path = '/uploads/';
+            $extFile     = $upload_file->getClientOriginalExtension();
+            $fn          = 'file'.'_'.rand(time(),time()).'.'.$extFile;
+            $path        = '/uploads/';
             $upload_file->move(public_path().$path, $fn);
             Session::flash('success', trans('common.msg_regist_success'));
         }else Session::flash('danger', trans('common.msg_regist_danger'));
@@ -143,12 +144,12 @@ class StaffController extends BackendController
 
 	public function getEdit($id)
 	{
-        $clsStaff      = new StaffModel();
-        $clsBelong     = new BelongModel();
-        $data['divisions'] = $clsBelong->list_division_tree(); 
-        $data['staff']     = $clsStaff->get_by_id($id);
-		$data['error']['error_staff_id_no_required'] = trans('validation.error_staff_id_no_required');
-        $data['error']['error_staff_name_required'] = trans('validation.error_staff_name_required');
+        $clsStaff           = new StaffModel();
+        $clsBelong          = new BelongModel();
+        $data['divisions']  = $clsBelong->list_division_tree(); 
+        $data['staff']      = $clsStaff->get_by_id($id);
+		$data['error']['error_staff_id_no_required']      = trans('validation.error_staff_id_no_required');
+        $data['error']['error_staff_name_required']       = trans('validation.error_staff_name_required');
         return view('backend.staff.edit', $data);
 	}
 
@@ -166,15 +167,15 @@ class StaffController extends BackendController
             'staff_id_no'       => Input::get('staff_id_no'),
             'staff_name'        => Input::get('staff_name'),           
             'staff_belong'      => Input::get('staff_belong'),
-            'staff_card1'      => Input::get('staff_card1'),
-            'staff_card2'      => Input::get('staff_card2'),
-            'staff_card3'      => Input::get('staff_card3'),
-            'staff_card4'      => Input::get('staff_card4'),
-            'staff_card5'      => Input::get('staff_card5'),
-            'staff_card6'      => Input::get('staff_card6'),
-            'staff_card7'      => Input::get('staff_card7'),
-            'staff_card8'      => Input::get('staff_card8'),
-            'staff_card9'      => Input::get('staff_card9'),
+            'staff_card1'       => Input::get('staff_card1'),
+            'staff_card2'       => Input::get('staff_card2'),
+            'staff_card3'       => Input::get('staff_card3'),
+            'staff_card4'       => Input::get('staff_card4'),
+            'staff_card5'       => Input::get('staff_card5'),
+            'staff_card6'       => Input::get('staff_card6'),
+            'staff_card7'       => Input::get('staff_card7'),
+            'staff_card8'       => Input::get('staff_card8'),
+            'staff_card9'       => Input::get('staff_card9'),
             'staff_card10'      => Input::get('staff_card10'),
             'staff_pc1'         => Input::get('staff_pc1'),
             'staff_pc2'         => Input::get('staff_pc2'),

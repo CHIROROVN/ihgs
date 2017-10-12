@@ -24,7 +24,7 @@
       </div>
     @endif  
   </div>
-  <p class="intro">検索の結果、**件が該当しました。うち、1～20件を表示しています。</p>
+  <p class="intro">検索の結果、{{$staffs['count']}}件が該当しました。うち、1～20件を表示しています。</p>
           <!-- tables -->
           <div class="agile-tables">
             <div class="w3l-table-info agile_info_shadow">
@@ -50,14 +50,14 @@
                   $i = 0;
                   $max = count($staffs);
                 ?>
-                @if(empty($staffs) || count($staffs) < 1)
+                @if(empty($staffs['data']) || count($staffs['data']) < 1)
                 <tr>
                 <td colspan="7">
                   <h3 align="center">該当するデータがありません。</h3>
                 </td>
               </tr>
                 @else 
-                 @foreach($staffs as $staff)
+                 @foreach($staffs['data'] as $staff)
                     <?php $i++; ?>
                   <tr>
                     <td align="center"><input name="btnDelete" id="btnDelete" value="削除"  type="button"  class="btn btn-primary btn-xs" onclick="if (confirm('Are you sure delete')) {location.href='{{ asset('staff/delete/' . $staff->staff_id) }}' }"></td>
@@ -74,7 +74,7 @@
               </table>
               <div class="row mar-bottom15">
                 <div class="col-md-12 text-center">
-                 {{ $staffs->links() }}
+                 {{ $staffs['data']->links() }}
                   <!--<input name="submit2" disabled="" value="前の20件を表示" type="submit" class="btn btn-primary btn-sm">
                   <input name="submit3" value="次の20件を表示" type="submit" class="btn btn-primary btn-sm mar-left15">-->
                 </div>
