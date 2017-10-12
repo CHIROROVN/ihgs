@@ -61,13 +61,13 @@ class TimecardController extends BackendController
                 $fn = Input::get('tt_dataname').'_'.rand(time(),time()).'.'.$extFile;
             }else{
                 $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
-            }       
+            } 
             
             $path = '/uploads/';          
             $upload_file->move(public_path().$path, $fn);                             
             $data = array();           
             $data = Excel::load(public_path().$path.$fn, function($reader) {
-            })->get();
+            }, 'UTF-8')->get();
             $timecardModel = $clsTimecardModel->get_last_insert();
             $date_formats  = Config::get('constants.DATE_FORMAT');
             $time_formats  = Config::get('constants.TIME_FORMAT');          
@@ -84,7 +84,8 @@ class TimecardController extends BackendController
                         'last_user'         => Auth::user()->u_id            
                     );
                     $clsTimecard->insert($dataInsert);
-                }                
+                }   
+                Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));          
                             
         }else Session::flash('danger', trans('common.msg_regist_danger'));         
