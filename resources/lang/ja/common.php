@@ -19,5 +19,10 @@ return [
 
     'msg_manage_login_danger'           => 'ログインに失敗しました。',
 
+    //import file csv
+    'msg_import_success'                => 'csvを正常にインポートします。',
+    'msg_import_danger'                 => 'インポートcsvが失敗しました。',
+
+
 
 ];

@@ -45,7 +45,7 @@
         {!! Form::open(array('route' => ['backend.pc.import'], 'class' => 'form-horizontal', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
           <table class="table table-bordered">
             <tr>
-              <td class="col-title col-md-3"><label for="">データ名称</label></td>
+              <td class="col-title col-md-3"><label for="">データ名称<span class="required">必須</span></label></td>
                <td class="col-md-9">
                 <div class="col-md-6">
                   <input type="text" name="tp_dataname" class="form-control" id="tp_dataname" value="@if(old('tp_dataname')){{old('tp_dataname')}}@endif">
@@ -58,7 +58,7 @@
               </td>
             </tr>
             <tr>
-              <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
+              <td class="col-title col-md-3"><label for="">取り込むデータ<span class="required">必須</span></label></td>
               <td class="col-md-9">
                 <div class="bt-browser mar-left15">
                   <input type="file" name="tp_file_csv" class="filestyle" data-btnClass="btn-primary" data-text="ファイルを選ぶ" data-placeholder="csvファイルを選択">
@@ -91,12 +91,20 @@
             </tr>
           </thead>
           <tbody>
+            @if(count($pcs) > 0)
+            @foreach($pcs as $pc)
             <tr>
-              <td align="center" style="width: 120px;"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-              <td>2017年8月期</td>
-              <td>2017/08/11 12:34:56</td>
+              <td align="center" style="width: 120px;">
+                <input name="btn_delete" value="削除" type="button" class="btn btn-primary btn-xs" onClick="if (confirm('これを削除してもよろしいですか？')) {location.href='{{ route('backend.pc.import.delete', $pc->tp_dataname) }}' }">
+              </td>
+              <td>{{$pc->tp_dataname}}</td>
+              <td>{{date_time($pc->last_date, '/')}}</td>
             </tr>
-            <tr>
+            @endforeach
+            @else
+            <tr><td colspan="3" style="text-align: center;">該当するデータがありません。</td></tr>
+            @endif
+            <!-- <tr>
               <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
               <td>2017年7月期</td>
               <td>2017/08/11 12:34:56</td>
@@ -130,7 +138,7 @@
               <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
               <td>2017年1月期</td>
               <td>2017/08/11 12:34:56</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>

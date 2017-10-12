@@ -77,6 +77,24 @@ if (!function_exists('format_date')) {
 	}
 }
 
+if (!function_exists('date_time')) {
+
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function date_time($date, $comm='/')
+	{
+		if(!empty($date)){
+			return date('Y'.$comm.'m'.$comm.'d'.' '. 'H:i:s', strtotime($date));
+		}else{
+			return '';
+		}
+	}
+}
+
 if (!function_exists('split_date')) {
 
 	/**
