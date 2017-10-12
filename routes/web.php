@@ -82,6 +82,8 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
     Route::get('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@getRegist']);
     Route::post('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@postRegist']);
     Route::get('/door/delete/{dataname}', ['as' => 'backend.door.delete', 'uses' => 'DoorController@getDelete']);
+    Route::get('/door/edit/{id}', ['as' => 'backend.door.edit', 'uses' => 'DoorController@getEdit']); 
+    Route::post('/door/edit/{id}', ['as' => 'backend.door.edit', 'uses' => 'DoorController@postEdit']); 
 
     Route::get('/staff', ['as' => 'backend.staff.index', 'uses' => 'StaffController@index']);
     Route::get('/staff/regist', ['as' => 'backend.staff.regist', 'uses' => 'StaffController@getRegist']);

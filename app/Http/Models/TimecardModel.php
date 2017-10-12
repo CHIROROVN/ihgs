@@ -44,7 +44,7 @@ class TimecardModel
         if(!empty($staff_id))
             return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('mt_staff_id_row', '=', $staff_id)->orderBy('mt_id', 'desc')->take(1)->get()->toArray();
         else
-            return DB::table($this->table)->where('last_kind', '<>', DELETE)->take(1)->orderBy('mt_id', 'desc')->get()->toArray();
+            return DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('mt_id', 'desc')->take(1)->get()->toArray();
     } 
     public function insert_get_id($data)
     {

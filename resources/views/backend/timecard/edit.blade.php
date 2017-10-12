@@ -119,7 +119,7 @@
                     <div class="col-md-12 text-center">
                       <input name="btnSubmit" id="btnSubmit" value="保存する" type="button" class="btn btn-primary btn-sm">
                       <input name="reset" value="元に戻す" type="reset" class="btn btn-primary btn-sm mar-left15">
-                      <input name="btn" value="フォーマットの指定" type="button" class="btn btn-primary btn-sm mar-left15" onclick="location.href='{{ asset('timecard/regist' ) }}'">
+                      <!--<input name="btn" value="フォーマットの指定" type="button" class="btn btn-primary btn-sm mar-left15" onclick="location.href='{{ asset('timecard/regist' ) }}'">-->
                     </div>
                   </div>
                   </form> 

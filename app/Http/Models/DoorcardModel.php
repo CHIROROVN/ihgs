@@ -7,7 +7,8 @@ use Validator;
 
 class DoorcardModel
 {
-   protected $table = 'm_doorcard';
+    protected $table        = 'm_doorcard';
+    protected $primaryKey   = 'md_id';
 
     public function Rules()
     {
@@ -47,6 +48,11 @@ class DoorcardModel
     {
         $results = DB::table($this->table)->where('md_id', $id)->update($data);
         return $results;
+    }
+    public function getLastRow()
+    {
+       $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('md_id', 'desc')->first(); 
+       return $results;
     }
 
 }

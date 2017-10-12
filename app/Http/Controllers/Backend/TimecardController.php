@@ -93,8 +93,15 @@ class TimecardController extends BackendController
 
 	public function getRegist(){
         $data =array();
+        $clsTimecard          = new TimecardModel();
+        $timecard             = $clsTimecard->get_last_insert();
         $data['date_formats'] = Config::get('constants.MT_DATE_FORMAT');
-        $data['time_formats'] = Config::get('constants.MT_TIME_FORMAT');        
+        $data['time_formats'] = Config::get('constants.MT_TIME_FORMAT'); 
+        if(isset($timecard[0]->mt_id))
+        {
+            $data['timecard']     = $clsTimecard->get_by_id($timecard[0]->mt_id);
+            return view('backend.timecard.edit', $data);
+        }                   
 		return view('backend.timecard.regist',$data);
 	}
 
