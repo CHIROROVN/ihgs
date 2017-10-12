@@ -104,41 +104,7 @@
             @else
             <tr><td colspan="3" style="text-align: center;">該当するデータがありません。</td></tr>
             @endif
-            <!-- <tr>
-              <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-              <td>2017年7月期</td>
-              <td>2017/08/11 12:34:56</td>
-            </tr>
-            <tr>
-              <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-              <td>2017年6月期</td>
-              <td>2017/08/11 12:34:56</td>
-            </tr>
-            <tr>
-              <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-              <td>2017年5月期</td>
-              <td>2017/08/11 12:34:56</td>
-            </tr>
-            <tr>
-              <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-              <td>2017年4月期</td>
-              <td>2017/08/11 12:34:56</td>
-            </tr>
-            <tr>
-              <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-              <td>2017年3月期</td>
-              <td>2017/08/11 12:34:56</td>
-            </tr>
-            <tr>
-              <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-              <td>2017年2月期</td>
-              <td>2017/08/11 12:34:56</td>
-            </tr>
-            <tr>
-              <td align="center"><input name="button2" value="削除" type="button" class="btn btn-primary btn-xs"></td>
-              <td>2017年1月期</td>
-              <td>2017/08/11 12:34:56</td>
-            </tr> -->
+
           </tbody>
         </table>
       </div>
@@ -150,7 +116,6 @@
 @section('js')
 <script src="{{ asset('') }}public/backend/js/bootstrap-filestyle.min.js"></script>
 <script>
-  //var filestyler = new buttontoinputFile();
   $(":file").filestyle({htmlIcon : '<span class="glyphicon glyphicon-folder-open"></span>', btnClass: "btn-primary", text: " ファイルを選ぶ", placeholder: "csvファイルを選択"});
 </script>
 @endsection
