@@ -84,7 +84,7 @@ class BelongModel
 
     public function get_min($parent_id='')
     {
-        $results = ($parent_id=='')?DB::table($this->table)->min('belong_sort')->whereNull('belong_parent_id'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->min('belong_sort');
+        $results = ($parent_id=='')?DB::table($this->table)->whereNull('belong_parent_id')->min('belong_sort'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->min('belong_sort');
         return $results;
     }
 

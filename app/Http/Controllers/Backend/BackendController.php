@@ -113,5 +113,27 @@ class BackendController extends Controller
         );
         $clsObject->update($down_belong->$field_primary, $dataUpdate);
     }
-
+    protected function changeDate($date_source,$date_format,$source_type,$result_type)
+    {
+        $arrData = explode(":", $date_format); 
+        echo "<br>"; print_r($arrData); echo "<br>";
+        echo $date_source;echo "<br>";
+        if($source_type=='date'){
+            $strYear = substr($date_source, $arrData[0], $arrData[1]);
+            echo $strYear."<br>";
+            $strMonth = substr($date_source, $arrData[2], $arrData[3]);
+            echo $strMonth."<br>";
+            $strDate = substr($date_source, $arrData[4], $arrData[5]);
+             echo $strDate."<br>";
+            return date("Y-m-d",mktime(0, 0, 0, $strMonth, $strDate, $strYear));
+        }else{
+           $strH = substr($date_source, $arrData[0], $arrData[1]);
+           echo $strH."<br>";
+           $strI = substr($date_source, $arrData[2], $arrData[3]);
+           echo $strI."<br>";
+           $strS = substr($date_source, $arrData[4], $arrData[5]);
+           echo $strS."<br>";
+           return date("h:i:s",mktime($strH, $strI, $strS, date("m"),  date("d"), date("Y")));
+        }
+    }
 }

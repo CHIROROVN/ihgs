@@ -54,6 +54,6 @@ class TimecardModel
     {
         $results = DB::table($this->table)->where('mt_id', $id)->update($data);
         return $results;
-    }
+    }    
 
 }

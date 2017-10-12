@@ -57,80 +57,37 @@ class TimecardController extends BackendController
             $upload_file = Input::file('file_path');
             $extFile  = $upload_file->getClientOriginalExtension();
 
-            if(!empty(Input::get('tt_dataname'))){
-               /* $flag  = $clsTimecard->checkFileValid(trim(Input::get('file_path')));
-                if($flag == true){
-                    $fn = Input::get('tt_dataname').'.'.$extFile;
-                }else{
-                    $fn = Input::get('tt_dataname').'_'.rand(time(),time()).'.'.$extFile;
-                }*/
+            if(!empty(Input::get('tt_dataname'))){              
                 $fn = Input::get('tt_dataname').'_'.rand(time(),time()).'.'.$extFile;
             }else{
                 $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
-            }
-            
+            }       
             
             $path = '/uploads/';          
-           $upload_file->move(public_path().$path, $fn);
-            //move_uploaded_file($upload_file->getPathName(),public_path().$path.$fn);           
-            Session::flash('success', trans('common.msg_regist_success')); 
-            $data = array();
-           /* Excel::batch(public_path().$path, function($rows,$fn) {              
-                $rows->each(function($row) {     
-                    echo $row->staff_id;
-                     $arrData[]  =  $row->staff_id;
-                     $arrData[$row->staff_id]['tt_staff_id_no']  = $row->staff_id;
-                     $arrData[$row->staff_id]['tt_date']  = $row->date;
-                     $arrData[$row->staff_id]['tt_gotime']  = $row->gotime;
-                     $arrData[$row->staff_id]['tt_backtime']  = $row->backtime;         
-                     
-                });
-
-            });
-            Excel::load(public_path().$path.$fn, function($reader) {
-                
-
-                // Getting all results
-                $results = $reader->get();
-
-                // ->all() is a wrapper for ->get() and will work the same
-                $results = $reader->all();
-                $arrData = $results->toArray();         
-                
-
-
-            }, 'UTF-8');  
+            $upload_file->move(public_path().$path, $fn);                             
+            $data = array();           
+            $data = Excel::load(public_path().$path.$fn, function($reader) {
+            })->get();
             $timecardModel = $clsTimecardModel->get_last_insert();
-            $i=0;
-            Excel::filter('chunk')->load(public_path().$path.$fn)->chunk(250, function($results)
-            {
-                    foreach($results as $row)
-                    {
-
-                        $data=$row->toArray();  
-                        print_r($data);     
-                        
-                        print_r($timecardModel);                
-                        $clsTimecard      = new TimecardImportModel();
-                        $dataInsert             = array(
-                            'tt_staff_id_no'    => $data['staff_id'],
-                            'tt_date'           => date('Y-m-d',$data['date']),           
-                            'tt_gotime'         => $data['gotime'], 
-                            'tt_backtime'       => $data['backtime'],
-                            'tt_dataname'       => Input::get('tt_dataname'),
-                            'last_date'         => date('Y-m-d H:i:s'),
-                            //'last_kind'         => INSERT,
-                            'last_ipadrs'       => CLIENT_IP_ADRS,
-                            'last_user'         => Auth::user()->u_id            
-                        );
-                        $clsTimecard->insert($dataInsert);
-
-                    }                    
-            }); */ 
+            $date_formats  = Config::get('constants.DATE_FORMAT');
+            $time_formats  = Config::get('constants.TIME_FORMAT');          
+            if(!empty($data) && $data->count()){                
+                foreach ($data as $key => $value) {                                      
+                    $dataInsert             = array(
+                        'tt_staff_id_no'    => $value->staff_id,
+                        'tt_date'           => $this->changeDate($value->date,$date_formats[$timecardModel[0]->mt_date_format],'date','date'),           
+                        'tt_gotime'         => $this->changeDate($value->gotime,$time_formats[$timecardModel[0]->mt_gotime_format],'time','time'), 
+                        'tt_backtime'       => $this->changeDate($value->backtime,$time_formats[$timecardModel[0]->mt_gotime_format],'time','time'),
+                        'tt_dataname'       => Input::get('tt_dataname'),
+                        'last_date'         => date('Y-m-d H:i:s'),                        
+                        'last_ipadrs'       => CLIENT_IP_ADRS,
+                        'last_user'         => Auth::user()->u_id            
+                    );
+                    $clsTimecard->insert($dataInsert);
+                }                
+            }else Session::flash('danger', trans('common.msg_regist_danger'));          
                             
-        }else Session::flash('danger', trans('common.msg_regist_danger'));
-
-
+        }else Session::flash('danger', trans('common.msg_regist_danger'));         
         return redirect()->route('backend.timecard.index');
     }
 

@@ -24,7 +24,7 @@
       </div>
     @endif  
   </div>
-  <p class="intro">検索の結果、{{$staffs['count']}}件が該当しました。うち、{{$staffs['start']}}～{{$staffs['end']}} 件を表示しています。</p>
+  <p class="intro">検索の結果、{{$staffs['count']}}件が該当しました。うち、@if($staffs['count']==0) 0～0  @else  {{$staffs['start']}}～{{$staffs['end']}} @endif件を表示しています。</p>
           <!-- tables -->
           <div class="agile-tables">
             <div class="w3l-table-info agile_info_shadow">
@@ -48,7 +48,7 @@
                 <tbody>
                   <?php 
                   $i = 0;
-                  $max = count($staffs);
+                  $max = count($staffs); 
                 ?>
                 @if(empty($staffs['data']) || count($staffs['data']) < 1)
                 <tr>
@@ -63,8 +63,8 @@
                     <td align="center"><input name="btnDelete" id="btnDelete" value="削除"  type="button"  class="btn btn-primary btn-xs" onclick="if (confirm('Are you sure delete')) {location.href='{{ asset('staff/delete/' . $staff->staff_id) }}' }"></td>
                     <td>{{ $staff->staff_id_no }}</td>
                     <td>{{ $staff->staff_name }}</td>
-                    <td>{{ $staff->staff_belong }}</td>
-                    <td>{{ $staff->staff_card1 }}</td>
+                    <td>{{ $staff->belong_name }}</td>
+                    <td>@if(!empty($staff->staff_card1)) {{$staff->staff_card1}} @endif</td>
                     <td>{{ $staff->staff_pc1 }}</td>
                     <td align="center"><input name="button" value="編集" type="button" class="btn btn-primary btn-xs" onclick="location.href='{{ asset('staff/edit/' . $staff->staff_id) }}'"></td>
                   </tr>
