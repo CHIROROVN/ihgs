@@ -12,13 +12,15 @@ class PcImportModel
     public function Rules()
     {
         return array(
-            'tp_file_csv'               => 'mimes:csv',
+            'tp_dataname'               => 'nullable|unique:t_pc,tp_dataname',
+            'tp_file_csv'               => 'nullable|mimes:csv',
         );
     }
 
     public function Messages()
     {
         return array(
+            'tp_dataname.unique'        => trans('validation.error_tp_dataname_unique'),
             'tp_file_csv.mimes'         => trans('validation.error_tp_file_csv_mimes'),
         );
     }

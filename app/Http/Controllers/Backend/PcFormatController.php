@@ -6,14 +6,15 @@ use Input;
 use Validator;
 use Session;
 use Auth;
-//use Config;
+use Config;
 
 class PcFormatController extends BackendController
 {
 	public function format(){
 		$clsPc            = new PcModel();
-		$mpc = $clsPc->getPc();		
-		return view('backend.pc.format', compact('mpc'));
+		$mpc = $clsPc->getPc();
+		$pc_date_format = Config::get('constants.PC_DATETIME_FORMAT');	
+		return view('backend.pc.format', compact('mpc', 'pc_date_format'));
 	}
 
 

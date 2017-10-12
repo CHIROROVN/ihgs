@@ -15,6 +15,8 @@ class BackendController extends Controller
             define($key, $value);
         }
 
+       
+
         //get IP address from user
         if (isset($_SERVER['HTTP_CLIENT_IP']))
             $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
