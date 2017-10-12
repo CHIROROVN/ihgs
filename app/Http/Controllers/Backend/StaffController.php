@@ -14,6 +14,7 @@ use Validator;
 use URL;
 use Session;
 use Config;
+use Excel;
 
 class StaffController extends BackendController
 {
@@ -99,6 +100,7 @@ class StaffController extends BackendController
     public function postImport(){
         $dataInput              = array();
         $clsStaff               = new StaffModel();
+        $clsBelong            = new BelongModel(); 
         $inputs                 = Input::all();
         $rules                  = $clsStaff->Rules();
         $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
@@ -118,9 +120,50 @@ class StaffController extends BackendController
             $fn          = 'file'.'_'.rand(time(),time()).'.'.$extFile;
             $path        = '/uploads/';
             $upload_file->move(public_path().$path, $fn);
-            Session::flash('success', trans('common.msg_regist_success'));
+            $data = array();           
+            $data = Excel::load(public_path().$path.$fn, function($reader) {
+            }, 'UTF-8')->get();
+            
+            if(!empty($data) && $data->count()){ 
+
+                foreach ($data as $key => $value) { 
+                    $staff_belong   =  $clsBelong->get_by_belong_name($value->staff_belong);                                    
+                    $dataInsert             = array(
+                        'staff_id_no'       => $value->staff_id_no,
+                        'staff_name'        => $value->staff_name,           
+                        'staff_belong'      => $staff_belong->belong_id,
+                        'staff_card1'       => $value->staff_card1,
+                        'staff_card2'       => $value->staff_card2,
+                        'staff_card3'       => $value->staff_card3,
+                        'staff_card4'       => $value->staff_card4,
+                        'staff_card5'       => $value->staff_card5,
+                        'staff_card6'       => $value->staff_card6,
+                        'staff_card7'       => $value->staff_card7,
+                        'staff_card8'       => $value->staff_card8,
+                        'staff_card9'       => $value->staff_card9,
+                        'staff_card10'      => $value->staff_card10,
+                        'staff_pc1'         => $value->staff_pc1,
+                        'staff_pc2'         => $value->staff_pc2,
+                        'staff_pc3'         => $value->staff_pc3,
+                        'staff_pc4'         => $value->staff_pc4,
+                        'staff_pc5'         => $value->staff_pc5,
+                        'staff_pc6'         => $value->staff_pc6,
+                        'staff_pc7'         => $value->staff_pc7,
+                        'staff_pc8'         => $value->staff_pc8,
+                        'staff_pc9'         => $value->staff_pc9,
+                        'staff_pc10'        => $value->staff_pc10,
+                        'last_date'         => date('Y-m-d H:i:s'), 
+                        'last_kind'         => INSERT,                       
+                        'last_ipadrs'       => CLIENT_IP_ADRS,
+                        'last_user'         => Auth::user()->u_id            
+                    );                   
+                    $clsStaff->insert($dataInsert);
+                }   
+                Session::flash('success', trans('common.msg_regist_success'));             
+            }else Session::flash('danger', trans('common.msg_regist_danger'));  
+            Session::flash('success', trans('common.msg_regist_success'));           
         }else Session::flash('danger', trans('common.msg_regist_danger'));
-        return redirect()->route('backend.staff.import',$data);    
+        return redirect()->route('backend.staff.import');    
     }
 
 	public function search(){

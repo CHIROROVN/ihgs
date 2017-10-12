@@ -10,7 +10,7 @@
   </div>
 </div>
 <!-- //breadcrumbs -->
-{!! Form::open(array('url' => 'staff/search','id'=>'frmSearch', 'method' => 'post')) !!}
+{!! Form::open(array('url' => 'staff','id'=>'frmSearch', 'method' => 'post')) !!}
   <div class="inner_content_w3_agile_info two_in">
   <!--/forms-->
     <div class="forms-main_agileits">

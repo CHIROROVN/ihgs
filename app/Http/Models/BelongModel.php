@@ -70,6 +70,12 @@ class BelongModel
         return $results;
     }
 
+     public function get_by_belong_name($belong_name)
+    {
+        $results = DB::table($this->table)->where('belong_name','like', '%'.$belong_name.'%')->where('last_kind', '<>', DELETE)->first();
+        return $results;
+    }
+
     public function update($id, $data)
     {
         $results = DB::table($this->table)->where('belong_id', $id)->update($data);
