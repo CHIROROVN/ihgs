@@ -48,7 +48,7 @@
                 <tbody>
                   <?php 
                   $i = 0;
-                  $max = count($staffs); 
+                  $max = count($staffs['data']); 
                 ?>
                 @if(empty($staffs['data']) || count($staffs['data']) < 1)
                 <tr>
@@ -74,9 +74,7 @@
               </table>
               <div class="row mar-bottom15">
                 <div class="col-md-12 text-center">
-                 {{ $staffs['data']->links() }}
-                  <!--<input name="submit2" disabled="" value="前の20件を表示" type="submit" class="btn btn-primary btn-sm">
-                  <input name="submit3" value="次の20件を表示" type="submit" class="btn btn-primary btn-sm mar-left15">-->
+                 {{ $staffs['data']->links() }}                  
                 </div>
               </div>
               <div class="row">
@@ -114,19 +112,14 @@
 </div>
 <!-- /.modal -->
 <script type="text/javascript">
-  $('#btnDelete').on('click', function (e) {
-    e.preventDefault();
-    var id = $(this).closest('tr').data('id');
-    $('#myModal').data('id', id).modal('show');
-});
-function btnDelete($id)
+  function btnDelete($id)
  {
       var id = $id;
     $('#myModal').data('id', id).modal('show');
  }   
 $('#btnDelteYes').click(function () {
     var id = $('#myModal').data('id');
-    location.href='{{ asset('staff/delete/') }}'+'/'+ id ;    
-});
+    location.href='{{ asset('staff/delete/') }}'+'/'+ id ; 
+  });
 </script>           
 @endsection

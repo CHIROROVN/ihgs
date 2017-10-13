@@ -45,7 +45,8 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 
 	//Working Time
 	Route::get('/overwork', ['as' => 'backend.workingtime.index', 'uses' => 'WorkingTimeController@index']);
-	Route::get('/overtime-detail', ['as' => 'backend.workingtime.detail', 'uses' => 'WorkingTimeController@detail']);
+	Route::post('/overwork', ['as' => 'backend.workingtime.index', 'uses' => 'WorkingTimeController@index']);
+	Route::get('/overtime/detail/{id}', ['as' => 'backend.workingtime.detail', 'uses' => 'WorkingTimeController@detail']);
 
 	 //division
     Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);

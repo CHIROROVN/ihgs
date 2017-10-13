@@ -5,7 +5,7 @@ use Validator;
 
 class WorkingTimeModel
 {
-    protected $table   = '';
+    protected $table   = 't_staff';
     protected $primaryKey   = '';
     public $timestamps  = false;
 
@@ -19,11 +19,30 @@ class WorkingTimeModel
         return array();
     }
 
-   
+    public function get_all($belong_id=null, $year=null)
+    {        
+        $results = DB::table($this->table)->join('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')->where('t_staff.last_kind', '<>', DELETE);
+        if(!empty($belong_id))     $results = $results->where('staff_belong',  '=', $belong_id);               
+
+        $count = $results->count();
+        $data  = $results->orderBy('staff_id', 'desc')->get();       
+        return [
+            'count' => $count,
+            'data' => $data
+        ];      
+    }
+    public function get_by_id($id)
+    {
+        $results = DB::table($this->table)->join('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')->where('staff_id', $id)->first();
+        return $results;
+    }
+
   //Manage Pc format
     public function getPc(){
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->first();
     }
+
+
 
     //pc insert
     public function insert($data)
