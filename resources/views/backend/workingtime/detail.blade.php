@@ -36,10 +36,18 @@
                   </tr>
                 </thead>
                 <tbody>
+                  @if(empty($worktimes) || count($worktimes) < 1)
                   <tr>
-                    <td>2017/08/01(火)</td>
-                    <td>9:00</td>
-                    <td>18:00</td>
+                  <td colspan="15">
+                    <h3 align="center">該当するデータがありません。</h3>
+                  </td>
+                </tr>
+                  @else  
+                  @foreach($worktimes as $worktime)  
+                  <tr>
+                    <td>{{DayeJp($worktime->tt_date, '/')}}</td>
+                    <td>{{$worktime->tt_gotime}}</td>
+                    <td>{{$worktime->tt_backtime}}</td>
                     <td>8:45</td>
                     <td>18:15</td>
                     <td>8:55</td>
@@ -47,7 +55,8 @@
                     <td></td>
                     <td></td>
                   </tr>
-                  
+                  @endforeach
+                @endif      
                 </tbody>
               </table>
               <div class="row">
@@ -57,5 +66,5 @@
               </div>
             </div>
           </div>
-</div>          
+</div>        
 @endsection

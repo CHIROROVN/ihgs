@@ -27,8 +27,10 @@ class WorkingTimeController extends BackendController
 	public function detail($id){
 		$clsWorkingTime   = new WorkingTimeModel();
         $data['year']     = (isset($_GET['year']) && $_GET['year'] >2000)?$_GET['year']:'2017';
-		$data['staff']    =  $clsWorkingTime->get_by_id($id,$data['year']);
-		//print_r($data['staff']);
+		$data['staff']    =  $clsWorkingTime->get_by_id($id);
+		$data['worktimes']=  $clsWorkingTime->get_timecard($id,$data['year']);
+		
+		
 		return view('backend.workingtime.detail',$data);
 	}
 }

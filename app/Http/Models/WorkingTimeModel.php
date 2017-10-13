@@ -31,15 +31,26 @@ class WorkingTimeModel
             'data' => $data
         ];      
     }
-    public function get_by_id($id,$year)
+    public function get_by_id($id)
     {
-        $results = DB::table($this->table)->join('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')
-                                         // ->leftJoin('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')                                          
-                                          ->where('t_staff.staff_id', $id)
-                                          //->whereYear('t1.tt_date', $year)->whereMonth('t1.tt_date','>', '4')
-                                          ->get();
 
-        return $results[0];
+        $results = DB::table($this->table)->join('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')                                                                                  
+                                          ->where('t_staff.staff_id', $id)                                          
+                                          ->first();         
+
+        return $results;
+    }
+
+    public function get_timecard($id,$year)
+    {
+        $results = DB::table($this->table)->join('t_timecard as t1', function ($join) {
+                                                $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
+                                                     ->whereYear('t1.tt_date', '2017')->whereMonth('t1.tt_date','>', '4');
+                                            })                                         
+                                          ->where('t_staff.staff_id', $id)                                          
+                                          ->get();         
+
+        return $results;
     }
 
   //Manage Pc format
