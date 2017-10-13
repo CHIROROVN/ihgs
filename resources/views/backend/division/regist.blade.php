@@ -53,7 +53,7 @@
                       <input onclick="location.href='{{route('backend.division.index')}}'" value="登録済み部の一覧に戻る" type="button" class="btn btn-primary btn-sm">
                     </div>
                   </div>
-                  </form> 
+               
                 </div>
               </div>
             </div>

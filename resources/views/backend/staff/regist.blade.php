@@ -10,38 +10,33 @@
     </ul>
   </div>
 </div>
-        <!-- //breadcrumbs -->
-        <div class="inner_content_w3_agile_info two_in">
-          <!--/forms-->
-          <div class="forms-main_agileits">
-            <header class="panel-heading">
-              社員データの新規登録
-            </header>
-            <div class="graph-form agile_info_shadow">
-            <!--form-->
-              <div class="form-body">
-                {!! Form::open(array('url' => 'staff/regist','id'=>'frmRegist', 'method' => 'post')) !!} 
-                  <table class="table table-bordered mar-bottom15">
-                    <tr>
-                      <td class="col-title col-md-3"><label for="">社員番号</label></td>
-                      <td class="col-md-9">
-                        <div class="col-md-6">
-                          <input type="text" class="form-control" id="staff_id_no" name="staff_id_no">
-                          <span class="help-block" id="error-staff_id_no">@if ($errors->first('staff_id_no')) ※{!! $errors->first('staff_id_no') !!} @endif</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="col-title col-md-3"><label for="">社員名</label></td>
-                      <td class="col-md-9">
-                        <div class="col-md-6">
-                          <input type="text" class="form-control" id="staff_name" name="staff_name">
-                          <span class="help-block" id="error-staff_name">@if ($errors->first('staff_name')) ※{!! $errors->first('staff_name') !!} @endif</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="col-title col-md-3"><label for="">部署名</label></td>
+<!-- //breadcrumbs -->
+  <div class="inner_content_w3_agile_info two_in">
+    <!--/forms-->
+    <div class="forms-main_agileits">
+      <header class="panel-heading">社員データの新規登録</header>
+      <div class="graph-form agile_info_shadow">
+      {!! Form::open(array('url' => 'staff/regist','id'=>'frmRegist', 'method' => 'post')) !!} 
+        <div class="form-body">
+          <table class="table table-bordered mar-bottom15">
+            <tr><td class="col-title col-md-3"><label for="">社員番号</label></td>
+              <td class="col-md-9"><div class="col-md-6">
+                <input type="text" class="form-control" id="staff_id_no" name="staff_id_no">
+                <span class="help-block" id="error-staff_id_no">@if ($errors->first('staff_id_no')) ※{!! $errors->first('staff_id_no') !!} @endif</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-title col-md-3"><label for="">社員名</label></td>
+              <td class="col-md-9">
+                <div class="col-md-6">
+                  <input type="text" class="form-control" id="staff_name" name="staff_name">
+                  <span class="help-block" id="error-staff_name">@if ($errors->first('staff_name')) ※{!! $errors->first('staff_name') !!} @endif</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-title col-md-3"><label for="">部署名</label></td>
                       <td class="col-md-9">
                         <div class="col-md-6">
                           <select name="staff_belong" id="staff_belong" class="form-control">
@@ -231,13 +226,14 @@
                       </td>
                     </tr>
                   </table>
+                   
                   <div class="row">
                     <div class="col-md-12 text-center">
                       <input  value="登録する" type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary btn-sm">
                       <input name="button3" value="クリア" type="reset" class="btn btn-primary btn-sm mar-left15">
                     </div>
                   </div>
-                  </form> 
+                 {!! Form::close() !!}  
                 </div>
               </div>
               <!--form-->

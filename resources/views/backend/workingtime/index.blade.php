@@ -13,7 +13,7 @@
         <div class="inner_content_w3_agile_info two_in">
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
-              <form> 
+              {!! Form::open(array('url' => 'overwork','id'=>'frm', 'method' => 'post')) !!} 
                 <table id="table">
                   <thead>
                     <tr>
@@ -26,14 +26,21 @@
                   <tr>
                     <td>
                       <select name="select" id="select" class="form-control">
-                        <option selected="">全社</option>
-                        <option>├営業部</option>
-                        <option>│├営業一課</option>
-                        <option>│├営業二課</option>
-                        <option>│└営業三課</option>
-                        <option>└総務人事部</option>
-                        <option>&#12288;├総務課</option>
-                        <option>&#12288;└人事課</option>
+                        @if(!empty($divisions))
+                              @foreach($divisions as $division)
+                                  @if(!empty($division->belong_parent_id))
+                                    @if($division->belong_id == $division->belong_parent_id)
+                                      <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > - {{$division->belong_name}} </option>
+                                    @else
+                                    <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > &#12288;|- {{$division->belong_name}} </option>
+                                    @endif
+
+                                  @else
+                                    <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > {{$division->belong_name}} </option>
+                                  @endif
+
+                              @endforeach
+                            @endif
                       </select>
                     </td>
                     <td>
@@ -48,7 +55,7 @@
                       </td>
                   </tr>
                  </table>
-                </form> 
+                 {!! Form::close() !!}  
               </div>
            </div>
           <!-- tables -->

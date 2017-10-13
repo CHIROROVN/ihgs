@@ -233,11 +233,12 @@
                       <input name="button3" value="クリア" type="reset" class="btn btn-primary btn-sm mar-left15">
                     </div>
                   </div>
-                  </form> 
+                  
                 </div>
               </div>
               <!--form-->
             </div>
+       {!! Form::close() !!}        
 </div>     
 <script type="text/javascript">
 $("#btnSubmit").on("click",function() {   
