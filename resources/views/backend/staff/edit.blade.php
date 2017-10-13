@@ -21,7 +21,7 @@
        {!! Form::open(array('url' => 'staff/edit/'.$staff->staff_id,'id'=>'frmEdit', 'method' => 'post')) !!} 
         <table class="table table-bordered mar-bottom15">
           <tr>
-            <td class="col-title col-md-3"><label for="">社員番号</label></td>
+            <td class="col-title col-md-3"><label for="">社員番号<span class="f_caution">(*)</span></label></td>
             <td class="col-md-9">
             <div class="col-md-6">
               <input type="text" class="form-control" id="staff_id_no" name="staff_id_no" value="{{$staff->staff_id_no}}">
@@ -30,7 +30,7 @@
             </td>
           </tr>
           <tr>
-            <td class="col-title col-md-3"><label for="">社員名</label></td>
+            <td class="col-title col-md-3"><label for="">社員名<span class="f_caution">(*)</span></label></td>
             <td class="col-md-9">
               <div class="col-md-6">
                 <input type="text" class="form-control" id="staff_name" name="staff_name" value="{{$staff->staff_name}}">

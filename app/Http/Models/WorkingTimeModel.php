@@ -45,14 +45,30 @@ class WorkingTimeModel
     {
         $results = DB::table($this->table)->join('t_timecard as t1', function ($join) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
-                                                     ->whereYear('t1.tt_date', '2017')->whereMonth('t1.tt_date','>', '4');
+                                                     ->Where(function ($query) {
+                                                            $query->whereYear('t1.tt_date', '2017')
+                                                                  ->whereMonth('t1.tt_date','>', '3');
+                                                        })
+                                                     ->orWhere(function ($query) {
+                                                            $query->whereYear('t1.tt_date', '2018')
+                                                                  ->whereMonth('t1.tt_date','<', '4');
+                                                        });
+                                                     //->whereYear('t1.tt_date', '2017')->whereMonth('t1.tt_date','>', '3');
                                             })                                         
                                           ->where('t_staff.staff_id', $id)                                          
                                           ->get();         
 
         return $results;
     }
+    public function get_doorcard($strCard,$year)
+    {
+        /*$results = DB::table('t_doorcard')                               
+                                          //->whereIn('td_card',$strCard) 
+                                          ->whereYear('t1.tt_date', '2017')->whereMonth('t1.tt_date','>', '3');                                         
+                                          ->get();         
 
+        return $results;*/
+    }
   //Manage Pc format
     public function getPc(){
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->first();

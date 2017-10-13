@@ -15,7 +15,7 @@ class WorkingTimeController extends BackendController
 		$clsWorkingTime       = new WorkingTimeModel();
 		$clsBelong            = new BelongModel();
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';		
-		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'';
+		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'2017';
 		$data['divisions']    = $clsBelong->list_division_tree(); 
 		//$data['error']['error_belong_name_required']    = trans('validation.error_belong_name_required');
         //$data['error']['error_belong_code_required']    = trans('validation.error_belong_code_required');

@@ -46,12 +46,12 @@
                   @foreach($worktimes as $worktime)  
                   <tr>
                     <td>{{DayeJp($worktime->tt_date, '/')}}</td>
-                    <td>{{$worktime->tt_gotime}}</td>
-                    <td>{{$worktime->tt_backtime}}</td>
-                    <td>8:45</td>
-                    <td>18:15</td>
-                    <td>8:55</td>
-                    <td>18:03</td>
+                    <td>{{formatshortTime($worktime->tt_gotime)}}</td>
+                    <td>{{formatshortTime($worktime->tt_backtime)}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                   </tr>

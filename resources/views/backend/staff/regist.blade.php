@@ -19,7 +19,7 @@
       {!! Form::open(array('url' => 'staff/regist','id'=>'frmRegist', 'method' => 'post')) !!} 
         <div class="form-body">
           <table class="table table-bordered mar-bottom15">
-            <tr><td class="col-title col-md-3"><label for="">社員番号</label></td>
+            <tr><td class="col-title col-md-3"><label for="">社員番号<span class="f_caution">(*)</span></label></td>
               <td class="col-md-9"><div class="col-md-6">
                 <input type="text" class="form-control" id="staff_id_no" name="staff_id_no">
                 <span class="help-block" id="error-staff_id_no">@if ($errors->first('staff_id_no')) ※{!! $errors->first('staff_id_no') !!} @endif</span>
@@ -27,7 +27,7 @@
               </td>
             </tr>
             <tr>
-              <td class="col-title col-md-3"><label for="">社員名</label></td>
+              <td class="col-title col-md-3"><label for="">社員名<span class="f_caution">(*)</span></label></td>
               <td class="col-md-9">
                 <div class="col-md-6">
                   <input type="text" class="form-control" id="staff_name" name="staff_name">

@@ -247,6 +247,16 @@ if (!function_exists('DayeJp')) {
 		}
 	}
 }
+if (!function_exists('formatshortTime')) {
+	function formatshortTime($time=null, $chars=':'){
+		if(!empty($time)){
+			$arrData = explode($chars, $time);
+			return $arrData[0].':'.$arrData[1];
+		}else{
+			return null;
+		}	
+	}	
+}	
 
 if (!function_exists('neatest_trim')) {
 
