@@ -170,6 +170,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Nestable\NestableServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -242,6 +243,7 @@ return [
         'Carbon' => 'Carbon\Carbon',
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Nestable' => Nestable\Facades\NestableService::class
 
     ],
 

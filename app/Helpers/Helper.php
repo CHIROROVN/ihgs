@@ -15,6 +15,15 @@ if (!function_exists('division')) {
     }
 }
 
+if (!function_exists('divisions')) {
+	function divisions($name, $selected)
+	{
+		$dropdown = App\Http\Controllers\Backend\SearchController::getDivision($name, $selected);
+
+		return $dropdown;
+    }
+}
+
 if (!function_exists('divi_tree')) {
 	function divi_tree($belong_id, $belong_parent_id)
 	{

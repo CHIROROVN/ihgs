@@ -28,6 +28,9 @@
                   <tbody>
                   <tr>
                     <td>
+                      {!! divisions('belong_name', $belong_selected) !!}
+                    </td>
+                    <!-- <td>
                       <select name="u_belong" id="u_belong" class="form-control">
                         @if(!empty($divisions))
                               @foreach($divisions as $division)
@@ -46,7 +49,7 @@
                               @endforeach
                             @endif
                       </select>
-                    </td>
+                    </td> -->
                     <td>
                       <div class="fl-left">
                         <select name="year_from" class="form-control form-control-date">

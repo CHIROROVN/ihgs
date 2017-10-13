@@ -65,34 +65,9 @@
                       <td class="col-title col-md-3"><label for="">所属</label></td>
                       <td class="col-md-9">
                         <div class="fl-left">
-                          <select name="u_belong" class="form-control">
 
-                            @if(!empty($divisions))
-                              @foreach($divisions as $division)
-
-                                  @if(!empty($division->belong_parent_id))
-                                    @if($division->belong_id == $division->belong_parent_id)
-                                      <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @elseif($user->u_belong == $division->belong_id) selected  @endif > - {{$division->belong_name}} </option>
-                                    @else
-                                    <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @elseif($user->u_belong == $division->belong_id) selected @endif > &#12288;|- {{$division->belong_name}} </option>
-                                    @endif
-
-                                  @else
-                                    <option value="{{$division->belong_id}}" @if(old('u_belong') == $division->belong_id) selected @endif > {{$division->belong_name}} </option>
-                                  @endif
-
-                              @endforeach
-                            @endif
-<!--                             <option value="" @if(old('u_belong') == '') selected @elseif($user->u_belong == '') selected @endif >全社</option>
-                            <option value="1" @if(old('u_belong') == '1') selected @elseif($user->u_belong == '1') selected @endif >├営業部</option>
-                            <option value="2" @if(old('u_belong') == '2') selected @elseif($user->u_belong == '2') selected  @endif >│├営業一課</option>
-                            <option value="3" @if(old('u_belong') == '3') selected @elseif($user->u_belong == '3') selected  @endif >│├営業二課</option>
-                            <option value="4" @if(old('u_belong') == '4') selected @elseif($user->u_belong == '4') selected  @endif >│└営業三課</option>
-                            <option value="5" @if(old('u_belong') == '5') selected @elseif($user->u_belong == '5') selected  @endif >└総務人事部</option>
-                            <option value="6" @if(old('u_belong') == '6') selected @elseif($user->u_belong == '6') selected  @endif >&#12288;├総務課</option>
-                            <option value="7" @if(old('u_belong') == '7') selected @elseif($user->u_belong == '7') selected  @endif >&#12288;└人事課</option>
- -->
-
+                          {!! divisions('u_belong' ,(!empty(old('u_belong')) ? old('u_belong') : $user->u_belong)) !!}
+                          
                           </select>
                           @if ($errors->has('u_belong'))
 	                            <span class="help-block">
