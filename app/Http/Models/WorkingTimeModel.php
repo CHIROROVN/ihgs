@@ -31,10 +31,15 @@ class WorkingTimeModel
             'data' => $data
         ];      
     }
-    public function get_by_id($id)
+    public function get_by_id($id,$year)
     {
-        $results = DB::table($this->table)->join('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')->where('staff_id', $id)->first();
-        return $results;
+        $results = DB::table($this->table)->join('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')
+                                         // ->leftJoin('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')                                          
+                                          ->where('t_staff.staff_id', $id)
+                                          //->whereYear('t1.tt_date', $year)->whereMonth('t1.tt_date','>', '4')
+                                          ->get();
+
+        return $results[0];
     }
 
   //Manage Pc format

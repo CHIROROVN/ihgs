@@ -118,13 +118,22 @@ class BackendController extends Controller
     protected function changeDate($date_source,$date_format,$source_type,$result_type)
     {
         $arrData = explode(":", $date_format);
-        
+        //echo $date_source;
+        //echo "<pre>";print_r($arrData);echo "</pre>";
         if($source_type=='date'){
             $strYear = substr($date_source, $arrData[0], $arrData[1]);           
             $strMonth = substr($date_source, $arrData[2], $arrData[3]);            
             $strDate = substr($date_source, $arrData[4], $arrData[5]);             
             return date("Y-m-d",mktime(0, 0, 0, $strMonth, $strDate, $strYear));
-        }else{
+        }elseif($source_type=='fulldate'){            
+            $strYear = substr($date_source, $arrData[0], $arrData[1]);                       
+            $strMonth = substr($date_source, $arrData[2], $arrData[3]);                        
+            $strDate = substr($date_source, $arrData[4], $arrData[5]); 
+            $strH = substr($date_source, $arrData[6], $arrData[7]);                  
+            $strI = substr($date_source, $arrData[8], $arrData[9]);                      
+            $strS = substr($date_source, $arrData[10], $arrData[11]);                   
+            return date("Y-m-d h:i:s",mktime((int)$strH, (int)$strI, (int)$strS, (int)$strMonth, (int)$strDate, (int)$strYear));
+        }else{    
            $strH = substr($date_source, $arrData[0], $arrData[1]);           
            $strI = substr($date_source, $arrData[2], $arrData[3]);           
            $strS = substr($date_source, $arrData[4], $arrData[5]);           

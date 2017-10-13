@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers\Backend;
+<?php 
+namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class DoorController extends BackendController
 		$data =array();
         $clsDoorcard               = new DoorcardImportModel();
         $data['doorcards']         = $clsDoorcard->get_all();
+        //echo "<pre>";print_r($data['doorcards']);echo "</pre>";
         $data['error']['error_td_dataname_required']    = trans('validation.error_td_dataname_required');
         $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
 		return view('backend.door.index',$data);
@@ -136,8 +138,30 @@ class DoorController extends BackendController
             }
 
             $path = '/uploads/';
-            $upload_file->move(public_path().$path, $fn);                  
-            Session::flash('success', trans('common.msg_regist_success'));                
+            $upload_file->move(public_path().$path, $fn); 
+            $data = array();     
+
+            $data = Excel::load(public_path().$path.$fn, function($reader) {
+            }, 'UTF-8')->get();
+            
+            $date_formats  = Config::get('constants.TOUCHTIME_FORMAT');
+            $doorcardModel = $clsDoorcardModel->getLastRow();            
+            if(!empty($data) && $data->count()){                
+                foreach ($data as $key => $value) {                                          
+                    $dataInsert             = array(
+                        'td_card'           => $value->td_card,
+                        'td_door'           => $value->td_door,           
+                        'td_touchtime'         => $this->changeDate($value->td_touchtime,$date_formats[$doorcardModel->md_touchtime_format],'fulldate','time') ,                         
+                        'td_dataname'       => Input::get('td_dataname'),
+                        'last_date'         => date('Y-m-d H:i:s'),                        
+                        'last_ipadrs'       => CLIENT_IP_ADRS,
+                        'last_user'         => Auth::user()->u_id            
+                    );
+                   $clsDoorcard->insert($dataInsert);
+                }   
+                Session::flash('success', trans('common.msg_regist_success'));             
+            }else Session::flash('danger', trans('common.msg_regist_danger'));            
+                            
         }else Session::flash('danger', trans('common.msg_regist_danger'));
         return redirect()->route('backend.door.index');
     }

@@ -1,3 +1,4 @@
+<?php //print_r($doorcards);exit;?>
 @extends('backend.layouts.app')
 @section('content')
 <!-- breadcrumbs -->
@@ -71,7 +72,7 @@
               <th>取り込み日時</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody>          
           @if(empty($doorcards) || count($doorcards) < 1)
           <tr>
             <td colspan="3">

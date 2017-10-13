@@ -26,7 +26,7 @@ class DoorcardImportModel
     
     public function get_all()
     {
-        $results = DB::table($this->table)->orderBy('td_id', 'desc')->get();
+        $results = DB::table($this->table)->orderBy('td_id', 'desc')->take(100)->get();
         return $results;
     }
     public function insert($data)

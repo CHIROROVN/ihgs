@@ -13,7 +13,7 @@
             <div class="w3l-table-info agile_info_shadow">
               <div class="row mar-bottom15">
                 <div class="col-md-12 text-left">
-                  {{$staff->belong_name}}／{{$staff->staff_id_no}}／{{$staff->staff_name}}
+                 {{$staff->belong_name}}／{{$staff->staff_id_no}}／{{$staff->staff_name}}
                 </div>
               </div>
               <table id="table" class="mar-bottom15">
