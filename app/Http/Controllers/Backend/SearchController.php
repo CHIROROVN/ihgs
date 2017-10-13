@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Backend\BackendController;
-use App\Http\Models\BelongModel;
+use App\Http\Models\SearchModel;
 
 use App\Http\Models\DivisionModel;
 
@@ -11,35 +11,64 @@ use Config;
 
 class SearchController extends BackendController
 {
+	public static function getDivision($name='belong_name', $selected=1){
+		$clsDivision = new DivisionModel();
+		return $clsDivision->attr(['name' => $name, 'class'=>'form-control', 'placeholder'=>'部課名'])->selected($selected)->orderBy('belong_sort', 'asc')->renderAsDropdown();
+	}
+
+
 	public function index(){
+		$clsSearch = new SearchModel();
 		$data = array();
-		$clsBelong = new BelongModel();
-		$data['divisions'] = $clsBelong->list_division_tree();
+		$where = array();
+		$data['worktimes'] = array();
+		//$data['divisions'] = $clsBelong->list_division_tree();
 
 		$data['curr_year'] = date('Y');
 		$data['curr_month'] = date('m');
 
-		$data['belong_name'] = Input::get('belong_name');
+		$data['belong_id'] = Input::get('belong_id');
 		$data['year_from'] = Input::get('year_from');
 		$data['month_from'] = Input::get('month_from');
 		$data['year_to'] = Input::get('year_to');
 		$data['month_to'] = Input::get('month_to');
-		$data['words'] = Input::get('words');
+		$data['kw'] = Input::get('kw');
 
-		$clsDivision = new DivisionModel();
+		
 		//$data['division'] = $clsDivision->nested()->get();
 
-		if(!empty(Input::get('belong_name'))){
-			$data['belong_selected'] = Input::get('belong_name');
+		if(!empty(Input::get('belong_id'))){
+			$data['belong_selected'] = Input::get('belong_id');
 		}else{
 			$data['belong_selected'] = 1;
+		}
+
+		if(!empty(Input::get('year_from'))){
+			$where['year_from'] = Input::get('year_from');
+		}
+
+		if(!empty(Input::get('month_from'))){
+			$where['month_from'] = Input::get('month_from');
+		}
+
+		if(!empty(Input::get('year_to'))){
+			$where['year_to'] = Input::get('year_to');
+		}
+
+		if(!empty(Input::get('month_to'))){
+			$where['month_to'] = Input::get('month_to');
+		}
+
+		if(!empty(Input::get('kw'))){
+			$where['kw'] = Input::get('kw');
+		}
+
+		if(!empty($where)){
+			$data['worktimes'] = $clsSearch->staffOfWorkTime($where);
 		}
 
 		return view('backend.search.index', $data);
 	}
 
-	public static function getDivision($name='belong_name', $selected=1){
-		$clsDivision = new DivisionModel();
-		return $clsDivision->attr(['name' => $name, 'class'=>'form-control', 'placeholder'=>'部課名'])->selected($selected)->orderBy('belong_sort', 'asc')->renderAsDropdown();
-	}
+
 }
