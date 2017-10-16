@@ -53,7 +53,6 @@ class SearchModel
 
         		//->join('t_pc', 't_staff.staff_id_no', 't_pc.tp_pc_no')
 
-
         		//->join('t_timecard', 't_staff.staff_id_no', 't_timecard.tt_staff_id_no')
         		
         		->select('t_staff.*', 't_timecard.tt_date', 't_timecard.tt_gotime', 't_timecard.tt_backtime')

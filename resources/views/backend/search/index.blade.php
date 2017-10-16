@@ -35,12 +35,12 @@
                       <div class="fl-left">
                         <select name="year_from" class="form-control form-control-date">
                           @for($yf=($curr_year-5); $yf<=($curr_year); $yf++)
-                          <option value="{{$yf}}">{{$yf}}年</option>
+                          <option value="{{$yf}}" @if(isset($year_from) && $year_from == $yf) selected @endif>{{$yf}}年</option>
                           @endfor
                         </select>
                           <select name="month_from" class="form-control form-control-date">
                             @for($mf=1; $mf<=12; $mf++)
-                            <option value="{{$mf}}">{{$mf}}年</option>
+                            <option value="{{$mf}}" @if(isset($month_from) && $month_from == $mf) selected @endif>{{$mf}}年</option>
                             @endfor
                           </select>
                           
@@ -49,12 +49,12 @@
                         <div class="fl-left">
                           <select name="year_to" class="form-control form-control-date">
                             @for($yt=($curr_year-5); $yt<=($curr_year); $yt++)
-                            <option value="{{$yt}}">{{$yt}}年</option>
+                            <option value="{{$yt}}" @if(isset($year_to) && $year_to == $yt) selected @endif>{{$yt}}年</option>
                           @endfor
                           </select>
                           <select name="month_to" class="form-control form-control-date">
                             @for($mt=1; $mt<=12; $mt++)
-                            <option value="{{$mt}}">{{$mt}}年</option>
+                            <option value="{{$mt}}" @if(isset($month_to) && $month_to == $mt) selected @endif>{{$mt}}年</option>
                             @endfor
                           </select>
                           
@@ -73,16 +73,16 @@
               </div>
            </div>
           <!-- tables -->
-
-          @if(count($worktimes) > 0)
-
+          @if(count($staffs) > 0)
           <div class="agile-tables">
             <div class="w3l-table-info agile_info_shadow">
+              @foreach($staffs as $staff)
               <div class="row mar-bottom15">
                 <div class="col-md-12 text-left">
-                  営業部営業課／1234567890／山山田田太郎
+                  {!! (!empty($staff->staff_belong)) ? division($staff->staff_belong) : '全社' !!}／{{$staff->staff_id_no}}／{{$staff->staff_name}}
                 </div>
               </div>
+
               <table id="table" class="mar-bottom15">
                 <thead>
                   <tr>
@@ -112,7 +112,7 @@
                     <td>18:03</td>
                     <td></td>
                   </tr>
-                  <tr>
+<!--                   <tr>
                     <td>2017/08/02(水)</td>
                     <td>9:00</td>
                     <td>18:00</td>
@@ -411,9 +411,9 @@
                     <td>8:55</td>
                     <td>18:03</td>
                     <td class="bg-yellow">30分超</td>
-                  </tr>
+                  </tr> -->
                 </tbody>
-              </table>
+              </table>              
 
               <div class="row">
                 <div class="col-md-12 text-center">
@@ -421,10 +421,11 @@
                 </div>
               </div>
 
+              @endforeach
 
             </div>
           </div>
-          @elseif(count($worktimes) <= 0 && (isset($belong_id) || isset($kw)) )
+          @elseif(count($staffs) <= 0 && (isset($belong_id) || isset($kw)) )
 
           <div class="agile-tables">
             <div class="agile_info_shadow" style="text-align: center;">

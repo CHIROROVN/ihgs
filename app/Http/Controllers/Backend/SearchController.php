@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Models\SearchModel;
-
+use App\Http\Models\StaffModel;
 use App\Http\Models\DivisionModel;
 
 use Input;
@@ -19,9 +19,11 @@ class SearchController extends BackendController
 
 	public function index(){
 		$clsSearch = new SearchModel();
+		$clsStaff = new StaffModel();
 		$data = array();
 		$where = array();
-		$data['worktimes'] = array();
+		//$staffs = array();
+		$data['staffs'] = array();
 		//$data['divisions'] = $clsBelong->list_division_tree();
 
 		$data['curr_year'] = date('Y');
@@ -60,12 +62,20 @@ class SearchController extends BackendController
 		}
 
 		if(!empty(Input::get('kw'))){
-			$where['kw'] = Input::get('kw');
+			$where['kw'] = trim(Input::get('kw'));
 		}
 
 		if(!empty($where)){
-			$data['worktimes'] = $clsSearch->staffOfWorkTime($where);
+			$data['staffs'] = $clsStaff->search_staff($where);
 		}
+
+		//if(!empty($where)){
+			//$data['worktimes'] = $clsSearch->staffOfWorkTime($where);
+		//}
+
+		// echo '<pre>';
+		// print_r($data['staffs']);
+		// echo '</pre>';
 
 		return view('backend.search.index', $data);
 	}

@@ -31,7 +31,7 @@ return array(
         */
         'settings' => [
 
-            'memoryCacheSize' => '32MB',
+            'memoryCacheSize' => '128MB',
             'cacheTime'       => 600
 
         ],
@@ -141,8 +141,9 @@ return array(
         | setUseBom
         |--------------------------------------------------------------------------
         */
+        //edited
 
-        'use_bom' => false
+        'use_bom' => true
     ],
 
     'export'     => [

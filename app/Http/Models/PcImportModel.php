@@ -13,7 +13,7 @@ class PcImportModel
     {
         return array(
             'tp_dataname'               => 'required|unique:t_pc,tp_dataname',
-            'tp_file_csv'               => 'required|mimes:csv',
+            'tp_file_csv'               => 'required|mimes:csv,xls,xlsx',
         );
     }
 

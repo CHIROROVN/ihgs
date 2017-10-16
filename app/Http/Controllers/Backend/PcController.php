@@ -35,7 +35,7 @@ class PcController extends BackendController
 			$file = Input::file('tp_file_csv');
 			$extension = $file->getClientOriginalExtension();
 
-			if($extension == 'csv' || $extension == 'CSV'){
+			if($extension == 'csv' || $extension == 'CSV' || $extension == 'xls' || $extension == 'xlsx'){
 				unset($Rules['tp_file_csv']);
 			}
 		}
@@ -54,7 +54,13 @@ class PcController extends BackendController
 			$path = Input::file('tp_file_csv')->getRealPath();
 
 			$file_csv = Excel::load($path, function($reader) {
-			})->get();
+				//$reader->limitRows(10);
+				//$reader->getTitle();
+			}, 'UTF-8')->get();
+
+				// echo '<pre>';
+				// print_r($file_csv->getHeading());
+				// echo '</pre>';die;
 
 			if(!empty($file_csv) && $file_csv->count()){
 				//$file_csv = $file_csv->toArray();
