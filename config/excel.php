@@ -31,7 +31,7 @@ return array(
         */
         'settings' => [
 
-            'memoryCacheSize' => '128MB',
+            'memoryCacheSize' => '256MB',//'32MB'
             'cacheTime'       => 600
 
         ],
@@ -429,7 +429,7 @@ return array(
         |
         */
 
-        'to_ascii'                => true,
+        'to_ascii'                => false,// 'true'
 
         /*
         |--------------------------------------------------------------------------
@@ -439,7 +439,7 @@ return array(
 
         'encoding'                => [
 
-            'input'  => 'UTF-8',
+            'input'  => 'Shift_JIS',//'Shift-JIS',
             'output' => 'UTF-8'
 
         ],

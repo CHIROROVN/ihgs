@@ -25,10 +25,12 @@ class DoorController extends BackendController
     }
 
 	public function index(){
+
 		$data =array();
         $clsDoorcard               = new DoorcardImportModel();
         $data['doorcards']         = $clsDoorcard->get_all();
         //echo "<pre>";print_r($data['doorcards']);echo "</pre>";
+
         $data['error']['error_td_dataname_required']    = trans('validation.error_td_dataname_required');
         $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
 		return view('backend.door.index',$data);
@@ -38,6 +40,8 @@ class DoorController extends BackendController
 		$data                 = array();
         $clsDoorcard          = new DoorcardModel();
 		$data['date_formats'] = Config::get('constants.MD_TOUCHTIME_FORMAT');
+        $data['time_formats'] = Config::get('constants.MT_TIME_FORMAT');
+        $data['short_dates']   = Config::get('constants.MD_SHORT_DATE');
 		$data['error']['error_door_format_required']    = trans('validation.error_door_format_required');
         $data['door']             = $clsDoorcard->getLastRow();
         if(isset($data['door']->md_id)) 
@@ -59,8 +63,12 @@ class DoorController extends BackendController
             'md_card_no_row'        => Input::get('md_card_no_row'),                        
             'md_door_row'           => Input::get('md_door_row'), 
             'md_door_format'        => Input::get('md_door_format'),
+            'md_touchday_row'       => Input::get('md_touchday_row'),
+            'md_touchday_format'    => Input::get('md_touchday_format'),
             'md_touchtime_row'      => Input::get('md_touchtime_row'),
-            'md_touchtime_format'   => Input::get('md_touchtime_format'),            
+            'md_touchtime_format'   => Input::get('md_touchtime_format'),   
+            'md_touchdate_row'      => Input::get('md_touchdate_row'),
+            'md_touchdate_format'   => Input::get('md_touchdate_format'),            
             'last_date'             => date('Y-m-d H:i:s'),
             'last_kind'             => INSERT,
             'last_ipadrs'           => CLIENT_IP_ADRS,
@@ -79,6 +87,8 @@ class DoorController extends BackendController
         $data                 = array();
         $clsDoorcard          = new DoorcardModel();
         $data['date_formats'] = Config::get('constants.MD_TOUCHTIME_FORMAT');
+        $data['time_formats'] = Config::get('constants.MT_TIME_FORMAT');
+        $data['short_dates']   = Config::get('constants.MD_SHORT_DATE');
         $data['error']['error_door_format_required']    = trans('validation.error_door_format_required');
         $data['door']             = $clsDoorcard->get_by_id($id);
         return view('backend.door.edit',$data);                   
@@ -96,8 +106,12 @@ class DoorController extends BackendController
             'md_card_no_row'        => Input::get('md_card_no_row'),                        
             'md_door_row'           => Input::get('md_door_row'), 
             'md_door_format'        => Input::get('md_door_format'),
+            'md_touchday_row'       => Input::get('md_touchday_row'),
+            'md_touchday_format'    => Input::get('md_touchday_format'),
             'md_touchtime_row'      => Input::get('md_touchtime_row'),
             'md_touchtime_format'   => Input::get('md_touchtime_format'),   
+            'md_touchdate_row'      => Input::get('md_touchdate_row'),
+            'md_touchdate_format'   => Input::get('md_touchdate_format'),     
             'last_date'             => date('Y-m-d H:i:s'),
             'last_kind'             => UPDATE,
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
@@ -136,20 +150,29 @@ class DoorController extends BackendController
             }else{
                 $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
             }
-
+            ini_set('memory_limit','256M');
             $path = '/uploads/';
             $upload_file->move(public_path().$path, $fn); 
-            $data = array();     
-           // config(['excel.import.dates.columns' => ['date']]);
+            $data = array();                
+           /* $data = Excel::load(public_path().$path.$fn, function($reader) {
+                // mb_convert_encoding($str, "SJIS")
+            }, 'UTF-8')->setDateColumns(['date','time'])->get(); */
+
             $data = Excel::load(public_path().$path.$fn, function($reader) {
-            }, 'UTF-8')->setDateColumns(['date','time'])->get();
+                // mb_convert_encoding($str, "SJIS")
+            }, 'UTF-8')->get();            
             
             $date_formats  = Config::get('constants.TOUCHTIME_FORMAT');
-            $doorcardModel = $clsDoorcardModel->getLastRow();            
+            $doorcardModel = $clsDoorcardModel->getLastRow();                       
             if(!empty($data) && $data->count()){                
-                foreach ($data as $key => $value) {                                         
-                    $times                  = $this->changeDate($value->time,'11:2:14:2:17:2','time','');      
-                    $date                   = $this->changeDate($value->date,$date_formats[$doorcardModel->md_touchtime_format],'date','');                                                             
+                foreach ($data as $key => $value) {                           
+                    if((int)$doorcardModel->md_touchdate_row >0){
+                        $date                   = date("Y-m-d",strtotime($value->date));
+                    }else{                                                      
+                       $times                  = $this->changeDate($value->time,'0:2:3:2:6:2','time','');                          
+                       $date                   = date("Y-m-d",strtotime($value->date));
+                    }    
+                    //$this->changeDate($value->date,$date_formats[$doorcardModel->md_touchtime_format],'date','');                                                             
                     $dataInsert             = array(
                         'td_card'           => trim($value->doorcard_id),
                         'td_door'           => trim($value->door_id),           
@@ -158,14 +181,14 @@ class DoorController extends BackendController
                         'last_date'         => date('Y-m-d H:i:s'),                        
                         'last_ipadrs'       => CLIENT_IP_ADRS,
                         'last_user'         => Auth::user()->u_id            
-                    );                    
+                    );                               
                     $clsDoorcard->insert($dataInsert);
                 }   
                 Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));            
                             
         }else Session::flash('danger', trans('common.msg_regist_danger'));
-       return redirect()->route('backend.door.index');
+        return redirect()->route('backend.door.index');
     }
     public function getDelete($dataname)
     {

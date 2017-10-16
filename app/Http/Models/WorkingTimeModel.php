@@ -52,22 +52,51 @@ class WorkingTimeModel
                                                      ->orWhere(function ($query) {
                                                             $query->whereYear('t1.tt_date', '2018')
                                                                   ->whereMonth('t1.tt_date','<', '4');
-                                                        });
-                                                     //->whereYear('t1.tt_date', '2017')->whereMonth('t1.tt_date','>', '3');
+                                                        });                                                     
                                             })                                         
                                           ->where('t_staff.staff_id', $id)                                          
                                           ->get();         
 
         return $results;
     }
-    public function get_doorcard($strCard,$year)
+    public function get_doorcard($id,$year)
     {
-        /*$results = DB::table('t_doorcard')                               
-                                          //->whereIn('td_card',$strCard) 
-                                          ->whereYear('t1.tt_date', '2017')->whereMonth('t1.tt_date','>', '3');                                         
-                                          ->get();         
+        $results = DB::table('t_doorcard')->join('t_staff', function ($join) {
+                                                $join->on('t_staff.staff_card1', 'like', 't_doorcard.td_card');
+                                                     /*->orOn('t_staff.staff_card2', 'like', 't_doorcard.td_card')
+                                                     ->orOn('t_staff.staff_card3', '=', 't_doorcard.td_card')
+                                                     ->orOn('t_staff.staff_card4', '=', 't_doorcard.td_card')
+                                                     ->orOn('t_staff.staff_card5', '=', 't_doorcard.td_card')
+                                                     ->orOn('t_staff.staff_card6', '=', 't_doorcard.td_card')
+                                                     ->orOn('t_staff.staff_card7', '=', 't_doorcard.td_card')
+                                                     ->orOn('t_staff.staff_card8', '=', 't_doorcard.td_card')
+                                                     ->orOn('t_staff.staff_card9', '=', 't_doorcard.td_card')
+                                                     ->orOn('t_staff.staff_card10', '=', 't_doorcard.td_card');*/
+                                            })   
+                                            ->Where(function ($query) {
+                                                            $query->whereYear('t_doorcard.td_touchtime', '2017')
+                                                                  ->whereMonth('t_doorcard.td_touchtime','>', '3');
+                                                        })
+                                                     ->orWhere(function ($query) {
+                                                            $query->whereYear('t_doorcard.td_touchtime', '2018')
+                                                                  ->whereMonth('t_doorcard.td_touchtime','<', '4');
+                                            })->where('t_staff.staff_id', $id)                                        
+                                            ->get();         
 
-        return $results;*/
+        return $results;
+    }
+    public function get_doorcard_by_card($strCard,$year)
+    {
+       $results = DB::table('t_doorcard')->whereIn('td_card', [$strCard])
+                                        ->Where(function ($query) {
+                                                            $query->whereYear('t_doorcard.td_touchtime', '2017')
+                                                                  ->whereMonth('t_doorcard.td_touchtime','>', '3');
+                                                        })
+                                                     ->orWhere(function ($query) {
+                                                            $query->whereYear('t_doorcard.td_touchtime', '2018')
+                                                                  ->whereMonth('t_doorcard.td_touchtime','<', '4');
+                                        })->get();  
+       return $results;
     }
   //Manage Pc format
     public function getPc(){

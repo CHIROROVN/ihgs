@@ -28,8 +28,14 @@ class WorkingTimeController extends BackendController
 		$clsWorkingTime   = new WorkingTimeModel();
         $data['year']     = (isset($_GET['year']) && $_GET['year'] >2000)?$_GET['year']:'2017';
 		$data['staff']    =  $clsWorkingTime->get_by_id($id);
+		$strCard = (isset($data['staff']->staff_card1) && !empty($data['staff']->staff_card1))?"'".$data['staff']->staff_card1."'":'';
+		$strCard .= (isset($data['staff']->staff_card2) && !empty($data['staff']->staff_card2))?((!empty($strCard))?",'".$data['staff']->staff_card2."'":"'".$data['staff']->staff_card2."'"):'';	
+		$strCard .= (isset($data['staff']->staff_card3) && !empty($data['staff']->staff_card3))?((!empty($strCard))?",'".$data['staff']->staff_card3."'":"'".$data['staff']->staff_card3."'"):'';	
+		$strCard .= (isset($data['staff']->staff_card4) && !empty($data['staff']->staff_card4))?((!empty($strCard))?",'".$data['staff']->staff_card4."'":"'".$data['staff']->staff_card4."'"):'';	
+		$strCard .= (isset($data['staff']->staff_card5) && !empty($data['staff']->staff_card5))?((!empty($strCard))?",'".$data['staff']->staff_card5."'":"'".$data['staff']->staff_card5."'"):'';			
 		$data['worktimes']=  $clsWorkingTime->get_timecard($id,$data['year']);
-		
+		print_r($data['staff']);
+		$data['doorcard']=  $clsWorkingTime->get_doorcard($strCard,$data['year']);
 		
 		return view('backend.workingtime.detail',$data);
 	}

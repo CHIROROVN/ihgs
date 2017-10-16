@@ -72,22 +72,64 @@
               <tr>
                 <td class="col-title col-md-3"><label for="">タッチした日時</label></td>
                 <td class="col-md-2">
-                  <select name="md_touchtime_row" id="md_touchtime_row"  class="form-control">
+                  <select name="md_touchday_row" id="md_touchday_row"  class="form-control">
+                  <option selected="" value="">該当なし<!-- NO use this field --></option>
                     <?php $last=40; $now=1; ?>
                       @for ($i = $now; $i <= $last; $i++)
-                        <option value="{{ $i }}" @if($i==1) selected="" @endif>{{ $i }} 列目</option>
+                        <option value="{{ $i }}">{{ $i }} 列目</option>
                       @endfor
                   </select>
                 </td>
                 <td class="col-md-6">
                 <div class="col-md-6">
-                  <select name="md_touchtime_format" id="md_touchtime_format" class="form-control">
-                    @foreach($date_formats as $key=>$date_format)                           
-                      <option value="{{ $key }}">{{ $date_format }}</option>
+                  <select name="md_touchday_format" id="md_touchday_format" class="form-control">
+                    @foreach($short_dates as $key=>$short_date)                           
+                      <option value="{{ $key }}">{{ $short_date }}</option>
                     @endforeach
                   </select>
                 </div></td>
               </tr>
+               <tr>
+                  <td class="col-title col-md-3"><label for="">タッチした時刻</label></td>
+                  <td class="col-md-2">
+                  <select name="md_touchtime_row" id="md_touchtime_row"  class="form-control">
+                          <option selected="" value="">該当なし<!-- NO use this field --></option>
+                              <?php $last=40; $now=1; ?>
+                          @for ($i = $now; $i <= $last; $i++)
+                            <option value="{{ $i }}" >{{ $i }} 列目</option>
+                          @endfor
+                        </select>
+                      </td>
+                      <td class="col-md-6">
+                      <div class="col-md-6">
+                        <select name="md_touchtime_format" id="md_touchtime_format" class="form-control">
+                          @foreach($time_formats as $key=>$time_format)                           
+                            <option value="{{ $key }}" >{{ $time_format }}</option>
+                          @endforeach  
+                        </select>
+                      </div>
+                    </tr>
+
+                    <tr>
+                      <td class="col-title col-md-3"><label for="">タッチした日付と時刻</label></td>
+                      <td class="col-md-2">
+                        <select name="md_touchdate_row" id="md_touchdate_row"  class="form-control">
+                          <option selected="" value="">該当なし<!-- NO use this field --></option>
+                          <?php $last=40; $now=1; ?>
+                          @for ($i = $now; $i <= $last; $i++)
+                            <option value="{{ $i }}" >{{ $i }} 列目</option>
+                          @endfor
+                        </select>
+                      </td>
+                      <td class="col-md-6">
+                      <div class="col-md-6">
+                        <select name="md_touchdate_format" id="md_touchdate_format" class="form-control">
+                          @foreach($date_formats as $key=>$date_format)                           
+                          <option value="{{ $key }}">{{ $date_format }}</option>
+                        @endforeach
+                        </select>
+                      </div>
+                    </tr>
             </table>
             <div class="row">
               <div class="col-md-12 text-center">
@@ -108,8 +150,26 @@ $("#btnSubmit").on("click",function() {
     $("#error-door_format").css('display','block');   
     $('#md_door_format').focus();
     flag = false;    
-  } 
+  }  
   if(flag) $( "#frmRegist" ).submit(); 
 });
+$('#md_touchday_row').on('change', function() {
+   if(this.value >0){     
+     //$("#md_touchtime_row option").removeAttr('selected').filter('[value=""]').attr('selected', true);
+     $("#md_touchdate_row option").removeAttr('selected').filter('[value=""]').attr('selected', true);
+   }
+})
+$('#md_touchtime_row').on('change', function() {
+   if(this.value >0){     
+     //$("#md_touchday_row option").removeAttr('selected').filter('[value=""]').attr('selected', true);
+     $("#md_touchdate_row option").removeAttr('selected').filter('[value=""]').attr('selected', true);
+   }
+})
+$('#md_touchdate_row').on('change', function() {
+   if(this.value >0){     
+     $("#md_touchday_row option").removeAttr('selected').filter('[value=""]').attr('selected', true);
+     $("#md_touchtime_row option").removeAttr('selected').filter('[value=""]').attr('selected', true);
+   }
+})
 </script> 
 @endsection

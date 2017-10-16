@@ -137,7 +137,7 @@ class BackendController extends Controller
            $strH = substr($date_source, $arrData[0], $arrData[1]);                      
            $strI = substr($date_source, $arrData[2], $arrData[3]);           
            $strS = substr($date_source, $arrData[4], $arrData[5]);           
-           return date("H:i:s",mktime($strH, $strI, $strS, date("m"),  date("d"), date("Y")));
+           return date("H:i:s",mktime((int)$strH, (int)$strI, (int)$strS, date("m"),  date("d"), date("Y")));
         }
     }
 }

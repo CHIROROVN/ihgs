@@ -37,6 +37,11 @@
 			'3' => 'YYYY/MM/DD 13:45',	
 			'4' => 'YYYY/MM/DD 1:45 PM',
 			'5' => 'YYYY年MM月DD日 13時45分',			
+	    ),
+	    'MD_SHORT_DATE' => array(
+			'1' => 'YYYY/MM/DD',
+			'2' => 'YYYY年MM月DD日',
+						
 	    ),	    
 	    'TOUCHTIME_FORMAT' => array(
 			'1' => '0:4:5:2:8:2:11:2:14:2:17:2',
