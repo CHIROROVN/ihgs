@@ -140,30 +140,32 @@ class DoorController extends BackendController
             $path = '/uploads/';
             $upload_file->move(public_path().$path, $fn); 
             $data = array();     
-
+           // config(['excel.import.dates.columns' => ['date']]);
             $data = Excel::load(public_path().$path.$fn, function($reader) {
-            }, 'UTF-8')->get();
+            }, 'UTF-8')->setDateColumns(['date','time'])->get();
             
             $date_formats  = Config::get('constants.TOUCHTIME_FORMAT');
             $doorcardModel = $clsDoorcardModel->getLastRow();            
             if(!empty($data) && $data->count()){                
-                foreach ($data as $key => $value) {                                          
+                foreach ($data as $key => $value) {                                         
+                    $times                  = $this->changeDate($value->time,'11:2:14:2:17:2','time','');      
+                    $date                   = $this->changeDate($value->date,$date_formats[$doorcardModel->md_touchtime_format],'date','');                                                             
                     $dataInsert             = array(
-                        'td_card'           => $value->td_card,
-                        'td_door'           => $value->td_door,           
-                        'td_touchtime'         => $this->changeDate($value->td_touchtime,$date_formats[$doorcardModel->md_touchtime_format],'fulldate','time') ,                         
+                        'td_card'           => trim($value->doorcard_id),
+                        'td_door'           => trim($value->door_id),           
+                        'td_touchtime'      => $this->changeDate($date .' '. $times ,'0:4:5:2:8:2:11:2:14:2:17:2','fulldate','time') ,                         
                         'td_dataname'       => Input::get('td_dataname'),
                         'last_date'         => date('Y-m-d H:i:s'),                        
                         'last_ipadrs'       => CLIENT_IP_ADRS,
                         'last_user'         => Auth::user()->u_id            
-                    );
-                   $clsDoorcard->insert($dataInsert);
+                    );                    
+                    $clsDoorcard->insert($dataInsert);
                 }   
                 Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));            
                             
         }else Session::flash('danger', trans('common.msg_regist_danger'));
-        return redirect()->route('backend.door.index');
+       return redirect()->route('backend.door.index');
     }
     public function getDelete($dataname)
     {

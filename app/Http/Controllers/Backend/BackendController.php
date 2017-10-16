@@ -115,7 +115,7 @@ class BackendController extends Controller
         );
         $clsObject->update($down_belong->$field_primary, $dataUpdate);
     }
-    protected function changeDate($date_source,$date_format,$source_type,$result_type)
+    protected function changeDate($date_source,$date_format,$source_type,$action='')
     {
         $arrData = explode(":", $date_format);
         //echo $date_source;
@@ -134,10 +134,10 @@ class BackendController extends Controller
             $strS = substr($date_source, $arrData[10], $arrData[11]);                   
             return date("Y-m-d h:i:s",mktime((int)$strH, (int)$strI, (int)$strS, (int)$strMonth, (int)$strDate, (int)$strYear));
         }else{    
-           $strH = substr($date_source, $arrData[0], $arrData[1]);           
+           $strH = substr($date_source, $arrData[0], $arrData[1]);                      
            $strI = substr($date_source, $arrData[2], $arrData[3]);           
            $strS = substr($date_source, $arrData[4], $arrData[5]);           
-           return date("h:i:s",mktime($strH, $strI, $strS, date("m"),  date("d"), date("Y")));
+           return date("H:i:s",mktime($strH, $strI, $strS, date("m"),  date("d"), date("Y")));
         }
     }
 }
