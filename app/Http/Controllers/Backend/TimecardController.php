@@ -1,6 +1,9 @@
 <?php namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Backend\BackendController;
+use App\Http\Requests;
+use Illuminate\Http\Request;
 use Auth;
+use Hash;
 use App\User;
 use App\Http\Models\TimecardModel;
 use App\Http\Models\TimecardImportModel;
@@ -57,25 +60,20 @@ class TimecardController extends BackendController
             if(!empty(Input::get('tt_dataname'))){              
                 $fn = Input::get('tt_dataname').'_'.rand(time(),time()).'.'.$extFile;
             }else{
-                $fn       = 'timecard'.'_'.rand(time(),time()).'.'.$extFile;
+                $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
             } 
-            ini_set('max_execution_time', 300);
-            ini_set('memory_limit', '512M');
+            
             $path = '/uploads/';          
             $upload_file->move(public_path().$path, $fn);                             
-            $data = array();                     
-            $data = Excel::load(public_path().$path.$fn, function($reader) {                             
+            $data = array();           
+            $data = Excel::load(public_path().$path.$fn, function($reader) {
             }, 'UTF-8')->get();
-            $timecard = $clsTimecardModel->get_last_insert();    
-               
-            $data = $data->toArray();         
-           
+            $timecardModel = $clsTimecardModel->get_last_insert();
             $date_formats  = Config::get('constants.DATE_FORMAT');
             $time_formats  = Config::get('constants.TIME_FORMAT');          
-            if(!empty($data) && count($data[0]) >0){                
-                foreach ($data[0] as $key => $value) {  
-                    $arr  =array(); 
-                    $arr = array_values($value);                      
+            if(!empty($data) && $data->count()){                
+                foreach ($data as $key => $value) {                                      
+                     $arr = array_values($value);                      
                     if(isset($arr[$timecard[0]->mt_gotime_row-1]) && $arr[$timecard[0]->mt_gotime_row-1] !=''){                        
                         if(strlen($arr[$timecard[0]->mt_gotime_row-1]) >8){
                              $dataInsert             = array(
@@ -101,13 +99,12 @@ class TimecardController extends BackendController
                             );         
                         }                                                                                                      
                         $clsTimecard->insert($dataInsert);
-                    }    
                 }   
                 Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));          
                             
         }else Session::flash('danger', trans('common.msg_regist_danger'));         
-        //return redirect()->route('backend.timecard.index');
+        return redirect()->route('backend.timecard.index');
     }
 
 	public function getRegist(){
