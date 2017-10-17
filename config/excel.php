@@ -1,5 +1,4 @@
 <?php
-
 return array(
 
     'cache'      => [
@@ -31,7 +30,7 @@ return array(
         */
         'settings' => [
 
-            'memoryCacheSize' => '256MB',//'32MB'
+            'memoryCacheSize' => '32MB',//'32MB'
             'cacheTime'       => 600
 
         ],
@@ -439,7 +438,7 @@ return array(
 
         'encoding'                => [
 
-            'input'  => 'Shift_JIS',//'Shift-JIS',
+            'input'  => 'UTF-8',//'Shift-JIS','SJIS'
             'output' => 'UTF-8'
 
         ],

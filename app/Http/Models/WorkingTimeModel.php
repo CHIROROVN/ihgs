@@ -45,12 +45,12 @@ class WorkingTimeModel
     {
         $results = DB::table($this->table)->join('t_timecard as t1', function ($join) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
-                                                     ->Where(function ($query) {
-                                                            $query->whereYear('t1.tt_date', '2017')
+                                                     ->Where(function ($query) use ($year) {
+                                                            $query->whereYear('t1.tt_date', $year)
                                                                   ->whereMonth('t1.tt_date','>', '3');
                                                         })
                                                      ->orWhere(function ($query) {
-                                                            $query->whereYear('t1.tt_date', '2018')
+                                                            $query->whereYear('t1.tt_date', $year + 1)
                                                                   ->whereMonth('t1.tt_date','<', '4');
                                                         });                                                     
                                             })                                         
@@ -73,12 +73,12 @@ class WorkingTimeModel
                                                      ->orOn('t_staff.staff_card9', '=', 't_doorcard.td_card')
                                                      ->orOn('t_staff.staff_card10', '=', 't_doorcard.td_card');*/
                                             })   
-                                            ->Where(function ($query) {
-                                                            $query->whereYear('t_doorcard.td_touchtime', '2017')
+                                            ->Where(function ($query) use ($year){
+                                                            $query->whereYear('t_doorcard.td_touchtime', $year)
                                                                   ->whereMonth('t_doorcard.td_touchtime','>', '3');
                                                         })
                                                      ->orWhere(function ($query) {
-                                                            $query->whereYear('t_doorcard.td_touchtime', '2018')
+                                                            $query->whereYear('t_doorcard.td_touchtime', $year + 1)
                                                                   ->whereMonth('t_doorcard.td_touchtime','<', '4');
                                             })->where('t_staff.staff_id', $id)                                        
                                             ->get();         
@@ -88,12 +88,12 @@ class WorkingTimeModel
     public function get_doorcard_by_card($strCard,$year)
     {
        $results = DB::table('t_doorcard')->whereIn('td_card', [$strCard])
-                                        ->Where(function ($query) {
-                                                            $query->whereYear('t_doorcard.td_touchtime', '2017')
+                                        ->Where(function ($query) use ($year) {
+                                                            $query->whereYear('t_doorcard.td_touchtime', $year)
                                                                   ->whereMonth('t_doorcard.td_touchtime','>', '3');
                                                         })
                                                      ->orWhere(function ($query) {
-                                                            $query->whereYear('t_doorcard.td_touchtime', '2018')
+                                                            $query->whereYear('t_doorcard.td_touchtime', $year + 1)
                                                                   ->whereMonth('t_doorcard.td_touchtime','<', '4');
                                         })->get();  
        return $results;
