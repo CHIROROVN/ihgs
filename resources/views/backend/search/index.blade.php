@@ -117,7 +117,7 @@
                     </tr>
                     @endforeach
                   @endif
-<!--                   <tr>
+<!--              <tr>
                     <td>2017/08/02(水)</td>
                     <td>9:00</td>
                     <td>18:00</td>
