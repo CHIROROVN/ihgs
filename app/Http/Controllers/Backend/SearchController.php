@@ -2,6 +2,7 @@
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Models\SearchModel;
 use App\Http\Models\StaffModel;
+use App\Http\Models\BelongModel;
 use App\Http\Models\DivisionModel;
 
 use Input;
@@ -20,6 +21,7 @@ class SearchController extends BackendController
 	public function index(){
 		$clsSearch = new SearchModel();
 		$clsStaff = new StaffModel();
+		$clsBelong = new BelongModel();
 		$data = array();
 		$where = array();
 		//$staffs = array();
@@ -41,6 +43,7 @@ class SearchController extends BackendController
 
 		if(!empty(Input::get('belong_id'))){
 			$data['belong_selected'] = Input::get('belong_id');
+			$where['belong_parent_id'] = $clsBelong->get_list_by_id(Input::get('belong_id'));
 		}else{
 			$data['belong_selected'] = 1;
 		}
@@ -60,6 +63,8 @@ class SearchController extends BackendController
 		if(!empty(Input::get('month_to'))){
 			$where['month_to'] = Input::get('month_to');
 		}
+
+		$data['conditions'] = $where;
 
 		if(!empty(Input::get('kw'))){
 			$where['kw'] = trim(Input::get('kw'));

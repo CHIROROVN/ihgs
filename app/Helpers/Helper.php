@@ -15,6 +15,13 @@ if (!function_exists('division')) {
     }
 }
 
+if (!function_exists('search_work_time')) {
+	function search_work_time($staff_id_no, $conditions)
+	{
+		return App\Http\Models\SearchModel::staffOfWorkTime($staff_id_no, $conditions);		
+    }
+}
+
 if (!function_exists('divisions')) {
 	function divisions($name, $selected)
 	{
@@ -283,48 +290,3 @@ if (!function_exists('neatest_trim')) {
 	}
 }
 
-if (!function_exists('gen_string')) {
-
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
-	function gen_string($string,$max=20)
-	{
-	    $tok=strtok($string,' ');
-	    $string='';
-	    while($tok!==false && mb_strlen($string)<$max)
-	    {
-	        if (mb_strlen($string)+mb_strlen($tok)<=$max)
-	            $string.=$tok.' ';
-	        else
-	            break;
-	        $tok=strtok(' ');
-	    }
-	    return trim($string).' ...';
-	}
-}
-
-if (!function_exists('info_cat')) {
-
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
-	function info_cat($info_cat)
-	{
-	    if($info_cat == 1){
-	    	return 'お知らせ';
-	    }elseif($info_cat == 2){
-	    	return 'イベント';
-	    }elseif($info_cat == 3){
-	    	return 'お勧め商品';
-	    }else{
-	    	return '';
-	    }
-	}
-}

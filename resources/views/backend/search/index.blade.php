@@ -102,16 +102,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>2017/08/01(火)</td>
-                    <td>9:00</td>
-                    <td>18:00</td>
-                    <td>8:45</td>
-                    <td>18:15</td>
-                    <td>8:55</td>
-                    <td>18:03</td>
-                    <td></td>
-                  </tr>
+
+                 @if(count(search_work_time($staff->staff_id_no, $conditions)) > 0)
+                   @foreach(search_work_time($staff->staff_id_no, $conditions) as $wt)
+                    <tr>
+                      <td>{{DayeJp($wt->tt_date)}}</td>
+                      <td>{{formatshortTime($wt->tt_gotime, ':')}}</td>
+                      <td>{{formatshortTime($wt->tt_backtime, ':')}}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    @endforeach
+                  @endif
 <!--                   <tr>
                     <td>2017/08/02(水)</td>
                     <td>9:00</td>

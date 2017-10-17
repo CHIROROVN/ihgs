@@ -61,10 +61,26 @@ class StaffModel
     }
 
     public function search_staff($where=null){
+
         $sql = DB::table($this->table)->where('t_staff.last_kind', '<>', DELETE);
 
-        if(!empty($where['belong_id'])){
-            $sql = $sql->where('t_staff.staff_belong', $where['belong_id']);
+        $sql = $sql->whereIn('t_staff.staff_belong', $where['belong_parent_id']);
+
+        if(!empty($where['kw'])){
+            $sql = $sql->where('t_staff.staff_id_no', $where['kw'])->orWhere('t_staff.staff_name', 'like', '%'.$where['kw'].'%');
+        }
+
+    return $sql->get();
+    }
+
+    /*
+public function search_staff($where=null){
+
+        $sql = DB::table($this->table)
+        ->select('staff_id', 'staff_id_no','staff_name', 'staff_belong')->where('t_staff.last_kind', '<>', DELETE);
+
+        if(!empty($where['belong_parent_id'])){
+            $sql = $sql->whereIn('t_staff.staff_belong', $where['belong_parent_id']);
         }
 
         if(!empty($where['kw'])){
@@ -73,5 +89,6 @@ class StaffModel
 
         return $sql->get();
     }
+    */
     
 }
