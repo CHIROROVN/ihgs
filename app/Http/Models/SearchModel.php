@@ -46,21 +46,21 @@ class SearchModel extends Model
         		->select('t_timecard.tt_date', 't_timecard.tt_gotime', 't_timecard.tt_backtime')
                 ->where('t_staff.staff_id_no', $staff_id_no);
 
-        // if(!empty($conditions['year_from'])){
-        // 	$sql = $sql->whereYear('t_timecard.tt_date', '>=' , $conditions['year_from']);
-        // }
+        if(!empty($conditions['year_from'])){
+        	$sql = $sql->whereYear('t_timecard.tt_date', '>=' , $conditions['year_from']);
+        }
 
-        //  if(!empty($conditions['month_from'])){
-        // 	$sql = $sql->whereMonth('t_timecard.tt_date', '>=' , $conditions['month_from']);
-        // }
+         if(!empty($conditions['month_from'])){
+        	$sql = $sql->whereMonth('t_timecard.tt_date', '>=' , $conditions['month_from']);
+        }
 
-        // if(!empty($conditions['year_to'])){
-        // 	$sql = $sql->whereYear('t_timecard.tt_date', '<=' , $conditions['year_to']);
-        // }
+        if(!empty($conditions['year_to'])){
+        	$sql = $sql->whereYear('t_timecard.tt_date', '<=' , $conditions['year_to']);
+        }
 
-        //  if(!empty($conditions['month_to'])){
-        // 	$sql = $sql->whereMonth('t_timecard.tt_date', '>=' , $conditions['month_to']);
-        // }
+         if(!empty($conditions['month_to'])){
+        	$sql = $sql->whereMonth('t_timecard.tt_date', '<=' , $conditions['month_to']);
+        }
 
         return $sql->get();
     }

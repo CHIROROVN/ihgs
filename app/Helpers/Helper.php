@@ -22,6 +22,20 @@ if (!function_exists('search_work_time')) {
     }
 }
 
+if (!function_exists('touchtime')) {
+	function touchtime($staff, $date)
+	{
+		return App\Http\Models\DoorcardImportModel::touchtime($staff, $date);		
+    }
+}
+
+if (!function_exists('actiontime')) {
+	function actiontime($staff, $date)
+	{
+		return App\Http\Models\PcImportModel::actiontime($staff, $date);		
+    }
+}
+
 if (!function_exists('divisions')) {
 	function divisions($name, $selected)
 	{
@@ -288,5 +302,15 @@ if (!function_exists('neatest_trim')) {
 	  }
 
 	}
+}
+
+if (!function_exists('hour_minute')) {
+	function hour_minute($date=null){
+		if(!empty($date)){
+			return date('H:i', strtotime($date));
+		}else{
+			return null;
+		}	
+	}	
 }
 
