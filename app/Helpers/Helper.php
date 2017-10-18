@@ -15,10 +15,31 @@ if (!function_exists('division')) {
     }
 }
 
-if (!function_exists('divisions')) {
-	function divisions($name, $selected)
+if (!function_exists('search_work_time')) {
+	function search_work_time($staff_id_no, $conditions)
 	{
-		$dropdown = App\Http\Controllers\Backend\SearchController::getDivision($name, $selected);
+		return App\Http\Models\SearchModel::staffOfWorkTime($staff_id_no, $conditions);		
+    }
+}
+
+if (!function_exists('touchtime')) {
+	function touchtime($staff, $date)
+	{
+		return App\Http\Models\DoorcardImportModel::touchtime($staff, $date);		
+    }
+}
+
+if (!function_exists('actiontime')) {
+	function actiontime($staff, $date)
+	{
+		return App\Http\Models\PcImportModel::actiontime($staff, $date);		
+    }
+}
+
+if (!function_exists('divisions')) {
+	function divisions($name, $selected, $flag)
+	{
+		$dropdown = App\Http\Controllers\Backend\SearchController::getDivision($name, $selected, $flag);
 
 		return $dropdown;
     }
@@ -283,48 +304,36 @@ if (!function_exists('neatest_trim')) {
 	}
 }
 
-if (!function_exists('gen_string')) {
-
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
-	function gen_string($string,$max=20)
-	{
-	    $tok=strtok($string,' ');
-	    $string='';
-	    while($tok!==false && mb_strlen($string)<$max)
-	    {
-	        if (mb_strlen($string)+mb_strlen($tok)<=$max)
-	            $string.=$tok.' ';
-	        else
-	            break;
-	        $tok=strtok(' ');
-	    }
-	    return trim($string).' ...';
-	}
+if (!function_exists('hour_minute')) {
+	function hour_minute($date=null){
+		if(!empty($date)){
+			return date('H:i', strtotime($date));
+		}else{
+			return null;
+		}	
+	}	
 }
 
-if (!function_exists('info_cat')) {
+if (!function_exists('time_over')) {
+	function time_over($start=null, $end=null){
+		$result = '';
+		if(!empty($end) && !empty($start)){
 
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
-	function info_cat($info_cat)
-	{
-	    if($info_cat == 1){
-	    	return 'お知らせ';
-	    }elseif($info_cat == 2){
-	    	return 'イベント';
-	    }elseif($info_cat == 3){
-	    	return 'お勧め商品';
-	    }else{
-	    	return '';
-	    }
-	}
+			$diff = date_diff(date_create($end), date_create($start));
+			
+			if($diff->h > 0){
+				$result .= ($diff->h - 8).'時間';
+			}
+			if($diff->i > 0){
+				$result .= $diff->i.'分';
+			}
+
+			return $result . '超';
+
+		}else{
+			return $result;
+		}
+
+	}	
 }
+

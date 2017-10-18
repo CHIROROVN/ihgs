@@ -28,9 +28,8 @@
                   <tbody>
                   <tr>
                     <td>
-                      {!! divisions('belong_id', $belong_selected) !!}
+                      {!! divisions('belong_id', $belong_selected, true) !!}
                     </td>
-
                     <td>
                       <div class="fl-left">
                         <select name="year_from" class="form-control form-control-date">
@@ -40,7 +39,7 @@
                         </select>
                           <select name="month_from" class="form-control form-control-date">
                             @for($mf=1; $mf<=12; $mf++)
-                            <option value="{{$mf}}" @if(isset($month_from) && $month_from == $mf) selected @endif>{{$mf}}年</option>
+                            <option value="{{c2digit($mf)}}" @if(isset($month_from) && $month_from == c2digit($mf)) selected @endif>{{c2digit($mf)}}年</option>
                             @endfor
                           </select>
                           
@@ -54,7 +53,7 @@
                           </select>
                           <select name="month_to" class="form-control form-control-date">
                             @for($mt=1; $mt<=12; $mt++)
-                            <option value="{{$mt}}" @if(isset($month_to) && $month_to == $mt) selected @endif>{{$mt}}年</option>
+                            <option value="{{c2digit($mt)}}" @if(isset($month_to) && $month_to == c2digit($mt)) selected @endif>{{c2digit($mt)}}年</option>
                             @endfor
                           </select>
                           
@@ -102,17 +101,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>2017/08/01(火)</td>
-                    <td>9:00</td>
-                    <td>18:00</td>
-                    <td>8:45</td>
-                    <td>18:15</td>
-                    <td>8:55</td>
-                    <td>18:03</td>
-                    <td></td>
-                  </tr>
-<!--                   <tr>
+                 @if(count(search_work_time($staff->staff_id_no, $conditions)) > 0)
+                   @foreach(search_work_time($staff->staff_id_no, $conditions) as $wt)
+                   <?php $date = format_date($wt->tt_date, '-');?>
+                    <tr>
+                      <td>{{DayeJp($wt->tt_date)}}</td>
+                      <td>{{formatshortTime($wt->tt_gotime, ':')}}</td>
+                      <td>{{formatshortTime($wt->tt_backtime, ':')}}</td>
+                      <td>{{@hour_minute(touchtime($staff, $date)[0]->door_in)}}</td>
+                      <td>{{@hour_minute(touchtime($staff, $date)[0]->door_out)}}</td>
+                      <td>{{@hour_minute(actiontime($staff, $date)[0]->action_in)}}</td>
+                      <td>{{@hour_minute(actiontime($staff, $date)[0]->action_out)}}</td>
+                      <?php $start = touchtime($staff, $date)[0]->door_in; $end = touchtime($staff, $date)[0]->door_out; ?>
+                      <td class="bg-yellow">{{ time_over($start, $end) }}</td>
+                    </tr>
+                    @endforeach
+                  @endif
+<!--              <tr>
                     <td>2017/08/02(水)</td>
                     <td>9:00</td>
                     <td>18:00</td>

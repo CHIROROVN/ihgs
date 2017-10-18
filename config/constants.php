@@ -6,6 +6,7 @@
             'DELETE'                => 9,
             'PAGINATION'            => 10,
             'LIMIT_PAGE'            => 10,
+            'ALL'					=> '全て',
         ),
         'MT_DATE_FORMAT' => array(
 			'1' => 'YYYY年MM月DD日',

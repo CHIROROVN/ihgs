@@ -65,7 +65,7 @@
                       <td class="col-title col-md-3"><label for="">所属</label></td>
                       <td class="col-md-9">
                         <div class="fl-left">
-                          {!! divisions('u_belong' ,(!empty(old('u_belong')) ? old('u_belong') : 1)) !!}
+                          {!! divisions('u_belong' ,(!empty(old('u_belong')) ? old('u_belong') : 1),false) !!}
 
                           @if ($errors->has('u_belong'))
 	                            <span class="help-block">

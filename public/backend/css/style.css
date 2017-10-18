@@ -3431,7 +3431,7 @@ li.second.logo.admin {
 
 .error-text {
   color: #D50000;
-  background-image: url('../images/warning-icon_002.png');
+  background-image: url('../images/warning.gif');
   background-repeat: no-repeat;
   text-align: left;
   margin-top: -10px;
@@ -3445,7 +3445,7 @@ span.required {
 
 .help-block {
     color: #D50000;
-    background-image: url('../images/warning_001.png');
+    background-image: url('../images/warning.gif');
     background-repeat: no-repeat;
     padding-left: 20px;
 }
