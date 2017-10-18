@@ -313,7 +313,7 @@ class NestableService
             }
 
             if (strpos($this->addAttributes(), 'flag="1"') !== false) {
-                $tree .='<option value="">'.ALL.'</option>';
+                $tree .='<option value="" selected >'.ALL.'</option>';
             }
         }
 

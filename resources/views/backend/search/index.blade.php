@@ -78,7 +78,7 @@
               @foreach($staffs as $staff)
               <div class="row mar-bottom15">
                 <div class="col-md-12 text-left">
-                  {!! (!empty($staff->staff_belong)) ? division($staff->staff_belong) : '全社' !!}／{{$staff->staff_id_no}}／{{$staff->staff_name}}
+                  {!! (!empty($staff->staff_belong)) ? division($staff->staff_belong) : ALL !!}／{{$staff->staff_id_no}}／{{$staff->staff_name}}
                 </div>
               </div>
 

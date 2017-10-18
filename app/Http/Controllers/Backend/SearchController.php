@@ -12,7 +12,7 @@ use Config;
 
 class SearchController extends BackendController
 {
-	public static function getDivision($name='belong_name', $selected=1, $flag=false){
+	public static function getDivision($name='belong_name', $selected=0, $flag=false){
 		$clsDivision = new DivisionModel();
 		return $clsDivision->attr(['name' => $name, 'class'=>'form-control', 'placeholder'=>'部課名','flag'=>$flag])->selected($selected)->orderBy('belong_sort', 'asc')->renderAsDropdown();
 	}
@@ -45,7 +45,7 @@ class SearchController extends BackendController
 			$data['belong_selected'] = Input::get('belong_id');
 			$where['belong_parent_id'] = $clsBelong->get_list_by_id(Input::get('belong_id'));
 		}else{
-			$data['belong_selected'] = 1;
+			$data['belong_selected'] = 0;
 		}
 
 		if(!empty(Input::get('year_from'))){
@@ -73,14 +73,6 @@ class SearchController extends BackendController
 		if(!empty($where)){
 			$data['staffs'] = $clsStaff->search_staff($where);
 		}
-
-		//if(!empty($where)){
-			//$data['worktimes'] = $clsSearch->staffOfWorkTime($where);
-		//}
-
-		// echo '<pre>';
-		// print_r($data['staffs']);
-		// echo '</pre>';
 
 		return view('backend.search.index', $data);
 	}
