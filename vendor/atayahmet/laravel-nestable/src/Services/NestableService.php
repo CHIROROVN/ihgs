@@ -356,7 +356,6 @@ class NestableService
                 }
 
                // $jumb += 1;
-
             }
 
             // current data contact to the parent variable
