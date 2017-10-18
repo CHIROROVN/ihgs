@@ -28,9 +28,8 @@
                   <tbody>
                   <tr>
                     <td>
-                      {!! divisions('belong_id', $belong_selected) !!}
+                      {!! divisions('belong_id', $belong_selected, true) !!}
                     </td>
-
                     <td>
                       <div class="fl-left">
                         <select name="year_from" class="form-control form-control-date">

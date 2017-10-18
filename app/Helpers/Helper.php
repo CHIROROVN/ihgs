@@ -37,9 +37,9 @@ if (!function_exists('actiontime')) {
 }
 
 if (!function_exists('divisions')) {
-	function divisions($name, $selected)
+	function divisions($name, $selected, $flag)
 	{
-		$dropdown = App\Http\Controllers\Backend\SearchController::getDivision($name, $selected);
+		$dropdown = App\Http\Controllers\Backend\SearchController::getDivision($name, $selected, $flag);
 
 		return $dropdown;
     }

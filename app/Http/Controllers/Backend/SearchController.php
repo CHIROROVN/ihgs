@@ -12,9 +12,9 @@ use Config;
 
 class SearchController extends BackendController
 {
-	public static function getDivision($name='belong_name', $selected=1){
+	public static function getDivision($name='belong_name', $selected=1, $flag=false){
 		$clsDivision = new DivisionModel();
-		return $clsDivision->attr(['name' => $name, 'class'=>'form-control', 'placeholder'=>'部課名'])->selected($selected)->orderBy('belong_sort', 'asc')->renderAsDropdown();
+		return $clsDivision->attr(['name' => $name, 'class'=>'form-control', 'placeholder'=>'部課名','flag'=>$flag])->selected($selected)->orderBy('belong_sort', 'asc')->renderAsDropdown();
 	}
 
 

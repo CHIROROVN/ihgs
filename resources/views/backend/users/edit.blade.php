@@ -66,7 +66,7 @@
                       <td class="col-md-9">
                         <div class="fl-left">
 
-                          {!! divisions('u_belong' ,(!empty(old('u_belong')) ? old('u_belong') : $user->u_belong)) !!}
+                          {!! divisions('u_belong' ,(!empty(old('u_belong')) ? old('u_belong') : $user->u_belong),false) !!}
                           
                           </select>
                           @if ($errors->has('u_belong'))

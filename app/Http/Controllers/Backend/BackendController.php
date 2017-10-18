@@ -13,9 +13,7 @@ class BackendController extends Controller
         foreach($configs as $key => $value)
         {
             define($key, $value);
-        }
-
-       
+        }       
 
         //get IP address from user
         if (isset($_SERVER['HTTP_CLIENT_IP']))
