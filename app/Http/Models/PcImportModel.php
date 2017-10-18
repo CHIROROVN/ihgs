@@ -28,7 +28,7 @@ class PcImportModel
     }
 
    
-  //Manage Pc format
+   //Manage Pc format
     public function getPc(){
         return DB::table($this->table)->get();
     }

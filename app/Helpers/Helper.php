@@ -317,23 +317,116 @@ if (!function_exists('hour_minute')) {
 if (!function_exists('time_over')) {
 	function time_over($start=null, $end=null){
 		$result = '';
-		if(!empty($end) && !empty($start)){
+		$overtime = (int)$start + (int)$end;
+		$minus = (int)$overtime / 60;
 
-			$diff = date_diff(date_create($end), date_create($start));
-			
-			if($diff->h > 0){
-				$result .= ($diff->h - 8).'時間';
+		if($minus > 30 ){
+			if($minus < 60){
+				return $minus . '分超';
+			}elseif($minus >= 60){
+				$hs = $overtime / 3600;
+				$ms = ($overtime / 60) % 60;
+				if($ms > 0){
+					return $hs.'時'.$ms.'分超';
+				}else{
+					return $hs . '時間超';
+				}				
 			}
-			if($diff->i > 0){
-				$result .= $diff->i.'分';
-			}
-
-			return $result . '超';
-
 		}else{
-			return $result;
+			return '';
 		}
-
 	}	
 }
 
+if (!function_exists('compare_min')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function compare_min($time1=null, $time2=null)
+	{
+		if(strtotime($time1) <= strtotime($time2)){
+			return $time1;
+		}else{
+			return $time2;
+		}
+	}
+}
+
+if (!function_exists('compare_max')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function compare_max($time1=null, $time2=null)
+	{
+		if(strtotime($time1) >= strtotime($time2)){
+			return $time1;
+		}else{
+			return $time2;
+		}
+	}
+}
+
+if (!function_exists('time2second')) {
+	function time2second($time){
+		if(!empty($time)){
+			$timeArr = array_reverse(explode(":", $time));
+			$seconds = 0;
+			foreach ($timeArr as $key => $value)
+			{
+			    if ($key > 2) break;
+			    $seconds += pow(60, $key) * $value;
+			}
+			return $seconds;
+		}else{
+			return '';
+		}
+	}
+}
+
+if (!function_exists('over_in')) {
+	function over_in($time1, $time2){
+		$result = $time1 - $time2;
+		if($result >= 0){
+			return $result;
+		}else{
+			return 0;
+		}
+	}
+}
+
+if (!function_exists('over_out')) {
+	function over_out($time1, $time2){
+		$result = $time2 - $time1;
+		if($result >= 0){
+			return $result;
+		}else{
+			return 0;
+		}
+	}
+}
+
+if (!function_exists('style_overtime')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function style_overtime($start=null, $end=null)
+	{
+		$overtime = ($start + $end)/60;
+		if($overtime > 30 && $overtime < 60){
+			return 'class=bg-yellow';
+		}elseif($overtime >= 60){
+			return 'class=bg-red';
+		}else{
+			return '';
+		}
+	}
+}
