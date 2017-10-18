@@ -28,7 +28,7 @@
                   <tbody>
                   <tr>
                     <td>
-                      {!! divisions('belong_id', $belong_selected, false) !!}
+                      {!! divisions('belong_id', $belong_selected, true) !!}
                     </td>
                     <td>
                       <div class="fl-left">
