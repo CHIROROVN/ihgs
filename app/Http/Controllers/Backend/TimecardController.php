@@ -1,9 +1,6 @@
 <?php namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Backend\BackendController;
-use App\Http\Requests;
-use Illuminate\Http\Request;
 use Auth;
-use Hash;
 use App\User;
 use App\Http\Models\TimecardModel;
 use App\Http\Models\TimecardImportModel;
@@ -43,8 +40,13 @@ class TimecardController extends BackendController
         $inputs                 = Input::all();
         $rules                  = $clsTimecard->Rules();
         if(!Input::hasFile('file_path')){
-            unset($rules['file_path']);
-            unset($rules['file_path']);
+            unset($rules['file_path']);            
+        }else{
+            $upload_file = Input::file('file_path');
+            $extFile  = $upload_file->getClientOriginalExtension();
+            if($extFile == 'csv' || $extFile == 'CSV' || $extFile == 'xls' || $extFile == 'xlsx'){
+                unset($rules['file_csv']);
+            }
         }
 
         $validator              = Validator::make($inputs, $rules, $clsTimecard->Messages());
