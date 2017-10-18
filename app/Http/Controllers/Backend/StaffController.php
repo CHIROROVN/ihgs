@@ -98,21 +98,31 @@ class StaffController extends BackendController
         $dataInput              = array();
         $clsStaff               = new StaffModel();
         $clsBelong             = new BelongModel(); 
+        $inputs                 = Input::all();
         $staff_id_no           = Input::get('staff_id_no');
         $staff_name           = Input::get('staff_name');
         $staff_belong          = Input::get('staff_belong');
         $staff_card            = Input::get('staff_card');
         $staff_pc              = Input::get('staff_pc');
-        $rules                 = $clsStaff->Rules();
+        $rules                 = $clsStaff->RulesImport();
         $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
         if(!Input::hasFile('file_path')){
-            unset($rules['file_path']);
-            unset($rules['file_path']);
-        }
-         if (Input::hasFile('file_path'))
-        {
+            unset($rules['file_path']);            
+        }else{
             $upload_file = Input::file('file_path');
-            $extFile     = $upload_file->getClientOriginalExtension();
+            $extFile  = $upload_file->getClientOriginalExtension();
+            if($extFile == 'csv' || $extFile == 'CSV' || $extFile == 'xls' || $extFile == 'xlsx'){
+                unset($rules['file_csv']);
+            }
+        }
+        $validator              = Validator::make($inputs, $rules,$clsStaff->MessagesImport());
+        if ($validator->fails()) {
+            return redirect()->route('backend.staff.import')->withErrors($validator)->withInput();
+        }
+        if (Input::hasFile('file_path'))
+        {            
+            ini_set('max_execution_time', 300);
+            ini_set('memory_limit', '512M');
             $fn          = 'file'.'_'.rand(time(),time()).'.'.$extFile;                        
             $path        = '/uploads/';
             $upload_file->move(public_path().$path, $fn);

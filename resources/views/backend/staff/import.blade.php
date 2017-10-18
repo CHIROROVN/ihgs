@@ -29,7 +29,7 @@
         　・「社員名」、「所属課」は上書きされます。<br />
         　・「入退出カード番号」、「PC番号」は追加されます。</p>
     <!--/forms-->
-    {!! Form::open(array('route' => 'backend.staff.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!} 
+    {!! Form::open(array('route' => 'backend.staff.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'Shift-JIS')) !!} 
     <div class="forms-main_agileits">
       <div class="graph-form agile_info_shadow">
         <div class="form-body">
@@ -108,7 +108,7 @@
       <td class="col-md-9" colspan="2">
       <div class="bt-browser">
         <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l" id="file_path"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
-        <span class="help-block" id="error_file_path"></span>
+        <span class="help-block" id="error_file_path">@if ($errors->has('file_csv'))<strong>{{ $errors->first('file_csv') }}</strong>@endif</span>
       </div>
       <div class="fl-left">
         <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
@@ -125,7 +125,7 @@
 $("#btnSend").on("click",function() {
   var flag = true;
   if (!$("#file_path").val().replace(/ /g, "")) {  
-    $("#error_file_path").html('<?php echo $error['error_file_path_required']?>');             
+    $("#error_file_path").html('<strong><?php echo $error['error_file_path_required']?></strong>');             
     $("#error_file_path").css('display','block');    
     flag = false; 
   }

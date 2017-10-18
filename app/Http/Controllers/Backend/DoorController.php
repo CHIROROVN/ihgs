@@ -134,32 +134,28 @@ class DoorController extends BackendController
         $rules                  = $clsDoorcard->Rules();
         if(!Input::hasFile('file_path')){
             unset($rules['file_path']);
-            unset($rules['file_path']);
+        }else{
+            $upload_file = Input::file('file_path');
+            $extFile  = $upload_file->getClientOriginalExtension();
+            if($extFile == 'csv' || $extFile == 'CSV' || $extFile == 'xls' || $extFile == 'xlsx'){
+                unset($rules['file_csv']);
+            }
         }
         $validator              = Validator::make($inputs, $rules, $clsDoorcard->Messages());
         if ($validator->fails()) {
             return redirect()->route('backend.door.index')->withErrors($validator)->withInput();
         }
         if (Input::hasFile('file_path'))
-        {
-            $upload_file = Input::file('file_path');
-            $extFile  = $upload_file->getClientOriginalExtension();
-
-            if(!empty(Input::get('td_dataname'))){
-               $fn = Input::get('td_dataname').'_'.rand(time(),time()).'.'.$extFile;
-            }else{
-                $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
-            }
+        {     
+            ini_set('max_execution_time', 300);
+            ini_set('memory_limit', '512M');       
+            $fn = Input::get('td_dataname').'_'.rand(time(),time()).'.'.$extFile;
+            
             ini_set('memory_limit','256M');
             $path = '/uploads/';
             $upload_file->move(public_path().$path, $fn); 
-            $data = array();                
-           /* $data = Excel::load(public_path().$path.$fn, function($reader) {
-                // mb_convert_encoding($str, "SJIS")
-            }, 'UTF-8')->setDateColumns(['date','time'])->get(); */
-
-            $data = Excel::load(public_path().$path.$fn, function($reader) {
-                // mb_convert_encoding($str, "SJIS")
+            $data = array();                           
+            $data = Excel::load(public_path().$path.$fn, function($reader) {                
             }, 'UTF-8')->get();            
             
             $date_formats  = Config::get('constants.TOUCHTIME_FORMAT');
@@ -171,8 +167,7 @@ class DoorController extends BackendController
                     }else{                                                      
                        $times                  = $this->changeDate($value->time,'0:2:3:2:6:2','time','');                          
                        $date                   = date("Y-m-d",strtotime($value->date));
-                    }    
-                    //$this->changeDate($value->date,$date_formats[$doorcardModel->md_touchtime_format],'date','');                                                             
+                    }                                                                                   
                     $dataInsert             = array(
                         'td_card'           => trim($value->doorcard_id),
                         'td_door'           => trim($value->door_id),           

@@ -37,12 +37,13 @@
     </p>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">
-        {!! Form::open(array('route' => 'backend.door.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!} 
+        {!! Form::open(array('route' => 'backend.door.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'Shift-JIS')) !!} 
           <table class="table table-bordered">
             <tr>
               <td class="col-title col-md-3"><label for="">データ名称</label></td>
               <td class="col-md-9">
-                <div class="col-md-6"><input type="text" class="form-control" id="td_dataname" name="td_dataname"><span class="help-block" id="error_dataname"></span></div>
+                <div class="col-md-6"><input type="text" class="form-control" id="td_dataname" name="td_dataname" value="@if(old('td_dataname')){{old('td_dataname')}}@endif">
+                <span class="help-block" id="error_dataname">@if ($errors->has('td_dataname'))<strong>{{ $errors->first('td_dataname') }}</strong>@endif</span></div>
               </td>
             </tr>
             <tr>
@@ -50,7 +51,7 @@
               <td class="col-md-9">
                 <div class="bt-browser mar-left15">
                   <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l" id="file_path"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
-                  <span class="help-block" id="error_file_path"></span>
+                  <span class="help-block" id="error_file_path">@if ($errors->has('file_csv'))<strong>{{ $errors->first('file_csv') }}</strong>@endif</span>
                 </div>
                 <div class="fl-left">
                   <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
@@ -123,12 +124,12 @@
 $("#btnSend").on("click",function() {
   var flag = true;
   if (!$("#td_dataname").val().replace(/ /g, "")) {  
-    $("#error_dataname").html('<?php echo $error['error_td_dataname_required']?>');             
+    $("#error_dataname").html('<strong><?php echo $error['error_td_dataname_required']?></strong>');             
     $("#error_dataname").css('display','block');  
     flag = false;  
   }  
   if (!$("#file_path").val().replace(/ /g, "")) {  
-    $("#error_file_path").html('<?php echo $error['error_file_path_required']?>');             
+    $("#error_file_path").html('<strong><?php echo $error['error_file_path_required']?></strong>');             
     $("#error_file_path").css('display','block');    
     flag = false; 
   }

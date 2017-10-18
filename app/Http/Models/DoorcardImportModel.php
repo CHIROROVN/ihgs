@@ -12,7 +12,8 @@ class DoorcardImportModel
     public function Rules()
     {
         return array(
-            'td_dataname' => 'required',                      
+            'td_dataname' => 'required', 
+            'file_csv'               => 'required|mimes:csv,xls,xlsx',                      
         );
     }
 
@@ -20,7 +21,8 @@ class DoorcardImportModel
     {
         return array(
            'td_dataname.required'  => trans('validation.error_td_dataname_required'),
-            
+           'file_csv.required'      => trans('validation.error_file_path_required'),
+           'file_csv.mimes'         => trans('validation.error_timecard_file_csv'), 
         );
     }
     

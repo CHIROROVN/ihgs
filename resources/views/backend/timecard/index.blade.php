@@ -43,7 +43,7 @@
                     <td class="col-title col-md-3"><label for="">データ名称</label></td>
                     <td class="col-md-9">
                       <div class="col-md-6">
-                        <input type="text" class="form-control" id="tt_dataname" name="tt_dataname">
+                        <input type="text" class="form-control" id="tt_dataname" name="tt_dataname" value="@if(old('tt_dataname')){{old('tt_dataname')}}@endif">
                         <span class="help-block" id="error_dataname">@if ($errors->has('tt_dataname'))<strong>{{ $errors->first('tt_dataname') }}</strong>@endif</span>
                       </div>
                     </td>

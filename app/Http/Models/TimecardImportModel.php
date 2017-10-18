@@ -11,7 +11,8 @@ class TimecardImportModel
     public function Rules()
     {
         return array(
-            'tt_dataname' => 'required', 
+            'tt_dataname' => 'required',
+            'file_csv'               => 'required|mimes:csv,xls,xlsx', 
         );
     }
 
@@ -19,6 +20,8 @@ class TimecardImportModel
     {
         return array(
             'tt_dataname.required'  => trans('validation.error_tt_dataname_required'),
+            'file_csv.required'      => trans('validation.error_file_path_required'),
+            'file_csv.mimes'         => trans('validation.error_timecard_file_csv'),
         );
     }
     
