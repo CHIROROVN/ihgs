@@ -317,12 +317,14 @@ class NestableService
             }
         }
 
-        $args['data']->each(function ($child_item) use (&$tree, $args, $level) {
+        $jumb = 0;
+
+        $args['data']->each(function ($child_item) use (&$tree, $args, $level, $jumb) {
 
             $childItems = '';
 
             if (intval($child_item[$this->parent]) == intval($args['parent'])) {
-
+                $comma = '│';
                 // Get the value
                 $value = $child_item[$this->config['dropdown']['value']];
 
@@ -333,7 +335,9 @@ class NestableService
 
                 // Generating nest level └ ├
                 //$levels = str_repeat('&nbsp;&nbsp;', $level);
-                $levels = str_repeat('├', $level);
+
+                $levels = str_repeat($comma, $level);
+                $levels = $levels.'├';
 
                 // check the does want select value
                 $selected = $this->doSelect($value, $label);
@@ -350,6 +354,9 @@ class NestableService
                     // function call again for child elements
                     $childItems .= $this->renderAsDropdown($args['data'], $item_id, false, $level);
                 }
+
+               // $jumb += 1;
+
             }
 
             // current data contact to the parent variable
