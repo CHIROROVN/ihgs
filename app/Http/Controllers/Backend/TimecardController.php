@@ -54,6 +54,8 @@ class TimecardController extends BackendController
         
         if (Input::hasFile('file_path'))
         {
+            ini_set('max_execution_time', 300);
+            ini_set('memory_limit', '512M');
             $upload_file = Input::file('file_path');
             $extFile  = $upload_file->getClientOriginalExtension();
 
@@ -71,9 +73,10 @@ class TimecardController extends BackendController
             $timecardModel = $clsTimecardModel->get_last_insert();
             $date_formats  = Config::get('constants.DATE_FORMAT');
             $time_formats  = Config::get('constants.TIME_FORMAT');          
-            if(!empty($data) && $data->count()){                
+            if(!empty($data) && $data->count()){                                
                 foreach ($data as $key => $value) {                                      
-                     $arr = array_values($value);                      
+                    $arr = (is_array($value))?array_values($value):array();                                           
+                    if(count($arr) <1) continue;
                     if(isset($arr[$timecard[0]->mt_gotime_row-1]) && $arr[$timecard[0]->mt_gotime_row-1] !=''){                        
                         if(strlen($arr[$timecard[0]->mt_gotime_row-1]) >8){
                              $dataInsert             = array(
@@ -99,6 +102,7 @@ class TimecardController extends BackendController
                             );         
                         }                                                                                                      
                         $clsTimecard->insert($dataInsert);
+                    }//end if empty    
                 }   
                 Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));          

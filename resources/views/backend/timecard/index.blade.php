@@ -37,7 +37,7 @@
           </p>
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
-              {!! Form::open(array('route' => 'backend.timecard.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!} 
+              {!! Form::open(array('route' => 'backend.timecard.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'SJIS')) !!} 
                 <table class="table table-bordered">
                   <tr>
                     <td class="col-title col-md-3"><label for="">データ名称</label></td>

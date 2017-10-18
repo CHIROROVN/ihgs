@@ -95,8 +95,8 @@ class StaffController extends BackendController
 	}
 
     public function postImport(){
-       $dataInput              = array();
-       $clsStaff               = new StaffModel();
+        $dataInput              = array();
+        $clsStaff               = new StaffModel();
         $clsBelong             = new BelongModel(); 
         $staff_id_no           = Input::get('staff_id_no');
         $staff_name           = Input::get('staff_name');
