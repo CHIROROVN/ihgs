@@ -61,7 +61,7 @@
                       <td class="col-md-2">
                         <select name="mt_date_row" id="mt_date_row"  class="form-control">                          
                           @for ($i = $now; $i <= $last; $i++)
-                              <option value="{{ $i }}" @if($i==$timecard->mt_staff_id_row) selected="" @endif>{{ $i }} 列目</option>
+                              <option value="{{ $i }}" @if($i==$timecard->mt_date_row) selected="" @endif>{{ $i }} 列目</option>
                           @endfor
                         </select>
                       </td>

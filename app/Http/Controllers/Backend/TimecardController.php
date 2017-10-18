@@ -1,9 +1,6 @@
 <?php namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Backend\BackendController;
-use App\Http\Requests;
-use Illuminate\Http\Request;
 use Auth;
-use Hash;
 use App\User;
 use App\Http\Models\TimecardModel;
 use App\Http\Models\TimecardImportModel;
@@ -43,8 +40,13 @@ class TimecardController extends BackendController
         $inputs                 = Input::all();
         $rules                  = $clsTimecard->Rules();
         if(!Input::hasFile('file_path')){
-            unset($rules['file_path']);
-            unset($rules['file_path']);
+            unset($rules['file_path']);            
+        }else{
+            $upload_file = Input::file('file_path');
+            $extFile  = $upload_file->getClientOriginalExtension();
+            if($extFile == 'csv' || $extFile == 'CSV' || $extFile == 'xls' || $extFile == 'xlsx'){
+                unset($rules['file_csv']);
+            }
         }
 
         $validator              = Validator::make($inputs, $rules, $clsTimecard->Messages());
@@ -54,6 +56,8 @@ class TimecardController extends BackendController
         
         if (Input::hasFile('file_path'))
         {
+            ini_set('max_execution_time', 300);
+            ini_set('memory_limit', '512M');
             $upload_file = Input::file('file_path');
             $extFile  = $upload_file->getClientOriginalExtension();
 
@@ -71,19 +75,36 @@ class TimecardController extends BackendController
             $timecardModel = $clsTimecardModel->get_last_insert();
             $date_formats  = Config::get('constants.DATE_FORMAT');
             $time_formats  = Config::get('constants.TIME_FORMAT');          
-            if(!empty($data) && $data->count()){                
+            if(!empty($data) && $data->count()){                                
                 foreach ($data as $key => $value) {                                      
-                    $dataInsert             = array(
-                        'tt_staff_id_no'    => $value->staff_id,
-                        'tt_date'           => $this->changeDate($value->date,$date_formats[$timecardModel[0]->mt_date_format],'date','date'),           
-                        'tt_gotime'         => $this->changeDate($value->gotime,$time_formats[$timecardModel[0]->mt_gotime_format],'time','time'), 
-                        'tt_backtime'       => $this->changeDate($value->backtime,$time_formats[$timecardModel[0]->mt_gotime_format],'time','time'),
-                        'tt_dataname'       => Input::get('tt_dataname'),
-                        'last_date'         => date('Y-m-d H:i:s'),                        
-                        'last_ipadrs'       => CLIENT_IP_ADRS,
-                        'last_user'         => Auth::user()->u_id            
-                    );
-                    $clsTimecard->insert($dataInsert);
+                    $arr = (is_array($value))?array_values($value):array();                                           
+                    if(count($arr) <1) continue;
+                    if(isset($arr[$timecard[0]->mt_gotime_row-1]) && $arr[$timecard[0]->mt_gotime_row-1] !=''){                        
+                        if(strlen($arr[$timecard[0]->mt_gotime_row-1]) >8){
+                             $dataInsert             = array(
+                                'tt_staff_id_no'    => isset($arr[$timecard[0]->mt_staff_id_row-1])?$arr[$timecard[0]->mt_staff_id_row-1]:'',
+                                'tt_date'           => isset($arr[$timecard[0]->mt_date_row-1])?$this->changeDate($arr[$timecard[0]->mt_date_row-1],'0:4:5:2:8:2','date','date'):'',           
+                                'tt_gotime'         => isset($arr[$timecard[0]->mt_gotime_row-1])?$this->changeDate($arr[$timecard[0]->mt_gotime_row-1],'11:2:14:2:17:2','time',''):'', 
+                                'tt_backtime'       => isset($arr[$timecard[0]->mt_backtime_row-1])?$this->changeDate($arr[$timecard[0]->mt_backtime_row-1],'11:2:14:2:17:2','time',''):'',
+                                'tt_dataname'       => Input::get('tt_dataname'),
+                                'last_date'         => date('Y-m-d H:i:s'),                        
+                                'last_ipadrs'       => CLIENT_IP_ADRS,
+                                'last_user'         => Auth::user()->u_id            
+                            );      
+                        }else{
+                             $dataInsert             = array(
+                                        'tt_staff_id_no'    => isset($arr[$timecard[0]->mt_staff_id_row-1])?$arr[$timecard[0]->mt_staff_id_row-1]:'',
+                                        'tt_date'           => isset($arr[$timecard[0]->mt_date_row-1])?$this->changeDate($arr[$timecard[0]->mt_date_row-1],$date_formats[$timecard[0]->mt_date_format],'date','date'):'',           
+                                        'tt_gotime'         => isset($arr[$timecard[0]->mt_gotime_row-1])?$this->changeDate($arr[$timecard[0]->mt_gotime_row-1],$time_formats[$timecard[0]->mt_gotime_format],'time',''):'', 
+                                        'tt_backtime'       => isset($arr[$timecard[0]->mt_backtime_row-1])?$this->changeDate($arr[$timecard[0]->mt_backtime_row-1],$time_formats[$timecard[0]->mt_gotime_format],'time',''):'',
+                                        'tt_dataname'       => Input::get('tt_dataname'),
+                                        'last_date'         => date('Y-m-d H:i:s'),                        
+                                        'last_ipadrs'       => CLIENT_IP_ADRS,
+                                        'last_user'         => Auth::user()->u_id            
+                            );         
+                        }                                                                                                      
+                        $clsTimecard->insert($dataInsert);
+                    }//end if empty    
                 }   
                 Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));          

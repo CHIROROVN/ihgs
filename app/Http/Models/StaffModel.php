@@ -26,8 +26,14 @@ class StaffModel
     
     public function get_all($belong_id=null, $staff_name=null,$staff_id_no=null)
     {        
-        $results = DB::table($this->table)->join('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')->where('t_staff.last_kind', '<>', DELETE);
-        if(!empty($belong_id))     $results = $results->where('staff_belong',  '=', $belong_id);       
+        $results = DB::table($this->table)->leftjoin('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')->where('t_staff.last_kind', '<>', DELETE);
+        if(!empty($belong_id)){
+              $results = $results->Where(function ($query) use ($belong_id) {
+                                                            $query->where('m_belong.belong_id',  '=', $belong_id)
+                                                                  ->orWhere('m_belong.belong_parent_id','=', $belong_id);
+                                                        });
+                   
+        }   
         if(!empty($staff_name))     $results = $results->where('staff_name',   'like', '%' . $staff_name . '%');
         if(!empty($staff_id_no))     $results = $results->where('staff_id_no', 'like', '%' . $staff_id_no . '%');
 

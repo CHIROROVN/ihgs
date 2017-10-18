@@ -116,7 +116,7 @@ class BackendController extends Controller
     protected function changeDate($date_source,$date_format,$source_type,$action='')
     {
         $arrData = explode(":", $date_format);
-        //echo $date_source;
+        // echo "<br>source".$date_source;
         //echo "<pre>";print_r($arrData);echo "</pre>";
         if($source_type=='date'){
             $strYear = substr($date_source, $arrData[0], $arrData[1]);           
@@ -132,9 +132,9 @@ class BackendController extends Controller
             $strS = substr($date_source, $arrData[10], $arrData[11]);                   
             return date("Y-m-d h:i:s",mktime((int)$strH, (int)$strI, (int)$strS, (int)$strMonth, (int)$strDate, (int)$strYear));
         }else{    
-           $strH = substr($date_source, $arrData[0], $arrData[1]);                      
-           $strI = substr($date_source, $arrData[2], $arrData[3]);           
-           $strS = substr($date_source, $arrData[4], $arrData[5]);           
+           $strH = substr($date_source, $arrData[0], $arrData[1]);                                 
+           $strI = substr($date_source, $arrData[2], $arrData[3]);                       
+           $strS = substr($date_source, $arrData[4], $arrData[5]);                       
            return date("H:i:s",mktime((int)$strH, (int)$strI, (int)$strS, date("m"),  date("d"), date("Y")));
         }
     }

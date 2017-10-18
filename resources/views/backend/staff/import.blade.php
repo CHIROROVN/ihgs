@@ -1,6 +1,5 @@
 @extends('backend.layouts.app')
-@section('content')
-  <!-- breadcrumbs -->
+@section('content')  
   <div class="w3l_agileits_breadcrumbs">
     <div class="w3l_agileits_breadcrumbs_inner">
       <ul>
