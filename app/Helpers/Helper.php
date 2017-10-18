@@ -314,3 +314,26 @@ if (!function_exists('hour_minute')) {
 	}	
 }
 
+if (!function_exists('time_over')) {
+	function time_over($start=null, $end=null){
+		$result = '';
+		if(!empty($end) && !empty($start)){
+
+			$diff = date_diff(date_create($end), date_create($start));
+			
+			if($diff->h > 0){
+				$result .= ($diff->h - 8).'時間';
+			}
+			if($diff->i > 0){
+				$result .= $diff->i.'分';
+			}
+
+			return $result . '超';
+
+		}else{
+			return $result;
+		}
+
+	}	
+}
+

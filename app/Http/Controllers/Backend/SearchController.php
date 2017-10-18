@@ -19,6 +19,7 @@ class SearchController extends BackendController
 
 
 	public function index(){
+
 		$clsSearch = new SearchModel();
 		$clsStaff = new StaffModel();
 		$clsBelong = new BelongModel();
@@ -37,7 +38,6 @@ class SearchController extends BackendController
 		$data['year_to'] = !empty(Input::get('year_to')) ? Input::get('year_to') : date('Y');
 		$data['month_to'] = !empty(Input::get('month_to')) ? Input::get('month_to') : date('m');
 		$data['kw'] = Input::get('kw');
-
 		
 		//$data['division'] = $clsDivision->nested()->get();
 

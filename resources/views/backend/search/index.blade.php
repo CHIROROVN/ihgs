@@ -113,7 +113,8 @@
                       <td>{{@hour_minute(touchtime($staff, $date)[0]->door_out)}}</td>
                       <td>{{@hour_minute(actiontime($staff, $date)[0]->action_in)}}</td>
                       <td>{{@hour_minute(actiontime($staff, $date)[0]->action_out)}}</td>
-                      <td class="bg-yellow">30分超</td>
+                      <?php $start = touchtime($staff, $date)[0]->door_in; $end = touchtime($staff, $date)[0]->door_out; ?>
+                      <td class="bg-yellow">{{ time_over($start, $end) }}</td>
                     </tr>
                     @endforeach
                   @endif
