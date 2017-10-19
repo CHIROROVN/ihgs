@@ -51,7 +51,7 @@ class PcController extends BackendController
             Session::flash('danger', trans('common.msg_import_setting_danger'));
             return redirect()->route('backend.pc.import');
         }      		 
-
+        $flag = true;
 		if(Input::hasFile('tp_file_csv')){
 			ini_set('max_execution_time', 300);
             ini_set('memory_limit', '512M');
@@ -121,7 +121,7 @@ class PcController extends BackendController
 			}*/
 
 
-		}
+		}else $flag = false;
         
 		if($flag){
 			Session::flash('success', trans('common.msg_import_success'));
