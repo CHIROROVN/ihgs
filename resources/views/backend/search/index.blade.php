@@ -129,7 +129,7 @@
 
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <input name="submit" value="PDFで出力する" type="submit" class="btn btn-primary btn-sm">
+                  <input name="export_pdf" value="PDFで出力する" type="button" onclick="location.href='{{route('backend.search.index_pdf',['staff_id'=>$staff->staff_id, 'year_from'=>$conditions['year_from'], 'month_from'=>$conditions['month_from'], 'year_to'=>$conditions['year_to'], 'month_to'=>$conditions['month_to']])}}'" class="btn btn-primary btn-sm">
                 </div>
               </div>
 

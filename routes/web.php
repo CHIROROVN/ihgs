@@ -21,6 +21,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	|--------------------------------------------------------------------------
 	*/
 	Route::get('/static_search', ['as' => 'backend.search.index', 'uses' => 'SearchController@index']);
+	Route::get('/overtime-pdf', ['as' => 'backend.search.index_pdf', 'uses' => 'SearchController@export_pdf']);
 
 	Route::get('/login', ['as' => 'auth.login', 'uses' => 'UsersController@login']);
 	Route::post('/login', ['as' => 'auth.login', 'uses' => 'UsersController@postLogin']);

@@ -7,7 +7,7 @@ class BackendController extends Controller
     public function __construct(){
 
         $this->middleware('auth', ['except' => ['postLogin', 'login','logout']]);
-
+        ini_set("memory_limit", "256M");
         //Define contants
         $configs = Config::get('constants.DEFINE');
         foreach($configs as $key => $value)

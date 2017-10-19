@@ -10,6 +10,8 @@ use Validator;
 use Session;
 use Config;
 
+use PDF;
+
 class SearchController extends BackendController
 {
 	public static function getDivision($name='belong_name', $selected=0, $flag=false){
@@ -19,7 +21,6 @@ class SearchController extends BackendController
 
 
 	public function index(){
-
 		$clsSearch = new SearchModel();
 		$clsStaff = new StaffModel();
 		$clsBelong = new BelongModel();
@@ -75,6 +76,39 @@ class SearchController extends BackendController
 		}
 
 		return view('backend.search.index', $data);
+	}
+
+	public function export_pdf(){
+		$clsStaff = new StaffModel();
+		$where = array();
+		if(!empty(Input::get('year_from'))){
+			$where['year_from'] = Input::get('year_from');
+		}
+
+		if(!empty(Input::get('month_from'))){
+			$where['month_from'] = Input::get('month_from');
+		}
+
+		if(!empty(Input::get('year_to'))){
+			$where['year_to'] = Input::get('year_to');
+		}
+
+		if(!empty(Input::get('month_to'))){
+			$where['month_to'] = Input::get('month_to');
+		}
+
+		$data['conditions'] = $where;
+
+		$staff = $clsStaff->get_by_id(Input::get('staff_id'));
+
+		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));
+		// return view('backend.search.index_pdf', $data);
+
+		//$file_name = $staff->staff_id_no . ! 
+
+	    $pdf = PDF::loadView('backend.search.index_pdf', $data);
+
+	    return $pdf->download($staff->staff_name.'.pdf');
 	}
 
 
