@@ -102,9 +102,6 @@ class SearchController extends BackendController
 		$staff = $clsStaff->get_by_id(Input::get('staff_id'));
 
 		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));
-		// return view('backend.search.index_pdf', $data);
-
-		//$file_name = $staff->staff_id_no . ! 
 
 	    $pdf = PDF::loadView('backend.search.index_pdf', $data);
 
