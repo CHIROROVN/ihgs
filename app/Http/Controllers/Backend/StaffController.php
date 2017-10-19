@@ -252,5 +252,45 @@ class StaffController extends BackendController
         }
         return redirect()->route('backend.staff.index');    
     }
+    public function exportPDF()
+    {
+       $clsStaff          = new StaffModel();      
+       $data['staffs']    = $clsStaff->get_all('','','');       
+
+       $str = '<table id="table" class="mar-bottom15">
+                <thead>
+                  <tr>
+                    <th>削除</th>
+                    <th>社員番号</th>
+                    <th>社員名</th>
+                    <th>所属部署</th>
+                    <th>入退出カード番号</th>
+                    <th>PC番号</th>
+                    <th>編集</th>
+                  </tr>
+                </thead>
+                <tbody>';
+        foreach($data['staffs']['data'] as $staff){ 
+                   
+        $str .= '<tr >
+                    <td align="center"></td>
+                    <td>'.$staff->staff_id_no.'</td>
+                    <td>'. $staff->staff_name.'</td>
+                    <td>'. $staff->belong_name.'</td>
+                    <td>'.$staff->staff_card1.'</td>
+                    <td>'.$staff->staff_pc1.'</td>
+                    <td align="center"></td>
+                  </tr>';  
+        } 
+        $str .='</tbody>
+              </table>';  
+       
+       return Excel::create('itsolutionstuff_example', function($excel) use ($str) {
+        $excel->sheet('mySheet', function($sheet) use ($str)
+        {
+            $sheet->fromArray($str);
+        });
+       })->download("pdf");
+    }
 
 }

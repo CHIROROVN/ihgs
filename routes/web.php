@@ -47,6 +47,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/overwork', ['as' => 'backend.workingtime.index', 'uses' => 'WorkingTimeController@index']);
 	Route::post('/overwork', ['as' => 'backend.workingtime.index', 'uses' => 'WorkingTimeController@index']);
 	Route::get('/overtime/detail/{id}', ['as' => 'backend.workingtime.detail', 'uses' => 'WorkingTimeController@detail']);
+	Route::get('/overwork/pdf', ['as' => 'backend.workingtime.pdf', 'uses' => 'WorkingTimeController@exportPDF']);
 
 	 //division
     Route::get('/division', ['as' => 'backend.division.index', 'uses' => 'DivisionController@index']);
@@ -97,6 +98,7 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/staff/delete/{id}', ['as' => 'backend.staff.delete', 'uses' => 'StaffController@getDelete']);
 	Route::get('/staff/edit/{id}', ['as' => 'backend.staff.edit', 'uses' => 'StaffController@getEdit']);
 	Route::post('/staff/edit/{id}', ['as' => 'backend.staff.edit', 'uses' => 'StaffController@postEdit']);
+	Route::get('/staff/pdf', ['as' => 'backend.staff.pdf', 'uses' => 'StaffController@exportPDF']);
 
 });
 

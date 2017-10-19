@@ -17,7 +17,8 @@ class PcController extends BackendController
 	public function import(){
 		$clsPcImport    = new PcImportModel();
 
-		$pcs = $clsPcImport->getPc();
+		//$pcs = $clsPcImport->getPc();
+		$pcs = $clsPcImport->get_all_by_dataname();
 
 		return view('backend.pc.import', compact('pcs'));
 	}
@@ -28,7 +29,7 @@ class PcController extends BackendController
 		$clsPC 			= new PcModel();
 		$mp_format = $clsPC->getPC();
 
-		$clsPcImport    = new PcImportModel();
+		$clsPcImport    = new PcImportModel();		
 		$Rules = $clsPcImport->Rules();
 
 		if(Input::hasFile('tp_file_csv')){
@@ -45,24 +46,38 @@ class PcController extends BackendController
 		if ($validator->fails()) {
 			return redirect()->route('backend.pc.import')->withErrors($validator)->withInput();
 		}
+		$config = $clsPC->getPc();		
+		if(!isset($config->mp_id)){
+            Session::flash('danger', trans('common.msg_import_setting_danger'));
+            return redirect()->route('backend.pc.import');
+        }      		 
 
 		if(Input::hasFile('tp_file_csv')){
-			
+			ini_set('max_execution_time', 300);
+            ini_set('memory_limit', '512M');
 			$file_upload = Input::file('tp_file_csv');
-
-
 			$path = Input::file('tp_file_csv')->getRealPath();
 
-			$file_csv = Excel::load($path, function($reader) {
-				//$reader->limitRows(10);
-				//$reader->getTitle();
+			$file_csv = Excel::load($path, function($reader) {				
 			}, 'UTF-8')->get();
-
-				// echo '<pre>';
-				// print_r($file_csv->getHeading());
-				// echo '</pre>';die;
-
-			if(!empty($file_csv) && $file_csv->count()){
+			if(!empty($file_csv) && $file_csv->count()){ 
+				$file_csv = $file_csv->toArray(); 
+				foreach ($file_csv as $key => $value) {
+				   $arr = (is_array($value))?array_values($value):array();  				   
+				   $date  = 	date('Y-m-d', strtotime($arr[$config->mp_actiontime_row-1]->toDateTimeString()));
+				   $time  =     date('H:i:s',strtotime($arr[$config->mp_actiontime_row]->toDateTimeString()));
+				   $data['tp_dataname']            = Input::get('tp_dataname');
+				   $data['tp_pc_no']				= isset($arr[$config->mp_pc_no_row-1])?$arr[$config->mp_pc_no_row-1]:'';
+				   $data['tp_action']				= isset($arr[$config->mp_action_row-1])?$arr[$config->mp_action_row-1]:'';
+				   $data['tp_actiontime']			= $date.' '.$time;
+				   $data['last_ipadrs']            = CLIENT_IP_ADRS;
+				   $data['last_date']              = date('Y-m-d H:i:s');
+				   $data['last_user']              = Auth::user()->u_id;				   
+				   $clsPcImport->insert($data);
+                }//end foreach value   	
+			}	
+            
+			/*if(!empty($file_csv) && $file_csv->count()){
 				//$file_csv = $file_csv->toArray();
 				$flag = false;
 				foreach ($file_csv as $valPc) {
@@ -103,9 +118,11 @@ class PcController extends BackendController
 				}else{
 					$flag = false;
 				}
-			}
-		}
+			}*/
 
+
+		}
+        
 		if($flag){
 			Session::flash('success', trans('common.msg_import_success'));
 			return redirect()->route('backend.pc.import');

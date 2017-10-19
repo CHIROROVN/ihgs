@@ -33,6 +33,12 @@ class PcImportModel
         return DB::table($this->table)->get();
     }
 
+    public function get_all_by_dataname()
+    {
+        $results = DB::table($this->table)->select('tp_dataname', 'last_date')->distinct('tp_dataname')->get();
+        return $results;
+    }
+
     //pc insert
     public function insert($data)
     {
