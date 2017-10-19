@@ -30,6 +30,12 @@ class TimecardImportModel
         $results = DB::table($this->table)->orderBy('tt_id', 'desc')->get();
         return $results;
     }
+     public function get_all_by_dataname()
+    {
+        $results = DB::table($this->table)->select('tt_dataname', 'last_date')->distinct('tt_dataname')->get();
+       // $results = DB::table($this->table)->select(DB::raw('count(*) as count, tt_dataname,last_date'))->groupBy('tt_dataname')->get();
+        return $results;
+    }
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

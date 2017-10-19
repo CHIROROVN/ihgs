@@ -37,7 +37,7 @@
           </p>
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
-              {!! Form::open(array('route' => 'backend.timecard.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'Shift-JIS')) !!} 
+              {!! Form::open(array('route' => 'backend.timecard.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'UTF-8')) !!} 
                 <table class="table table-bordered">
                   <tr>
                     <td class="col-title col-md-3"><label for="">データ名称</label></td>
@@ -87,7 +87,7 @@
                   <tr data-id='{{$timecard->tt_dataname}}'>
                     <td align="center" style="width: 150px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$timecard->tt_dataname}}');"></td>
                     <td>{{$timecard->tt_dataname}}</td>
-                    <td>{{$timecard->last_date}}</td>
+                    <td>{{date_time($timecard->last_date)}}</td>
                   </tr> 
                  @endforeach
                  @endif                      
@@ -153,13 +153,6 @@ $("#btnSend").on("click",function() {
   }
   if(flag)   $( "#frmUpload" ).submit(); 
 });
-/*
-$(document).ready(function(){
-  $('input[type="file"]').change(function(e){
-    var fileName = e.target.files[0].name;    
-    $("#tt_dataname").val(fileName);    
-  });
-});*/
 </script>
 @endsection
 @section('js')

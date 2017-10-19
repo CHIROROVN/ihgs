@@ -133,7 +133,7 @@ class StaffController extends BackendController
             if(!empty($data) && count($data) >0){                    
                 foreach ($data[0] as $key => $value) {
                     $arr  =array(); 
-                    $arr = array_values($value);                   
+                    $arr = array_values($value);             
                     
                     $staff_belong   =  isset($arr[$staff_belong])?$clsBelong->get_by_belong_name($arr[$staff_belong]):'NULL'; 
                     if(isset($staff_belong->belong_id)){                                   

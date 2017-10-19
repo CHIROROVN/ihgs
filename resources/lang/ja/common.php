@@ -23,6 +23,8 @@ return [
     'msg_import_success'                => 'csvを正常にインポートします。',
     'msg_import_danger'                 => 'インポートcsvが失敗しました。',
 
+    'msg_import_setting_danger'                 => 'パラメータを設定してください。',
+
 
 
 ];

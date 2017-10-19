@@ -31,6 +31,12 @@ class DoorcardImportModel
         $results = DB::table($this->table)->distinct('td_dataname')->orderBy('td_id', 'desc')->take(100)->get();//->groupBy('td_dataname')
         return $results;
     }
+
+    public function get_all_by_dataname()
+    {
+        $results = DB::table($this->table)->select('td_dataname', 'last_date')->distinct('td_dataname')->get();
+        return $results;
+    }
     
     public function insert($data)
     {

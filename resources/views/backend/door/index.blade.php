@@ -85,7 +85,7 @@
               <tr data-id='{{$doorcard->td_dataname}}'>
                 <td align="center" style="width: 120px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$doorcard->td_dataname}}');"></td>
                 <td>{{$doorcard->td_dataname}}</td>
-                <td>{{$doorcard->last_date}}</td>
+                <td>{{date_time($doorcard->last_date)}}</td>
               </tr>
             @endforeach
           @endif       

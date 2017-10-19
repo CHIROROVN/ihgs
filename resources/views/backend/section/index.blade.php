@@ -129,7 +129,7 @@ function btnDelete($id)
  }   
 $('#btnDelteYes').click(function () {
     var id = $('#myModal').data('id');
-    location.href='{{ asset('section/' . $belong->belong_parent_id.'/delete/') }}'+'/'+ id ;    
+    location.href='{{ asset('section/' . $parent->belong_id.'/delete/') }}'+'/'+ id ;    
 });
 </script>    
 @endsection

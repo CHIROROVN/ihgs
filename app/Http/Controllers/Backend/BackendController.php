@@ -138,4 +138,33 @@ class BackendController extends Controller
            return date("H:i:s",mktime((int)$strH, (int)$strI, (int)$strS, date("m"),  date("d"), date("Y")));
         }
     }
+    protected function  readFileCsv($filename)
+    {
+        $arrResult = array();
+        $ary[] = "ASCII";
+        $ary[] = "JIS";
+        $ary[] = "EUC-JP";
+        $ary[] = "Shift-JIS";   
+        $ary[] = "eucjp-win"; 
+        $ary[] = "sjis-win";
+        $ary[] = "UTF-8";    
+        $string = file_get_contents($filename);
+        if(mb_detect_encoding($string, 'auto') !='UTF-8')           
+            $str = mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, $ary));
+        else  $str =  $string; 
+        unset($string);
+        $convert = explode("\n", $str);
+        for ($i=1;$i<count($convert);$i++)  
+        {
+            $arrTempt = array();            
+            $arrTempt = explode(",",$convert[$i]);
+            $arrResult[$i-1][0] = '';
+            foreach($arrTempt as $value){
+                $arrResult[$i-1][] = $value;
+            }         
+                                               
+        }
+        unset($convert);
+        return $arrResult;
+    }   
 }
