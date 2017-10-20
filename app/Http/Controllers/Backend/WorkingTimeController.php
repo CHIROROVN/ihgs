@@ -100,15 +100,15 @@ class WorkingTimeController extends BackendController
 		if(count($arrTempt) >0){
 			foreach($arrTempt as $key=>$val){				
 				if(isset($val['gotime'])){					
- 					$temptDoor     = strtotime($val['touchtime_in']);
-					$temptPC       = strtotime($val['pc_in']);
-					$tempt         = strtotime($val['gotime']);
+ 					$temptDoor     = isset($val['touchtime_in'])?strtotime($key.' '.$val['touchtime_in']):'';
+					$temptPC       = isset($val['pc_in'])?strtotime($key.' '.$val['pc_in']):'';
+					$tempt         = isset($val['gotime'])?strtotime($key.' '.$val['gotime']):'';
 					$time_in       = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;					
  				}
  				if(isset($val['backtime'])){
- 					$temptDoor     = strtotime($key.' '.$val['touchtime_out']);
-					$temptPC       = strtotime($key.' '.$val['pc_out']);
-					$tempt         = strtotime($key.' '.$val['backtime']);
+ 					$temptDoor     = isset($val['touchtime_out'])?strtotime($key.' '.$val['touchtime_out']):'';
+					$temptPC       = isset($val['pc_out'])?strtotime($key.' '.$val['pc_out']):'';
+					$tempt         = isset($val['backtime'])?strtotime($key.' '.$val['backtime']):'';
 					$time_out      = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;
  				}
  				//$time_total = $time_in + $time_out ;
