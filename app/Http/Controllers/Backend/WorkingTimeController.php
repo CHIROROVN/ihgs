@@ -95,7 +95,27 @@ class WorkingTimeController extends BackendController
                     $arrTempt[$temptDate]['pc_out'] = date("H:i:s",strtotime($val->tp_actiontime));
 				}				
 			}	
-		}		
+		}	
+		//
+		if(count($arrTempt) >0){
+			foreach($arrTempt as $key=>$val){				
+				if(isset($val['gotime'])){					
+ 					$temptDoor     = strtotime($val['touchtime_in']);
+					$temptPC       = strtotime($val['pc_in']);
+					$tempt         = strtotime($val['gotime']);
+					$time_in       = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;					
+ 				}
+ 				if(isset($val['backtime'])){
+ 					$temptDoor     = strtotime($key.' '.$val['touchtime_out']);
+					$temptPC       = strtotime($key.' '.$val['pc_out']);
+					$tempt         = strtotime($key.' '.$val['backtime']);
+					$time_out      = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;
+ 				}
+ 				//$time_total = $time_in + $time_out ;
+ 				//$arrTempt[$key]['diff'] = $time_total;
+			}
+		}	
+		die;
 		$data['worktimes']  = $arrTempt;
 		/*echo '<pre>';
 		print_r($data['worktimes']);
