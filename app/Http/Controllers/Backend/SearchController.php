@@ -10,16 +10,17 @@ use Validator;
 use Session;
 use Config;
 
+use PDF;
+
 class SearchController extends BackendController
 {
-	public static function getDivision($name='belong_name', $selected=1, $flag=false){
+	public static function getDivision($name='belong_name', $selected=0, $flag=false){
 		$clsDivision = new DivisionModel();
 		return $clsDivision->attr(['name' => $name, 'class'=>'form-control', 'placeholder'=>'部課名','flag'=>$flag])->selected($selected)->orderBy('belong_sort', 'asc')->renderAsDropdown();
 	}
 
 
 	public function index(){
-
 		$clsSearch = new SearchModel();
 		$clsStaff = new StaffModel();
 		$clsBelong = new BelongModel();
@@ -45,7 +46,7 @@ class SearchController extends BackendController
 			$data['belong_selected'] = Input::get('belong_id');
 			$where['belong_parent_id'] = $clsBelong->get_list_by_id(Input::get('belong_id'));
 		}else{
-			$data['belong_selected'] = 1;
+			$data['belong_selected'] = 0;
 		}
 
 		if(!empty(Input::get('year_from'))){
@@ -74,15 +75,37 @@ class SearchController extends BackendController
 			$data['staffs'] = $clsStaff->search_staff($where);
 		}
 
-		//if(!empty($where)){
-			//$data['worktimes'] = $clsSearch->staffOfWorkTime($where);
-		//}
-
-		// echo '<pre>';
-		// print_r($data['staffs']);
-		// echo '</pre>';
-
 		return view('backend.search.index', $data);
+	}
+
+	public function export_pdf(){
+		$clsStaff = new StaffModel();
+		$where = array();
+		if(!empty(Input::get('year_from'))){
+			$where['year_from'] = Input::get('year_from');
+		}
+
+		if(!empty(Input::get('month_from'))){
+			$where['month_from'] = Input::get('month_from');
+		}
+
+		if(!empty(Input::get('year_to'))){
+			$where['year_to'] = Input::get('year_to');
+		}
+
+		if(!empty(Input::get('month_to'))){
+			$where['month_to'] = Input::get('month_to');
+		}
+
+		$data['conditions'] = $where;
+
+		$staff = $clsStaff->get_by_id(Input::get('staff_id'));
+
+		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));
+
+	    $pdf = PDF::loadView('backend.search.index_pdf', $data);
+
+	    return $pdf->download($staff->staff_name.'.pdf');
 	}
 
 

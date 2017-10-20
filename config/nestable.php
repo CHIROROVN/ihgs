@@ -11,7 +11,7 @@ return [
     ],
 
     'dropdown' => [
-        'prefix' => '',
+        'prefix' => '&nbsp;',
         'label' => 'belong_name',
         'value' => 'belong_id'
     ]
