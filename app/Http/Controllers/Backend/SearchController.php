@@ -9,8 +9,9 @@ use Input;
 use Validator;
 use Session;
 use Config;
-
+use App;
 use PDF;
+
 
 class SearchController extends BackendController
 {
@@ -75,6 +76,8 @@ class SearchController extends BackendController
 			$data['staffs'] = $clsStaff->search_staff($where);
 		}
 
+		$data['staff'] = $clsStaff->get_by_id(1);
+
 		return view('backend.search.index', $data);
 	}
 
@@ -103,9 +106,12 @@ class SearchController extends BackendController
 
 		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));
 
-	    $pdf = PDF::loadView('backend.search.index_pdf', $data);
+		//PDF::setOptions(['dpi' => 150, 'defaultFont' => 'DFKai-SB']);
+		//mb_internal_encoding('UTF-8');
 
-	    return $pdf->download($staff->staff_name.'.pdf');
+		$pdf = PDF::loadView('backend.search.index_pdf', $data);
+
+		return $pdf->download($staff->staff_name . '_' . rand('9999',time()).'.pdf');
 	}
 
 

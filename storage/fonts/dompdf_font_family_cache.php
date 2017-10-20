@@ -80,4 +80,19 @@
   'mplus 1p' => array(
     'normal' => $fontDir . '\0f43579cad507d5ea7f45064421855f9',
   ),
+  'firefly sung' => array(
+    'normal' => $fontDir . '\fbe0d3322808aed4540a9fbbf02fdc78',
+  ),
+  'roboto' => array(
+    'normal' => $fontDir . '\6635cb8d74c1c5e1d70f633e30f9425c',
+  ),
+  'ms gothic' => array(
+    'normal' => $fontDir . '\128315536e499632d9fe6f912a5b5109',
+  ),
+  'ms mincho' => array(
+    'normal' => $fontDir . '\dc478310035a2daaa9e0986e77d39668',
+  ),
+  'dfkai-sb' => array(
+    'normal' => $fontDir . '\6117155083ffb2f4a75c3d7a49f0ea6a',
+  ),
 ) ?>

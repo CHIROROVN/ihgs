@@ -268,6 +268,29 @@ if (!function_exists('DayeJp')) {
 		}
 	}
 }
+
+if (!function_exists('DateDayJp')) {
+
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function DateDayJp($date=null){
+		if(!empty($date)){
+			$convertEn2Jp = array('Sun'=>'日', 'Mon'=>'月', 'Tue'=>'火', 'Wed'=>'水', 'Thu'=>'木', 'Fri'=>'金', 'Sat'=>'土');
+			$month = (int) date('m', strtotime($date)) + 0;
+			$year = (int) date('Y', strtotime($date)) + 0;
+			$day = (int) date('d', strtotime($date)) + 0;
+			$dayEn = strtotime($date);
+			return $year.'年'.$month . '月' . $day . '日' . '('.$convertEn2Jp[date("D", $dayEn)].')';
+		}else{
+			return null;
+		}
+	}
+}
+
 if (!function_exists('formatshortTime')) {
 	function formatshortTime($time=null, $chars=':'){
 		if(!empty($time)){

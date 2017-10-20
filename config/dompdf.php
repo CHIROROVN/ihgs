@@ -57,7 +57,7 @@ return array(
          * The temporary directory is required to download remote images and when
          * using the PFDLib back end.
          */
-        "DOMPDF_TEMP_DIR" => sys_get_temp_dir(),
+        "DOMPDF_TEMP_DIR" => sys_get_temp_dir('tmp/'),
 
         /**
          * ==== IMPORTANT ====
@@ -87,7 +87,7 @@ return array(
         /**
          * Whether to enable font subsetting or not.
          */
-        "DOMPDF_ENABLE_FONT_SUBSETTING" => false,
+        "DOMPDF_ENABLE_FONT_SUBSETTING" => true,
 
         /**
          * The PDF rendering backend to use
@@ -160,7 +160,7 @@ return array(
          * Used if no suitable fonts can be found. This must exist in the font folder.
          * @var string
          */
-        "DOMPDF_DEFAULT_FONT" => "serif",
+        "DOMPDF_DEFAULT_FONT" => "MS GoThic",
 
         /**
          * Image DPI setting
@@ -209,7 +209,7 @@ return array(
          *
          * @var bool
          */
-        "DOMPDF_ENABLE_PHP" => false,
+        "DOMPDF_ENABLE_PHP" => true,
 
         /**
          * Enable inline Javascript
@@ -251,13 +251,13 @@ return array(
          * Allows people to disabled CSS float support
          * @var bool
          */
-        "DOMPDF_ENABLE_CSS_FLOAT" => false,
+        "DOMPDF_ENABLE_CSS_FLOAT" => true,
 
 
         /**
          * Use the more-than-experimental HTML5 Lib parser
          */
-        "DOMPDF_ENABLE_HTML5PARSER" => false,
+        "DOMPDF_ENABLE_HTML5PARSER" => true,
 
 
     ),

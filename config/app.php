@@ -243,7 +243,7 @@ return [
         'Carbon' => 'Carbon\Carbon',
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Nestable' => Nestable\Facades\NestableService::class
+        'Nestable' => Nestable\Facades\NestableService::class,
 
     ],
 
