@@ -43,15 +43,15 @@
                   </td>
                 </tr>
                   @else  
-                  @foreach($worktimes as $worktime)  
+                  @foreach($worktimes as $key=>$worktime)  
                   <tr>
-                    <td>{{DayeJp($worktime->tt_date, '/')}}</td>
-                    <td>{{formatshortTime($worktime->tt_gotime)}}</td>
-                    <td>{{formatshortTime($worktime->tt_backtime)}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{DayeJp($key, '/')}}</td>
+                    <td>@if(isset($worktime['gotime'])){{formatshortTime($worktime['gotime'])}} @else  データ無し @endif</td>
+                    <td>@if(isset($worktime['backtime'])){{formatshortTime($worktime['backtime'])}} @else  データ無し @endif</td>
+                    <td>@if(isset($worktime['touchtime_in'])){{formatshortTime($worktime['touchtime_in'])}} @else  データ無し @endif</td>
+                    <td>@if(isset($worktime['touchtime_out'])){{formatshortTime($worktime['touchtime_out'])}} @else  データ無し @endif</td>
+                    <td>@if(isset($worktime['pc_in'])){{formatshortTime($worktime['pc_in'])}} @else  データ無し @endif</td>
+                    <td>@if(isset($worktime['pc_out'])){{formatshortTime($worktime['pc_out'])}} @else  データ無し @endif</td>
                     <td></td>
                     <td></td>
                   </tr>
