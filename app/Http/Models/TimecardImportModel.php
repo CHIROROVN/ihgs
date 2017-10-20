@@ -63,9 +63,7 @@ class TimecardImportModel
             if(!empty($results1->staff_pc9))  $strPC[] = $results1->staff_pc9;
             if(!empty($results1->staff_pc10)) $strPC[] = $results1->staff_pc10;                       
             $results['pcs'] = DB::table('t_pc')->whereIn('tp_pc_no',[array_values($strPC)])->whereYear('tp_actiontime','=', $year)->whereMonth('tp_actiontime','=', $month)->orderBy('tp_actiontime', 'asc')->get();
-           /* echo '<pre>';
-            print_r($results['pcs']);
-            echo '</pre>';*/
+         
         }                 
         $results['timecards'] = DB::table('t_staff')->leftJoin('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                        ->whereYear('t1.tt_date', $year)
