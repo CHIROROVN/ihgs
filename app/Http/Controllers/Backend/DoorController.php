@@ -157,8 +157,7 @@ class DoorController extends BackendController
             $upload_file->move(public_path().$path, $fn);                                
                                    
             if(!empty($data) && count($data) >0){                
-                foreach ($data as $value) {     
-
+                foreach ($data as $value) {                        
                    if(isset($doorcardModel->md_touchdate_row) && $doorcardModel->md_touchdate_row >0)                                            
                         $touchtime    = isset($value[$doorcardModel->md_touchdate_row])?date("Y-m-d",strtotime($value[$doorcardModel->md_touchdate_row])):date("Y-m-d H:i:s");
                     else{                                                                  
@@ -175,14 +174,14 @@ class DoorController extends BackendController
                         'last_ipadrs'       => CLIENT_IP_ADRS,
                         'last_user'         => Auth::user()->u_id            
                     );     
-                    // /echo "<pre>";print_r($dataInsert );echo "</pre>";                                      
+                    //echo "<pre>";print_r($dataInsert );echo "</pre>";                                      
                     $clsDoorcard->insert($dataInsert);
                 }   
                 Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));            
             unset($data); unset($date_formats);unset($inputs);                
         }else Session::flash('danger', trans('common.msg_regist_danger'));
-       return redirect()->route('backend.door.index');
+       //return redirect()->route('backend.door.index');
     }
     public function getDelete($dataname)
     {

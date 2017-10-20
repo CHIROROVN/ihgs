@@ -16,11 +16,10 @@ class WorkingTimeController extends BackendController
 		$clsBelong            = new BelongModel();
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';		
 		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'2017';
-		$data['divisions']    = $clsBelong->list_division_tree(); 
-		//$data['error']['error_belong_name_required']    = trans('validation.error_belong_name_required');
-        //$data['error']['error_belong_code_required']    = trans('validation.error_belong_code_required');
+		//$data['divisions']    = $clsBelong->list_division_tree(); 
+		
 		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array(); 
-		//print_r($data['worktimes']);
+		//echo "<pre>";print_r($data['worktimes']);echo "</pre>";
 		return view('backend.workingtime.index',$data);
 	}
 
@@ -34,7 +33,7 @@ class WorkingTimeController extends BackendController
 		$strCard .= (isset($data['staff']->staff_card4) && !empty($data['staff']->staff_card4))?((!empty($strCard))?",'".$data['staff']->staff_card4."'":"'".$data['staff']->staff_card4."'"):'';	
 		$strCard .= (isset($data['staff']->staff_card5) && !empty($data['staff']->staff_card5))?((!empty($strCard))?",'".$data['staff']->staff_card5."'":"'".$data['staff']->staff_card5."'"):'';			
 		$data['worktimes']=  $clsWorkingTime->get_timecard($id,$data['year']);
-		print_r($data['staff']);
+		// /print_r($data['staff']);
 		$data['doorcard']=  $clsWorkingTime->get_doorcard($strCard,$data['year']);
 		
 		return view('backend.workingtime.detail',$data);

@@ -42,7 +42,7 @@
             <td class="col-title col-md-3"><label for="">部署名</label></td>
             <td class="col-md-9">
               <div class="col-md-6">
-                {!! divisions('staff_belong', $staff->staff_belong) !!} 
+                {!! divisions('staff_belong', $staff->staff_belong,true) !!} 
                 
                 @if ($errors->has('u_belong'))
                     <span class="help-block">

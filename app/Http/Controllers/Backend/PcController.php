@@ -63,7 +63,8 @@ class PcController extends BackendController
 			if(!empty($file_csv) && $file_csv->count()){ 
 				$file_csv = $file_csv->toArray(); 
 				foreach ($file_csv as $key => $value) {
-				   $arr = (is_array($value))?array_values($value):array();  				   
+				   $arr = (is_array($value))?array_values($value):array();
+
 				   $date  = 	date('Y-m-d', strtotime($arr[$config->mp_actiontime_row-1]->toDateTimeString()));
 				   $time  =     date('H:i:s',strtotime($arr[$config->mp_actiontime_row]->toDateTimeString()));
 				   $data['tp_dataname']            = Input::get('tp_dataname');
@@ -72,7 +73,7 @@ class PcController extends BackendController
 				   $data['tp_actiontime']			= $date.' '.$time;
 				   $data['last_ipadrs']            = CLIENT_IP_ADRS;
 				   $data['last_date']              = date('Y-m-d H:i:s');
-				   $data['last_user']              = Auth::user()->u_id;				   
+				   $data['last_user']              = Auth::user()->u_id;				   				   
 				   $clsPcImport->insert($data);
                 }//end foreach value   	
 			}	

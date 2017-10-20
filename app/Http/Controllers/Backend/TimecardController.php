@@ -206,5 +206,14 @@ class TimecardController extends BackendController
             Session::flash('danger', trans('common.msg_delete_danger'));
         }
         return redirect()->route('backend.timecard.index');
+    }
+    public function getList($staff_id,$year,$month)
+    {
+        $clsTimecard            = new TimecardImportModel();
+        $timecard     = $clsTimecard->getList($staff_id,$year,$month);        
+        $data['timecards']  = isset($timecard['timecards'])?$timecard['timecards']:array();
+        $data['doorcards']  = isset($timecard['doorcards'])?$timecard['doorcards']:array();
+        $data['pcs']        = isset($timecard['pcs'])?$timecard['pcs']:array();
+        return view('backend.timecard.list', $data);
     } 
 }

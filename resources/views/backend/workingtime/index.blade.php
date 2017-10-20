@@ -21,7 +21,7 @@
             </thead>
         <tbody>
         <tr>
-            <td>{!! divisions('staff_belong', $staff_belong) !!}                
+            <td>{!! divisions('staff_belong', $staff_belong,true) !!}                
             </td>
             <td>
                 <div class="fl-left">

@@ -43,13 +43,14 @@ class WorkingTimeModel
 
     public function get_timecard($id,$year)
     {
-        $results = DB::table($this->table)->join('t_timecard as t1', function ($join) {
+
+        $results = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                                      ->Where(function ($query) use ($year) {
                                                             $query->whereYear('t1.tt_date', $year)
                                                                   ->whereMonth('t1.tt_date','>', '3');
                                                         })
-                                                     ->orWhere(function ($query) {
+                                                     ->orWhere(function ($query) use ($year){
                                                             $query->whereYear('t1.tt_date', $year + 1)
                                                                   ->whereMonth('t1.tt_date','<', '4');
                                                         });                                                     
@@ -61,9 +62,9 @@ class WorkingTimeModel
     }
     public function get_doorcard($id,$year)
     {
-        $results = DB::table('t_doorcard')->join('t_staff', function ($join) {
-                                                $join->on('t_staff.staff_card1', 'like', 't_doorcard.td_card');
-                                                     /*->orOn('t_staff.staff_card2', 'like', 't_doorcard.td_card')
+        $results = DB::table('t_staff')->join('t_doorcard', function ($join) {
+                                                $join->on('t_staff.staff_card1', '=', 't_doorcard.td_card');
+                                                    /* ->orOn('t_staff.staff_card2', '=', 't_doorcard.td_card')
                                                      ->orOn('t_staff.staff_card3', '=', 't_doorcard.td_card')
                                                      ->orOn('t_staff.staff_card4', '=', 't_doorcard.td_card')
                                                      ->orOn('t_staff.staff_card5', '=', 't_doorcard.td_card')
@@ -71,13 +72,13 @@ class WorkingTimeModel
                                                      ->orOn('t_staff.staff_card7', '=', 't_doorcard.td_card')
                                                      ->orOn('t_staff.staff_card8', '=', 't_doorcard.td_card')
                                                      ->orOn('t_staff.staff_card9', '=', 't_doorcard.td_card')
-                                                     ->orOn('t_staff.staff_card10', '=', 't_doorcard.td_card');*/
+                                                     // ->orOn('t_staff.staff_card10', '=', 't_doorcard.td_card');*/
                                             })   
                                             ->Where(function ($query) use ($year){
                                                             $query->whereYear('t_doorcard.td_touchtime', $year)
                                                                   ->whereMonth('t_doorcard.td_touchtime','>', '3');
                                                         })
-                                                     ->orWhere(function ($query) {
+                                                     ->orWhere(function ($query) use ($year){
                                                             $query->whereYear('t_doorcard.td_touchtime', $year + 1)
                                                                   ->whereMonth('t_doorcard.td_touchtime','<', '4');
                                             })->where('t_staff.staff_id', $id)                                        
