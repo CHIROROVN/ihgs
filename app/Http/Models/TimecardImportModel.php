@@ -66,7 +66,8 @@ class TimecardImportModel
            /* echo '<pre>';
             print_r($results['pcs']);
             echo '</pre>';*/
-        }                 
+        } 
+                        
         $results['timecards'] = DB::table('t_staff')->leftJoin('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                        ->whereYear('t1.tt_date', $year)
                                        ->whereMonth('t1.tt_date','=', $month)
