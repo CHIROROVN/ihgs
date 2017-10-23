@@ -138,5 +138,7 @@ class WorkingTimeController extends BackendController
 		$pdf = PDF::loadView('backend.workingtime.pdf', $data);
 
 		return $pdf->download(ALL . '_' . rand('9999',time()).'.pdf');
+
+		//return view('backend.workingtime.pdf',$data);
 	}
 }
