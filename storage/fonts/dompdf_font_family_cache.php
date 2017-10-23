@@ -95,4 +95,10 @@
   'dfkai-sb' => array(
     'normal' => $fontDir . '\6117155083ffb2f4a75c3d7a49f0ea6a',
   ),
+  'yu gohhic' => array(
+    'normal' => $fontDir . '\cef1cca1302e3ba6cefc8857cb923353',
+  ),
+  'yu gothic' => array(
+    'normal' => $fontDir . '\b09a64cc842308d5f8f2d299910c013b',
+  ),
 ) ?>
