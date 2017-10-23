@@ -60,6 +60,7 @@ class WorkingTimeModel
 
         return $results;
     }
+    
     public function get_doorcard($id,$year)
     {
        $results1 = DB::table('t_staff')->where('staff_id', $id)->first();              

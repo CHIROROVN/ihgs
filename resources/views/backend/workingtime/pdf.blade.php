@@ -13,25 +13,25 @@
   <table cellpadding=0 cellspacing=0>
 	<tr>
 			<td class="bottom-line header col-name">氏名</td>
-			<td class="bottom-line header col-normal">2017年<br />4月</td>
-			<td class="bottom-line header col-normal">2017年<br />5月</td>
-			<td class="bottom-line header col-normal">2017年<br />6月</td>
-			<td class="bottom-line header col-normal">2017年<br />7月</td>
-			<td class="bottom-line header col-normal">2017年<br />8月</td>
-			<td class="bottom-line header col-normal">2017年<br />9月</td>
-			<td class="bottom-line header col-normal">2017年<br />10月</td>
-			<td class="bottom-line header col-normal">2017年<br />11月</td>
-			<td class="bottom-line header col-normal">2017年<br />12月</td>
-			<td class="bottom-line header col-normal">2018年<br />1月</td>
-			<td class="bottom-line header col-normal">2018年<br />2月</td>
-			<td class="bottom-line header col-normal">2018年<br />3月</td>
-			<td class="bottom-line header col-total">合計 </td>
+			<td class="bottom-line header col-normal">2017年<br>4月</td>
+			<td class="bottom-line header col-normal">2017年<br>5月</td>
+			<td class="bottom-line header col-normal">2017年<br>6月</td>
+			<td class="bottom-line header col-normal">2017年<br>7月</td>
+			<td class="bottom-line header col-normal">2017年<br>8月</td>
+			<td class="bottom-line header col-normal">2017年<br>9月</td>
+			<td class="bottom-line header col-normal">2017年<br>10月</td>
+			<td class="bottom-line header col-normal">2017年<br>11月</td>
+			<td class="bottom-line header col-normal">2017年<br>12月</td>
+			<td class="bottom-line header col-normal">2018年<br>1月</td>
+			<td class="bottom-line header col-normal">2018年<br>2月</td>
+			<td class="bottom-line header col-normal">2018年<br>3月</td>
+			<td class="bottom-line header col-total">合計</td>
 			<td class="bottom-line header col-normal">基準超</td>
 			<td class="bottom-line header remark">備考</td>
 	</tr>
 	<?php $row = 0; ?>
-	@if(count($overwork) > 0)
-	@foreach($overwork as $ow)
+	@if(count($worktimes) > 0)
+	@foreach($worktimes as $ow)
     <tr {!! ($row % 2 != 0) ? 'class="old"' : '' !!}>
 		<td>杉元 俊彦 </td>
 		<td>0h</td>
