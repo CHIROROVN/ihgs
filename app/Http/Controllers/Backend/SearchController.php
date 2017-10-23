@@ -12,14 +12,12 @@ use Config;
 use App;
 use PDF;
 
-
 class SearchController extends BackendController
 {
 	public static function getDivision($name='belong_name', $selected=0, $flag=false){
 		$clsDivision = new DivisionModel();
 		return $clsDivision->attr(['name' => $name, 'class'=>'form-control', 'placeholder'=>'部課名','flag'=>$flag])->selected($selected)->orderBy('belong_sort', 'asc')->renderAsDropdown();
 	}
-
 
 	public function index(){
 		$clsSearch = new SearchModel();
@@ -67,7 +65,7 @@ class SearchController extends BackendController
 		}
 
 		$data['conditions'] = $where;
-
+		
 		if(!empty(Input::get('kw'))){
 			$where['kw'] = trim(Input::get('kw'));
 		}

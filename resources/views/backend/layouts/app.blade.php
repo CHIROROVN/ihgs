@@ -76,7 +76,7 @@
 
   <!-- banner -->
   <!--copy rights start here-->
-  <div class="copyrights">
+  <div class="copyrights copyright-fixed">
     <p>© 2017 ITOCHU Human Resources ＆ General Affairs Services Inc. All Rights Reserved.</p>
   </div>
 <!--copy rights end here-->
