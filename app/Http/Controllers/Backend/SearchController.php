@@ -103,11 +103,8 @@ class SearchController extends BackendController
 		$data['conditions'] = $where;
 
 		$staff = $clsStaff->get_by_id(Input::get('staff_id'));
-
+		
 		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));
-
-		//PDF::setOptions(['dpi' => 150, 'defaultFont' => 'DFKai-SB']);
-		//mb_internal_encoding('UTF-8');
 
 		$pdf = PDF::loadView('backend.search.index_pdf', $data);
 

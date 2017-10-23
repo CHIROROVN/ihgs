@@ -3,6 +3,13 @@ use App\Http\Models\BelongModel;
 
 use Carbon\Carbon;
 
+if (!function_exists('encoding')) {
+	function encoding($str)
+	{
+		return mb_convert_encoding($str, "SJIS");
+    }
+}
+
 if (!function_exists('division')) {
 	function division($belong_id)
 	{
