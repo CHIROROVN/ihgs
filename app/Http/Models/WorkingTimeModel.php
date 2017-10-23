@@ -75,8 +75,9 @@ class WorkingTimeModel
             if(!empty($results1->staff_card7))  $strCard[] = $results1->staff_card7;
             if(!empty($results1->staff_card8))  $strCard[] = $results1->staff_card8;
             if(!empty($results1->staff_card9))  $strCard[] = $results1->staff_card9;
-            if(!empty($results1->staff_card10))  $strCard[] = $results1->staff_card10;                       
-            $results['doorcards'] = DB::table('t_doorcard')->where(function($query) use ($year){
+            if(!empty($results1->staff_card10))  $strCard[] = $results1->staff_card10; 
+            if(count($strCard) >0)                      
+              $results['doorcards'] = DB::table('t_doorcard')->where(function($query) use ($year){
                                           $query->where(function ($query) use ($year) {
                                                             $query->whereYear('td_touchtime', $year)
                                                                   ->whereMonth('td_touchtime','>', '3');
@@ -86,6 +87,7 @@ class WorkingTimeModel
                                                                   ->whereMonth('td_touchtime','<', '4');
                                                         });
                                     })->whereIn('td_card',[array_values($strCard)])->orderBy('td_touchtime', 'asc')->get();
+            else $results['doorcards'] = array();
                                    
            if(!empty($results1->staff_pc1))  $strPC[] = $results1->staff_pc1;
             if(!empty($results1->staff_pc2))  $strPC[] = $results1->staff_pc2;
@@ -96,7 +98,8 @@ class WorkingTimeModel
             if(!empty($results1->staff_pc7))  $strPC[] = $results1->staff_pc7;
             if(!empty($results1->staff_pc8))  $strPC[] = $results1->staff_pc8;
             if(!empty($results1->staff_pc9))  $strPC[] = $results1->staff_pc9;
-            if(!empty($results1->staff_pc10)) $strPC[] = $results1->staff_pc10;                       
+            if(!empty($results1->staff_pc10)) $strPC[] = $results1->staff_pc10;
+            if(count($strPC) >0)                       
             $results['pcs'] = DB::table('t_pc')->whereIn('tp_pc_no',[array_values($strPC)])->where(function($query) use ($year){
                                           $query->where(function ($query) use ($year) {
                                                             $query->whereYear('tp_actiontime', $year)
@@ -107,6 +110,7 @@ class WorkingTimeModel
                                                                   ->whereMonth('tp_actiontime','<', '4');
                                                         });
                                     })->orderBy('tp_actiontime', 'asc')->get();
+            else  $results['pcs'] = array();
             $results['timecards'] = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                                      ->Where(function ($query) use ($year) {
