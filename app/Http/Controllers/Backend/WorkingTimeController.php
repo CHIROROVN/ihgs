@@ -199,9 +199,7 @@ class WorkingTimeController extends BackendController
 				}
 			}
 		}
-		return 	$arrResult;	
-
-
+		return 	$arrResult;
 		
 	}
 }
