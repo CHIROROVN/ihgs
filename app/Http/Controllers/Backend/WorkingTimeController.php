@@ -154,21 +154,23 @@ class WorkingTimeController extends BackendController
 		if(count($arrTempt) >0){
 			foreach($arrTempt as $key=>$val){
 			    $temptDoor=0;$time_out=0;$time_in=0;$overtime_in=0;$overtime_out=0;				
-				if(isset($val['gotime'])){					
- 					$temptDoor     = isset($val['touchtime_in'])?strtotime($key.' '.$val['touchtime_in']):'';
-					$temptPC       = isset($val['pc_in'])?strtotime($key.' '.$val['pc_in']):'';
-					$tempt         = isset($val['gotime'])?strtotime($key.' '.$val['gotime']):'';
-					$start_time    = strtotime($key.' '.START_TIME);
-					$time_in       = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;
-					$overtime_in   = ($start_time > $tempt )?$start_time - $tempt :0 ;
+				if(isset($val['gotime'])){									
+ 					$temptDoor     = isset($val['touchtime_in'])?strtotime($key.' '.$val['touchtime_in']):0;
+					$temptPC       = isset($val['pc_in'])?strtotime($key.' '.$val['pc_in']):0;
+					$tempt         = isset($val['gotime'])?strtotime($key.' '.$val['gotime']):0;
+					$start_time    = strtotime($key.' '.START_TIME);					
+					$time_in       = ($temptDoor  >$temptPC )?(int)$tempt-(int)$temptPC:(int)$temptDoor-(int)$tempt;
+					$time_in       = ($time_in <0)?(-1)*$time_in:$time_in;
+					$overtime_in   = (is_numeric($tempt) && $start_time > $tempt )?$start_time - $tempt :0 ;
 
  				}
  				if(isset($val['backtime'])){
- 					$temptDoor     = isset($val['touchtime_out'])?strtotime($key.' '.$val['touchtime_out']):'';
-					$temptPC       = isset($val['pc_out'])?strtotime($key.' '.$val['pc_out']):'';
-					$tempt         = isset($val['backtime'])?strtotime($key.' '.$val['backtime']):'';
+ 					$temptDoor     = isset($val['touchtime_out'])?strtotime($key.' '.$val['touchtime_out']):0;
+					$temptPC       = isset($val['pc_out'])?strtotime($key.' '.$val['pc_out']):0;
+					$tempt         = isset($val['backtime'])?strtotime($key.' '.$val['backtime']):0;
 					$end_time      = strtotime($key.' '.END_TIME);
-					$time_out      = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;
+					$time_out      = ($temptDoor  >$temptPC )?(int)$temptDoor-(int)$tempt:(int)$temptPC-(int)$tempt;
+					$time_out      = ($time_out <0)?(-1)*$time_out:$time_out;
 					$overtime_out  = ($end_time < $tempt)?$tempt - $end_time :0 ;
  				} 				
  				$arrTempt[$key]['diff'] = ceil(($time_in + $time_out)/60) ;
