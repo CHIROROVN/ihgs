@@ -38,7 +38,7 @@
                 <tbody>
                   @if(empty($worktimes) || count($worktimes) < 1)
                   <tr>
-                  <td colspan="15">
+                  <td colspan="12">
                     <h3 align="center">該当するデータがありません。</h3>
                   </td>
                 </tr>
@@ -52,7 +52,14 @@
                     <td>@if(isset($worktime['touchtime_out'])){{formatshortTime($worktime['touchtime_out'])}} @else  データ無し @endif</td>
                     <td>@if(isset($worktime['pc_in'])){{formatshortTime($worktime['pc_in'])}} @else  データ無し @endif</td>
                     <td>@if(isset($worktime['pc_out'])){{formatshortTime($worktime['pc_out'])}} @else  データ無し @endif</td>
-                    <td></td>
+                    @if(isset($worktime['diff'])) 
+                          @if($worktime['diff'] >29 && $worktime['diff'] <61) 
+                            <td class="bg-yellow">{{$worktime['diff']}} </td>
+                          @elseif($worktime['diff'] >60)                
+                            <td class="bg-red">{{$worktime['diff']}} </td>
+                          $else  <td></td>
+                          @endif
+                    @endif                        
                     <td></td>
                   </tr>
                   @endforeach

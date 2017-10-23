@@ -8,6 +8,9 @@
             'LIMIT_PAGE'            => 10,
             'ALL'					=> '全社',
             'COMPANY_NAME'			=> '全社',
+            'START_TIME'			=> '09:00:00',
+            'END_TIME'				=> '18:00:00',
+            'RESET_TIME'			=> '27:00:00',
         ),
         'MT_DATE_FORMAT' => array(
 			'1' => 'YYYY年MM月DD日',
