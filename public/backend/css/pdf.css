@@ -16,7 +16,7 @@ body {
   font-weight: normal; */
   font-size: 10px;
   //color: #D9D9D9;
-  //width: 100%;
+  width: 100%;
 }
 
 
@@ -26,7 +26,7 @@ body {
 
 table {
 	margin-top: 28px;
-	//width: 50%;
+	width: 80%;
 	border-left: 0.5px solid #000000;
 	//border-bottom: 0.5px solid #000000;
 	//border-top: 0.5px solid #000000;
@@ -83,7 +83,7 @@ td.col-left {
 }
 
 .col-name {
-	width: 60px;
+	width: 80px;
 	//text-align: left;
 }
 
@@ -103,11 +103,11 @@ td.col-left {
 }
 
 td.width-normal {
-	width: 25px;
+	width: 40px;
 }
 
 td.remark {
-	width: 30px !important;
+	width: 70px !important;
 }
 
 td.col-reason {
