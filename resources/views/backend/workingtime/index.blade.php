@@ -42,8 +42,16 @@
 </div>
 <!-- tables -->
 <div class="agile-tables">
-    <div class="w3l-table-info agile_info_shadow">
-        <div class="row mar-bottom15"></div>
+    
+        @if(empty($worktimes['data']) || count($worktimes['data']) < 1)
+
+            <div class="agile_info_shadow" style="text-align: center;">
+              <strong style="color: #777;">該当するデータがありません。</strong>
+            </div>
+          
+          @else
+          <div class="w3l-table-info agile_info_shadow">
+          <div class="row mar-bottom15"></div>
             <table id="table" class="mar-bottom15">
                 <thead>
                   <tr>
@@ -64,14 +72,7 @@
                     <th>基準超</th>
                   </tr>
                 </thead>
-                <tbody>
-                @if(empty($worktimes['data']) || count($worktimes['data']) < 1)
-                <tr>
-                <td colspan="15">
-                  <h3 align="center">該当するデータがありません。</h3>
-                </td>
-              </tr>
-                @else  
+                <tbody> 
                 @foreach($worktimes['data'] as $worktime)  
                   <tr>
                     <td><a href="{{ asset('overtime/detail/'.$worktime->staff_id.'?year='.$cb_year) }}">{{$worktime->staff_name}}</a></td>
@@ -164,15 +165,16 @@
                     <td></td>
                   </tr>
                 @endforeach
-                @endif      
                 </tbody>
               </table>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <input name="submit" value="PDFで出力する" type="submit" class="btn btn-primary btn-sm">
+                  <input name="export_pdf" value="PDFで出力する" type="button" onclick="location.href='{{route('backend.workingtime.pdf', ['staff_belong'=>$staff_belong, 'cb_year'=>$cb_year])}}'" class="btn btn-primary btn-sm">
                 </div>
               </div>
-            </div>
+              </div>
+              @endif
+
           </div>
         </div>
  </div>

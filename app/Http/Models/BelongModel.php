@@ -114,28 +114,6 @@ class BelongModel
         return DB::table('m_belong')->select('belong_id', 'belong_name', 'belong_parent_id')->where('last_kind', '<>', DELETE)->orderBy('belong_parent_id', 'desc')->get();
     }
 
-    //Search working time
-    // public function work_monthly($where=null){
-    //     $sql = DB::table($this->table)
-    //             ->leftJoin('t_staff', 'm_belong.belong_id', '=', 't_staff.staff_belong')
-    //             ->leftJoin('t_timecard', 't_staff.staff_id_no', 't_timecard.tt_staff_id_no')
-    //             //->leftJoin('t_pc', 't_staff.staff_id_no', 't_pc.tp_id')
-    //             ->leftJoin('t_pc', 't_staff.staff_id_no', 't_pc.tp_pc_no')
-    //             ->select('m_belong.belong_id', 'm_belong.belong_name', 't_staff.*', 't_timecard.tt_date', 't_timecard.tt_gotime', 't_timecard.tt_backtime')
-    //             ->where('m_belong.last_kind', '<>', DELETE)
-    //             ->where('t_staff.last_kind', '<>', DELETE);
-
-    //     // if(!empty($where['belong_id'])){
-    //     //     $sql = $sql->where('m_belong.m_belong', $where['belong_id']);
-    //     // }
-
-    //     // if(!empty($where['kw'])){
-    //     //     $sql = $sql->where('t_staff.staff_id_no', $where['kw'])->orWhere('t_staff.staff_name', 'like', '%'.$where['kw'].'%');
-    //     // }
-
-    //     return $sql->get();
-    // }
-
     public function get_list_by_id($id)
     {
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('belong_parent_id', '=', $id)->orderBy('belong_sort', 'asc')->pluck('belong_id');

@@ -12,10 +12,4 @@ class DivisionModel extends Model{
     public $timestamps  = false;
     protected $parent = 'belong_parent_id';
 
-
-
-
-
-
-
 }
