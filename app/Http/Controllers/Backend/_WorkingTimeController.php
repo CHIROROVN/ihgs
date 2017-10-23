@@ -16,7 +16,7 @@ class WorkingTimeController extends BackendController
 		$clsWorkingTime       = new WorkingTimeModel();
 		$clsBelong            = new BelongModel();
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';		
-
+<<<<<<< HEAD
 		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'2017';		 		
 		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array();
 		$arrWorkTime = array(); 
@@ -34,9 +34,15 @@ class WorkingTimeController extends BackendController
 					$data['overtimes'][$worktime->staff_id]['time']    = $intOverTime;
 				}			
 			}						
-		}			
+		}
+			
+=======
+		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):date('Y');
+		//$data['divisions']    = $clsBelong->list_division_tree(); 		
+		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array(); 
 
 		//echo "<pre>";print_r($data['worktimes']);echo "</pre>";
+>>>>>>> a5f56b350b64b8fd26b360b5eb5a50531b9b6002
 		return view('backend.workingtime.index',$data);
 	}
 
@@ -53,22 +59,12 @@ class WorkingTimeController extends BackendController
 	{
 	   $clsWorkingTime   = new WorkingTimeModel();	
 	   $data = $clsWorkingTime->get_timecard($id,$data['year']);
-	  
-	   $data = array();
-
-		$data['staff_belong'] = !empty(Input::get('staff_belong')) ? Input::get('staff_belong') : null;		
-
-		if(!empty(Input::get('cb_year'))){
-			$data['cb_year'] = Input::get('cb_year');
-		}
-
-		$data['overwork'] = $clsWorkingTime->get_timecard($data['staff_belong'], $data['cb_year']);
-
-		$pdf = PDF::loadView('backend.workingtime.pdf', $data);
-
-		return $pdf->download(ALL . '_' . rand('9999',time()).'.pdf');
-
-		//return view('backend.workingtime.pdf',$data);
+	   /*return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
+		$excel->sheet('mySheet', function($sheet) use ($data)
+	    {
+			$sheet->fromArray($data);
+	    });
+	   })->download("pdf");*/
 	}
 	public function get_work_time_array($id,$year)
 	{
@@ -79,18 +75,15 @@ class WorkingTimeController extends BackendController
 			foreach($doorcard['timecards'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->tt_date));
 				if(isset($arrTempt[$temptDate])){
-					echo "<br>".strtotime($val->tt_gotime);
-					echo "<br>".strtotime($val->tt_backtime);
-
+					
 				}else{
 					$arrTempt[$temptDate]['gotime'] = $val->tt_gotime;
 					$arrTempt[$temptDate]['backtime'] = $val->tt_backtime;
 				}
 				
 			}
-		}						
-		
-		if(count($doorcard['doorcards']) >0){
+		}	
+		if(count($doorcard['doorcards']) >0){			
 			foreach($doorcard['doorcards'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->td_touchtime));
 				if(isset($arrTempt[$temptDate])){
@@ -166,6 +159,7 @@ class WorkingTimeController extends BackendController
 	public function get_over_time_year($id,$year)
 	{
 		$clsWorkingTime   = new WorkingTimeModel();
+<<<<<<< HEAD
 		$arrTempt = array();$arrResult = array();						
 		$workingTimes = $clsWorkingTime->get_timecard($id,$year);
 		$arrT         = explode(":",RESET_TIME);
@@ -201,7 +195,22 @@ class WorkingTimeController extends BackendController
 		}
 		return 	$arrResult;	
 
+=======
+		$data = array();
 
-		
+		$data['staff_belong'] = !empty(Input::get('staff_belong')) ? Input::get('staff_belong') : null;		
+
+		if(!empty(Input::get('cb_year'))){
+			$data['cb_year'] = Input::get('cb_year');
+		}
+
+		$data['overwork'] = $clsWorkingTime->get_timecard($data['staff_belong'], $data['cb_year']);
+
+		$pdf = PDF::loadView('backend.workingtime.pdf', $data);
+
+		return $pdf->download(ALL . '_' . rand('9999',time()).'.pdf');
+
+		//return view('backend.workingtime.pdf',$data);
+>>>>>>> a5f56b350b64b8fd26b360b5eb5a50531b9b6002
 	}
 }
