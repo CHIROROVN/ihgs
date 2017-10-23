@@ -23,8 +23,8 @@
                     <th colspan="2">本人申告</th>
                     <th colspan="2">入退出</th>
                     <th colspan="2">パソコン(テレワーク)</th>
-                    <th colspan="2"  rowspan="2">乖離</th>
-                    <th colspan="2"  rowspan="2">残業</th>
+                    <th rowspan="2">乖離</th>
+                    <th rowspan="2">残業</th>
                   </tr>
                   <tr>
                     <th>出社</th>
@@ -54,13 +54,13 @@
                     <td>@if(isset($worktime['pc_out'])){{formatshortTime($worktime['pc_out'])}} @else  データ無し @endif</td>
                     @if(isset($worktime['diff'])) 
                           @if($worktime['diff'] >29 && $worktime['diff'] <61) 
-                            <td class="bg-yellow">{{$worktime['diff']}} </td>
+                            <td class="bg-yellow" style="text-align: center;">30分超 </td>
                           @elseif($worktime['diff'] >60)                
-                            <td class="bg-red">{{$worktime['diff']}} </td>
-                          $else  <td></td>
+                            <td class="bg-red" style="text-align: center;">1時間超 </td>
+                          @else  <td></td>
                           @endif
                     @endif                        
-                    <td></td>
+                    <td style="text-align: center;">@if(isset($worktime['overtime']) && $worktime['overtime'] >0){{$worktime['overtime']}} @endif </td>
                   </tr>
                   @endforeach
                 @endif      

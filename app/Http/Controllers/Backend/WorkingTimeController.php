@@ -15,41 +15,67 @@ class WorkingTimeController extends BackendController
 		$clsWorkingTime       = new WorkingTimeModel();
 		$clsBelong            = new BelongModel();
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';		
-		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'2017';
-		//$data['divisions']    = $clsBelong->list_division_tree(); 		
-		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array(); 
-		//echo "<pre>";print_r($data['worktimes']);echo "</pre>";
+		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'2017';		 		
+		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array();
+		$arrWorkTime = array(); 
+		if(count($data['worktimes']) >0){
+			foreach($data['worktimes']['data'] as $worktime){				
+				$arrWorkTime[$worktime->staff_id]  =  $this->get_over_time_year($worktime->staff_id,$data['cb_year']);
+				$total =0;$intOverTime =0;
+				if(count($arrWorkTime[$worktime->staff_id])>0){
+					foreach($arrWorkTime[$worktime->staff_id] as $key=>$val){
+						$data['overtimes'][$worktime->staff_id][$key] = round($val /3600);
+						$intOverTime +=($data['overtimes'][$worktime->staff_id][$key] >60)?1:0;
+						$total += $val;
+					}
+					$data['overtimes'][$worktime->staff_id]['total']   = round($total/3600); 
+					$data['overtimes'][$worktime->staff_id]['time']    = $intOverTime;
+				}			
+			}
+						
+		}
+			
 		return view('backend.workingtime.index',$data);
 	}
 
 	public function detail($id){
 		$clsWorkingTime   = new WorkingTimeModel();
         $data['year']     = (isset($_GET['year']) && $_GET['year'] >2000)?$_GET['year']:'2017';
-		$data['staff']    =  $clsWorkingTime->get_by_id($id);
-		$strCard = (isset($data['staff']->staff_card1) && !empty($data['staff']->staff_card1))?"'".$data['staff']->staff_card1."'":'';
-		$strCard .= (isset($data['staff']->staff_card2) && !empty($data['staff']->staff_card2))?((!empty($strCard))?",'".$data['staff']->staff_card2."'":"'".$data['staff']->staff_card2."'"):'';	
-		$strCard .= (isset($data['staff']->staff_card3) && !empty($data['staff']->staff_card3))?((!empty($strCard))?",'".$data['staff']->staff_card3."'":"'".$data['staff']->staff_card3."'"):'';	
-		$strCard .= (isset($data['staff']->staff_card4) && !empty($data['staff']->staff_card4))?((!empty($strCard))?",'".$data['staff']->staff_card4."'":"'".$data['staff']->staff_card4."'"):'';	
-		$strCard .= (isset($data['staff']->staff_card5) && !empty($data['staff']->staff_card5))?((!empty($strCard))?",'".$data['staff']->staff_card5."'":"'".$data['staff']->staff_card5."'"):'';
-		$arrTempt = array();		
-		$worktimes=  $clsWorkingTime->get_timecard($id,$data['year']);
-		if(count($worktimes) >0){
-			foreach($worktimes as $val){
+		$data['staff']    =  $clsWorkingTime->get_by_id($id);		
+		$arrTempt         = $this->get_work_time_array($id, $data['year'] );			
+		$data['worktimes']  = $arrTempt;
+		
+		return view('backend.workingtime.detail',$data);
+	}
+	public function exportPDF()
+	{
+	   $clsWorkingTime   = new WorkingTimeModel();	
+	   $data = $clsWorkingTime->get_timecard($id,$data['year']);
+	   /*return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
+		$excel->sheet('mySheet', function($sheet) use ($data)
+	    {
+			$sheet->fromArray($data);
+	    });
+	   })->download("pdf");*/
+	}
+	public function get_work_time_array($id,$year)
+	{
+		$clsWorkingTime   = new WorkingTimeModel();
+		$arrTempt = array();							
+		$doorcard=  $clsWorkingTime->get_doorcard($id,$year);
+		if(count($doorcard['timecards']) >0){
+			foreach($doorcard['timecards'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->tt_date));
 				if(isset($arrTempt[$temptDate])){
-					echo "<br>".strtotime($val->tt_gotime);
-					echo "<br>".strtotime($val->tt_backtime);
-
+					
 				}else{
 					$arrTempt[$temptDate]['gotime'] = $val->tt_gotime;
 					$arrTempt[$temptDate]['backtime'] = $val->tt_backtime;
 				}
 				
 			}
-		}				
-		$doorcard=  $clsWorkingTime->get_doorcard($id,$data['year']);
-		
-		if(count($doorcard['doorcards']) >0){
+		}	
+		if(count($doorcard['doorcards']) >0){			
 			foreach($doorcard['doorcards'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->td_touchtime));
 				if(isset($arrTempt[$temptDate])){
@@ -97,38 +123,68 @@ class WorkingTimeController extends BackendController
 		}	
 		//
 		if(count($arrTempt) >0){
-			foreach($arrTempt as $key=>$val){				
+			foreach($arrTempt as $key=>$val){
+			    $temptDoor=0;$time_out=0;$time_in=0;$overtime_in=0;$overtime_out=0;				
 				if(isset($val['gotime'])){					
  					$temptDoor     = isset($val['touchtime_in'])?strtotime($key.' '.$val['touchtime_in']):'';
 					$temptPC       = isset($val['pc_in'])?strtotime($key.' '.$val['pc_in']):'';
 					$tempt         = isset($val['gotime'])?strtotime($key.' '.$val['gotime']):'';
-					$time_in       = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;					
+					$start_time    = strtotime($key.' '.START_TIME);
+					$time_in       = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;
+					$overtime_in   = ($start_time > $tempt )?$start_time - $tempt :0 ;
+
  				}
  				if(isset($val['backtime'])){
  					$temptDoor     = isset($val['touchtime_out'])?strtotime($key.' '.$val['touchtime_out']):'';
 					$temptPC       = isset($val['pc_out'])?strtotime($key.' '.$val['pc_out']):'';
 					$tempt         = isset($val['backtime'])?strtotime($key.' '.$val['backtime']):'';
+					$end_time      = strtotime($key.' '.END_TIME);
 					$time_out      = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;
+					$overtime_out  = ($end_time < $tempt)?$tempt - $end_time :0 ;
  				} 				
- 				$arrTempt[$key]['diff'] = ceil(($time_in + $time_out)/3600) ;
+ 				$arrTempt[$key]['diff'] = ceil(($time_in + $time_out)/60) ;
+ 				$arrTempt[$key]['overtime'] = (int)(($overtime_in  + $overtime_out)/3600) ;	
 			}
-		}	
-		
-		$data['worktimes']  = $arrTempt;
-		/*echo '<pre>';
-		print_r($data['worktimes']);
-		echo '</pre>';/*die;*/
-		return view('backend.workingtime.detail',$data);
+		}
+		return $arrTempt;
 	}
-	public function exportPDF()
+	public function get_over_time_year($id,$year)
 	{
-	   $clsWorkingTime   = new WorkingTimeModel();	
-	   $data = $clsWorkingTime->get_timecard($id,$data['year']);
-	   /*return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
-		$excel->sheet('mySheet', function($sheet) use ($data)
-	    {
-			$sheet->fromArray($data);
-	    });
-	   })->download("pdf");*/
+		$clsWorkingTime   = new WorkingTimeModel();
+		$arrTempt = array();$arrResult = array();						
+		$workingTimes = $clsWorkingTime->get_timecard($id,$year);
+		$arrT         = explode(":",RESET_TIME);
+		$intStartTime = (isset($arrT[0]) &&  $arrT[0] >24)?$arrT[0]-24:0;
+
+		if(count($workingTimes) >0){
+			foreach($workingTimes as $workingTime){
+				$temptDate = isset($workingTime->tt_date)?date("Y-m-d",strtotime($workingTime->tt_date)):date("Y-m-d");				
+				if(isset($workingTime->tt_gotime))
+				{
+					$temptGotime 	= isset($workingTime->tt_gotime)?strtotime($temptDate.' '.$workingTime->tt_gotime):0;
+					$temptBacktime 	= isset($workingTime->backtime)?strtotime($temptDate.' '.$workingTime->backtime):0;
+					$temptResetTime = isset($intStartTime)?strtotime($temptDate.' '.$intStartTime.':00:00'):0;
+					$temptStarttime = isset($workingTime->tt_gotime)?strtotime($temptDate.' '.START_TIME):0;
+					$temptEndtime 	= isset($workingTime->tt_gotime)?strtotime($temptDate.' '.END_TIME):0;
+					$overtime_out   = ($temptEndtime < $temptBacktime)?$temptBacktime - $temptEndtime:0;
+                    if($temptGotime < $temptResetTime){
+                    	$arrT          = explode("-",$temptDate)  ;
+                        $arrTempt[date("Y-m-d",mktime(0, 0, 0, $arrT[1],$arrT[2] -1, $arrT[0]))] = $temptResetTime-$temptGotime;
+                    	$overtime_in   = $temptResetTime -$temptStarttime;
+                    }else{
+                    	$overtime_in   = ($temptGotime < $temptStarttime)?$temptStarttime-$temptGotime:0;
+                    }
+                    $arrTempt[$temptDate] = isset($arrTempt[$temptDate])?$arrTempt[$temptDate] + $overtime_in + $overtime_out:$overtime_in + $overtime_out;
+				}					
+			}
+			if(count($arrTempt) >0){
+				foreach($arrTempt as $key=>$val){
+					$month = date("n",strtotime($key));					
+					$arrResult[$month] =isset($arrResult[$month])?$arrResult[$month] + $val:$val;
+				}
+			}
+		}
+		return 	$arrResult;	
+
 	}
 }

@@ -55,7 +55,7 @@ class WorkingTimeModel
                                                                   ->whereMonth('t1.tt_date','<', '4');
                                                         });                                                     
                                             })                                         
-                                          ->where('t_staff.staff_id', $id)                                          
+                                          ->where('t_staff.staff_id', $id)->select('tt_date','tt_gotime','tt_backtime','tt_staff_id_no')                                          
                                           ->get();         
 
         return $results;
@@ -107,12 +107,26 @@ class WorkingTimeModel
                                                                   ->whereMonth('tp_actiontime','<', '4');
                                                         });
                                     })->orderBy('tp_actiontime', 'asc')->get();
+            $results['timecards'] = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
+                                                $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
+                                                     ->Where(function ($query) use ($year) {
+                                                            $query->whereYear('t1.tt_date', $year)
+                                                                  ->whereMonth('t1.tt_date','>', '3');
+                                                        })
+                                                     ->orWhere(function ($query) use ($year){
+                                                            $query->whereYear('t1.tt_date', $year + 1)
+                                                                  ->whereMonth('t1.tt_date','<', '4');
+                                                        });                                                     
+                                            })                                         
+                                          ->where('t_staff.staff_id', $id)                                          
+                                          ->get();
            
         }        
 
         return $results;    
     }
-   
+
+
   //Manage Pc format
     public function getPc(){
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->first();
