@@ -44,7 +44,7 @@ class WorkingTimeModel
     public function get_timecard($id,$year)
     {
 
-        $results = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
+        $sql = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                                      ->Where(function ($query) use ($year) {
                                                             $query->whereYear('t1.tt_date', $year)
@@ -54,11 +54,12 @@ class WorkingTimeModel
                                                             $query->whereYear('t1.tt_date', $year + 1)
                                                                   ->whereMonth('t1.tt_date','<', '4');
                                                         });                                                     
-                                            })                                         
-                                          ->where('t_staff.staff_id', $id)                                          
-                                          ->get();         
+                                            }) ;
+        if(!empty($id)){
+            $sql->where('t_staff.staff_id', $id);
+        }
 
-        return $results;
+        return $sql->get();
     }
     public function get_doorcard($id,$year)
     {

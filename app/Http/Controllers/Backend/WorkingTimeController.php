@@ -5,6 +5,7 @@ use App\Http\Models\BelongModel;
 use Input;
 use Validator;
 use Session;
+use PDF;
 //use Config;
 
 class WorkingTimeController extends BackendController
@@ -15,9 +16,10 @@ class WorkingTimeController extends BackendController
 		$clsWorkingTime       = new WorkingTimeModel();
 		$clsBelong            = new BelongModel();
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';		
-		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'2017';
+		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):date('Y');
 		//$data['divisions']    = $clsBelong->list_division_tree(); 		
 		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array(); 
+
 		//echo "<pre>";print_r($data['worktimes']);echo "</pre>";
 		return view('backend.workingtime.index',$data);
 	}
@@ -122,13 +124,19 @@ class WorkingTimeController extends BackendController
 	}
 	public function exportPDF()
 	{
-	   $clsWorkingTime   = new WorkingTimeModel();	
-	   $data = $clsWorkingTime->get_timecard($id,$data['year']);
-	   /*return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
-		$excel->sheet('mySheet', function($sheet) use ($data)
-	    {
-			$sheet->fromArray($data);
-	    });
-	   })->download("pdf");*/
+		$clsWorkingTime   = new WorkingTimeModel();
+		$data = array();
+
+		$data['staff_belong'] = !empty(Input::get('staff_belong')) ? Input::get('staff_belong') : null;		
+
+		if(!empty(Input::get('cb_year'))){
+			$data['cb_year'] = Input::get('cb_year');
+		}
+
+		$data['overwork'] = $clsWorkingTime->get_timecard($data['staff_belong'], $data['cb_year']);
+
+		$pdf = PDF::loadView('backend.workingtime.pdf', $data);
+
+		return $pdf->download(ALL . '_' . rand('9999',time()).'.pdf');
 	}
 }
