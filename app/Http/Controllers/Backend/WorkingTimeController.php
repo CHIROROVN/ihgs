@@ -16,8 +16,7 @@ class WorkingTimeController extends BackendController
 		$clsBelong            = new BelongModel();
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';		
 		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'2017';
-		//$data['divisions']    = $clsBelong->list_division_tree(); 
-		
+		//$data['divisions']    = $clsBelong->list_division_tree(); 		
 		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array(); 
 		//echo "<pre>";print_r($data['worktimes']);echo "</pre>";
 		return view('backend.workingtime.index',$data);
@@ -110,16 +109,15 @@ class WorkingTimeController extends BackendController
 					$temptPC       = isset($val['pc_out'])?strtotime($key.' '.$val['pc_out']):'';
 					$tempt         = isset($val['backtime'])?strtotime($key.' '.$val['backtime']):'';
 					$time_out      = ($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt;
- 				}
- 				//$time_total = $time_in + $time_out ;
- 				//$arrTempt[$key]['diff'] = $time_total;
+ 				} 				
+ 				$arrTempt[$key]['diff'] = ceil(($time_in + $time_out)/3600) ;
 			}
 		}	
-		die;
+		
 		$data['worktimes']  = $arrTempt;
 		/*echo '<pre>';
 		print_r($data['worktimes']);
-		echo '</pre>';die;*/
+		echo '</pre>';/*die;*/
 		return view('backend.workingtime.detail',$data);
 	}
 	public function exportPDF()
