@@ -174,7 +174,7 @@ class WorkingTimeController extends BackendController
 					$overtime_out  = ($end_time < $tempt)?$tempt - $end_time :0 ;
  				} 				
  				$arrTempt[$key]['diff'] = ceil(($time_in + $time_out)/60) ;
- 				$arrTempt[$key]['overtime'] = (int)(($overtime_in  + $overtime_out)/3600) ;	
+ 				$arrTempt[$key]['overtime'] = round(($overtime_in  + $overtime_out)/3600) ;	
 			}
 		}
 		return $arrTempt;
