@@ -538,14 +538,21 @@ class ExcelParser {
     protected function encode($value)
     {
         // Get input and output encoding
-        list($input, $output) = array_values(config('excel.import.encoding', array('UTF-8', 'UTF-8')));
+       // list($input, $output) = array_values(config('excel.import.encoding', array('UTF-8', 'UTF-8')));
 
         // If they are the same, return the value
-        if ( $input == $output )
-            return $value;
-
+        //if ( $input == $output )
+         //   return $value;
+        $ary[] = "ASCII";
+        $ary[] = "JIS";
+        $ary[] = "EUC-JP";
+        $ary[] = "Shift-JIS";   
+        $ary[] = "eucjp-win"; 
+        $ary[] = "sjis-win";
+        $ary[] = "UTF-8";    
+        return mb_convert_encoding($value, "UTF-8", mb_detect_encoding($value, $ary));
         // Encode
-        return iconv($input, $output, $value);
+       // return iconv($input, $output, $value);
     }
 
     /**
