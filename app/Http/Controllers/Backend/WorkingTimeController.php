@@ -36,8 +36,6 @@ class WorkingTimeController extends BackendController
 				}			
 			}						
 		}			
-
-		//echo "<pre>";print_r($data['worktimes']);echo "</pre>";
 		return view('backend.workingtime.index',$data);
 	}
 
@@ -90,8 +88,7 @@ class WorkingTimeController extends BackendController
 			foreach($doorcard['timecards'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->tt_date));
 				if(isset($arrTempt[$temptDate])){
-					echo "<br>".strtotime($val->tt_gotime);
-					echo "<br>".strtotime($val->tt_backtime);
+					
 
 				}else{
 					$arrTempt[$temptDate]['gotime'] = $val->tt_gotime;

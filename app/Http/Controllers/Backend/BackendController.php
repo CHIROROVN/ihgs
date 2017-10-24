@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Config;
+use Excel;
 
 class BackendController extends Controller
 {
@@ -148,25 +149,40 @@ class BackendController extends Controller
         $ary[] = "EUC-JP";
         $ary[] = "Shift-JIS";   
         $ary[] = "eucjp-win"; 
-        $ary[] = "sjis-win";
-        $ary[] = "UTF-8";    
-        $string = file_get_contents($filename);        
+        $ary[] = "sjis-win";          
+        $string = file_get_contents($filename);               
         if(mb_detect_encoding($string, 'auto') !=='UTF-8')
         {                               
             $str = mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, $ary));
-        }else $str = iconv("UTF-8", "UTF-8", $string) ;         
-        unset($string);
-        $convert = explode("\n", $str);
-        for ($i=1;$i<count($convert);$i++)  
-        {
-            $arrTempt = array();            
-            $arrTempt = explode(",",$convert[$i]);
-            $arrResult[$i-1][0] = '';
-            foreach($arrTempt as $value){
-                $arrResult[$i-1][] = $value;
-            }         
+            $convert = explode("\n", $str);
+            for ($i=1;$i<count($convert);$i++)  
+            {
+                $arrTempt = array();            
+                $arrTempt = explode(",",$convert[$i]);
+                $arrResult[$i-1][0] = '';
+                foreach($arrTempt as $value){
+                    $arrResult[$i-1][] = $value;
+                }         
                                                
-        }
+            }
+            
+        }else{
+            $data = Excel::load($filename,'UTF-8')->get();
+            $data = $data->toArray();$i=0;
+             foreach ($data as $key => $value) {
+                $arrResult[$i-1][0] = ''; 
+                foreach($value as $var){         
+                   if(is_object($var))
+                     $arrResult[$i-1][] =  $var->toDateTimeString();
+                   else                             
+                    $arrResult[$i-1][] = $var;
+                }
+                $i++;
+            }        
+           
+        }      
+                
+        unset($string);      
         unset($convert);
         return $arrResult;
     }   

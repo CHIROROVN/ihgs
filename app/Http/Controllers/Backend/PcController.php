@@ -69,12 +69,12 @@ class PcController extends BackendController
 				foreach ($file_csv as $key => $value) {
 				   $arr = (is_array($value))?array_values($value):array();
 
-				   $date  = 	date('Y-m-d', strtotime($arr[$config->mp_actiontime_row-1]->toDateTimeString()));
-				   $time  =     date('H:i:s',strtotime($arr[$config->mp_actiontime_row]->toDateTimeString()));
+				   $date  = 	date('Y-m-d H:i:s', strtotime($arr[$config->mp_actiontime_row-1]->toDateTimeString()));
+				  // $time  =     date('H:i:s',strtotime($arr[$config->mp_actiontime_row]->toDateTimeString()));
 				   $data['tp_dataname']            = Input::get('tp_dataname');
 				   $data['tp_pc_no']				= isset($arr[$config->mp_pc_no_row-1])?$arr[$config->mp_pc_no_row-1]:'';
 				   $data['tp_action']				= isset($arr[$config->mp_action_row-1])?$arr[$config->mp_action_row-1]:'';
-				   $data['tp_actiontime']			= $date.' '.$time;
+				   $data['tp_actiontime']			= $date ;
 				   $data['last_ipadrs']            = CLIENT_IP_ADRS;
 				   $data['last_date']              = date('Y-m-d H:i:s');
 				   $data['last_user']              = Auth::user()->u_id;				   				   

@@ -95,6 +95,83 @@ class StaffController extends BackendController
 	}
 
     public function postImport(){
+       $dataInput              = array();
+       $clsStaff               = new StaffModel();
+        $clsBelong             = new BelongModel();
+        $inputs                = Input::all(); 
+        $staff_id_no           = Input::get('staff_id_no');
+        $staff_name            = Input::get('staff_name');
+        $staff_belong          = Input::get('staff_belong');
+        $staff_card            = Input::get('staff_card');
+        $staff_pc              = Input::get('staff_pc');
+        $rules                 = $clsStaff->RulesImport();
+        $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
+        if(!Input::hasFile('file_path')){
+            unset($rules['file_path']);
+        }else{
+            $upload_file = Input::file('file_path');
+            $extFile  = $upload_file->getClientOriginalExtension();
+            if($extFile == 'csv' || $extFile == 'CSV' || $extFile == 'xls' || $extFile == 'xlsx'){
+                unset($rules['file_csv']);
+            }
+        }
+        $validator              = Validator::make($inputs, $rules, $clsStaff->MessagesImport());
+        if ($validator->fails()) {
+            return redirect()->route('backend.staff.import')->withErrors($validator)->withInput();
+        }
+        if (Input::hasFile('file_path'))
+        {
+            ini_set('max_execution_time', 100);
+            ini_set('memory_limit', '512M');
+            $fn          = 'file'.'_'.rand(time(),time()).'.'.$extFile;                        
+            $path        = '/uploads/';
+            $upload_file->move(public_path().$path, $fn);
+            $data = array(); 
+            $data = Excel::load(public_path().$path.$fn, function($reader) {
+            }, 'UTF-8')->get();   
+            $data = $data->toArray();
+            if(!empty($data) && count($data) >0){                    
+                foreach ($data[0] as $key => $value) {
+                    $arr  =array(); 
+                    $arr = array_values($value);                
+                    
+                    $staff_belong   =  isset($arr[$staff_belong])?$clsBelong->get_by_belong_name($arr[$staff_belong]):'NULL'; 
+                    if(isset($staff_belong->belong_id)){                                   
+                        $dataInsert             = array(
+                            'staff_id_no'       => isset($arr[$staff_id_no])?$arr[$staff_id_no]:'',
+                            'staff_name'        => isset($arr[$staff_name])?$arr[$staff_name]:'',                        
+                            'staff_belong'      => $staff_belong->belong_id,
+                            'staff_card1'       => isset($arr[$staff_card])?$arr[$staff_card]:'',                      
+                            'staff_pc1'         => isset($arr[$staff_pc])?$arr[$staff_pc]:'',                       
+                            'last_date'         => date('Y-m-d H:i:s'), 
+                            'last_kind'         => INSERT,                       
+                            'last_ipadrs'       => CLIENT_IP_ADRS,
+                            'last_user'         => Auth::user()->u_id            
+                        );  
+                    }else{
+                        $dataInsert             = array(
+                            'staff_id_no'       => isset($arr[$staff_id_no])?$arr[$staff_id_no]:'',
+                            'staff_name'        => isset($arr[$staff_name])?$arr[$staff_name]:'',                                                    
+                            'staff_card1'       => isset($arr[$staff_card])?$arr[$staff_card]:'',                      
+                            'staff_pc1'         => isset($arr[$staff_pc])?$arr[$staff_pc]:'',                       
+                            'last_date'         => date('Y-m-d H:i:s'), 
+                            'last_kind'         => INSERT,                       
+                            'last_ipadrs'       => CLIENT_IP_ADRS,
+                            'last_user'         => Auth::user()->u_id            
+                        );  
+                    }    
+                     
+                    $clsStaff->insert($dataInsert);
+                }//end foreach
+                Session::flash('success', trans('common.msg_regist_success'));
+            }//end if empty
+            else Session::flash('danger', trans('common.msg_regist_danger'));       
+        }//end if upload   
+        else Session::flash('danger', trans('common.msg_regist_danger'));  
+        return redirect()->route('backend.staff.import'); 
+    }
+
+    public function postImport1(){
         $dataInput              = array();
         $clsStaff               = new StaffModel();
         $clsBelong             = new BelongModel(); 
