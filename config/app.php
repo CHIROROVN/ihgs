@@ -171,6 +171,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Nestable\NestableServiceProvider::class,
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -241,9 +242,10 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Carbon' => 'Carbon\Carbon',
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        //'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Nestable' => Nestable\Facades\NestableService::class,
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
 
     ],
 

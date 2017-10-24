@@ -39,23 +39,9 @@ if (!function_exists('actiontime')) {
 if (!function_exists('divisions')) {
 	function divisions($name, $selected, $flag)
 	{
-		$dropdown = App\Http\Controllers\Backend\SearchController::getDivision($name, $selected, $flag);
-
-		return $dropdown;
+		return App\Http\Controllers\Backend\SearchController::getDivision($name, $selected, $flag);
     }
 }
-
-if (!function_exists('divi_tree')) {
-	function divi_tree($belong_id, $belong_parent_id)
-	{
-		if(!empty($belong_parent_id)){
-
-		}else{
-			
-		}
-    }
-}
-
 
 if (!function_exists('format_date')) {
 
@@ -225,7 +211,6 @@ if (!function_exists('japan_date')) {
 	}
 }
 
-
 if (!function_exists('DayJp')) {
 
 	/**
@@ -345,14 +330,14 @@ if (!function_exists('time_over')) {
 
 		if($minus > 30 ){
 			if($minus < 60){
-				return $minus . '分超';
+				return round($minus) . '分超';
 			}elseif($minus >= 60){
 				$hs = $overtime / 3600;
 				$ms = ($overtime / 60) % 60;
 				if($ms > 0){
-					return $hs.'時'.$ms.'分超';
+					return round($hs).'時'.round($ms).'分超';
 				}else{
-					return $hs . '時間超';
+					return round($hs) . '時間超';
 				}				
 			}
 		}else{

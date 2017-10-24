@@ -31,11 +31,12 @@
     27 => 'Barryvdh\\DomPDF\\ServiceProvider',
     28 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
     29 => 'Nestable\\NestableServiceProvider',
-    30 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    31 => 'App\\Providers\\AppServiceProvider',
-    32 => 'App\\Providers\\AuthServiceProvider',
-    33 => 'App\\Providers\\EventServiceProvider',
-    34 => 'App\\Providers\\RouteServiceProvider',
+    30 => 'niklasravnsborg\\LaravelPdf\\PdfServiceProvider',
+    31 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    32 => 'App\\Providers\\AppServiceProvider',
+    33 => 'App\\Providers\\AuthServiceProvider',
+    34 => 'App\\Providers\\EventServiceProvider',
+    35 => 'App\\Providers\\RouteServiceProvider',
   ),
   'eager' => 
   array (
@@ -56,10 +57,11 @@
     14 => 'Barryvdh\\DomPDF\\ServiceProvider',
     15 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
     16 => 'Nestable\\NestableServiceProvider',
-    17 => 'App\\Providers\\AppServiceProvider',
-    18 => 'App\\Providers\\AuthServiceProvider',
-    19 => 'App\\Providers\\EventServiceProvider',
-    20 => 'App\\Providers\\RouteServiceProvider',
+    17 => 'niklasravnsborg\\LaravelPdf\\PdfServiceProvider',
+    18 => 'App\\Providers\\AppServiceProvider',
+    19 => 'App\\Providers\\AuthServiceProvider',
+    20 => 'App\\Providers\\EventServiceProvider',
+    21 => 'App\\Providers\\RouteServiceProvider',
   ),
   'deferred' => 
   array (
