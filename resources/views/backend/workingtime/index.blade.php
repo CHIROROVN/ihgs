@@ -26,9 +26,8 @@
             <td>
                 <div class="fl-left">
                     <select name="cb_year" id="cb_year" class="form-control form-control-date">
-                        <option value="">All</option>
-                        <?php $last=2020; $now=2017; ?>
-                        @for ($i = $now; $i <= $last; $i++)
+                        <option value="">{{ALL_YEAR}}</option>                        
+                        @for ($i = START_YEAR; $i <= END_YEAR; $i++)
                             <option value="{{ $i }}" @if($i==$cb_year) selected="" @endif>{{ $i }} 年度</option>
                         @endfor
                     </select>
@@ -180,8 +179,7 @@
  </div>
 </div>
 <script type="text/javascript">
-$("#btnSubmit").on("click",function() {
-   
+$("#btnSubmit").on("click",function() {   
   $( "#frmSearch" ).submit(); 
 });
 </script>   
