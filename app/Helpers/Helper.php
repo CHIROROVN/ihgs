@@ -453,3 +453,18 @@ if (!function_exists('style_overtime')) {
 		}
 	}
 }
+if (!function_exists('style_overwork')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function style_overwork($worktime)
+	{		
+		if($worktime >59)
+			return '<td class="bg-red">'.$worktime.' h</td>';
+		else
+			return '<td >'.$worktime.' h</td>';		
+	}
+}

@@ -100,7 +100,7 @@ class WorkingTimeController extends BackendController
 				}
 				
 			}
-		}						
+		}					
 		
 		if(count($doorcard['doorcards']) >0){
 			foreach($doorcard['doorcards'] as $val){

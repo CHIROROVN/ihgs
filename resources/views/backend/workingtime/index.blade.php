@@ -21,7 +21,8 @@
             </thead>
         <tbody>
         <tr>
-            <td>{!! divisions('staff_belong', $staff_belong,true) !!}</td>
+            <td>{!! divisions('staff_belong', $staff_belong,true) !!}
+              <span class="help-block" id="error-staff-belong">@if ($errors->first('staff_belong')) ※{!! $errors->first('staff_belong') !!} @endif</span></td>
             <td>
                 <div class="fl-left">
                     <select name="cb_year" id="cb_year" class="form-control form-control-date">
@@ -31,6 +32,7 @@
                         @endfor
                     </select>
                 </div>
+                <span class="help-block" id="error-cb-year">@if ($errors->first('cb_year')) ※{!! $errors->first('cb_year') !!} @endif</span>
             </td>
             <td><input name="btnSubmit" value="抽出する" id="btnSubmit" type="button" class="btn btn-primary btn-sm"></td>
             </tr>
@@ -71,91 +73,19 @@
                 @foreach($worktimes['data'] as $worktime)  
                   <tr>
                     <td><a href="{{ asset('overtime/detail/'.$worktime->staff_id.'?year='.$cb_year) }}">{{$worktime->staff_name}}</a></td>
-                    @if(isset($overtimes[$worktime->staff_id][4]))
-                       @if($overtimes[$worktime->staff_id][4] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][4]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][4]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif
-                    @if(isset($overtimes[$worktime->staff_id][5]))
-                       @if($overtimes[$worktime->staff_id][5] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][5]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][5]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif
-                    @if(isset($overtimes[$worktime->staff_id][6]))
-                       @if($overtimes[$worktime->staff_id][6] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][6]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][6]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif
-                    @if(isset($overtimes[$worktime->staff_id][7]))
-                       @if($overtimes[$worktime->staff_id][7] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][7]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][7]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif
-                    @if(isset($overtimes[$worktime->staff_id][8]))
-                       @if($overtimes[$worktime->staff_id][8] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][8]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][8]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif
-                    @if(isset($overtimes[$worktime->staff_id][9]))
-                       @if($overtimes[$worktime->staff_id][9] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][9]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][9]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif                    
-                    @if(isset($overtimes[$worktime->staff_id][10]))
-                       @if($overtimes[$worktime->staff_id][10] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][10]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][10]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif
-                    @if(isset($overtimes[$worktime->staff_id][11]))
-                       @if($overtimes[$worktime->staff_id][11] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][11]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][11]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif 
-                    @if(isset($overtimes[$worktime->staff_id][12]))
-                       @if($overtimes[$worktime->staff_id][12] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][12]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][12]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif 
-                    @if(isset($overtimes[$worktime->staff_id][1]))
-                       @if($overtimes[$worktime->staff_id][1] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][1]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][1]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif
-                    @if(isset($overtimes[$worktime->staff_id][2]))
-                       @if($overtimes[$worktime->staff_id][2] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][2]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][2]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif 
-                    @if(isset($overtimes[$worktime->staff_id][3]))
-                       @if($overtimes[$worktime->staff_id][3] >59)
-                          <td class="bg-red">{{$overtimes[$worktime->staff_id][3]}} h</td>
-                       @else <td>{{$overtimes[$worktime->staff_id][3]}} h</td>
-                       @endif
-                    @else  <td>0h</td>
-                    @endif                                                            
-                    <td>@if(isset($overtimes[$worktime->staff_id]['total']) && $overtimes[$worktime->staff_id]['total'] >0) {{$overtimes[$worktime->staff_id]['total']}}h @endif</td>
+                     @if(isset($overtimes[$worktime->staff_id][4])) {{@style_overwork($overtimes[$worktime->staff_id][4])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][5])) {{@style_overwork($overtimes[$worktime->staff_id][5])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][6])) {{@style_overwork($overtimes[$worktime->staff_id][6])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][7])) {{@style_overwork($overtimes[$worktime->staff_id][7])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][8])) {{@style_overwork($overtimes[$worktime->staff_id][8])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][9])) {{@style_overwork($overtimes[$worktime->staff_id][9])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][10])) {{@style_overwork($overtimes[$worktime->staff_id][10])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][11])) {{@style_overwork($overtimes[$worktime->staff_id][11])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][12])) {{@style_overwork($overtimes[$worktime->staff_id][12])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][1])) {{@style_overwork($overtimes[$worktime->staff_id][1])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][2])) {{@style_overwork($overtimes[$worktime->staff_id][2])}}  @else  <td>0h</td>@endif
+                     @if(isset($overtimes[$worktime->staff_id][3])) {{@style_overwork($overtimes[$worktime->staff_id][3])}}  @else  <td>0h</td>@endif
+                     <td>@if(isset($overtimes[$worktime->staff_id]['total']) && $overtimes[$worktime->staff_id]['total'] >0) {{$overtimes[$worktime->staff_id]['total']}}h @endif</td>
                     <td>@if(isset($overtimes[$worktime->staff_id]['time']) && $overtimes[$worktime->staff_id]['time'] >0) {{$overtimes[$worktime->staff_id]['time']}}@endif</td>
                     <td></td>
                   </tr>
