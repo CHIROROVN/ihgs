@@ -90,7 +90,7 @@ class StaffModel
         }
         
         if(!empty($where['kw'])){
-            $sql = $sql->where('t_staff.staff_id_no', $where['kw'])->orWhere('t_staff.staff_name', 'like', '%'.$where['kw'].'%');
+            $sql = $sql->where('t_staff.staff_id_no', 'like', '%'.$where['kw'].'%')->orWhere('t_staff.staff_name', 'like', '%'.$where['kw'].'%');
         }
 
     return $sql->get();
