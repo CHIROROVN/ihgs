@@ -59,25 +59,26 @@ class WorkingTimeController extends BackendController
 		$data['staff_belong'] 	= !empty(Input::get('staff_belong')) ? Input::get('staff_belong') : null;
 		$data['cb_year'] 		= !empty(Input::get('cb_year')) ? Input::get('cb_year') : null ;
 		$data['worktimes']    	= $clsWorkingTime->get_all( $data['staff_belong'], $data['cb_year'] );
-
-		// $arrWorkTime = array(); 
-		// if(count($data['worktimes']) >0){
-		// 	foreach($data['worktimes']['data'] as $worktime){				
-		// 		$arrWorkTime[$worktime->staff_id]  =  $this->get_over_time_year($worktime->staff_id,$data['cb_year']);
-		// 		$total =0;$intOverTime =0;
-		// 		if(count($arrWorkTime[$worktime->staff_id])>0){
-		// 			foreach($arrWorkTime[$worktime->staff_id] as $key=>$val){
-		// 				$data['overtimes'][$worktime->staff_id][$key] = round($val /3600);
-		// 				$intOverTime +=($data['overtimes'][$worktime->staff_id][$key] >60)?1:0;
-		// 				$total += $val;
-		// 			}
-		// 			$data['overtimes'][$worktime->staff_id]['total']   = round($total/3600); 
-		// 			$data['overtimes'][$worktime->staff_id]['time']    = $intOverTime;
-		// 		}			
-		// 	}						
-		// }
-
+		$arrWorkTime = array(); 
+		if(count($data['worktimes']) >0){
+			foreach($data['worktimes']['data'] as $worktime){				
+				$arrWorkTime[$worktime->staff_id]  =  $this->get_over_time_year($worktime->staff_id,$data['cb_year']);
+				$total =0;$intOverTime =0;
+				if(count($arrWorkTime[$worktime->staff_id])>0){
+					foreach($arrWorkTime[$worktime->staff_id] as $key=>$val){
+						$data['overtimes'][$worktime->staff_id][$key] = round($val /3600);
+						$intOverTime +=($data['overtimes'][$worktime->staff_id][$key] >60)?1:0;
+						$total += $val;
+					}
+					$data['overtimes'][$worktime->staff_id]['total']   = round($total/3600); 
+					$data['overtimes'][$worktime->staff_id]['time']    = $intOverTime;
+				}			
+			}						
+		}
 		$pdf = PDF::loadView('backend.workingtime.pdf', $data);
+		/*echo '<pre>';
+		print_r($pdf);
+		echo '</pre>';die;*/
 
 		return $pdf->download(ALL . '_' . rand('9999',time()).'.pdf');
 
