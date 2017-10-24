@@ -54,13 +54,13 @@
                     <td>@if(isset($worktime['pc_out'])){{formatshortTime($worktime['pc_out'])}} @else  データ無し @endif</td>
                     @if(isset($worktime['diff'])) 
                           @if($worktime['diff'] >29 && $worktime['diff'] <61) 
-                            <td class="bg-yellow" style="text-align: center;">30分超 </td>
+                            <td class="bg-yellow" style="text-align: center;">{{$worktime['diff']}}分超 </td>
                           @elseif($worktime['diff'] >60)                
-                            <td class="bg-red" style="text-align: center;">1時間超 </td>
+                            <td class="bg-red" style="text-align: center;">{{floor($worktime['diff']/60)}} 時間超 {{floor($worktime['diff']/60)}}</td>
                           @else  <td></td>
                           @endif
                     @endif                        
-                    <td style="text-align: center;">@if(isset($worktime['overtime']) && $worktime['overtime'] >0){{$worktime['overtime']}} @endif </td>
+                    <td style="text-align: center;">@if(isset($worktime['overtime']) && $worktime['overtime'] >0){{$worktime['overtime']}} h @endif </td>
                   </tr>
                   @endforeach
                 @endif      
