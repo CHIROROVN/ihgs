@@ -18,8 +18,14 @@ class PcController extends BackendController
 		$clsPcImport    = new PcImportModel();
 
 		//$pcs = $clsPcImport->getPc();
-		$pcs = $clsPcImport->get_all_by_dataname();
-
+		$pcs = array();
+		 $arrPC= $clsPcImport->get_all_by_dataname();
+         if(count($arrPC) >0)
+        {
+            foreach($arrPC as $val){
+                $pcs[$val->tp_dataname] = $val->last_date;
+            }
+        }    
 		return view('backend.pc.import', compact('pcs'));
 	}
 

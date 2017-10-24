@@ -37,7 +37,7 @@
     </p>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">
-        {!! Form::open(array('route' => 'backend.door.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'Shift-JIS')) !!} 
+        {!! Form::open(array('route' => 'backend.door.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'UTF-8')) !!} 
           <table class="table table-bordered">
             <tr>
               <td class="col-title col-md-3"><label for="">データ名称</label></td>
@@ -62,7 +62,7 @@
         {!! Form::close() !!} 
       </div>
     </div>
-    <!-- tables -->
+    <!-- tables -->   
     <div class="agile-tables">
       <div class="w3l-table-info agile_info_shadow">
         <table id="table">
@@ -81,11 +81,11 @@
             </td>
           </tr>
           @else  
-            @foreach($doorcards as $doorcard)
-              <tr data-id='{{$doorcard->td_dataname}}'>
-                <td align="center" style="width: 120px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$doorcard->td_dataname}}');"></td>
-                <td>{{$doorcard->td_dataname}}</td>
-                <td>{{date_time($doorcard->last_date)}}</td>
+            @foreach($doorcards as $key=>$doorcard)
+              <tr data-id='{{$key}}'>
+                <td align="center" style="width: 120px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$key}}');"></td>
+                <td>{{$key}}</td>
+                <td>{{date_time($doorcard)}}</td>
               </tr>
             @endforeach
           @endif       
@@ -119,7 +119,8 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->       
+<!-- /.modal --> 
+
 <script type="text/javascript">
 $("#btnSend").on("click",function() {
   var flag = true;

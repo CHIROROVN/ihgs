@@ -92,13 +92,13 @@
           </thead>
           <tbody>
             @if(count($pcs) > 0)
-            @foreach($pcs as $pc)
+            @foreach($pcs as $key=>$pc)
             <tr>
               <td align="center" style="width: 120px;">
-                <input name="btn_delete" value="削除" type="button" class="btn btn-primary btn-xs" onClick="if (confirm('これを削除してもよろしいですか？')) {location.href='{{ route('backend.pc.import.delete', $pc->tp_dataname) }}' }">
+                <input name="btn_delete" value="削除" type="button" class="btn btn-primary btn-xs" onClick="if (confirm('これを削除してもよろしいですか？')) {location.href='{{ route('backend.pc.import.delete', $key) }}' }">
               </td>
-              <td>{{$pc->tp_dataname}}</td>
-              <td>{{date_time($pc->last_date, '/')}}</td>
+              <td>{{$key}}</td>
+              <td>{{date_time($pc, '/')}}</td>
             </tr>
             @endforeach
             @else

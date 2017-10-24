@@ -141,6 +141,8 @@ class BackendController extends Controller
     }
     protected function  readFileCsv($filename)
     {
+        ini_set("memory_limit","600M");
+        set_time_limit(0);
         $arrResult = array();
         $ary[] = "ASCII";
         $ary[] = "JIS";
@@ -149,10 +151,11 @@ class BackendController extends Controller
         $ary[] = "eucjp-win"; 
         $ary[] = "sjis-win";
         $ary[] = "UTF-8";    
-        $string = file_get_contents($filename);
-        if(mb_detect_encoding($string, 'auto') !='UTF-8')           
+        $string = file_get_contents($filename);        
+        if(mb_detect_encoding($string, 'auto') !=='UTF-8')
+        {                               
             $str = mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, $ary));
-        else  $str =  $string; 
+        }else $str = iconv("UTF-8", "UTF-8", $string) ;         
         unset($string);
         $convert = explode("\n", $str);
         for ($i=1;$i<count($convert);$i++)  

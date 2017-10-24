@@ -147,7 +147,7 @@ class DoorController extends BackendController
         
         if (Input::hasFile('file_path'))
         {           
-            ini_set('max_execution_time', 300);
+            ini_set('max_execution_time', "600M");
             ini_set('memory_limit', '512M');
             $fn     = Input::get('td_dataname').'_'.rand(time(),time()).'.'.$extFile;
             $path   = Input::file('file_path')->getRealPath();
@@ -181,7 +181,7 @@ class DoorController extends BackendController
             }else Session::flash('danger', trans('common.msg_regist_danger'));            
             unset($data); unset($date_formats);unset($inputs);                
         }else Session::flash('danger', trans('common.msg_regist_danger'));
-       //return redirect()->route('backend.door.index');
+       return redirect()->route('backend.door.index');
     }
     public function getDelete($dataname)
     {

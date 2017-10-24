@@ -33,9 +33,15 @@ class DoorcardImportModel
     }
 
     public function get_all_by_dataname()
-    {
-        $results = DB::table($this->table)->select('td_dataname', 'last_date')->distinct('td_dataname')->get();
-        return $results;
+    {        
+        $arrResult = array();
+        $results = DB::table($this->table)->select(DB::raw('DISTINCT(td_dataname) , last_date'))->get();
+        if(count($results) >0){
+            foreach($results as $value){
+               $arrResult[$value->td_dataname] = $value->last_date;
+            }            
+        }
+        return  $arrResult;
     }
     
     public function insert($data)
