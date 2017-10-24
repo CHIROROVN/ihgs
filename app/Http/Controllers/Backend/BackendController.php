@@ -11,11 +11,10 @@ class BackendController extends Controller
         ini_set("memory_limit", "256M");
         //Define contants
         $configs = Config::get('constants.DEFINE');
-
         foreach($configs as $key => $value)
         {
             define($key, $value);
-        }    
+        }       
 
         //get IP address from user
         if (isset($_SERVER['HTTP_CLIENT_IP']))
@@ -142,7 +141,7 @@ class BackendController extends Controller
     }
     protected function  readFileCsv($filename)
     {
-        ini_set("memory_limit","600M");
+        ini_set("memory_limit","700M");
         set_time_limit(0);
         $arrResult = array();
         $ary[] = "ASCII";
@@ -163,9 +162,9 @@ class BackendController extends Controller
                 $arrResult[$i-1][0] = '';
                 foreach($arrTempt as $value){
                     $arrResult[$i-1][] = $value;
-                }         
-                                               
+                }                                                        
             }
+            unset($convert);
             
         }else{
             $data = Excel::load($filename,'UTF-8')->get();
@@ -180,11 +179,11 @@ class BackendController extends Controller
                 }
                 $i++;
             }        
-           
-        }      
+            unset($data);
+        }         
                 
         unset($string);      
-        unset($convert);
+        
         return $arrResult;
     }   
 }

@@ -70,11 +70,10 @@ class TimecardController extends BackendController
         
         if (Input::hasFile('file_path'))
         {     
-            ini_set('max_execution_time', 3000);      
-            ini_set('memory_limit', '512M');    
+            ini_set('max_execution_time', 3000);                  
             $path = Input::file('file_path')->getRealPath();
             $data = array();
-            $data  = $this->readFileCsv($path);                                                           
+            $data  = $this->readFileCsv($path);                                                                  
             $fn = $tt_dataname.'_'.date("y_m_d_his").'.'.$extFile;                                
             $path = '/uploads/';          
             $upload_file->move(public_path().$path, $fn);                                    
@@ -95,8 +94,8 @@ class TimecardController extends BackendController
                                         'last_date'         => date('Y-m-d H:i:s'),                        
                                         'last_ipadrs'       => CLIENT_IP_ADRS,
                                         'last_user'         => Auth::user()->u_id            
-                        );                                                                                                  
-                        $clsTimecard->insert($dataInsert);
+                        );                                                                                                                        
+                       $clsTimecard->insert($dataInsert);
                     } 
                 }                   
                 Session::flash('success', trans('common.msg_regist_success'));             
