@@ -83,7 +83,7 @@ class WorkingTimeModel
             if(!empty($results1->staff_card7))  $strCard[] = $results1->staff_card7;
             if(!empty($results1->staff_card8))  $strCard[] = $results1->staff_card8;
             if(!empty($results1->staff_card9))  $strCard[] = $results1->staff_card9;
-            if(!empty($results1->staff_card10))  $strCard[] = $results1->staff_card10; 
+            if(!empty($results1->staff_card10)) $strCard[] = $results1->staff_card10; 
             if(count($strCard) >0)                      
               $results['doorcards'] = DB::table('t_doorcard')->where(function($query) use ($year){
                                           $query->where(function ($query) use ($year) {
@@ -130,8 +130,9 @@ class WorkingTimeModel
                                                                   ->whereMonth('t1.tt_date','<', '4');
                                                         });                                                     
                                             })                                         
-                                          ->where('t_staff.staff_id', $id)                                          
+                                          ->where('t_staff.staff_id', $id)->orderBy('t1.tt_date','asc')                                          
                                           ->get();
+                                     
            
         }        
 

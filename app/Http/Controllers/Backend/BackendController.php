@@ -164,8 +164,7 @@ class BackendController extends Controller
                     $arrResult[$i-1][] = $value;
                 }                                                        
             }
-            unset($convert);
-            
+            unset($convert);            
         }else{
             $data = Excel::load($filename,'UTF-8')->get();
             $data = $data->toArray();$i=0;
