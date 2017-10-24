@@ -18,6 +18,8 @@ class WorkingTimeController extends BackendController
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';
 		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'';
 		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array();
+		$data['error']['error_belong_required']  = trans('validation.error_belong_required');
+        $data['error']['error_year_required']    = trans('validation.error_year_required');
 		$arrWorkTime = array(); 
 		if(count($data['worktimes']) >0){
 			foreach($data['worktimes']['data'] as $worktime){				
@@ -74,10 +76,7 @@ class WorkingTimeController extends BackendController
 				}			
 			}						
 		}
-		$pdf = PDF::loadView('backend.workingtime.pdf', $data);
-		/*echo '<pre>';
-		print_r($pdf);
-		echo '</pre>';die;*/
+		$pdf = PDF::loadView('backend.workingtime.pdf', $data);	
 
 		return $pdf->download(ALL . '_' . rand('9999',time()).'.pdf');
 	}
@@ -100,7 +99,7 @@ class WorkingTimeController extends BackendController
 				}
 				
 			}
-		}						
+		}					
 		
 		if(count($doorcard['doorcards']) >0){
 			foreach($doorcard['doorcards'] as $val){

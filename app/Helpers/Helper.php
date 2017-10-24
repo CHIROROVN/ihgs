@@ -327,7 +327,6 @@ if (!function_exists('time_over')) {
 		$result = '';
 		$overtime = (int)$start + (int)$end;
 		$minus = (int)$overtime / 60;
-
 		if($minus > 30 ){
 			if($minus < 60){
 				return round($minus) . '分超';
@@ -436,5 +435,20 @@ if (!function_exists('style_overtime')) {
 		}else{
 			return '';
 		}
+	}
+}
+if (!function_exists('style_overwork')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function style_overwork($worktime)
+	{		
+		if($worktime >59)
+			return 'class="bg-red"';
+		else
+			return '';		
 	}
 }

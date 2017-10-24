@@ -16,8 +16,6 @@ class PcController extends BackendController
 	//get import csv
 	public function import(){
 		$clsPcImport    = new PcImportModel();
-
-		//$pcs = $clsPcImport->getPc();
 		$pcs = array();
 		 $arrPC= $clsPcImport->get_all_by_dataname();
          if(count($arrPC) >0)
