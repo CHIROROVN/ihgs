@@ -16,7 +16,7 @@ class WorkingTimeController extends BackendController
 		$clsWorkingTime       = new WorkingTimeModel();
 		$clsBelong            = new BelongModel();
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';
-		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'2017';				
+		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'';				
 
 		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array();
 		$arrWorkTime = array(); 

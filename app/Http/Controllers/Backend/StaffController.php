@@ -30,7 +30,7 @@ class StaffController extends BackendController
         $data['staffs']['start']        = (($data['staffs']['page'] - 1) * LIMIT_PAGE) +1 ;
         $data['staffs']['total_page']   = ceil($data['staffs']['count']/ LIMIT_PAGE) ;
         $data['staffs']['end']          = ($data['staffs']['page']==$data['staffs']['total_page'])?$data['staffs']['count']: $data['staffs']['start'] + LIMIT_PAGE -1;
-        // /echo "<pre>";print_r($data['staffs']);echo "</pre>";
+        
 		return view('backend.staff.index',$data);
 	}
 	public function getRegist(){

@@ -7,10 +7,13 @@
             'PAGINATION'            => 10,
             'LIMIT_PAGE'            => 10,
             'ALL'					=> '全社',
+            'ALL_YEAR'				=> '年',
             'COMPANY_NAME'			=> 'Chiroro Net',
             'START_TIME'			=> '09:00:00',
             'END_TIME'				=> '18:00:00',
             'RESET_TIME'			=> '27:00:00',
+            'START_YEAR'			=> '2017',
+            'END_YEAR'			    => '2020',
         ),
         'MT_DATE_FORMAT' => array(
 			'1' => 'YYYY年MM月DD日',
