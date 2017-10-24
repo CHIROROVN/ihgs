@@ -8,7 +8,7 @@ class BackendController extends Controller
     public function __construct(){
 
         $this->middleware('auth', ['except' => ['postLogin', 'login','logout']]);
-        ini_set("memory_limit", "256M");
+        ini_set("memory_limit","700M");
         //Define contants
         $configs = Config::get('constants.DEFINE');
         foreach($configs as $key => $value)
@@ -140,8 +140,7 @@ class BackendController extends Controller
         }
     }
     protected function  readFileCsv($filename)
-    {
-        ini_set("memory_limit","700M");
+    {       
         set_time_limit(0);
         $arrResult = array();
         $ary[] = "ASCII";
@@ -174,7 +173,7 @@ class BackendController extends Controller
                    if(is_object($var))
                      $arrResult[$i-1][] =  $var->toDateTimeString();
                    else                             
-                    $arrResult[$i-1][] = $var;
+                     $arrResult[$i-1][] = $var;
                 }
                 $i++;
             }        

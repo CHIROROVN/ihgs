@@ -7,7 +7,6 @@ use App\Http\Models\TimecardImportModel;
 use Html;
 use Input;
 use Validator;
-use URL;
 use Session;
 use Config;
 use Excel;
