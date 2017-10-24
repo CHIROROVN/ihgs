@@ -59,30 +59,52 @@ class PcImportModel
 
     public static function actiontime($staff=array(), $date=null){
         if(!empty($staff)){
-            return DB::table('t_pc')
+            $sql = DB::table('t_pc')
                 ->select(DB::raw("min(tp_actiontime) as action_in, max(tp_actiontime) as action_out"))
-                ->whereDate('tp_actiontime', $date)
-                ->whereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc1)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc2)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc3)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc4)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc5)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc6)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc7)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc8)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc9)
-                ->orWhereNotNull('tp_pc_no')
-                ->where('tp_pc_no', $staff->staff_pc10)
-                ->get();
+                ->whereDate('tp_actiontime', $date);
+
+            if(!empty($staff->staff_pc1)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc1);
+            }
+            if(!empty($staff->staff_pc2)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc2);
+            }
+            if(!empty($staff->staff_pc31)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc3);
+            }
+            if(!empty($staff->staff_pc4)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc4);
+            }
+            if(!empty($staff->staff_pc5)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc5);
+            }
+            if(!empty($staff->staff_pc6)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc6);
+            }
+            if(!empty($staff->staff_pc7)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc7);
+            }
+            if(!empty($staff->staff_pc8)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc8);
+            }
+            if(!empty($staff->staff_pc9)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc9);
+            }
+            if(!empty($staff->staff_pc10)){
+                $sql = $sql->whereNotNull('tp_pc_no')
+                ->where('tp_pc_no', $staff->staff_pc10);
+            }
+
+            return $sql->get();
         }
 
     }

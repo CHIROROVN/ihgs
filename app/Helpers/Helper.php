@@ -1,5 +1,4 @@
 <?php
-use App\Http\Models\BelongModel;
 
 use Carbon\Carbon;
 
@@ -12,6 +11,13 @@ if (!function_exists('division')) {
 	    }else{
 	    	return '';
 	    }
+    }
+}
+
+if (!function_exists('show_overtime')) {
+	function show_overtime($time)
+	{
+		return !empty($time) ? $time : 'データ無し';
     }
 }
 
@@ -44,18 +50,6 @@ if (!function_exists('divisions')) {
 		return $dropdown;
     }
 }
-
-if (!function_exists('divi_tree')) {
-	function divi_tree($belong_id, $belong_parent_id)
-	{
-		if(!empty($belong_parent_id)){
-
-		}else{
-			
-		}
-    }
-}
-
 
 if (!function_exists('format_date')) {
 
@@ -337,23 +331,45 @@ if (!function_exists('hour_minute')) {
 	}	
 }
 
+if (!function_exists('time_over2')) {
+	function time_over2($start=null, $end=null){
+		$result = '';
+		$overtime = $start + $end;
+		$mins = $overtime / 60;
+		$H = floor($overtime / 3600);
+		$i = floor(($overtime / 60) % 60);
+		if( $mins >= 31 ){
+			if(!empty($H)){
+				$result .= $H.'時';
+			}
+			if(!empty($i)){
+				$result .= $i.'分';
+			}
+			return $result.'超';	
+		}else{
+			return '';
+		}
+	}	
+}
+
 if (!function_exists('time_over')) {
 	function time_over($start=null, $end=null){
 		$result = '';
-		$overtime = (int)$start + (int)$end;
-		$minus = (int)$overtime / 60;
-		if($minus > 30 ){
-			if($minus < 60){
-				return $minus . '分超';
-			}elseif($minus >= 60){
-				$hs = $overtime / 3600;
-				$ms = ($overtime / 60) % 60;
-				if($ms > 0){
-					return $hs.'時'.$ms.'分超';
-				}else{
-					return $hs . '時間超';
-				}				
+		$seconds = $start + $end;
+		$time = gmdate('H:i:s', $seconds);
+		$arrTime = explode(':', $time);
+		$mins = $seconds / 60;
+		$H = $arrTime[0] + 0;
+		$i = $arrTime[1] + 0;
+		if( $mins >= 31 ){
+			if($H > 0){
+				$result .= $H.'時';
 			}
+			if($i > 0){
+				$result .= $i.'分';
+			}
+			if( ($H > 0 && $i > 0) || ($H > 0 && $i == 0) ) $result .= '間';
+			return $result.'超';	
 		}else{
 			return '';
 		}
@@ -413,23 +429,23 @@ if (!function_exists('time2second')) {
 
 if (!function_exists('over_in')) {
 	function over_in($time1, $time2){
-		$result = $time1 - $time2;
-		if($result >= 0){
-			return $result;
-		}else{
-			return 0;
-		}
+		return $time1 - $time2;
+		// if($result >= 0){
+		// 	return $result;
+		// }else{
+		// 	return 0;
+		// }
 	}
 }
 
 if (!function_exists('over_out')) {
 	function over_out($time1, $time2){
-		$result = $time2 - $time1;
-		if($result >= 0){
-			return $result;
-		}else{
-			return 0;
-		}
+		return $time2 - $time1;
+		// if($result >= 0){
+		// 	return $result;
+		// }else{
+		// 	return 0;
+		// }
 	}
 }
 
@@ -442,10 +458,10 @@ if (!function_exists('style_overtime')) {
 	 */
 	function style_overtime($start=null, $end=null)
 	{
-		$overtime = ($start + $end)/60;
-		if($overtime > 30 && $overtime < 60){
+		$overtime = floor(($start + $end)/60);
+		if($overtime >= 31 && $overtime <= 60){
 			return 'class=bg-yellow';
-		}elseif($overtime >= 60){
+		}elseif($overtime >= 61){
 			return 'class=bg-red';
 		}else{
 			return '';

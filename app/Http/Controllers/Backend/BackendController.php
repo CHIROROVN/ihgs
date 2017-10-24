@@ -11,10 +11,11 @@ class BackendController extends Controller
         ini_set("memory_limit", "256M");
         //Define contants
         $configs = Config::get('constants.DEFINE');
+
         foreach($configs as $key => $value)
         {
             define($key, $value);
-        }       
+        }    
 
         //get IP address from user
         if (isset($_SERVER['HTTP_CLIENT_IP']))
