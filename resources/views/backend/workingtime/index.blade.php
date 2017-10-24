@@ -21,8 +21,7 @@
             </thead>
         <tbody>
         <tr>
-            <td>{!! divisions('staff_belong', $staff_belong,true) !!}                
-            </td>
+            <td>{!! divisions('staff_belong', $staff_belong,true) !!}</td>
             <td>
                 <div class="fl-left">
                     <select name="cb_year" id="cb_year" class="form-control form-control-date">
@@ -41,35 +40,32 @@
 </div>
 <!-- tables -->
 <div class="agile-tables">
-    
-        @if(empty($worktimes['data']) || count($worktimes['data']) < 1)
-
-            <div class="agile_info_shadow" style="text-align: center;">
-              <strong style="color: #777;">該当するデータがありません。</strong>
-            </div>
-          
-          @else
-          <div class="w3l-table-info agile_info_shadow">
-          <div class="row mar-bottom15"></div>
-            <table id="table" class="mar-bottom15">
-                <thead>
-                  <tr>
-                    <th>氏名</th>
-                    <th>2017年<br />4月</th>
-                    <th>2017年<br />5月</th>
-                    <th>2017年<br />6月</th>
-                    <th>2017年<br />7月</th>
-                    <th>2017年<br />8月</th>
-                    <th>2017年<br />9月</th>
-                    <th>2017年<br />10月</th>
-                    <th>2017年<br />11月</th>
-                    <th>2017年<br />12月</th>
-                    <th>2018年<br />1月</th>
-                    <th>2018年<br />2月</th>
-                    <th>2018年<br />3月</th>
-                    <th>合計</th>
-                    <th>基準超</th>
-                  </tr>
+  @if(empty($worktimes['data']) || count($worktimes['data']) < 1)
+    <div class="agile_info_shadow" style="text-align: center;">
+      <strong style="color: #777;">該当するデータがありません。</strong>
+    </div>
+  @else
+    <div class="w3l-table-info agile_info_shadow">
+      <div class="row mar-bottom15"></div>
+        <table id="table" class="mar-bottom15">
+          <thead>
+          <tr>
+            <th>氏名</th>
+            <th>{{$cb_year}} 年<br />4月</th>
+            <th>{{$cb_year}} 年<br />5月</th>
+            <th>{{$cb_year}} 年<br />6月</th>
+            <th>{{$cb_year}} 年<br />7月</th>
+            <th>{{$cb_year}} 年<br />8月</th>
+            <th>{{$cb_year}} 年<br />9月</th>
+            <th>{{$cb_year}} 年<br />10月</th>
+            <th>{{$cb_year}} 年<br />11月</th>
+            <th>{{$cb_year}} 年<br />12月</th>
+            <th>{{$cb_year +1}} 年<br />1月</th>
+            <th>{{$cb_year +1}} 年<br />2月</th>
+            <th>{{$cb_year +1}} 年<br />3月</th>
+            <th>合計</th>
+            <th>基準超</th>
+          </tr>
                 </thead>
                 <tbody> 
                 @foreach($worktimes['data'] as $worktime)  

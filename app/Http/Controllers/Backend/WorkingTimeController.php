@@ -16,8 +16,7 @@ class WorkingTimeController extends BackendController
 		$clsWorkingTime       = new WorkingTimeModel();
 		$clsBelong            = new BelongModel();
 		$data['staff_belong'] = (count($inputs) >0)?Input::get('staff_belong', null):'';
-		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'';				
-
+		$data['cb_year']      = (count($inputs) >0)?Input::get('cb_year', null):'';
 		$data['worktimes']    = (count($inputs) >0)?$clsWorkingTime->get_all($data['staff_belong'],$data['cb_year'] ):array();
 		$arrWorkTime = array(); 
 		if(count($data['worktimes']) >0){
@@ -42,7 +41,7 @@ class WorkingTimeController extends BackendController
 
 	public function detail($id){
 		$clsWorkingTime   = new WorkingTimeModel();
-        $data['year']     = (isset($_GET['year']) && $_GET['year'] >2000)?$_GET['year']:'2017';
+        $data['year']     = (isset($_GET['year']) && $_GET['year'] >2000)?$_GET['year']:date("Y");
 		$data['staff']    =  $clsWorkingTime->get_by_id($id);		
 		$arrTempt         = $this->get_work_time_array($id, $data['year'] );			
 		$data['worktimes']  = $arrTempt;
@@ -81,8 +80,6 @@ class WorkingTimeController extends BackendController
 		echo '</pre>';die;*/
 
 		return $pdf->download(ALL . '_' . rand('9999',time()).'.pdf');
-
-		//return view('backend.workingtime.pdf',$data);
 	}
 
 	public function get_work_time_array($id,$year)
