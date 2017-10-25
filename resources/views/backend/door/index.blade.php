@@ -81,11 +81,11 @@
             </td>
           </tr>
           @else  
-            @foreach($doorcards as $key=>$doorcard)
-              <tr data-id='{{$key}}'>
-                <td align="center" style="width: 120px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$key}}');"></td>
-                <td>{{$key}}</td>
-                <td>{{date_time($doorcard)}}</td>
+            @foreach($doorcards as $doorcard)
+              <tr data-id='{{$doorcard->td_dataname}}'>
+                <td align="center" style="width: 120px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$doorcard->td_dataname}}');"></td>
+                <td>{{$doorcard->td_dataname}}</td>
+                <td>{{date_time($doorcard->last_date)}}</td>
               </tr>
             @endforeach
           @endif       

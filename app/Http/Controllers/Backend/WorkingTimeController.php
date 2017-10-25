@@ -88,15 +88,14 @@ class WorkingTimeController extends BackendController
 			foreach($doorcard['timecards'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->tt_date));
 				if(isset($arrTempt[$temptDate])){
-					
-
+					$arrTempt[$temptDate]['gotime'] = date("H:i:s",strtotime(compare_min($arrTempt[$temptDate]['gotime'],$val->tt_gotime)));
+					$arrTempt[$temptDate]['backtime'] = date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime'])));
 				}else{
-					$arrTempt[$temptDate]['gotime'] = $val->tt_gotime;
+				    $arrTempt[$temptDate]['gotime'] = $val->tt_gotime;
 					$arrTempt[$temptDate]['backtime'] = $val->tt_backtime;
-				}
-				
+				}				
 			}
-		}					
+		}				
 		
 		if(count($doorcard['doorcards']) >0){
 			foreach($doorcard['doorcards'] as $val){
@@ -149,11 +148,11 @@ class WorkingTimeController extends BackendController
 			foreach($arrTempt as $key=>$val){
 			    $temptDoor=0;$time_out=0;$time_in=0;$overtime_in=0;$overtime_out=0;				
 				if(isset($val['gotime'])){									
- 					$temptDoor     = isset($val['touchtime_in'])?strtotime($key.' '.$val['touchtime_in']):0;
+ 					$temptDoor     = isset($val['touchtime_in'])?strtotime($key.' '.$val['touchtime_in']):0; 					
 					$temptPC       = isset($val['pc_in'])?strtotime($key.' '.$val['pc_in']):0;
 					$tempt         = isset($val['gotime'])?strtotime($key.' '.$val['gotime']):0;
 					$start_time    = strtotime($key.' '.START_TIME);					
-					$time_in       = ($temptDoor  >$temptPC )?(int)$tempt-(int)$temptPC:(int)$temptDoor-(int)$tempt;
+					$time_in       = ($temptDoor==0 && $temptPC==0)?0:(($temptDoor  >$temptPC )?$tempt-$temptPC:$temptDoor-$tempt);
 					$time_in       = ($time_in <0)?(-1)*$time_in:$time_in;
 					$overtime_in   = (is_numeric($tempt) && $start_time > $tempt )?$start_time - $tempt :0 ;
 
@@ -163,7 +162,7 @@ class WorkingTimeController extends BackendController
 					$temptPC       = isset($val['pc_out'])?strtotime($key.' '.$val['pc_out']):0;
 					$tempt         = isset($val['backtime'])?strtotime($key.' '.$val['backtime']):0;
 					$end_time      = strtotime($key.' '.END_TIME);
-					$time_out      = ($temptDoor  >$temptPC )?(int)$temptDoor-(int)$tempt:(int)$temptPC-(int)$tempt;
+					$time_out      = ($temptDoor==0 && $temptPC==0)?0:(($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt);
 					$time_out      = ($time_out <0)?(-1)*$time_out:$time_out;
 					$overtime_out  = ($end_time < $tempt)?$tempt - $end_time :0 ;
  				} 				

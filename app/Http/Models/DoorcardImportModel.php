@@ -29,19 +29,18 @@ class DoorcardImportModel
     public function get_all()
     {
         $results = DB::table($this->table)->distinct('td_dataname')->orderBy('td_id', 'desc')->take(100)->get();//->groupBy('td_dataname')
+       
         return $results;
     }
 
     public function get_all_by_dataname()
-    {        
-        $arrResult = array();
-        $results = DB::table($this->table)->select(DB::raw('DISTINCT(td_dataname) , last_date'))->get();
-        if(count($results) >0){
-            foreach($results as $value){
-               $arrResult[$value->td_dataname] = $value->last_date;
-            }            
-        }
-        return  $arrResult;
+    {     
+            
+        $results = DB::table($this->table)
+               ->select(DB::raw('td_dataname, max(last_date) as last_date'))
+               ->groupBy('td_dataname')              
+               ->get();             
+        return  $results;
     }
     
     public function insert($data)
