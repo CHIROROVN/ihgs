@@ -34,8 +34,11 @@ class PcImportModel
     }
 
     public function get_all_by_dataname()
-    {
-        $results = DB::table($this->table)->select('tp_dataname', 'last_date')->distinct('tp_dataname')->get();
+    {        
+        $results = DB::table($this->table)
+               ->select(DB::raw('tp_dataname, max(last_date) as last_date'))
+               ->groupBy('tp_dataname')              
+               ->get(); 
         return $results;
     }
 

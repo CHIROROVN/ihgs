@@ -15,15 +15,8 @@ class PcController extends BackendController
 {
 	//get import csv
 	public function import(){
-		$clsPcImport    = new PcImportModel();
-		$pcs = array();
-		 $arrPC= $clsPcImport->get_all_by_dataname();
-         if(count($arrPC) >0)
-        {
-            foreach($arrPC as $val){
-                $pcs[$val->tp_dataname] = $val->last_date;
-            }
-        }    
+		$clsPcImport    = new PcImportModel();		
+		$pcs= $clsPcImport->get_all_by_dataname();         
 		return view('backend.pc.import', compact('pcs'));
 	}
 

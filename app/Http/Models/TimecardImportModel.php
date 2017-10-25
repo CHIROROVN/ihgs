@@ -32,7 +32,10 @@ class TimecardImportModel
     }
      public function get_all_by_dataname()
     {
-        $results = DB::table($this->table)->select('tt_dataname', 'last_date')->distinct('tt_dataname')->get();       
+        $results = DB::table($this->table)
+               ->select(DB::raw('tt_dataname, max(last_date) as last_date'))
+               ->groupBy('tt_dataname')              
+               ->get();     
         return $results;
     }
     public function getList($staff_id,$year,$month)

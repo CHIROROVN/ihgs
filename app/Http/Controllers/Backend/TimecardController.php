@@ -23,15 +23,7 @@ class TimecardController extends BackendController
     public function index(){
         $data =array();
         $clsTimecard               = new TimecardImportModel();
-        $timecards                 = $clsTimecard->get_all_by_dataname();
-        $arrTimecard = array();
-        if(count($timecards) >0)
-        {
-            foreach($timecards as $val){
-                $arrTimecard[$val->tt_dataname] = $val->last_date;
-            }
-        }    
-        $data['timecards']         = $arrTimecard; 
+        $data['timecards']        = $clsTimecard->get_all_by_dataname();       
 
         $data['error']['error_tt_dataname_required']    = trans('validation.error_tt_dataname_required');
         $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
