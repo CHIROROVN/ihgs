@@ -51,6 +51,18 @@ if (!function_exists('divisions')) {
     }
 }
 
+if (!function_exists('divi_tree')) {
+	function divi_tree($belong_id, $belong_parent_id)
+	{
+		if(!empty($belong_parent_id)){
+
+		}else{
+			
+		}
+    }
+}
+
+
 if (!function_exists('format_date')) {
 
 	/**
@@ -331,50 +343,43 @@ if (!function_exists('hour_minute')) {
 	}	
 }
 
-if (!function_exists('time_over2')) {
-	function time_over2($start=null, $end=null){
-		$result = '';
+if (!function_exists('time_over')) {
+	function time_over($start=null, $end=null){
 		$overtime = $start + $end;
 		$mins = $overtime / 60;
-		$H = floor($overtime / 3600);
-		$i = floor(($overtime / 60) % 60);
-		if( $mins >= 31 ){
-			if(!empty($H)){
-				$result .= $H.'時';
-			}
-			if(!empty($i)){
-				$result .= $i.'分';
-			}
-			return $result.'超';	
+		if( ($mins > 30) && ($mins <= 60) ){
+			return '30分超';	
+		}elseif( $mins > 60 ){
+			return '1時間超';
 		}else{
 			return '';
 		}
 	}	
 }
 
-if (!function_exists('time_over')) {
-	function time_over($start=null, $end=null){
-		$result = '';
-		$seconds = $start + $end;
-		$time = gmdate('H:i:s', $seconds);
-		$arrTime = explode(':', $time);
-		$mins = $seconds / 60;
-		$H = $arrTime[0] + 0;
-		$i = $arrTime[1] + 0;
-		if( $mins >= 31 ){
-			if($H > 0){
-				$result .= $H.'時';
-			}
-			if($i > 0){
-				$result .= $i.'分';
-			}
-			if( ($H > 0 && $i > 0) || ($H > 0 && $i == 0) ) $result .= '間';
-			return $result.'超';	
-		}else{
-			return '';
-		}
-	}	
-}
+// if (!function_exists('time_over2')) {
+// 	function time_over2($start=null, $end=null){
+// 		$result = '';
+// 		$seconds = $start + $end;
+// 		$time = gmdate('H:i:s', $seconds);
+// 		$arrTime = explode(':', $time);
+// 		$mins = $seconds / 60;
+// 		$H = $arrTime[0] + 0;
+// 		$i = $arrTime[1] + 0;
+// 		if( $mins >= 31 ){
+// 			if($H > 0){
+// 				$result .= $H.'時';
+// 			}
+// 			if($i > 0){
+// 				$result .= $i.'分';
+// 			}
+// 			if( ($H > 0 && $i > 0) || ($H > 0 && $i == 0) ) $result .= '間';
+// 			return $result.'超';	
+// 		}else{
+// 			return '';
+// 		}
+// 	}	
+// }
 
 if (!function_exists('compare_min')) {
 	/**
@@ -458,10 +463,10 @@ if (!function_exists('style_overtime')) {
 	 */
 	function style_overtime($start=null, $end=null)
 	{
-		$overtime = floor(($start + $end)/60);
-		if($overtime >= 31 && $overtime <= 60){
+		$overtime = ($start + $end)/60;
+		if(($overtime > 30) && ($overtime <= 60)){
 			return 'class=bg-yellow';
-		}elseif($overtime >= 61){
+		}elseif($overtime > 60){
 			return 'class=bg-red';
 		}else{
 			return '';
