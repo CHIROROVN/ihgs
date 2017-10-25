@@ -42,8 +42,8 @@
                     <h3 align="center">該当するデータがありません。</h3>
                   </td>
                 </tr>
-                  @else  
-                  @foreach($worktimes as $key=>$worktime)  
+                  @else                   
+                  @foreach($worktimes as $key=>$worktime)                  
                   <tr>
                     <td>{{DayeJp($key, '/')}}</td>
                     <td>@if(isset($worktime['gotime'])){{formatshortTime($worktime['gotime'])}} @else  データ無し @endif</td>
@@ -53,14 +53,14 @@
                     <td>@if(isset($worktime['pc_in'])){{formatshortTime($worktime['pc_in'])}} @else  データ無し @endif</td>
                     <td>@if(isset($worktime['pc_out'])){{formatshortTime($worktime['pc_out'])}} @else  データ無し @endif</td>
                     @if(isset($worktime['diff'])) 
-                          @if($worktime['diff'] >29 && $worktime['diff'] <61) 
-                            <td class="bg-yellow" style="text-align: center;">{{$worktime['diff']}}分超 </td>
+                          @if($worktime['diff']>29 && $worktime['diff'] <61) 
+                            <td class="bg-yellow" style="text-align: center;">30 分超 </td>
                           @elseif($worktime['diff'] >60)                
-                            <td class="bg-red" style="text-align: center;">{{floor($worktime['diff']/60)}} 時間超 {{floor($worktime['diff']/60)}}</td>
+                            <td class="bg-red" style="text-align: center;">1 時間超 </td>
                           @else  <td></td>
                           @endif
                     @endif                        
-                    <td style="text-align: center;">@if(isset($worktime['overtime']) && $worktime['overtime'] >0){{$worktime['overtime']}} h @endif </td>
+                    <td style="text-align: center;">@if(isset($worktime['overtime']) && $worktime['overtime'] >0){{floor($worktime['overtime']/3600)}} h {{floor(($worktime['overtime']%3600)/60)}} @endif </td>
                   </tr>
                   @endforeach
                 @endif      

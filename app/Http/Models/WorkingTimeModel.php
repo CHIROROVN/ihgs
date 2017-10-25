@@ -51,19 +51,20 @@ class WorkingTimeModel
     public function get_timecard($id,$year)
     {
 
-        $results = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
-                                                $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
-                                                     ->Where(function ($query) use ($year) {
-                                                            $query->whereYear('t1.tt_date', $year)
-                                                                  ->whereMonth('t1.tt_date','>', '3');
-                                                        })
-                                                     ->orWhere(function ($query) use ($year){
-                                                            $query->whereYear('t1.tt_date', $year + 1)
-                                                                  ->whereMonth('t1.tt_date','<', '4');
-                                                        });                                                     
-                                            })                                         
-                                          ->where('t_staff.staff_id', $id)->select('tt_date','tt_gotime','tt_backtime','tt_staff_id_no')                                          
-                                          ->get();         
+        $results = DB::table($this->table)->join('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
+                                           ->where(function($query) use ($year){
+                                                $query->where(function ($query) use ($year) {
+                                                                  $query->whereYear('t1.tt_date', $year)
+                                                                        ->whereMonth('t1.tt_date','>', '3');
+                                                              })
+                                                           ->orWhere(function ($query) use ($year){
+                                                                  $query->whereYear('t1.tt_date', $year + 1)
+                                                                        ->whereMonth('t1.tt_date','<', '4');
+                                                              });
+                                          })                                          
+                                          ->where('t_staff.staff_id', $id)->select('t1.tt_date','t1.tt_gotime','t1.tt_backtime','t1.tt_staff_id_no')
+                                          ->orderBy('t1.tt_date', 'asc')                                          
+                                          ->get();                                                 
 
         return $results;
     }
@@ -83,7 +84,7 @@ class WorkingTimeModel
             if(!empty($results1->staff_card7))  $strCard[] = $results1->staff_card7;
             if(!empty($results1->staff_card8))  $strCard[] = $results1->staff_card8;
             if(!empty($results1->staff_card9))  $strCard[] = $results1->staff_card9;
-            if(!empty($results1->staff_card10)) $strCard[] = $results1->staff_card10; 
+            if(!empty($results1->staff_card10))  $strCard[] = $results1->staff_card10; 
             if(count($strCard) >0)                      
               $results['doorcards'] = DB::table('t_doorcard')->where(function($query) use ($year){
                                           $query->where(function ($query) use ($year) {
@@ -118,7 +119,21 @@ class WorkingTimeModel
                                                                   ->whereMonth('tp_actiontime','<', '4');
                                                         });
                                     })->orderBy('tp_actiontime', 'asc')->get();
+           /* $results['pcs'] = DB::table('t_pc')->select(DB::raw('DATE(tp_actiontime) as time_date, max(tp_actiontime) as time_out'))->whereIn('tp_pc_no',[array_values($strPC)])->where(function($query) use ($year){
+                                          $query->where(function ($query) use ($year) {
+                                                            $query->whereYear('tp_actiontime', $year)
+                                                                  ->whereMonth('tp_actiontime','>', '3');
+                                                        })
+                                                     ->orWhere(function ($query) use ($year){
+                                                            $query->whereYear('tp_actiontime', $year + 1)
+                                                                  ->whereMonth('tp_actiontime','<', '4');
+                                                        });
+                                    })->groupBy(DB::raw("DATE(tp_actiontime)"))->groupBy('tp_actiontime')->orderBy('tp_actiontime', 'asc')
+                                    ->get();                                                            
             else  $results['pcs'] = array();
+            echo '<pre>';
+            print_r($results['pcs']);
+            echo '</pre>';die;*/
             $results['timecards'] = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                                      ->Where(function ($query) use ($year) {

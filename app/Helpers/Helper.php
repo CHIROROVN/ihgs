@@ -448,6 +448,38 @@ if (!function_exists('over_out')) {
 		// }
 	}
 }
+if (!function_exists('get_time_diff')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function get_time_diff($time_door,$time_pc,$time_card)
+	{		
+		$temptDoor     = isset($time_door)?strtotime($time_door):0;
+		$temptPC       = isset($time_pc)?strtotime($time_pc):0;
+		$tempt         = isset($time_card)?strtotime($time_card):0;
+		if($temptDoor==0 && $temptPC==0)
+			return 0;
+		elseif($temptDoor==0){
+			return ($tempt >$temptPC)?$tempt-$temptPC:$temptPC-$tempt;
+		}elseif($temptPC==0)
+		   return ($tempt >$temptDoor)?$tempt-$temptDoor:$temptDoor-$tempt;
+	}
+}
+if (!function_exists('get_time_overtime')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function get_time_overtime($time_in,$time_out)
+	{		
+		
+	}
+}
 
 if (!function_exists('style_overtime')) {
 	/**

@@ -54,6 +54,11 @@ class TimecardModel
     {
         $results = DB::table($this->table)->where('mt_id', $id)->update($data);
         return $results;
-    }    
+    } 
+    public function getLastRow()
+    {
+       $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('mt_id', 'desc')->first(); 
+       return $results;
+    }   
 
 }

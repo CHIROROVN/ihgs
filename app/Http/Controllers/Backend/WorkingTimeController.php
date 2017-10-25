@@ -85,15 +85,31 @@ class WorkingTimeController extends BackendController
 		$arrTempt = array();							
 		$doorcard=  $clsWorkingTime->get_doorcard($id,$year);
 		if(count($doorcard['timecards']) >0){
+			$arrT         = explode(":",RESET_TIME);
+		    $intStartTime = (isset($arrT[0]) &&  $arrT[0] >24)?$arrT[0]-24:0;
 			foreach($doorcard['timecards'] as $val){
-				$temptDate = date("Y-m-d",strtotime($val->tt_date));
+				$temptDate     = date("Y-m-d",strtotime($val->tt_date));
+				$reset_time    = isset($intStartTime)?strtotime($temptDate.' '.$intStartTime.':00:00'):0;
+				$start_time    = strtotime($temptDate.' '.START_TIME);
+				$end_time      = strtotime($temptDate.' '.END_TIME);
 				if(isset($arrTempt[$temptDate])){
 					$arrTempt[$temptDate]['gotime'] = date("H:i:s",strtotime(compare_min($arrTempt[$temptDate]['gotime'],$val->tt_gotime)));
 					$arrTempt[$temptDate]['backtime'] = date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime'])));
 				}else{
 				    $arrTempt[$temptDate]['gotime'] = $val->tt_gotime;
 					$arrTempt[$temptDate]['backtime'] = $val->tt_backtime;
-				}				
+				}	
+				$gotime       = strtotime($temptDate.' '.$arrTempt[$temptDate]['gotime']);
+				$backtime     = strtotime($temptDate.' '.$arrTempt[$temptDate]['backtime']);
+				$overtime_out = ($end_time < $backtime)?$backtime - $end_time:0;		
+                if($gotime < $reset_time){
+                    $arrT          = explode("-",$temptDate)  ;
+                    $arrTempt[date("Y-m-d",mktime(0, 0, 0, $arrT[1],$arrT[2] -1, $arrT[0]))]['overtime'] = $reset_time-$gotime;
+                    $overtime_in   = $start_time - $reset_time ;
+                }else{
+                    $overtime_in   = ($gotime < $start_time)?$start_time-$gotime:0;
+                }
+                $arrTempt[$temptDate]['overtime'] = isset($arrTempt[$temptDate]['overtime'])?$arrTempt[$temptDate]['overtime'] + $overtime_in + $overtime_out:$overtime_in + $overtime_out;
 			}
 		}				
 		
@@ -142,32 +158,12 @@ class WorkingTimeController extends BackendController
                     $arrTempt[$temptDate]['pc_out'] = date("H:i:s",strtotime($val->tp_actiontime));
 				}				
 			}	
-		}	
-		//
+		}			
 		if(count($arrTempt) >0){
-			foreach($arrTempt as $key=>$val){
-			    $temptDoor=0;$time_out=0;$time_in=0;$overtime_in=0;$overtime_out=0;				
-				if(isset($val['gotime'])){									
- 					$temptDoor     = isset($val['touchtime_in'])?strtotime($key.' '.$val['touchtime_in']):0; 					
-					$temptPC       = isset($val['pc_in'])?strtotime($key.' '.$val['pc_in']):0;
-					$tempt         = isset($val['gotime'])?strtotime($key.' '.$val['gotime']):0;
-					$start_time    = strtotime($key.' '.START_TIME);					
-					$time_in       = ($temptDoor==0 && $temptPC==0)?0:(($temptDoor  >$temptPC )?$tempt-$temptPC:$temptDoor-$tempt);
-					$time_in       = ($time_in <0)?(-1)*$time_in:$time_in;
-					$overtime_in   = (is_numeric($tempt) && $start_time > $tempt )?$start_time - $tempt :0 ;
-
- 				}
- 				if(isset($val['backtime'])){
- 					$temptDoor     = isset($val['touchtime_out'])?strtotime($key.' '.$val['touchtime_out']):0;
-					$temptPC       = isset($val['pc_out'])?strtotime($key.' '.$val['pc_out']):0;
-					$tempt         = isset($val['backtime'])?strtotime($key.' '.$val['backtime']):0;
-					$end_time      = strtotime($key.' '.END_TIME);
-					$time_out      = ($temptDoor==0 && $temptPC==0)?0:(($temptDoor  >$temptPC )?$temptDoor-$tempt:$temptPC-$tempt);
-					$time_out      = ($time_out <0)?(-1)*$time_out:$time_out;
-					$overtime_out  = ($end_time < $tempt)?$tempt - $end_time :0 ;
- 				} 				
- 				$arrTempt[$key]['diff'] = ceil(($time_in + $time_out)/60) ;
- 				$arrTempt[$key]['overtime'] = round(($overtime_in  + $overtime_out)/3600) ;	
+			foreach($arrTempt as $key=>$val){			    				
+				$time_in       = isset($val['gotime'])?get_time_diff(isset($val['touchtime_in'])?$val['touchtime_in']:0,isset($val['pc_in'])?$val['pc_in']:0,isset($val['gotime'])?$val['gotime']:0):0; 			
+ 				$time_out      = isset($val['backtime'])?get_time_diff(isset($val['touchtime_out'])?$val['touchtime_out']:0 ,isset($val['pc_out'])?$val['pc_out']:0,isset($val['backtime'])?$val['backtime']:0):0;	
+ 				$arrTempt[$key]['diff']   = floor(($time_in + $time_out)/60) ; 				 													
 			}
 		}
 		return $arrTempt;

@@ -4,8 +4,6 @@ use App\Http\Controllers\Backend\BackendController;
 use App\Http\Models\DoorcardModel;
 use App\Http\Models\DoorcardImportModel;
 use Auth;
-use Form;
-use Html;
 use Input;
 use Validator;
 use URL;
@@ -146,20 +144,19 @@ class DoorController extends BackendController
         }           
         
         if (Input::hasFile('file_path'))
-        {           
-            ini_set('max_execution_time', "600M");
-            ini_set('memory_limit', '512M');
+        {          
+            
             $fn     = Input::get('td_dataname').'_'.rand(time(),time()).'.'.$extFile;
             $path   = Input::file('file_path')->getRealPath();
             $data   = array();
-            $data   = $this->readFileCsv($path);                 
+            $data   = $this->readFileCsv($path);                           
             $path   = '/uploads/';
             $upload_file->move(public_path().$path, $fn);                                
                                    
             if(!empty($data) && count($data) >0){                
                 foreach ($data as $value) {                        
                    if(isset($doorcardModel->md_touchdate_row) && $doorcardModel->md_touchdate_row >0)                                            
-                        $touchtime    = isset($value[$doorcardModel->md_touchdate_row])?date("Y-m-d",strtotime($value[$doorcardModel->md_touchdate_row])):date("Y-m-d H:i:s");
+                        $touchtime    = isset($value[$doorcardModel->md_touchdate_row])?date("Y-m-d  H:i:s",strtotime($value[$doorcardModel->md_touchdate_row])):date("Y-m-d H:i:s");
                     else{                                                                  
                        $time           = isset($value[$doorcardModel->md_touchtime_row])?date("H:i:s",strtotime($value[$doorcardModel->md_touchtime_row])):'00:00:00';                       
                        $date           = isset($value[$doorcardModel->md_touchday_row])?date("Y-m-d", strtotime(trim($value[$doorcardModel->md_touchday_row]))):date("Y-m-d"); 
