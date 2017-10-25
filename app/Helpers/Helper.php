@@ -460,18 +460,7 @@ if (!function_exists('get_time_diff')) {
 		   return ($tempt >$temptDoor)?$tempt-$temptDoor:$temptDoor-$tempt;
 	}
 }
-if (!function_exists('get_time_overtime')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
-	function get_time_overtime($time_in,$time_out)
-	{		
-		
-	}
-}
+
 
 if (!function_exists('style_overtime')) {
 	/**
