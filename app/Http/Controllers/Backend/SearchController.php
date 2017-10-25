@@ -25,24 +25,23 @@ class SearchController extends BackendController
 		$clsBelong = new BelongModel();
 		$data = array();
 		$where = array();
-		//$staffs = array();
 		$data['staffs'] = array();
-		//$data['divisions'] = $clsBelong->list_division_tree();
 
 		$data['curr_year'] = date('Y');
 		$data['curr_month'] = date('m');
 
 		$data['belong_id'] = Input::get('belong_id');
 		$data['year_from'] = !empty(Input::get('year_from')) ? Input::get('year_from') : date('Y');
-		$data['month_from'] = !empty(Input::get('month_from')) ? Input::get('month_from') : date('m');
+		$data['month_from'] = !empty(Input::get('month_from')) ? Input::get('month_from') : date('m')-1;
 		$data['year_to'] = !empty(Input::get('year_to')) ? Input::get('year_to') : date('Y');
 		$data['month_to'] = !empty(Input::get('month_to')) ? Input::get('month_to') : date('m');
 		$data['kw'] = Input::get('kw');
-		
-		//$data['division'] = $clsDivision->nested()->get();
 
+		$belong_parent_id = array();
+		
 		if(!empty(Input::get('belong_id'))){
 			$data['belong_selected'] = Input::get('belong_id');
+			
 			$where['belong_parent_id'] = $clsBelong->get_list_by_id(Input::get('belong_id'));
 		}else{
 			$data['belong_selected'] = 0;
@@ -65,7 +64,7 @@ class SearchController extends BackendController
 		}
 
 		$data['conditions'] = $where;
-		
+
 		if(!empty(Input::get('kw'))){
 			$where['kw'] = trim(Input::get('kw'));
 		}
