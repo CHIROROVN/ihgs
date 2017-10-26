@@ -44,7 +44,7 @@
               <td>@if(isset($worktime['pc_in'])){{formatshortTime($worktime['pc_in'])}} @else  データ無し @endif</td>
               <td>@if(isset($worktime['pc_out'])){{formatshortTime($worktime['pc_out'])}} @else  データ無し @endif</td>
               @if(isset($worktime['diff'])) 
-                @if($worktime['diff']>29 && $worktime['diff'] <61) 
+                @if($worktime['diff']>30 && $worktime['diff'] <61) 
                   <td class="bg-yellow" style="text-align: center;">30 分超 </td>
                   @elseif($worktime['diff'] >60)                
                   <td class="bg-red" style="text-align: center;">1 時間超 </td>
