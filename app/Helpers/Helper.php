@@ -460,6 +460,38 @@ if (!function_exists('get_time_diff')) {
 		   return ($tempt >$temptDoor)?$tempt-$temptDoor:$temptDoor-$tempt;
 	}
 }
+if (!function_exists('get_work_overtime')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function get_work_overtime($time_in,$time_out,$date_overtime)
+	{		
+		if(empty($time_in) && empty($time_out)) return '';
+		$over_time_in =0;$over_time_out=0;
+		if(!empty($time_in)){
+		   $arrT          = explode(":",RESET_TIME);$arrMonth = array();
+		   $intStartTime  = (isset($arrT[0]) &&  $arrT[0] >24)?$arrT[0]-24:0;	
+           $temptIn       = strtotime($date_overtime.' '.$time_in);
+           $reset_time    = isset($intStartTime)?strtotime($date_overtime.' '.$intStartTime.':00:00'):0;
+		   $start_time    = strtotime($date_overtime.' '.START_TIME);
+		   $over_time_in  = ($temptIn > $start_time )?0:(($temptIn < $reset_time)?$reset_time-$start_time:$start_time - $temptIn);
+		}
+		if(!empty($time_out))
+		{
+			$end_time       = strtotime($date_overtime.' '.END_TIME);
+			$temptOut       = strtotime($date_overtime.' '.$time_out);
+			$over_time_out  = ($end_time > $temptOut)?0:$temptOut-$end_time ;
+		}	
+		$over_time = $over_time_in + $over_time_out;		
+		if($over_time <3600) return '';
+		$over_time_hours = floor($over_time/3600);
+		$over_time_mintue = floor(($over_time%3600)/60);		
+		return $over_time_hours.' h'.(($over_time_mintue >0)?$over_time_mintue:'');		
+	}
+}
 
 
 if (!function_exists('style_overtime')) {
@@ -490,10 +522,64 @@ if (!function_exists('style_overwork')) {
 	 * @return
 	 */
 	function style_overwork($worktime)
-	{		
-		if($worktime >59)
-			return 'class="bg-red"';
+	{
+        
+		if((int)$worktime > (3600 * MAX_OVERTIME_MONTH))
+			return 'class=bg-red';
 		else
 			return '';		
 	}
 }
+if (!function_exists('display_overwork')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function display_overwork($worktime)
+	{	  
+       if((int)$worktime ==0) return '0h';
+       if((int)$worktime <3600)    return $worktime;
+       $over_time_hours = floor($worktime/3600);
+	   $over_time_mintue = floor(($worktime%3600)/60);	
+       return $over_time_hours.' h '.(($over_time_mintue >0)?$over_time_mintue:'');	    	
+	}
+}
+if (!function_exists('display_overwork_staff')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function display_overwork_staff($arrWorktime)
+	{	  
+      if(is_array($arrWorktime) && count($arrWorktime) >0){
+      	$intTotal = 0;
+      	foreach($arrWorktime as $value){
+           $intTotal +=$value;
+      	}
+        return display_overwork($intTotal); 
+      }else return '';   	
+	}
+}
+if (!function_exists('count_overwork_staff')) {
+	/**
+	 * description
+	 *
+	 * @param
+	 * @return
+	 */
+	function count_overwork_staff($arrWorktime)
+	{	  
+      if(is_array($arrWorktime) && count($arrWorktime) >0){
+        $intCount =0;
+        foreach($arrWorktime as $value){
+           if($value > (3600 * MAX_OVERTIME_MONTH))  $intCount++;
+      	} 
+      	return ($intCount >0)?$intCount.' 回':'';
+      }else return '';   	
+	}
+}
+
