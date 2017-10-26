@@ -1,6 +1,15 @@
 <?php
 use Carbon\Carbon;
 
+$number = cal_days_in_month(CAL_GREGORIAN, 8, 2003);
+
+if (!function_exists('dayOfMonth')) {
+	function dayOfMonth($year, $month)
+	{
+		return $number = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+    }
+}
+
 if (!function_exists('division')) {
 	function division($belong_id=null)
 	{
