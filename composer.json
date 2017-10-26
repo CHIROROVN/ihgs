@@ -12,9 +12,10 @@
         "landish/pagination": "~1.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "twbs/bootstrap": "^3.3",
-		"laravelcollective/html": "^5.4",
-		"maddhatter/laravel-fullcalendar": "^1.2"
+        "laravelcollective/html": "^5.4",
+        "maddhatter/laravel-fullcalendar": "^1.2",
+        "niklasravnsborg/laravel-pdf": "^1.5",
+        "twbs/bootstrap": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
