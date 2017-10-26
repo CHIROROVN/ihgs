@@ -21,10 +21,6 @@ class SearchController extends BackendController
 	}
 
 	public function index(){
-			echo '<pre>';
-			print_r(Auth::user());
-			echo '</pre>';die;
-		//return abort(401);
 		$clsSearch = new SearchModel();
 		$clsStaff = new StaffModel();
 		$clsBelong = new BelongModel();
