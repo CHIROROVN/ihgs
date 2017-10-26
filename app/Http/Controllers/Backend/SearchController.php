@@ -9,6 +9,7 @@ use Input;
 use Validator;
 use Session;
 use Config;
+use Auth;
 use App;
 use PDF;
 
