@@ -102,16 +102,16 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
                     aria-hidden="true">&times;</button>
-                <h3 class="modal-title" id="myModalLabel">Warning!</h3>
+                <h3 class="modal-title" id="myModalLabel">確認を削除!</h3>
             </div>
             <div class="modal-body">
-                <h4>Are you sure you want to DELETE?</h4>
+                <h4>本当に削除してもいいですか。</h4>
 
             </div>
             <!--/modal-body-collapse -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnDelteYes" href="#">Yes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" id="btnDelteYes" href="#">削除</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
             </div>
             <!--/modal-footer-collapse -->
         </div>
