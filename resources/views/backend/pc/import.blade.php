@@ -143,12 +143,12 @@
 });
 function btnDelete($id)
  {
-      var id = $id;
+    var id = $id;
     $('#myModal').data('id', id).modal('show');
  } 
 $('#btnDelteYes').click(function () {
     var id = $('#myModal').data('id');   
-    location.href="{{ asset('pc/import/delete/') }}"+"/"+ tp_dataname ;  
+    location.href="{{ asset('pc/import/delete/') }}"+"/"+ id ;  
 });
 </script>
 @endsection

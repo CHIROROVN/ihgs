@@ -47,7 +47,7 @@
                         </div>
                         <div class="fl-left">
                           <select name="year_to" class="form-control form-control-date">
-                            @for($yt=($curr_year-5); $yt<=($curr_year); $yt++)
+                            @for($yt=($curr_year - 4); $yt<=($curr_year + 1); $yt++)
                             <option value="{{$yt}}" @if(isset($year_to) && $year_to == $yt) selected @endif>{{$yt}}年</option>
                           @endfor
                           </select>
