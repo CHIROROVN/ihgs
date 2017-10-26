@@ -67,7 +67,7 @@
           <!-- tables -->
           <div class="agile-tables">
             <div class="w3l-table-info agile_info_shadow">
-              <table id="table">
+              <table id="table" class="table-bordered">
                 <thead>
                   <tr>
                     <th>削除</th>

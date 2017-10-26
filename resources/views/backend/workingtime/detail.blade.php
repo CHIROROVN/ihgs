@@ -11,7 +11,7 @@
       <div class="row mar-bottom15">
         <div class="col-md-12 text-left">{{$staff->belong_name}}／{{$staff->staff_id_no}}／{{$staff->staff_name}}</div>
       </div>
-      <table id="table" class="mar-bottom15">
+      <table id="table" class="mar-bottom15 table-bordered">
         <thead>
           <tr>
             <th rowspan="2">年月日</th>

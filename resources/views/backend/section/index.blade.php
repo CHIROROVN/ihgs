@@ -44,7 +44,7 @@
                   <input onclick="location.href='{{ asset('section/' . $parent->belong_id.'/regist') }}'" value="課の新規登録" type="button" class="btn btn-primary btn-xs">
                 </div>
               </div>
-              <table id="table" class="mar-bottom15">
+              <table id="table" class="mar-bottom15 table-bordered">
                 <thead>
                   <tr>
                     <th>削除</th>

@@ -50,7 +50,7 @@
   @else
     <div class="w3l-table-info agile_info_shadow">
       <div class="row mar-bottom15"></div>
-        <table id="table" class="mar-bottom15">
+        <table id="table" class="mar-bottom15 table-bordered">
           <thead>
           <tr>
             <th>氏名</th>

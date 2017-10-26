@@ -35,7 +35,7 @@
                   <input onclick="location.href='{{route('backend.division.regist')}}'" value="部の新規登録" type="button" class="btn btn-primary btn-xs">
                 </div>
               </div>
-              <table id="table">
+              <table id="table" class="table-bordered">
                 <thead>
                   <tr>
                     <th>削除</th>

@@ -33,7 +33,7 @@
                   <input onclick="location.href='{{route('backend.staff.regist')}}'" value="社員データの新規登録" type="button" class="btn btn-primary btn-xs">
                 </div>
               </div>
-              <table id="table" class="mar-bottom15">
+              <table id="table" class="mar-bottom15 table-bordered">
                 <thead>
                   <tr>
                     <th>削除</th>
