@@ -51,7 +51,7 @@
                   @else  <td></td>
                 @endif
               @endif                        
-               <td style="text-align: center;">{{get_work_overtime($worktime['gotime'],$worktime['backtime'],$key)}}</td>
+               <td style="text-align: center;">{{@get_work_overtime($worktime['gotime'],$worktime['backtime'],$key)}}</td>
             </tr>
           @endforeach
         @endif      

@@ -81,13 +81,11 @@ class WorkingTimeController extends BackendController
 				}else{
 				    $arrTempt[$temptDate]['gotime']   = date("H:i:s",strtotime($val->tt_gotime));
 					$arrTempt[$temptDate]['backtime'] = date("H:i:s",strtotime($val->tt_backtime));
-				}	
-				$gotime       = strtotime($temptDate.' '.$arrTempt[$temptDate]['gotime']);
-				$backtime     = strtotime($temptDate.' '.$arrTempt[$temptDate]['backtime']);				               
+				}									               
 			}			
 		}				
 		
-		if(count($doorcard['doorcards']) >0){
+		if(count($doorcard['doorcards']) >0){			
 			foreach($doorcard['doorcards'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->td_touchtime));
 				if(isset($arrTempt[$temptDate])){
@@ -139,7 +137,7 @@ class WorkingTimeController extends BackendController
  				$time_out      = isset($val['backtime'])?get_time_diff(isset($val['touchtime_out'])?$val['touchtime_out']:0 ,isset($val['pc_out'])?$val['pc_out']:0,isset($val['backtime'])?$val['backtime']:0):0;	
  				$arrTempt[$key]['diff']   = floor(($time_in + $time_out)/60) ; 				 													
 			}
-		}
+		}		
 		return $arrTempt;
 	}
 	public function get_over_time_year($id,$year)

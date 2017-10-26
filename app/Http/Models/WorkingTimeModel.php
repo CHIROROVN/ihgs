@@ -84,28 +84,19 @@ class WorkingTimeModel
                                                             $query->whereYear('td_touchtime', $year + 1)
                                                                   ->whereMonth('td_touchtime','<', '4');
                                                         });
-                                    })->whereIn('td_card',function ($query) {
-                                        $query->select('staff_card1')->from('t_staff')
-                                        ->Where('staff_card1','<>','');
-                                        $query->select('staff_card2')->from('t_staff')
-                                        ->Where('staff_card2','<>','');
-                                        $query->select('staff_card3')->from('t_staff')
-                                        ->Where('staff_card3','<>','');
-                                        $query->select('staff_card4')->from('t_staff')
-                                        ->Where('staff_card4','<>','');
-                                        $query->select('staff_card5')->from('t_staff')
-                                        ->Where('staff_card5','<>','');
-                                        $query->select('staff_card6')->from('t_staff')
-                                        ->Where('staff_card6','<>','');
-                                        $query->select('staff_card7')->from('t_staff')
-                                        ->Where('staff_card7','<>','');
-                                        $query->select('staff_card8')->from('t_staff')
-                                        ->Where('staff_card8','<>','');
-                                        $query->select('staff_card9')->from('t_staff')
-                                        ->Where('staff_card9','<>','');
-                                        $query->select('staff_card10')->from('t_staff')
-                                        ->Where('staff_card10','<>','');
-                                    })->orderBy('td_touchtime', 'asc')->get();                                             
+                                    
+                                    })->where(function($query) {
+                                        $query->whereIn('td_card',function ($query) {
+                                              $query->select('staff_card1')->from('t_staff')
+                                              ->where('staff_card1','<>','');
+                                        });   
+                                        for($i=2;$i<=10;$i++){                                     
+                                            $query->orWhereIn('td_card',function ($query) use ($i)  {
+                                                  $query->select('staff_card'.$i)->from('t_staff')
+                                                  ->where('staff_card'.$i,'<>','');
+                                            });
+                                        }                                            
+                                    })->orderBy('td_touchtime', 'asc')->get();                                                                           
                                  
             $results['pcs'] = DB::table('t_pc')->where(function($query) use ($year){
                                           $query->where(function ($query) use ($year) {
@@ -116,29 +107,20 @@ class WorkingTimeModel
                                                             $query->whereYear('tp_actiontime', $year + 1)
                                                                   ->whereMonth('tp_actiontime','<', '4');
                                                         });
-                                    })->whereIn('tp_pc_no',function ($query) {
-                                        $query->select('staff_pc1')->from('t_staff')
-                                        ->Where('staff_pc1','<>','');
-                                        $query->select('staff_pc2')->from('t_staff')
-                                        ->Where('staff_pc2','<>','');
-                                        $query->select('staff_pc3')->from('t_staff')
-                                        ->Where('staff_pc3','<>','');
-                                        $query->select('staff_pc4')->from('t_staff')
-                                        ->Where('staff_pc4','<>','');
-                                        $query->select('staff_pc5')->from('t_staff')
-                                        ->Where('staff_pc5','<>','');
-                                        $query->select('staff_pc6')->from('t_staff')
-                                        ->Where('staff_pc6','<>','');
-                                        $query->select('staff_pc7')->from('t_staff')
-                                        ->Where('staff_pc7','<>','');
-                                        $query->select('staff_pc8')->from('t_staff')
-                                        ->Where('staff_pc8','<>','');
-                                        $query->select('staff_pc9')->from('t_staff')
-                                        ->Where('staff_pc9','<>','');
-                                        $query->select('staff_pc10')->from('t_staff')
-                                        ->Where('staff_pc10','<>','');
-
+                                    })->where(function($query) {
+                                        $query->whereIn('tp_pc_no',function ($query) {
+                                              $query->select('staff_pc1')->from('t_staff')
+                                              ->where('staff_pc1','<>','');
+                                        });
+                                        for($i=2;$i<=10;$i++){
+                                              $query->orWhereIn('tp_pc_no',function ($query) use ($i) {
+                                                    $query->select('staff_pc'.$i)->from('t_staff')
+                                                    ->where('staff_pc'.$i,'<>','');
+                                              });
+                                        }
+                                       
                                     })->orderBy('tp_actiontime', 'asc')->get();          
+
             $results['timecards'] = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                                      ->Where(function ($query) use ($year) {
@@ -151,21 +133,15 @@ class WorkingTimeModel
                                                         });                                                     
                                             })                                         
                                           ->where('t_staff.staff_id', $id)->orderBy('t1.tt_date','asc')                                          
-                                          ->get();
-                                     
+                                          ->get();                               
            
         }        
-
         return $results;    
     }
-
-
-  //Manage Pc format
+    //Manage Pc format
     public function getPc(){
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->first();
     }
-
-
 
     //pc insert
     public function insert($data)
@@ -178,5 +154,6 @@ class WorkingTimeModel
     {
         return DB::table($this->table)->where('id', $id)->update($data);
     }
-
 }
+
+                                  
