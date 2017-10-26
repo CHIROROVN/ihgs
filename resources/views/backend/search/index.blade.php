@@ -105,13 +105,13 @@
                    @foreach(search_work_time($staff->staff_id_no, $conditions) as $wt)
                    <?php $date = format_date($wt->tt_date, '-');?>
                     <tr>
-                      <td>{{DayeJp($wt->tt_date)}}</td>
-                      <td>{{formatshortTime($wt->tt_gotime, ':')}}</td>
-                      <td>{{formatshortTime($wt->tt_backtime, ':')}}</td>
-                      <td>{{@hour_minute(touchtime($staff, $date)[0]->door_in)}}</td>
-                      <td>{{@hour_minute(touchtime($staff, $date)[0]->door_out)}}</td>
-                      <td>{{@hour_minute(actiontime($staff, $date)[0]->action_in)}}</td>
-                      <td>{{@hour_minute(actiontime($staff, $date)[0]->action_out)}}</td>
+                      <td>{{show_overtime(DayeJp($wt->tt_date))}}</td>
+                      <td>{{show_overtime(formatshortTime($wt->tt_gotime, ':'))}}</td>
+                      <td>{{show_overtime(formatshortTime($wt->tt_backtime, ':'))}}</td>
+                      <td>{{show_overtime(@hour_minute(touchtime($staff, $date)[0]->door_in))}}</td>
+                      <td>{{show_overtime(@hour_minute(touchtime($staff, $date)[0]->door_out))}}</td>
+                      <td>{{show_overtime(@hour_minute(actiontime($staff, $date)[0]->action_in))}}</td>
+                      <td>{{show_overtime(@hour_minute(actiontime($staff, $date)[0]->action_out))}}</td>
                       <?php 
                         $time_start = compare_min(touchtime($staff, $date)[0]->door_in, actiontime($staff, $date)[0]->action_in); 
                         $time_end = compare_max(touchtime($staff, $date)[0]->door_out, actiontime($staff, $date)[0]->action_out);
@@ -122,6 +122,10 @@
                       <td {{@style_overtime($over_in, $over_out)}}>{{ @time_over($over_in, $over_out) }}</td>
                     </tr>
                     @endforeach
+
+
+
+
                   @endif
 
                 </tbody>
