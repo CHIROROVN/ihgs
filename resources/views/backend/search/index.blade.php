@@ -122,14 +122,9 @@
                       <td {{@style_overtime($over_in, $over_out)}}>{{ @time_over($over_in, $over_out) }}</td>
                     </tr>
                     @endforeach
-
-
-
-
                   @endif
-
                 </tbody>
-              </table>              
+              </table>          
 
               <div class="row">
                 <div class="col-md-12 text-center">
