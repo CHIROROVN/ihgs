@@ -8,7 +8,7 @@
 <body>
 <div class="container">
 	<div class="name-section">
-		<div class="company-line">{{ ALL }} / {!! division($staff_belong) !!}</div>
+		<div class="company-line">{{ COMPANY_NAME }} / {!! division($staff_belong) !!}</div>
 	</div>
   <table cellpadding=0 cellspacing=0>
 	<tr>
