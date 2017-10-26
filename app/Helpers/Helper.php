@@ -44,9 +44,7 @@ if (!function_exists('actiontime')) {
 if (!function_exists('divisions')) {
 	function divisions($name, $selected, $flag)
 	{
-		$dropdown = App\Http\Controllers\Backend\SearchController::getDivision($name, $selected, $flag);
-
-		return $dropdown;
+		return App\Http\Controllers\Backend\SearchController::getDivision($name, $selected, $flag);
     }
 }
 
@@ -218,7 +216,6 @@ if (!function_exists('japan_date')) {
 	}
 }
 
-
 if (!function_exists('DayJp')) {
 
 	/**
@@ -241,13 +238,6 @@ if (!function_exists('DayJp')) {
 }
 
 if (!function_exists('DayeJp')) {
-
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function DayeJp($date=null){
 		if(!empty($date)){
 			$convertEn2Jp = array('Sun'=>'日', 'Mon'=>'月', 'Tue'=>'火', 'Wed'=>'水', 'Thu'=>'木', 'Fri'=>'金', 'Sat'=>'土');
@@ -263,13 +253,6 @@ if (!function_exists('DayeJp')) {
 }
 
 if (!function_exists('DateDayJp')) {
-
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function DateDayJp($date=null){
 		if(!empty($date)){
 			$convertEn2Jp = array('Sun'=>'日', 'Mon'=>'月', 'Tue'=>'火', 'Wed'=>'水', 'Thu'=>'木', 'Fri'=>'金', 'Sat'=>'土');
@@ -296,13 +279,6 @@ if (!function_exists('formatshortTime')) {
 }	
 
 if (!function_exists('neatest_trim')) {
-
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function neatest_trim($content, $chars) {
 	  if (mb_strlen($content,'UTF-8') > $chars) 
 	  {
@@ -422,31 +398,15 @@ if (!function_exists('time2second')) {
 if (!function_exists('over_in')) {
 	function over_in($time1, $time2){
 		return $time1 - $time2;
-		// if($result >= 0){
-		// 	return $result;
-		// }else{
-		// 	return 0;
-		// }
 	}
 }
 
 if (!function_exists('over_out')) {
 	function over_out($time1, $time2){
 		return $time2 - $time1;
-		// if($result >= 0){
-		// 	return $result;
-		// }else{
-		// 	return 0;
-		// }
 	}
 }
 if (!function_exists('get_time_diff')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function get_time_diff($time_door,$time_pc,$time_card,$type_time)
 	{		
 		$temptDoor     = isset($time_door)?strtotime($time_door):0;
@@ -465,12 +425,6 @@ if (!function_exists('get_time_diff')) {
 	}
 }
 if (!function_exists('get_work_overtime')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function get_work_overtime($time_in,$time_out,$date_overtime)
 	{		
 		if(empty($time_in) && empty($time_out)) return '';
@@ -499,12 +453,6 @@ if (!function_exists('get_work_overtime')) {
 
 
 if (!function_exists('style_overtime')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function style_overtime($start=null, $end=null)
 	{
 		$overtime = ($start + $end)/60;
@@ -519,12 +467,6 @@ if (!function_exists('style_overtime')) {
 }
 
 if (!function_exists('style_overwork')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function style_overwork($worktime)
 	{
         
@@ -535,12 +477,6 @@ if (!function_exists('style_overwork')) {
 	}
 }
 if (!function_exists('display_overwork')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function display_overwork($worktime)
 	{	  
        if((int)$worktime ==0) return '0h';
@@ -551,12 +487,6 @@ if (!function_exists('display_overwork')) {
 	}
 }
 if (!function_exists('display_overwork_staff')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function display_overwork_staff($arrWorktime)
 	{	  
       if(is_array($arrWorktime) && count($arrWorktime) >0){
@@ -565,16 +495,10 @@ if (!function_exists('display_overwork_staff')) {
            $intTotal +=$value;
       	}
         return display_overwork($intTotal); 
-      }else return '';   	
+      }else return '';
 	}
 }
 if (!function_exists('count_overwork_staff')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function count_overwork_staff($arrWorktime)
 	{	  
       if(is_array($arrWorktime) && count($arrWorktime) >0){
@@ -583,7 +507,7 @@ if (!function_exists('count_overwork_staff')) {
            if($value > (3600 * MAX_OVERTIME_MONTH))  $intCount++;
       	} 
       	return ($intCount >0)?$intCount.' 回':'';
-      }else return '';   	
+      }else return '';
 	}
 }
 

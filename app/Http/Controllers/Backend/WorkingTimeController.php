@@ -63,8 +63,8 @@ class WorkingTimeController extends BackendController
 			}						
 		}
 		$pdf = PDF::loadView('backend.workingtime.pdf', $data);	
-
-		return $pdf->download(!empty(division($data['staff_belong'])) ? division($data['staff_belong']) : ALL . '_' . rand('9999',time()).'.pdf');
+		$fileName = !empty(division($data['staff_belong'])) ? division($data['staff_belong']) : ALL;
+		return $pdf->download(mb_convert_encoding($fileName, 'UTF-8') . '_' . rand('9999',time()).'.pdf');
 	}
 
 	public function get_work_time_array($id,$year)

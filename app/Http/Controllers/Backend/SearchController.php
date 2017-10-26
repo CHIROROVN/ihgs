@@ -9,7 +9,6 @@ use Input;
 use Validator;
 use Session;
 use Config;
-use Auth;
 use App;
 use PDF;
 
@@ -106,7 +105,7 @@ class SearchController extends BackendController
 
 		$pdf = PDF::loadView('backend.search.index_pdf', $data);
 
-		return $pdf->download($staff->staff_name . '_' . rand('9999',time()).'.pdf');
+		return $pdf->download(mb_convert_encoding($staff->staff_name, 'UTF-8') . '_' . rand('9999',time()).'.pdf');
 	}
 
 
