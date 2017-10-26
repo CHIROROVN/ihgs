@@ -78,7 +78,7 @@
     'normal' => $rootDir . '\lib\fonts\DejaVuSerif',
   ),
   'yu gothic' => array(
-    'normal' => $fontDir . '\17c7ca1dd56ef2c9ad8e7d447270735c',
+    'normal' => $fontDir . '\b09a64cc842308d5f8f2d299910c013b',
   ),
   'mplus 1p' => array(
     'normal' => $fontDir . '\0f43579cad507d5ea7f45064421855f9',

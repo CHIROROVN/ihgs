@@ -26,7 +26,7 @@ class SectionController extends BackendController
 		$data =array();
 		$clsBelong          = new BelongModel();
         $data['belongs']    = $clsBelong->get_all_section($parent_id);         
-        $data['parent']     = $clsBelong->get_by_id($parent_id);        
+        $data['parent']     = $clsBelong->get_by_id($parent_id);
         /*if ( $clsBelong->insert($dataInsert) ) {
             Session::flash('danger', trans('common.msg_permission_no_access'));
             return redirect()->route('backend.division.index');
