@@ -82,7 +82,7 @@
     <!-- tables -->
     <div class="agile-tables">
       <div class="w3l-table-info agile_info_shadow">
-        <table id="table">
+        <table id="table" class="table-bordered">
           <thead>
             <tr>
               <th>削除</th>
@@ -136,9 +136,6 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
-@endsection
-
 <script type="text/javascript">
   $('#btnDelete').on('click', function (e) {    
     var id = $(this).closest('tr').data('id');
@@ -154,7 +151,7 @@ $('#btnDelteYes').click(function () {
     location.href="{{ asset('pc/import/delete/') }}"+"/"+ tp_dataname ;  
 });
 </script>
-
+@endsection
 @section('js')
 <script src="{{ asset('') }}public/backend/js/bootstrap-filestyle.min.js"></script>
 <script>
