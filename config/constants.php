@@ -14,6 +14,7 @@
             'RESET_TIME'			=> '27:00:00',
             'START_YEAR'			=> '2016',
             'END_YEAR'			    => '2020',
+            'MAX_OVERTIME_MONTH'	=> '60',
         ),
         'MT_DATE_FORMAT' => array(
 			'1' => 'YYYY年MM月DD日',
