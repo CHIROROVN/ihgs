@@ -123,9 +123,6 @@
                     </tr>
                     @endforeach
 
-
-
-
                   @endif
 
                 </tbody>
