@@ -15,7 +15,7 @@
         <div class="inner_content_w3_agile_info two_in">
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
-                <table id="table">
+                <table id="table" class="table-bordered">
                   <thead>
                     <tr>
                       <th>部課名</th>
