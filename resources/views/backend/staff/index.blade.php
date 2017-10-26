@@ -64,8 +64,9 @@
                     <td>{{ $staff->staff_id_no }}</td>
                     <td>{{ $staff->staff_name }}</td>
                     <td>{{ $staff->belong_name }}</td>
-                    <td>@if(!empty($staff->staff_card1)) {{$staff->staff_card1}} @endif</td>
-                    <td>{{ $staff->staff_pc1 }}</td>
+                    <td>{{ !empty($staff->staff_card1) ? $staff->staff_card1 : '' }}{{ !empty($staff->staff_card2) ? ','.$staff->staff_card2 : '' }}{{ !empty($staff->staff_card3) ? ','.$staff->staff_card3 : '' }}{{ !empty($staff->staff_card4) ? ',<br>'.$staff->staff_card4 : '' }}{{ !empty($staff->staff_card5) ? ','.$staff->staff_card5 : '' }}{{ !empty($staff->staff_card6) ? ','.$staff->staff_card6 : '' }}{{ !empty($staff->staff_card7) ? ','.$staff->staff_card7 : '' }}{{ !empty($staff->staff_card8) ? ','.$staff->staff_card8 : '' }}
+                    {{ !empty($staff->staff_card9) ? ', <br> '.$staff->staff_card9 : '' }}{{ !empty($staff->staff_card10) ? ','.$staff->staff_card10 : '' }}</td>
+                    <td>{{ !empty($staff->staff_pc1) ? $staff->staff_pc1 : '' }}{{ !empty($staff->staff_pc2) ? ','.$staff->staff_pc2 : '' }}{{ !empty($staff->staff_pc3) ? ','.$staff->staff_pc3 : '' }}{{ !empty($staff->staff_pc4) ? ',<br>'.$staff->staff_pc4 : '' }}{{ !empty($staff->staff_pc5) ?','.$staff->staff_pc5 : '' }}{{ !empty($staff->staff_pc6) ? ','.$staff->staff_pc6 : '' }}{{ !empty($staff->staff_pc7) ? ',<br>'.$staff->staff_pc7 : '' }}{{ !empty($staff->staff_pc8) ?','.$staff->staff_pc8 : '' }}{{ !empty($staff->staff_pc9) ? ','.$staff->staff_pc9 : '' }}{{ !empty($staff->staff_pc10) ? ','.$staff->staff_pc10 : '' }}</td>
                     <td align="center"><input name="button" value="編集" type="button" class="btn btn-primary btn-xs" onclick="location.href='{{ asset('staff/edit/' . $staff->staff_id) }}'"></td>
                   </tr>
                   @endforeach

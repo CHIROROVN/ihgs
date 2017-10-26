@@ -109,7 +109,7 @@ class WorkingTimeController extends BackendController
                 }else{
                     $overtime_in   = ($gotime < $start_time)?$start_time-$gotime:0;
                 }
-                $arrTempt[$temptDate]['overtime'] = isset($arrTempt[$temptDate]['overtime'])?$arrTempt[$temptDate]['overtime'] + $overtime_in + $overtime_out:$overtime_in + $overtime_out;
+                $arrTempt[$temptDate]['overtime'] = $overtime_in + $overtime_out;
 			}
 		}				
 		

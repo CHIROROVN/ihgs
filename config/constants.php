@@ -12,7 +12,7 @@
             'START_TIME'			=> '09:00:00',
             'END_TIME'				=> '18:00:00',
             'RESET_TIME'			=> '27:00:00',
-            'START_YEAR'			=> '2017',
+            'START_YEAR'			=> '2016',
             'END_YEAR'			    => '2020',
         ),
         'MT_DATE_FORMAT' => array(
