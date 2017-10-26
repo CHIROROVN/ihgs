@@ -447,7 +447,7 @@ if (!function_exists('get_time_diff')) {
 	 * @param
 	 * @return
 	 */
-	function get_time_diff($time_door,$time_pc,$time_card)
+	function get_time_diff($time_door,$time_pc,$time_card,$type_time)
 	{		
 		$temptDoor     = isset($time_door)?strtotime($time_door):0;
 		$temptPC       = isset($time_pc)?strtotime($time_pc):0;
@@ -458,6 +458,10 @@ if (!function_exists('get_time_diff')) {
 			return ($tempt >$temptPC)?$tempt-$temptPC:$temptPC-$tempt;
 		}elseif($temptPC==0)
 		   return ($tempt >$temptDoor)?$tempt-$temptDoor:$temptDoor-$tempt;
+		else{
+             if($type_time=='in') return ($temptDoor < $temptPC)?(($temptDoor < $tempt)?$tempt-$temptDoor:$temptDoor-$tempt):(($temptPC < $tempt)?$tempt-$temptPC:$temptPC-$tempt);
+             else  return ($temptDoor < $temptPC)?(($temptPC < $tempt)?$tempt-$temptPC:$temptPC-$tempt):(($temptDoor < $tempt)?$tempt-$temptDoor:$temptDoor-$tempt);
+		}    
 	}
 }
 if (!function_exists('get_work_overtime')) {
