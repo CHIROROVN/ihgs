@@ -73,7 +73,7 @@ class SearchController extends BackendController
 			$data['staffs'] = $clsStaff->search_staff($where);
 		}
 
-		$data['staff'] = $clsStaff->get_by_id(1);
+		$data['staff'] = $clsStaff->get_by_id(Input::get('belong_id'));
 
 		return view('backend.search.index', $data);
 	}
