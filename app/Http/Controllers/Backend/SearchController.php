@@ -32,9 +32,9 @@ class SearchController extends BackendController
 
 		$data['belong_id'] = Input::get('belong_id');
 		$data['year_from'] = !empty(Input::get('year_from')) ? Input::get('year_from') : date('Y');
-		$data['month_from'] = !empty(Input::get('month_from')) ? Input::get('month_from') : date('m')-1;
-		$data['year_to'] = !empty(Input::get('year_to')) ? Input::get('year_to') : date('Y');
-		$data['month_to'] = !empty(Input::get('month_to')) ? Input::get('month_to') : date('m');
+		$data['month_from'] = !empty(Input::get('month_from')) ? Input::get('month_from') : '04';
+		$data['year_to'] = !empty(Input::get('year_to')) ? Input::get('year_to') : date('Y')+1;
+		$data['month_to'] = !empty(Input::get('month_to')) ? Input::get('month_to') : '03';
 		$data['kw'] = Input::get('kw');
 
 		$belong_parent_id = array();

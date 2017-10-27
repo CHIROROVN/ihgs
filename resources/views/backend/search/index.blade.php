@@ -39,7 +39,7 @@
                         </select>
                           <select name="month_from" class="form-control form-control-date">
                             @for($mf=1; $mf<=12; $mf++)
-                            <option value="{{c2digit($mf)}}" @if(isset($month_from) && $month_from == c2digit($mf)) selected @endif>{{c2digit($mf)}}年</option>
+                            <option value="{{c2digit($mf)}}" @if(isset($month_from) && $month_from == c2digit($mf)) selected @endif>{{c2digit($mf)}}月</option>
                             @endfor
                           </select>
                           
@@ -47,13 +47,13 @@
                         </div>
                         <div class="fl-left">
                           <select name="year_to" class="form-control form-control-date">
-                            @for($yt=($curr_year - 4); $yt<=($curr_year + 1); $yt++)
+                            @for($yt=($curr_year-4); $yt<=($curr_year + 1); $yt++)
                             <option value="{{$yt}}" @if(isset($year_to) && $year_to == $yt) selected @endif>{{$yt}}年</option>
                           @endfor
                           </select>
                           <select name="month_to" class="form-control form-control-date">
                             @for($mt=1; $mt<=12; $mt++)
-                            <option value="{{c2digit($mt)}}" @if(isset($month_to) && $month_to == c2digit($mt)) selected @endif>{{c2digit($mt)}}年</option>
+                            <option value="{{c2digit($mt)}}" @if(isset($month_to) && $month_to == c2digit($mt)) selected @endif>{{c2digit($mt)}}月</option>
                             @endfor
                           </select>
                           

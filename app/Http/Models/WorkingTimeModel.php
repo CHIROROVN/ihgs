@@ -61,7 +61,7 @@ class WorkingTimeModel
                                                                   $query->whereYear('t1.tt_date', $year + 1)
                                                                         ->whereMonth('t1.tt_date','<', '4');
                                                               });
-                                          })                                          
+                                          })
                                           ->where('t_staff.staff_id', $id)->select('t1.tt_date','t1.tt_gotime','t1.tt_backtime','t1.tt_staff_id_no')
                                           ->orderBy('t1.tt_date', 'asc')                                          
                                           ->get();                                                 
