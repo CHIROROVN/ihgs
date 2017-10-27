@@ -145,7 +145,7 @@ class WorkingTimeController extends BackendController
 	{
 		$clsWorkingTime   = new WorkingTimeModel();
 		$arrTempt = array();$arrResult = array();						
-		$workingTimes = $clsWorkingTime->get_timecard($id,$year);	
+		$workingTimes = $clsWorkingTime->get_timecard($id,$year);		
 
 		if(count($workingTimes) >0){
 			foreach($workingTimes as $workingTime){
@@ -154,22 +154,23 @@ class WorkingTimeController extends BackendController
 				if(isset($workingTime->tt_gotime))
 				{
 					$temptGotime 	= isset($workingTime->tt_gotime)?strtotime($temptDate.' '.$workingTime->tt_gotime):0;									
-					$temptStarttime = isset($workingTime->tt_gotime)?strtotime($temptDate.' '.START_TIME):0;					
+					$temptStarttime = strtotime($temptDate.' '.START_TIME);					
 					$overtime_in    = ($temptGotime > $temptStarttime)?0:$temptStarttime-$temptGotime ;
+
 				}
 				if(isset($workingTime->backtime))
 				{
 					$temptBacktime 	= isset($workingTime->backtime)?strtotime($temptDate.' '.$workingTime->backtime):0;		
-					$temptEndtime 	= isset($workingTime->tt_gotime)?strtotime($temptDate.' '.END_TIME):0;
+					$temptEndtime 	= strtotime($temptDate.' '.END_TIME);
 					$overtime_out    = ($temptBacktime < $temptEndtime)?0:$temptBacktime-$temptEndtime ;					
 				}				
 				$arrTempt[$temptDate] =$overtime_in +$overtime_out ;
 			}
 			if(count($arrTempt) >0){
-				foreach($arrTempt as $key=>$val){
+				foreach($arrTempt as $key=>$val){					
 					$month = date("n",strtotime($key));					
 					$arrResult[$month] =isset($arrResult[$month])?$arrResult[$month] + $val:$val;
-				}
+				}				
 			}			
 		}
 		return 	$arrResult;		

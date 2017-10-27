@@ -499,7 +499,7 @@ if (!function_exists('display_overwork')) {
        if((int)$worktime ==0) return '0h';
        if((int)$worktime <3600)    return $worktime;
        $over_time_hours = floor($worktime/3600);
-	   $over_time_mintue = floor(($worktime%3600)/60);	
+	   $over_time_mintue = round(($worktime- ($over_time_hours*3600))/60);	
        return $over_time_hours.' h '.(($over_time_mintue >0)?$over_time_mintue:'');	    	
 	}
 }

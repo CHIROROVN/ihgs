@@ -252,8 +252,10 @@ ALTER SEQUENCE t_doorcard_td_id_seq OWNED BY t_doorcard.td_id;
 CREATE TABLE t_pc (
     tp_id integer NOT NULL,
     tp_pc_no text,
-    tp_action text,
-    tp_actiontime timestamp without time zone,
+    tp_staff_id_no text,   
+    tp_date timestamp without time zone,
+    tp_logintime time without time zone,
+    tp_logouttime time without time zone,
     tp_dataname text,
     tp_free1 text,
     tp_free2 text,
