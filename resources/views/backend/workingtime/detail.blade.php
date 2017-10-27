@@ -34,7 +34,7 @@
         @if(empty($worktimes) || count($worktimes) < 1)
           <tr><td colspan="12"><h3 align="center">該当するデータがありません。</h3></td></tr>
         @else                   
-          @foreach($worktimes as $key=>$worktime)                  
+          @foreach($worktimes as $key=>$worktime)           
             <tr>
               <td>{{DayeJp($key, '/')}}</td>
               <td>@if(isset($worktime['gotime'])){{formatshortTime($worktime['gotime'])}} @else  データ無し @endif</td>

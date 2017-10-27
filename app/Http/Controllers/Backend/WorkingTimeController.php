@@ -70,7 +70,7 @@ class WorkingTimeController extends BackendController
 	public function get_work_time_array($id,$year)
 	{
 		$clsWorkingTime   = new WorkingTimeModel();
-		$arrTempt = array();							
+		$arrTempt = array();$arrResult = array();							
 		$doorcard=  $clsWorkingTime->get_doorcard($id,$year);
 		if(count($doorcard['timecards']) >0){			
 			foreach($doorcard['timecards'] as $val){
@@ -130,15 +130,26 @@ class WorkingTimeController extends BackendController
                     $arrTempt[$temptDate]['pc_out'] = date("H:i:s",strtotime($val->tp_actiontime));
 				}				
 			}	
-		}			
-		if(count($arrTempt) >0){
-			foreach($arrTempt as $key=>$val){			    				
+		}	
+		$arrDate = array();	$aDate = array();	
+		if(count($arrTempt) >0){			
+			foreach($arrTempt as $key=>$val){                
+                $arrDate[date("Y",strtotime($key))][date("n",strtotime($key))] = date("t",strtotime($key));
 				$time_in       = isset($val['gotime'])?get_time_diff(isset($val['touchtime_in'])?$val['touchtime_in']:0,isset($val['pc_in'])?$val['pc_in']:0,isset($val['gotime'])?$val['gotime']:0,'in'):0; 			
  				$time_out      = isset($val['backtime'])?get_time_diff(isset($val['touchtime_out'])?$val['touchtime_out']:0 ,isset($val['pc_out'])?$val['pc_out']:0,isset($val['backtime'])?$val['backtime']:0,'out'):0;	
  				$arrTempt[$key]['diff']   = floor(($time_in + $time_out)/60) ; 				 													
-			}
-		}		
-		return $arrTempt;
+			} 			   
+			ksort($arrDate);			
+			foreach($arrDate as $key=>$val){
+                foreach($val as $k=>$v){
+                	for($i=1;$i<$v;$i++){
+                		$strDate = date("Y-m-d",mktime(0,0,0,$k,$i,$key));
+                		$arrResult[$strDate] = (array_key_exists($strDate,$arrTempt))?$arrTempt[$strDate]:array();
+                	}
+                }
+			}											
+		}
+		return $arrResult;
 	}
 	public function get_over_time_year($id,$year)
 	{
