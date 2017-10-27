@@ -23,7 +23,7 @@ class SearchModel extends Model
                     $query->whereYear('t_timecard.tt_date', '>=', $conditions['year_from'])
                             ->whereMonth('t_timecard.tt_date', '>=' , $conditions['month_from']);
                     $query->whereYear('t_timecard.tt_date', '>=', $conditions['year_to'])
-                            ->whereMonth('t_timecard.tt_date', '>=' , $conditions['month_to]);
+                            ->whereMonth('t_timecard.tt_date', '>=' , $conditions['month_to']);
                 })
                 ->orderBy('t_timecard.tt_date', 'asc');
 
