@@ -445,7 +445,7 @@ if (!function_exists('get_work_overtime')) {
            $temptIn       = strtotime($date_overtime.' '.$time_in);
            $reset_time    = isset($intStartTime)?strtotime($date_overtime.' '.$intStartTime.':00:00'):0;
 		   $start_time    = strtotime($date_overtime.' '.START_TIME);
-		   $over_time_in  = ($temptIn > $start_time )?0:(($temptIn < $reset_time)?$reset_time-$start_time:$start_time - $temptIn);
+		   $over_time_in  = ($temptIn > $start_time )?0:(($temptIn < $reset_time)?$start_time - $reset_time:$start_time - $temptIn);
 		}
 		if(!empty($time_out))
 		{
