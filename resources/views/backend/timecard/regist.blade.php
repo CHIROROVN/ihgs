@@ -45,6 +45,19 @@
                       <td class="col-md-6"></td>
                     </tr>
                     <tr>
+                      <td class="col-title col-md-3"><label for="">社員番号</label></td>
+                      <td class="col-md-2">
+                        <select name="mt_staff_id_row" id="mt_staff_id_row" class="form-control">
+                        <?php $last=40; $now=1; ?>
+                        @for ($i = $now; $i <= $last; $i++)
+                            <option value="{{ $i }}" @if($i==1) selected="" @endif>{{ $i }} 列目</option>
+                        @endfor
+                          
+                        </select>
+                      </td>
+                      <td class="col-md-6"></td>
+                    </tr>
+                    <tr>
                       <td class="col-title col-md-3"><label for="">日付</label></td>
                       <td class="col-md-2">
                         <select name="mt_date_row" id="mt_date_row"  class="form-control">                          

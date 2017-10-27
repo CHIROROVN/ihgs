@@ -62,46 +62,93 @@
                       <td class="col-md-6"></td>
                     </tr>
                     <tr>
-                      <td class="col-title col-md-3"><label for="">アクション</label></td>
+                      <td class="col-title col-md-3"><label for="">社員番号</label></td>
                       <td class="col-md-2">
-                        <select name="mp_action_row" id="mp_action_row"  class="form-control">
-                          @for($y=1; $y<=40; $y++)
-                            <option value="{{$y}}" @if(isset($mpc->mp_action_row) && $mpc->mp_action_row == $y) selected @endif>{{$y}}列目</option>
+                        <select name="mp_pc_no_row" id="mp_pc_no_row" class="form-control">
+                          @for($i=1; $i<=40; $i++)
+                            <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                          @endfor                          
+                        </select>
+                      </td>
+                      <td class="col-md-6"></td>
+                    </tr>
+                    <tr>
+                      <td class="col-title col-md-3"><label for="">日付</label></td>
+                      <td class="col-md-2">
+                        <select name="mt_date_row" id="mt_date_row"  class="form-control">                          
+                          @for($i=1; $i<=40; $i++)
+                              <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor
                         </select>
                       </td>
                       <td class="col-md-6">
-                        <div class="fl-left text-td text-center mar-left15">値が</div>
-                        <div class="col-md-3">
-                           <input name="mp_action_format1" id="mp_action_format1" type="text"  class="form-control" value="@if(isset($mpc->mp_action_format1)){{$mpc->mp_action_format1}}@endif">
+                        <div class="col-md-6">
+                          <select name="mt_date_format" id="mt_date_format" class="form-control">
+                           @foreach($date_formats as $key=>$date_format)                           
+                            <option value="{{ $key }}">{{ $date_format }}</option>
+                          @endforeach
+                            
+                          </select>
                         </div>
-                        <div class="fl-left text-td">または</div>
-                        <div class="col-md-3 text-td">
-                          <input name="mp_action_format2" id="mp_action_format2" type="text"  class="form-control" value="@if(isset($mpc->mp_action_format2)){{$mpc->mp_action_format2}}@endif">
-                        </div>
-                        <div class="fl-left text-td">と一致するもの</div>
                       </td>
                     </tr>
                     <tr>
-                      <td class="col-title col-md-3"><label for="">日時</label></td>
+                      <td class="col-title col-md-3"><label for="">出社時刻</label></td>
                       <td class="col-md-2">
-                        <select name="mp_actiontime_row" id="mp_actiontime_row"  class="form-control">
-                          @for($h=1; $h<=40; $h++)
-                            <option value="{{$h}}" @if(isset($mpc->mp_actiontime_row) && $mpc->mp_actiontime_row == $h) selected @endif>{{$h}}列目</option>
+                        <select name="mt_gotime_row" id="mt_gotime_row"  class="form-control">                          
+                          @for($i=1; $i<=40; $i++)
+                              <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor
                         </select>
                       </td>
                       <td class="col-md-6">
-                      <div class="col-md-6">
-                        <select name="mp_actiontime_format" class="form-control">
-                          @if(!empty($pc_date_format))
-                            @foreach($pc_date_format as $key=>$pc_format)
-                              <option value="{{$key}}" @if(isset($mpc->mp_actiontime_format) && $mpc->mp_actiontime_format == 1) selected @endif >{{$pc_format}}</option>
-                            @endforeach
-                          @endif                          
-                        </select>
-                      </div>
+                        <div class="col-md-6">
+                          <select name="mt_gotime_format" id="mt_gotime_format" class="form-control">
+                            @foreach($time_formats as $key=>$date_format)                           
+                            <option value="{{ $key }}">{{ $date_format }}</option>
+                          @endforeach
+                          </select>
+                        </div>
+                      </td>
                     </tr>
+                    <tr>
+                      <td class="col-title col-md-3"><label for="">退社時刻</label></td>
+                      <td class="col-md-2">
+                        <select name="mt_backtime_row" id="mt_backtime_row"  class="form-control">                          
+                         @for($i=1; $i<=40; $i++)
+                              <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                          @endfor
+                        </select>
+                      </td>
+                      <td class="col-md-6">
+                        <div class="col-md-6">
+                          <select name="mt_backtime_format" id="mt_backtime_format" class="form-control">
+                            @foreach($time_formats as $key=>$date_format)                           
+                            <option value="{{ $key }}">{{ $date_format }}</option>
+                          @endforeach
+                          </select>
+                        </div>
+                      </td>
+                    </tr>   
+                    <tr>
+                      <td class="col-title col-md-3"><label for="">日時</label></td>
+                      <td class="col-md-2">
+                        <select name="mp_pc_no_row" id="mp_pc_no_row" class="form-control">
+                          @for($i=1; $i<=40; $i++)
+                            <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                          @endfor                          
+                        </select>
+                      </td>
+                      <td class="col-md-6">
+                        <div class="col-md-6">
+                          <select name="mt_backtime_format" id="mt_backtime_format" class="form-control">
+                            @foreach($date_formats as $key=>$date_format)                           
+                            <option value="{{ $key }}">{{ $date_format }}</option>
+                           @endforeach
+                          </select>
+                        </div>
+                      </td>
+                    </tr>                 
                   </table>
                   <div class="row">
                     <div class="col-md-12 text-center">
