@@ -352,7 +352,12 @@ if (!function_exists('compare_min')) {
 	 * @return
 	 */
 	function compare_min($time1=null, $time2=null)
-	{
+	{	
+		if(!empty($time1) && empty($time1)){
+			return $time1;
+		}elseif(empty($time1) && !empty($time1)){
+			return $time2;
+		}
 		if(strtotime($time1) <= strtotime($time2)){
 			return $time1;
 		}else{
@@ -370,6 +375,11 @@ if (!function_exists('compare_max')) {
 	 */
 	function compare_max($time1=null, $time2=null)
 	{
+		if(!empty($time1) && empty($time1)){
+			return $time1;
+		}elseif(empty($time1) && !empty($time1)){
+			return $time2;
+		}
 		if(strtotime($time1) >= strtotime($time2)){
 			return $time1;
 		}else{
