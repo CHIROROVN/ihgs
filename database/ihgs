@@ -3,6 +3,7 @@
 CREATE TABLE m_belong (
     belong_id integer NOT NULL,
     belong_name text,
+    belong_code text,
     belong_parent_id integer,
     belong_sort integer,
     belong_free1 text,
@@ -13,8 +14,8 @@ CREATE TABLE m_belong (
     last_date timestamp without time zone,
     last_kind smallint,
     last_ipadrs text,
-    last_user integer,
-    belong_code text    
+    last_user integer
+        
 );
 
 
