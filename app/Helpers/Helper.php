@@ -477,13 +477,20 @@ if (!function_exists('style_overtime')) {
 }
 
 if (!function_exists('style_overwork')) {
-	function style_overwork($worktime)
+	function style_overwork($worktime,$year=null)
 	{
         
-		if((int)$worktime > (3600 * MAX_OVERTIME_MONTH))
-			return 'class=bg-red';
-		else
-			return '';		
+        if($year){
+			$intTotal =0;						
+			foreach($worktime as $value){
+           			$intTotal +=$value;
+      		}      		
+			return ((int)$intTotal > (3600 * MAX_OVERTIME_YEAR))?'class=bg-red':'';		
+        }
+		else{
+			return ((int)$worktime > (3600 * MAX_OVERTIME_MONTH))?'class=bg-red':'';	
+				
+		}
 	}
 }
 if (!function_exists('display_overwork')) {

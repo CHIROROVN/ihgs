@@ -15,6 +15,7 @@
             'START_YEAR'			=> '2016',
             'END_YEAR'			    => '2020',
             'MAX_OVERTIME_MONTH'	=> '100',
+            'MAX_OVERTIME_YEAR'	    => '720',
         ),
         'MT_DATE_FORMAT' => array(
 			'1' => 'YYYY年MM月DD日',
