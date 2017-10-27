@@ -444,6 +444,8 @@ ALTER TABLE ONLY m_timecard
     ADD CONSTRAINT m_timecard_pkey PRIMARY KEY (mt_id);
 
 
+ALTER TABLE ONLY m_pc
+    ADD CONSTRAINT m_pc_pkey PRIMARY KEY (mp_id);
 
 
 ALTER TABLE ONLY m_user

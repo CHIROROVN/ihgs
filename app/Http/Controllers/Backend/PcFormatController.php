@@ -26,11 +26,15 @@ class PcFormatController extends BackendController
 		if(!empty(Input::get('mp_id'))){
 			//Update
 			$data['mp_pc_no_row'] 			= Input::get('mp_pc_no_row');
-			$data['mp_action_row'] 			= Input::get('mp_action_row');
-			$data['mp_action_format1'] 		= Input::get('mp_action_format1');
-			$data['mp_action_format2'] 		= Input::get('mp_action_format2');
-			$data['mp_actiontime_row'] 		= Input::get('mp_actiontime_row');
-			$data['mp_actiontime_format'] 	= Input::get('mp_actiontime_format');
+			$data['mp_staff_id_no_row'] 	= Input::get('mp_staff_id_no_row');
+			$data['mp_date_row'] 			= Input::get('mp_date_row');
+			$data['mp_date_format'] 		= Input::get('mp_date_format');
+			$data['mp_logintime_row'] 		= Input::get('mp_logintime_row');
+			$data['mp_logintime_format'] 	= Input::get('mp_logintime_format');
+			$data['mp_logouttime_row'] 		= Input::get('mp_logouttime_row');
+			$data['mp_logouttime_format'] 	= Input::get('mp_logouttime_format');
+			$data['mp_datetime_row'] 		= Input::get('mp_datetime_row');
+			$data['mp_datetime_format'] 	= Input::get('mp_datetime_format');
 
 			$data['last_ipadrs']            = CLIENT_IP_ADRS;
 			$data['last_date']              = date('Y-m-d H:i:s');
@@ -48,11 +52,15 @@ class PcFormatController extends BackendController
 		}else{
 			//Insert
 			$data['mp_pc_no_row'] 			= Input::get('mp_pc_no_row');
-			$data['mp_action_row'] 			= Input::get('mp_action_row');
-			$data['mp_action_format1'] 		= Input::get('mp_action_format1');
-			$data['mp_action_format2'] 		= Input::get('mp_action_format2');
-			$data['mp_actiontime_row'] 		= Input::get('mp_actiontime_row');
-			$data['mp_actiontime_format'] 	= Input::get('mp_actiontime_format');
+			$data['mp_staff_id_no_row'] 	= Input::get('mp_staff_id_no_row');
+			$data['mp_date_row'] 			= Input::get('mp_date_row');
+			$data['mp_date_format'] 		= Input::get('mp_date_format');
+			$data['mp_logintime_row'] 		= Input::get('mp_logintime_row');
+			$data['mp_logintime_format'] 	= Input::get('mp_logintime_format');
+			$data['mp_logouttime_row'] 		= Input::get('mp_logouttime_row');
+			$data['mp_logouttime_format'] 	= Input::get('mp_logouttime_format');
+			$data['mp_datetime_row'] 		= Input::get('mp_datetime_row');
+			$data['mp_datetime_format'] 	= Input::get('mp_datetime_format');
 
 			$data['last_ipadrs']            = CLIENT_IP_ADRS;
 			$data['last_date']              = date('Y-m-d H:i:s');
