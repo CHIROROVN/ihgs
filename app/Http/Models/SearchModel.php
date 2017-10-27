@@ -24,8 +24,8 @@ class SearchModel extends Model
                             ->whereMonth('t_timecard.tt_date', '>=' , $conditions['month_from']);
                 })
                 ->orWhere(function($query) use ($conditions){
-                    $query->whereYear('t_timecard.tt_date', '>=', $conditions['year_to'])
-                            ->whereMonth('t_timecard.tt_date', '>=' , $conditions['month_to']);
+                    $query->whereYear('t_timecard.tt_date', '<=', $conditions['year_to'])
+                            ->whereMonth('t_timecard.tt_date', '<=' , $conditions['month_to']);
                 })
                 ->orderBy('t_timecard.tt_date', 'asc');
 
