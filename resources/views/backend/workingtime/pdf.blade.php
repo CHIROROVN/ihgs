@@ -47,7 +47,7 @@
         <td {{@style_overwork($overtimes[$worktime->staff_id][2])}}>{{@display_overwork($overtimes[$worktime->staff_id][2])}}</td>
         <td {{@style_overwork($overtimes[$worktime->staff_id][3])}}>{{@display_overwork($overtimes[$worktime->staff_id][3])}}</td>
         <td>{{@display_overwork_staff($overtimes[$worktime->staff_id])}}</td>
-        <td>{{@count_overwork_staff($overtimes[$worktime->staff_id])}}</td> 
+        <td>{{@count_overwork_staff($overtimes[$worktime->staff_id])}}</td>        
       <td></td>               		
     </tr>
     <?php $row ++; ?>

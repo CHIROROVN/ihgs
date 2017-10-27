@@ -49,17 +49,7 @@ class WorkingTimeController extends BackendController
 		$arrWorkTime = array(); 
 		if(count($data['worktimes']) >0){
 			foreach($data['worktimes']['data'] as $worktime){				
-				$arrWorkTime[$worktime->staff_id]  =  $this->get_over_time_year($worktime->staff_id,$data['cb_year']);
-				$total =0;$intOverTime =0;
-				if(count($arrWorkTime[$worktime->staff_id])>0){
-					foreach($arrWorkTime[$worktime->staff_id] as $key=>$val){
-						$data['overtimes'][$worktime->staff_id][$key] = round($val /3600);
-						$intOverTime +=($data['overtimes'][$worktime->staff_id][$key] >60)?1:0;
-						$total += $val;
-					}
-					$data['overtimes'][$worktime->staff_id]['total']   = round($total/3600); 
-					$data['overtimes'][$worktime->staff_id]['time']    = $intOverTime;
-				}			
+				$data['overtimes'][$worktime->staff_id]  =  $this->get_over_time_year($worktime->staff_id,$data['cb_year']);					
 			}						
 		}
 		$pdf = PDF::loadView('backend.workingtime.pdf', $data);	
