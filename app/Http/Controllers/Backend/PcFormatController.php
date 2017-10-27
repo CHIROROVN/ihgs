@@ -12,7 +12,7 @@ class PcFormatController extends BackendController
 {
 	public function format(){
 		$clsPc            = new PcModel();
-		$mpc = $clsPc->getPc();
+		$mpc = $clsPc->getPc();		
 		$pc_date_format = Config::get('constants.PC_DATETIME_FORMAT');
 		$date_formats = Config::get('constants.MT_DATE_FORMAT');
         $time_formats = Config::get('constants.MT_TIME_FORMAT'); 	

@@ -66,7 +66,7 @@
                       <td class="col-md-2">
                         <select name="mp_staff_id_no_row" id="mp_staff_id_no_row" class="form-control">
                           @for($i=1; $i<=40; $i++)
-                            <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                            <option value="{{$i}}" @if(isset($mpc->mp_staff_id_no_row) && $mpc->mp_staff_id_no_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor                          
                         </select>
                       </td>
@@ -77,7 +77,7 @@
                       <td class="col-md-2">
                         <select name="mp_date_row" id="mp_date_row"  class="form-control">                          
                           @for($i=1; $i<=40; $i++)
-                              <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                              <option value="{{$i}}" @if(isset($mpc->mp_date_row) && $mpc->mp_date_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor
                         </select>
                       </td>
@@ -85,7 +85,7 @@
                         <div class="col-md-6">
                           <select name="mp_date_format" id="mp_date_format" class="form-control">
                            @foreach($date_formats as $key=>$date_format)                           
-                            <option value="{{ $key }}">{{ $date_format }}</option>
+                            <option value="{{ $key }}" @if(isset($mpc->mp_date_format) && $mpc->mp_date_format == $i) selected @endif>{{ $date_format }}</option>
                           @endforeach
                             
                           </select>
@@ -97,7 +97,7 @@
                       <td class="col-md-2">
                         <select name="mp_logintime_row" id="mp_logintime_row"  class="form-control">                          
                           @for($i=1; $i<=40; $i++)
-                              <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                              <option value="{{$i}}" @if(isset($mpc->mp_logintime_row) && $mpc->mp_logintime_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor
                         </select>
                       </td>
@@ -105,7 +105,7 @@
                         <div class="col-md-6">
                           <select name="mp_logintime_format" id="mp_logintime_format" class="form-control">
                             @foreach($time_formats as $key=>$date_format)                           
-                            <option value="{{ $key }}">{{ $date_format }}</option>
+                            <option value="{{ $key }}" @if(isset($mpc->mp_logintime_format) && $mpc->mp_logintime_format == $i) selected @endif>{{ $date_format }}</option>
                           @endforeach
                           </select>
                         </div>
@@ -116,7 +116,7 @@
                       <td class="col-md-2">
                         <select name="mp_logouttime_row" id="mp_logouttime_row"  class="form-control">                          
                          @for($i=1; $i<=40; $i++)
-                              <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                              <option value="{{$i}}" @if(isset($mpc->mp_logouttime_row) && $mpc->mp_logouttime_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor
                         </select>
                       </td>
@@ -124,7 +124,7 @@
                         <div class="col-md-6">
                           <select name="mp_logouttime_format" id="mp_logouttime_format" class="form-control">
                             @foreach($time_formats as $key=>$date_format)                           
-                            <option value="{{ $key }}">{{ $date_format }}</option>
+                            <option value="{{ $key }}" @if(isset($mpc->mp_logouttime_format) && $mpc->mp_logouttime_format == $i) selected @endif>{{ $date_format }}</option>
                           @endforeach
                           </select>
                         </div>
@@ -135,7 +135,7 @@
                       <td class="col-md-2">
                         <select name="mp_datetime_row" id="mp_datetime_row" class="form-control">
                           @for($i=1; $i<=40; $i++)
-                            <option value="{{$i}}" @if(isset($mpc->mp_pc_no_row) && $mpc->mp_pc_no_row == $i) selected @endif>{{$i}}列目</option>
+                            <option value="{{$i}}" @if(isset($mpc->mp_datetime_row) && $mpc->mp_datetime_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor                          
                         </select>
                       </td>
@@ -143,7 +143,7 @@
                         <div class="col-md-6">
                           <select name="mp_datetime_format" id="mp_datetime_format" class="form-control">
                             @foreach($pc_date_format as $key=>$date_format)                           
-                            <option value="{{ $key }}">{{ $date_format }}</option>
+                            <option value="{{ $key }}" @if(isset($mpc->mp_datetime_format) && $mpc->mp_datetime_format == $i) selected @endif>{{ $date_format }}</option>
                            @endforeach
                           </select>
                         </div>

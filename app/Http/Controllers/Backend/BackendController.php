@@ -168,19 +168,35 @@ class BackendController extends Controller
         }else{
             $data = Excel::load($filename,'UTF-8')->get();
             $data = $data->toArray();$i=0;
-             foreach ($data as $key => $value) {
-                $arrResult[$i-1][0] = ''; 
-                foreach($value as $var){         
-                   if(is_object($var))
-                     $arrResult[$i-1][] =  $var->toDateTimeString();
-                   else                             
-                     $arrResult[$i-1][] = $var;
-                }
-                $i++;
+            foreach ($data as $key => $value) {
+                if(count($value)<3 ){
+                   foreach($value as $var){                      
+                      $arrT = (strpos($var,','))?explode(",", $var):array(); 
+                      if(count($arrT) <1) continue; 
+                      $arrResult[$i-1][0] = '';
+                      foreach($arrT as $var){         
+                           if(is_object($var))
+                              $arrResult[$i-1][] =  $var->toDateTimeString();
+                            else                             
+                              $arrResult[$i-1][] = $var;
+                      }                   
+                        $i++;                                                           
+                   }
+                   
+                }else{
+
+                    $arrResult[$i-1][0] = ''; 
+                    foreach($$valueT as $var){         
+                       if(is_object($var))
+                          $arrResult[$i-1][] =  $var->toDateTimeString();
+                        else                             
+                          $arrResult[$i-1][] = $var;
+                    }                   
+                    $i++;
+                }    
             }        
             unset($data);
-        }         
-                
+        }                     
         unset($string);      
         
         return $arrResult;
