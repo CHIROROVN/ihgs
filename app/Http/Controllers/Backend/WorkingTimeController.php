@@ -98,7 +98,7 @@ class WorkingTimeController extends BackendController
 				}				
 			}	
 		}
-		if(count($doorcard['pcs']) >0){
+		if(count($doorcard['pcs']) >0){			
 			foreach($doorcard['pcs'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->tp_actiontime));
 				if(isset($arrTempt[$temptDate])){
