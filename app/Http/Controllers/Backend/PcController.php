@@ -66,7 +66,7 @@ class PcController extends BackendController
 					   $data['tp_logouttime']		   = date('H:i:s', strtotime($value[$config->mp_logouttime_row])) ;;
 					   $data['last_ipadrs']            = CLIENT_IP_ADRS;
 					   $data['last_date']              = date('Y-m-d H:i:s');
-					   $data['last_user']              = Auth::user()->u_id;						   				   				   				   
+					   $data['last_user']              = Auth::user()->u_id;						   				   				   				   					 
 					   $clsPcImport->insert($data);
 					}   
                 }//end foreach value   	
@@ -76,7 +76,7 @@ class PcController extends BackendController
 		if($flag)	Session::flash('success', trans('common.msg_import_success'));			
 		else		Session::flash('danger', trans('common.msg_import_danger'));			
 		
-		//return redirect()->route('backend.pc.import');
+		return redirect()->route('backend.pc.import');
 	}
 
 	/*

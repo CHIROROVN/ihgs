@@ -181,12 +181,10 @@ class BackendController extends Controller
                               $arrResult[$i-1][] = $var;
                       }                   
                         $i++;                                                           
-                   }
-                   
+                   }                   
                 }else{
-
                     $arrResult[$i-1][0] = ''; 
-                    foreach($$valueT as $var){         
+                    foreach($value as $var){         
                        if(is_object($var))
                           $arrResult[$i-1][] =  $var->toDateTimeString();
                         else                             
