@@ -152,7 +152,7 @@
                   </table>
                   <div class="row">
                     <div class="col-md-12 text-center">
-                      <input name="btn_submit" value="保存する" type="submit" class="btn btn-primary btn-sm">
+                      <input name="btnSubmit" id="btnSubmit" value="保存する" type="submit" class="btn btn-primary btn-sm">
                       <input name="reset" value="元に戻す" type="reset" class="btn btn-primary btn-sm mar-left15">
                     </div>
                   </div>
@@ -161,4 +161,9 @@
               </div>
             </div>
           </div>
+<script type="text/javascript">          
+/*$("#btnSubmit").on("click",function() { 
+  $( "#frmRegist" ).submit(); 
+});*/          
+</script>
 @endsection

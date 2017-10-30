@@ -45,7 +45,7 @@ class PcController extends BackendController
 		if(!isset($config->mp_id)){
             Session::flash('danger', trans('common.msg_import_setting_danger'));
             return redirect()->route('backend.pc.import');
-        } 
+        }       
                    		 
         $flag = true;
 		if(Input::hasFile('tp_file_csv')){			
@@ -56,10 +56,7 @@ class PcController extends BackendController
              
 
 			if(!empty($file_csv) && count($file_csv)){ 				
-				foreach ($file_csv as  $value) {
-				    echo '<pre>';
-                 print_r($value);
-                 echo '</pre>';	
+				foreach ($file_csv as  $value) {				    
 				   if(isset($value[$config->mp_date_row]) && !empty($value[$config->mp_date_row])){				 			                     				   
 					   $data['tp_dataname']            = Input::get('tp_dataname');
 					   $data['tp_pc_no']			   = isset($value[$config->mp_pc_no_row])?$value[$config->mp_pc_no_row]:'';
@@ -69,11 +66,8 @@ class PcController extends BackendController
 					   $data['tp_logouttime']		   = date('H:i:s', strtotime($value[$config->mp_logouttime_row])) ;;
 					   $data['last_ipadrs']            = CLIENT_IP_ADRS;
 					   $data['last_date']              = date('Y-m-d H:i:s');
-					   $data['last_user']              = Auth::user()->u_id;	
-					    echo '<pre>';
-		                 print_r($data);
-		                 echo '</pre>';				   				   				   
-					  // $clsPcImport->insert($data);
+					   $data['last_user']              = Auth::user()->u_id;						   				   				   				   
+					   $clsPcImport->insert($data);
 					}   
                 }//end foreach value   	
 			}

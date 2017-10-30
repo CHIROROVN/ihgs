@@ -11,11 +11,11 @@ use Config;
 class PcFormatController extends BackendController
 {
 	public function format(){
-		$clsPc            = new PcModel();
-		$mpc = $clsPc->getPc();		
-		$pc_date_format = Config::get('constants.PC_DATETIME_FORMAT');
-		$date_formats = Config::get('constants.MT_DATE_FORMAT');
-        $time_formats = Config::get('constants.MT_TIME_FORMAT'); 	
+		$clsPc            	= new PcModel();
+		$mpc 				= $clsPc->getPc();		
+		$pc_date_format 	= Config::get('constants.PC_DATETIME_FORMAT');
+		$date_formats 		= Config::get('constants.MT_DATE_FORMAT');
+        $time_formats 		= Config::get('constants.MT_TIME_FORMAT'); 	
 		return view('backend.pc.format', compact('mpc', 'pc_date_format','date_formats','time_formats'));
 	}
 

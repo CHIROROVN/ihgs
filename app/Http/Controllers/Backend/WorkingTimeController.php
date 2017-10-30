@@ -64,18 +64,13 @@ class WorkingTimeController extends BackendController
 		$doorcard=  $clsWorkingTime->get_doorcard($id,$year);
 		if(count($doorcard['timecards']) >0){			
 			foreach($doorcard['timecards'] as $val){
-				$temptDate     = date("Y-m-d",strtotime($val->tt_date));								
-				if(isset($arrTempt[$temptDate])){
-					$arrTempt[$temptDate]['gotime'] = date("H:i:s",strtotime(compare_min($arrTempt[$temptDate]['gotime'],$val->tt_gotime)));
-					$arrTempt[$temptDate]['backtime'] = date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime'])));
-				}else{
-				    $arrTempt[$temptDate]['gotime']   = date("H:i:s",strtotime($val->tt_gotime));
-					$arrTempt[$temptDate]['backtime'] = date("H:i:s",strtotime($val->tt_backtime));
-				}									               
+				$temptDate     = date("Y-m-d",strtotime($val->tt_date));												
+				$arrTempt[$temptDate]['gotime']   = (!isset($arrTempt[$temptDate]['gotime']))?date("H:i:s",strtotime($val->tt_gotime)):date("H:i:s",strtotime(compare_min($arrTempt[$temptDate]['gotime'],$val->tt_gotime)));
+				$arrTempt[$temptDate]['backtime'] =	(!isset($arrTempt[$temptDate]['backtime']))?date("H:i:s",strtotime($val->tt_backtime)):date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime']))); 							               
 			}			
 		}				
 		
-		if(count($doorcard['doorcards']) >0){			
+		if(count($doorcard['doorcards']) >0){					
 			foreach($doorcard['doorcards'] as $val){
 				$temptDate = date("Y-m-d",strtotime($val->td_touchtime));
 				if(isset($arrTempt[$temptDate])){
@@ -98,27 +93,11 @@ class WorkingTimeController extends BackendController
 				}				
 			}	
 		}
-		if(count($doorcard['pcs']) >0){			
+		if(count($doorcard['pcs']) >0){			    		
 			foreach($doorcard['pcs'] as $val){
-				$temptDate = date("Y-m-d",strtotime($val->tp_actiontime));
-				if(isset($arrTempt[$temptDate])){
-					if(!isset($arrTempt[$temptDate]['pc_in']))
-					{
-                        $arrTempt[$temptDate]['pc_in'] = date("H:i:s",strtotime($val->tp_actiontime));
-                        $arrTempt[$temptDate]['pc_out'] = date("H:i:s",strtotime($val->tp_actiontime));
-					}else{
-						$temptDateIn     = strtotime($temptDate.' '.$arrTempt[$temptDate]['pc_in']);
-						$temptDateOut    = strtotime($temptDate.' '.$arrTempt[$temptDate]['pc_out']);
-					    $temptDateSource = strtotime($val->tp_actiontime);
-					    if($temptDateSource < $temptDateIn)
-					    	$arrTempt[$temptDate]['pc_in'] = date("H:i:s",strtotime($val->tp_actiontime));
-					    if($temptDateSource > $temptDateOut)
-					    	$arrTempt[$temptDate]['pc_out'] = date("H:i:s",strtotime($val->tp_actiontime));
-					} 
-				}else{
-                    $arrTempt[$temptDate]['pc_in'] = date("H:i:s",strtotime($val->tp_actiontime));
-                    $arrTempt[$temptDate]['pc_out'] = date("H:i:s",strtotime($val->tp_actiontime));
-				}				
+				$temptDate = date("Y-m-d",strtotime($val->tp_date));				
+				$arrTempt[$temptDate]['pc_in'] 	= (!isset($arrTempt[$temptDate]['pc_in']))?date("H:i:s",strtotime($val->tp_logintime)):date("H:i:s",strtotime(compare_min($val->tp_logintime, $arrTempt[$temptDate]['pc_in'])));
+				$arrTempt[$temptDate]['pc_out'] = (!isset($arrTempt[$temptDate]['pc_out']))?date("H:i:s",strtotime($val->tp_logouttime)): date("H:i:s",strtotime(compare_max($arrTempt[$temptDate]['pc_out'], $val->tp_logouttime)));			
 			}	
 		}	
 		$arrDate = array();	$aDate = array();	
