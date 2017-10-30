@@ -14,7 +14,7 @@ class BackendController extends Controller
         foreach($configs as $key => $value)
         {
             define($key, $value);
-        }       
+        }      
 
         //get IP address from user
         if (isset($_SERVER['HTTP_CLIENT_IP']))
@@ -113,32 +113,7 @@ class BackendController extends Controller
             $field_sort => $cur_belong->$field_sort
         );
         $clsObject->update($down_belong->$field_primary, $dataUpdate);
-    }
-    protected function changeDate($date_source,$date_format,$source_type,$action='')
-    {
-        $arrData = explode(":", $date_format);
-        // echo "<br>source".$date_source;
-        //echo "<pre>";print_r($arrData);echo "</pre>";
-        if($source_type=='date'){
-            $strYear = substr($date_source, $arrData[0], $arrData[1]);           
-            $strMonth = substr($date_source, $arrData[2], $arrData[3]);            
-            $strDate = substr($date_source, $arrData[4], $arrData[5]);             
-            return date("Y-m-d",mktime(0, 0, 0, $strMonth, $strDate, $strYear));
-        }elseif($source_type=='fulldate'){            
-            $strYear = substr($date_source, $arrData[0], $arrData[1]);                       
-            $strMonth = substr($date_source, $arrData[2], $arrData[3]);                        
-            $strDate = substr($date_source, $arrData[4], $arrData[5]); 
-            $strH = substr($date_source, $arrData[6], $arrData[7]);                  
-            $strI = substr($date_source, $arrData[8], $arrData[9]);                      
-            $strS = substr($date_source, $arrData[10], $arrData[11]);                   
-            return date("Y-m-d h:i:s",mktime((int)$strH, (int)$strI, (int)$strS, (int)$strMonth, (int)$strDate, (int)$strYear));
-        }else{    
-           $strH = substr($date_source, $arrData[0], $arrData[1]);                                 
-           $strI = substr($date_source, $arrData[2], $arrData[3]);                       
-           $strS = substr($date_source, $arrData[4], $arrData[5]);                       
-           return date("H:i:s",mktime((int)$strH, (int)$strI, (int)$strS, date("m"),  date("d"), date("Y")));
-        }
-    }
+    }    
     protected function  readFileCsv($filename)
     {       
         ini_set('max_execution_time', "3000");        

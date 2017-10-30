@@ -39,8 +39,8 @@ class WorkingTimeController extends BackendController
 
 	public function exportPDF()
 	{
-	   $clsWorkingTime   = new WorkingTimeModel();
-	   $clsBelong            = new BelongModel();
+	   $clsWorkingTime   		= new WorkingTimeModel();
+	   $clsBelong            	= new BelongModel();
 	   $data = array();
 
 		$data['staff_belong'] 	= !empty(Input::get('staff_belong')) ? Input::get('staff_belong') : null;
@@ -128,14 +128,9 @@ class WorkingTimeController extends BackendController
 
 		if(count($workingTimes) >0){
 			foreach($workingTimes as $val){
-				$temptDate     = date("Y-m-d",strtotime($val->tt_date));								
-				if(isset($arrTempt[$temptDate])){
-					$arrTempt[$temptDate]['gotime'] = date("H:i:s",strtotime(compare_min($arrTempt[$temptDate]['gotime'],$val->tt_gotime)));
-					$arrTempt[$temptDate]['backtime'] = date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime'])));
-				}else{
-				    $arrTempt[$temptDate]['gotime']   = date("H:i:s",strtotime($val->tt_gotime));
-					$arrTempt[$temptDate]['backtime'] = date("H:i:s",strtotime($val->tt_backtime));
-				}									               
+				$temptDate     = date("Y-m-d",strtotime($val->tt_date));													
+				$arrTempt[$temptDate]['gotime']   = (!isset($arrTempt[$temptDate]['gotime']))?date("H:i:s",strtotime($val->tt_gotime)):date("H:i:s",strtotime(compare_min($arrTempt[$temptDate]['gotime'],$val->tt_gotime)));
+				$arrTempt[$temptDate]['backtime'] =	(!isset($arrTempt[$temptDate]['backtime']))?date("H:i:s",strtotime($val->tt_backtime)):date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime']))); 									               
 			}	
 			foreach($workingTimes as $workingTime){
 				$temptDate = isset($workingTime->tt_date)?date("Y-m-d",strtotime($workingTime->tt_date)):date("Y-m-d");	
