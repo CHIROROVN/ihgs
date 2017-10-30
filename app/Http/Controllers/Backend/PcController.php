@@ -57,7 +57,7 @@ class PcController extends BackendController
 
 			if(!empty($file_csv) && count($file_csv)){ 				
 				foreach ($file_csv as  $value) {				    
-				   if(isset($value[$config->mp_date_row]) && !empty($value[$config->mp_date_row])){				 			                     				   
+				   if(isset($value[$config->mp_date_row]) && (!empty($value[$config->mp_logintime_row]) || !empty($value[$config->mp_logouttime_row]))){				 			                     				   
 					   $data['tp_dataname']            = Input::get('tp_dataname');
 					   $data['tp_pc_no']			   = isset($value[$config->mp_pc_no_row])?$value[$config->mp_pc_no_row]:'';
 					   $data['tp_staff_id_no']		   = isset($value[$config->mp_staff_id_no_row])?$value[$config->mp_staff_id_no_row]:'';					   
@@ -66,7 +66,8 @@ class PcController extends BackendController
 					   $data['tp_logouttime']		   = date('H:i:s', strtotime($value[$config->mp_logouttime_row])) ;;
 					   $data['last_ipadrs']            = CLIENT_IP_ADRS;
 					   $data['last_date']              = date('Y-m-d H:i:s');
-					   $data['last_user']              = Auth::user()->u_id;						   				   				   				   					 
+					   $data['last_user']              = Auth::user()->u_id;						  				   				   				   				   					 
+
 					   $clsPcImport->insert($data);
 					}   
                 }//end foreach value   	
