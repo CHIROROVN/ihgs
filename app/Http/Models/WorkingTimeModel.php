@@ -85,15 +85,15 @@ class WorkingTimeModel
                                                                   ->whereMonth('td_touchtime','<', '4');
                                                         });
                                     
-                                    })->where(function($query) {
-                                        $query->whereIn('td_card',function ($query) {
+                                    })->where(function($query) use ($id){
+                                        $query->whereIn('td_card',function ($query) use ($id) {
                                               $query->select('staff_card1')->from('t_staff')
-                                              ->where('staff_card1','<>','');
+                                              ->where('staff_card1','<>','')->where('staff_id','=',$id);
                                         });   
                                         for($i=2;$i<=10;$i++){                                     
-                                            $query->orWhereIn('td_card',function ($query) use ($i)  {
+                                            $query->orWhereIn('td_card',function ($query) use ($i,$id)  {
                                                   $query->select('staff_card'.$i)->from('t_staff')
-                                                  ->where('staff_card'.$i,'<>','');
+                                                  ->where('staff_card'.$i,'<>','')->where('staff_id','=',$id);
                                             });
                                         }                                            
                                     })->orderBy('td_touchtime', 'asc')->get();                                                                           
