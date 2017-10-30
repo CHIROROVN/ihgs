@@ -440,12 +440,13 @@ if (!function_exists('get_work_overtime')) {
 		if(empty($time_in) && empty($time_out)) return '';
 		$over_time_in =0;$over_time_out=0;
 		if(!empty($time_in)){
-		   $arrT          = explode(":",RESET_TIME);$arrMonth = array();
+		   //$arrT          = explode(":",RESET_TIME);$arrMonth = array();
 		   $intStartTime  = (isset($arrT[0]) &&  $arrT[0] >24)?$arrT[0]-24:0;	
            $temptIn       = strtotime($date_overtime.' '.$time_in);
-           $reset_time    = isset($intStartTime)?strtotime($date_overtime.' '.$intStartTime.':00:00'):0;
+           //$reset_time    = isset($intStartTime)?strtotime($date_overtime.' '.$intStartTime.':00:00'):0;
 		   $start_time    = strtotime($date_overtime.' '.START_TIME);
-		   $over_time_in  = ($temptIn > $start_time )?0:(($temptIn < $reset_time)?$start_time - $reset_time:$start_time - $temptIn);
+		   //$over_time_in  = ($temptIn > $start_time )?0:(($temptIn < $reset_time)?$start_time - $reset_time:$start_time - $temptIn);
+		   $over_time_in  = ($temptIn > $start_time )?0:$start_time - $temptIn;
 		}
 		if(!empty($time_out))
 		{
