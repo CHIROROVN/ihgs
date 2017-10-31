@@ -22,7 +22,7 @@ class SearchModel extends Model
         $format = 'Y-m-d'; 
         $sTime = strtotime($date_from);
         $eTime = strtotime($date_to);
-        $numDays = round(($eTime - $sTime) / $day) + 1;  
+        $numDays = round(($eTime - $sTime) / $day) + 1;
 
 
         for ($d = 0; $d < $numDays; $d++) { 
@@ -40,17 +40,6 @@ class SearchModel extends Model
                 ->whereDate('t_timecard.tt_date', '<=', $date_to)
                 ->orderBy('t_timecard.tt_date', 'asc')
                 ->get()->toArray();
-
-        // for($y=$conditions['year_from']; $y<=$conditions['year_to']; $y++){
-        //     for($m=$conditions['month_from']; $m<=$conditions['month_to']; $m++){
-        //         $dayOfMonth = date('t',strtotime($y.'-'.$m));
-        //         for($i=1; $i<=$dayOfMonth; $i++){
-        //             $ymd_tmp = $y.'-'.c2digit($m) . '-' . c2digit($i) . ' 00:00:00';
-        //            $worktimes[$y.'-'.c2digit($m) . '-' . c2digit($i)]['tt_date'] =  $ymd_tmp;
-        //         }
-        //     }
-        // }
-
 
         if(!empty($result['timecard'])){
             foreach ($result['timecard'] as $valtc) {
