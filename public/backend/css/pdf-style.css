@@ -11,17 +11,17 @@
 
 body {
   font-size: 11px;
-  width: 680px;
+  width: 695px;
 }
 
 
 .container {
-	width: 680px;
+	width: 695px;
 }
 
 table {
 	margin-top: 28px;
-	width: 680px;
+	width: 695px;
 	border-left: 0.5px solid #000000;
 	border-top: 0.5px solid #000000;
 }
@@ -53,7 +53,7 @@ tr.old {
 }
 
 .col-date {
-	width: 60px;
+	width: 10px !important;
 }
 
 .name-section {
@@ -72,19 +72,19 @@ tr.old {
 }
 
 td.width-normal {
-	width: 35px;
+	width: 58px;
 }
 
 td.remark {
-	width: 20px !important;
+	width: 35px !important;
 }
 
 td.col-reason {
-	width: 60px !important;
+	width: 90px !important;
 }
 
 td.col-first {
-	width: 60px;
+	width: 10px !important;
 }
 
 .bg-red {

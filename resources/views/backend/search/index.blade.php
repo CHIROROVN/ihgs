@@ -103,15 +103,17 @@
                 <tbody>
                 <?php $wts = search_work_time($staff, $conditions); ?>                
                  
-                @if(count($wts['worktimes']) > 0)
                 @foreach($wts['worktimes'] as $kd => $vald)
 
                 <?php  $tt_date =  date('Y-m-d', strtotime($vald['tt_date'])); 
-                $door_in = formatshortTime(hour_minute(touchtime($staff, $tt_date)->door_in));
-                $door_out = formatshortTime(hour_minute(touchtime($staff, $tt_date)->door_out));
-                $tt_gotime = formatshortTime(@$vald['tt_gotime'], ':');
-                $tt_backtime = formatshortTime(@$vald['tt_backtime'], ':');
-
+                    $door_in = formatshortTime(hour_minute(touchtime($staff, $tt_date)->door_in));
+                    $door_out = formatshortTime(hour_minute(touchtime($staff, $tt_date)->door_out));
+                    $tt_gotime = formatshortTime(@$vald['tt_gotime'], ':');
+                    $tt_backtime = formatshortTime(@$vald['tt_backtime'], ':');
+                    $time_start = compare_min($door_in, formatshortTime(@$vald['tp_logintime'])); 
+                    $time_end = compare_max($door_out, formatshortTime(@$vald['tp_logouttime']));
+                    $over_in = over_in( time2second($tt_gotime), time2second($time_start));
+                    $over_out = over_out(time2second($tt_backtime), time2second($time_end));
                 ?>
 
                 <tr>
@@ -126,21 +128,11 @@
                   <td>@if(isset($vald['tp_logintime'])){{formatshortTime($vald['tp_logintime'])}} @else データ無し @endif</td>
                   <td>@if(isset($vald['tp_logouttime'])){{formatshortTime($vald['tp_logouttime'])}} @else データ無し @endif</td>
 
-                  <?php
-                        $time_start = compare_min($door_in, formatshortTime(@$vald['tp_logintime'])); 
-                        $time_end = compare_max($door_out, formatshortTime(@$vald['tp_logouttime']));
-
-
-                        $over_in = over_in( time2second($tt_gotime), time2second($time_start));
-
-                        $over_out = over_out(time2second($tt_backtime), time2second($time_end));
-
-                 ?>
-                    <td {{style_overtime($over_in, $over_out)}}>{{ time_over($over_in, $over_out) }}</td>
+                  <td {{style_overtime($over_in, $over_out)}}>{{ time_over($over_in, $over_out) }}</td>
 
                 </tr>
                 @endforeach
-                @endif
+                
 
                 </tbody>
               </table>              

@@ -1,9 +1,6 @@
 <?php namespace App\Http\Models;
 
 use DB;
-use Hash;
-use Auth;
-use Validator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
