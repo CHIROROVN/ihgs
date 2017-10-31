@@ -96,31 +96,9 @@ class WorkingTimeModel
                                                   ->where('staff_card'.$i,'<>','')->where('staff_id','=',$id);
                                             });
                                         }                                            
-                                    })->orderBy('td_touchtime', 'asc')->get();                                                                           
-                                 
-           /* $results['pcs'] = DB::table('t_pc')->where(function($query) use ($year){
-                                          $query->where(function ($query) use ($year) {
-                                                            $query->whereYear('tp_actiontime', $year)
-                                                                  ->whereMonth('tp_actiontime','>', '3');
-                                                        })
-                                                     ->orWhere(function ($query) use ($year){
-                                                            $query->whereYear('tp_actiontime', $year + 1)
-                                                                  ->whereMonth('tp_actiontime','<', '4');
-                                                        });
-                                    })->where(function($query) {
-                                        $query->whereIn('tp_pc_no',function ($query) {
-                                              $query->select('staff_pc1')->from('t_staff')
-                                              ->where('staff_pc1','<>','');
-                                        });
-                                        for($i=2;$i<=10;$i++){
-                                              $query->orWhereIn('tp_pc_no',function ($query) use ($i) {
-                                                    $query->select('staff_pc'.$i)->from('t_staff')
-                                                    ->where('staff_pc'.$i,'<>','');
-                                              });
-                                        }
-                                       
-                                    })->orderBy('tp_actiontime', 'asc')->get();   */ 
-            $results['pcs'] = DB::table($this->table)->join('t_pc as t1', function ($join) use ($year) {
+                                    })->select('td_card','td_door','td_touchtime')->orderBy('td_touchtime', 'asc')->get();                                                                                                                                          
+          
+           $results['pcs'] = DB::table($this->table)->join('t_pc as t1', function ($join) use ($year) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tp_staff_id_no')
                                                      ->Where(function ($query) use ($year) {
                                                             $query->whereYear('t1.tp_date', $year)
@@ -131,24 +109,34 @@ class WorkingTimeModel
                                                                   ->whereMonth('t1.tp_date','<', '4');
                                                         });                                                     
                                             })                                         
-                                          ->where('t_staff.staff_id', $id)->select('t1.tp_date','t1.tp_logintime','t1.tp_logouttime','t1.tp_staff_id_no')->orderBy('t1.tp_date','asc')                                          
-                                          ->get();                              
-
-            $results['timecards'] = DB::table($this->table)->join('t_timecard as t1', function ($join) use ($year) {
-                                                $join->on('t_staff.staff_id_no', '=', 't1.tt_staff_id_no')
-                                                     ->Where(function ($query) use ($year) {
-                                                            $query->whereYear('t1.tt_date', $year)
-                                                                  ->whereMonth('t1.tt_date','>', '3');
-                                                        })
-                                                     ->orWhere(function ($query) use ($year){
-                                                            $query->whereYear('t1.tt_date', $year + 1)
-                                                                  ->whereMonth('t1.tt_date','<', '4');
-                                                        });                                                     
-                                            })                                         
-                                          ->where('t_staff.staff_id', $id)->orderBy('t1.tt_date','asc')                                          
-                                          ->get();                               
+                                          ->where('t_staff.staff_id', $id)->select('t1.tp_date','t1.tp_logintime','t1.tp_logouttime','t1.tp_staff_id_no')->orderBy('t1.tp_date','asc')                                         
+                                          ->get();
+                                                                               
+           /* $results['timecards'] = DB::table('t_timecard')->where(function($query) use ($year){
+                                                                 $query->whereYear('t_timecard.tt_date', $year)->whereMonth('t_timecard.tt_date','>', '3');
+                                                              })->orWhere(function ($query) use ($year){
+                                                                 $query->whereYear('t_timecard.tt_date', $year + 1)->whereMonth('t_timecard.tt_date','<', '4');                                                                      
+                                                           })->where(function($query) use ($id){
+                                                                      $query->whereIn('tt_staff_id_no',function ($query) use ($id) {
+                                                                            $query->select('staff_id_no')->from('t_staff')->where('staff_id','=',$id);
+                                                                      });                                                                                                                   
+                                                            })->select('tt_staff_id_no','tt_date','tt_gotime','tt_backtime')->orderBy('tt_date','asc')->get(); */
+           $results['timecards']= DB::table($this->table)->join('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
+                                           ->where(function($query) use ($year){
+                                                $query->where(function ($query) use ($year) {
+                                                                  $query->whereYear('t1.tt_date', $year)
+                                                                        ->whereMonth('t1.tt_date','>', '3');
+                                                              })
+                                                           ->orWhere(function ($query) use ($year){
+                                                                  $query->whereYear('t1.tt_date', $year + 1)
+                                                                        ->whereMonth('t1.tt_date','<', '4');
+                                                              });
+                                          })
+                                          ->where('t_staff.staff_id', $id)->select('t1.tt_date','t1.tt_gotime','t1.tt_backtime','t1.tt_staff_id_no')
+                                          ->orderBy('t1.tt_date', 'asc')                                          
+                                          ->get();                                                                                                                  
            
-        }        
+        }          
         return $results;    
     }
     //Manage Pc format

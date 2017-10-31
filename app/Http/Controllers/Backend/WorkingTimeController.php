@@ -32,6 +32,7 @@ class WorkingTimeController extends BackendController
         $data['year']     = (isset($_GET['year']) && $_GET['year'] >2000)?$_GET['year']:date("Y");
 		$data['staff']    =  $clsWorkingTime->get_by_id($id);		
 		$arrTempt         = $this->get_work_time_array($id, $data['year'] );			
+
 		$data['worktimes']  = $arrTempt;		
 		return view('backend.workingtime.detail',$data);
 	}
@@ -109,7 +110,7 @@ class WorkingTimeController extends BackendController
 			ksort($arrDate);			
 			foreach($arrDate as $key=>$val){
                 foreach($val as $k=>$v){
-                	for($i=1;$i<$v;$i++){
+                	for($i=1;$i<=$v;$i++){
                 		$strDate = date("Y-m-d",mktime(0,0,0,$k,$i,$key));
                 		$arrResult[$strDate] = (array_key_exists($strDate,$arrTempt))?$arrTempt[$strDate]:array();
                 	}

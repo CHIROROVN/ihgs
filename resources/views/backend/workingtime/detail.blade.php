@@ -48,10 +48,11 @@
                   <td class="bg-yellow" style="text-align: center;">30 分超 </td>
                   @elseif($worktime['diff'] >60)                
                   <td class="bg-red" style="text-align: center;">1 時間超 </td>
-                  @else  <td></td>
+                  @else  <td>&nbsp;</td>
                 @endif
+              @else  <td>&nbsp;</td>  
               @endif                        
-               <td style="text-align: center;" >{{@get_work_overtime($worktime['gotime'],$worktime['backtime'],$key)}}</td>
+              <td style="text-align: center;" >{{@get_work_overtime($worktime['gotime'],$worktime['backtime'],$key)}}&nbsp;</td>
             </tr>
           @endforeach
         @endif      
