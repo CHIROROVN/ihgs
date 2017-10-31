@@ -99,15 +99,15 @@ class WorkingTimeController extends BackendController
 				$arrTempt[$temptDate]['pc_out'] = (!isset($arrTempt[$temptDate]['pc_out']))?date("H:i:s",strtotime($val->tp_logouttime)): date("H:i:s",strtotime(compare_max($arrTempt[$temptDate]['pc_out'], $val->tp_logouttime)));			
 			}	
 		}	
-		$arrDate = array();	$aDate = array();	
+		//$arrDate = array();	$aDate = array();	
 		if(count($arrTempt) >0){			
 			foreach($arrTempt as $key=>$val){                
-                $arrDate[date("Y",strtotime($key))][date("n",strtotime($key))] = date("t",strtotime($key));
+                //$arrDate[date("Y",strtotime($key))][date("n",strtotime($key))] = date("t",strtotime($key));
 				$time_in       = isset($val['gotime'])?get_time_diff(isset($val['touchtime_in'])?$val['touchtime_in']:0,isset($val['pc_in'])?$val['pc_in']:0,isset($val['gotime'])?$val['gotime']:0,'in'):0; 			
  				$time_out      = isset($val['backtime'])?get_time_diff(isset($val['touchtime_out'])?$val['touchtime_out']:0 ,isset($val['pc_out'])?$val['pc_out']:0,isset($val['backtime'])?$val['backtime']:0,'out'):0;	
  				$arrTempt[$key]['diff']   = floor(($time_in + $time_out)/60) ; 				 													
 			} 			   
-			ksort($arrDate);			
+			/*ksort($arrDate);					
 			foreach($arrDate as $key=>$val){
                 foreach($val as $k=>$v){
                 	for($i=1;$i<=$v;$i++){
@@ -115,7 +115,18 @@ class WorkingTimeController extends BackendController
                 		$arrResult[$strDate] = (array_key_exists($strDate,$arrTempt))?$arrTempt[$strDate]:array();
                 	}
                 }
-			}											
+			}*/											
+		}
+		for($i=$year;$i<=$year+1;$i++){
+			$startMonth = ($i==$year)?4:1;
+			$endMonth   = ($i==$year)?12:3;
+			for($j=$startMonth;$j<=$endMonth;$j++){
+				$endDate = date("t",mktime(0,0,0,$j,1,$i));                 
+                for($k=1;$k<=$endDate;$k++){
+                	$strDate = date("Y-m-d",mktime(0,0,0,$j,$k,$i));
+                	$arrResult[$strDate] = (array_key_exists($strDate,$arrTempt))?$arrTempt[$strDate]:array();
+                }
+			}
 		}
 		return $arrResult;
 	}
