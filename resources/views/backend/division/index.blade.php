@@ -67,9 +67,9 @@
                         <td>{{ $belong->belong_name }}</td>
                         <td>@foreach($sections as $section)
                                @if($section->belong_parent_id==$belong->belong_id)
-                               {{ $section->belong_name }}
+                               {{ $section->belong_name }} <br />
                                @endif 
-                            <br />
+                           
                             @endforeach</td>
                         <td align="center"><input onclick="location.href='{{ asset('section/' . $belong->belong_id) }}'" value="配下の課の編集" type="button" class="btn btn-primary btn-xs"></td>
                         <td align="center"><input onclick="location.href='{{ asset('division/edit/' . $belong->belong_id) }}'" value="編集" type="button" class="btn btn-primary btn-xs"></td>
