@@ -6,11 +6,19 @@
 <link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" />
 </head>
 <body>
+
 <div class="container">
 	<div class="name-section">
 		<div class="company-line">{{ COMPANY_NAME }}</div>
 		<div class="staff-line">{!! division($staff->staff_belong) !!} ／ {{$staff->staff_id_no}} ／ {{$staff->staff_name}}</div>
 	</div>
+
+
+	<?php $row = 0; $ym=''; $wts = search_work_time($staff->staff_id_no, $conditions);?>
+	  @if(count($wts['timecard']) > 0)
+	   @foreach($wts['worktimes'] as $date => $wt)
+   	<?php $ym = date('Y-m', strtotime($date)); ?>
+   	@if($ym != date('Y-m', strtotime($date)) || $row == 0)
   <table cellpadding=0 cellspacing=0>
 	<tr>
 			<td rowspan="2" class="bottom-line col-first header">年月日</td>
@@ -29,36 +37,36 @@
 			<td class="bottom-line top-line width-normal header">最初</td>
 			<td class="bottom-line width-normal header">最後</td>
 	</tr>
-	<?php $row = 0; ?>
-	  @if(count(search_work_time($staff->staff_id_no, $conditions)) > 0)
-	   @foreach(search_work_time($staff->staff_id_no, $conditions) as $wt)
-   	<?php $date = format_date($wt->tt_date, '-');
+   	@endif
 
-   ?>
     <tr {!! ($row % 2 != 0) ? 'class="old"' : '' !!}>
-      <td class="col-date">{{DateDayJp($wt->tt_date)}}</td>
-      <td>{{formatshortTime($wt->tt_gotime, ':')}}</td>
-      <td>{{formatshortTime($wt->tt_backtime, ':')}}</td>
-      <td>{{@hour_minute(touchtime($staff, $date)[0]->door_in)}}</td>
-      <td>{{@hour_minute(touchtime($staff, $date)[0]->door_out)}}</td>
-      <td>{{@hour_minute(actiontime($staff, $date)[0]->action_in)}}</td>
-      <td>{{@hour_minute(actiontime($staff, $date)[0]->action_out)}}</td>
+      <td class="col-date">{{DateDayJp($date)}}</td>
+      <td>{{formatshortTime(@$wt['tt_gotime'], ':')}}</td>
+      <td>{{formatshortTime(@$wt['tt_backtime'], ':')}}</td>
+      <td>{{@hour_minute(touchtime($staff, $date)->door_in)}}</td>
+      <td>{{@hour_minute(touchtime($staff, $date)->door_out)}}</td>
+      <td>{{@hour_minute(actiontime($staff, $date)->action_in)}}</td>
+      <td>{{@hour_minute(actiontime($staff, $date)->action_out)}}</td>
       <?php 
-        $time_start = compare_min(touchtime($staff, $date)[0]->door_in, actiontime($staff, $date)[0]->action_in); 
-        $time_end = compare_max(touchtime($staff, $date)[0]->door_out, actiontime($staff, $date)[0]->action_out);
+        $time_start = compare_min(touchtime($staff, $date)->door_in, actiontime($staff, $date)->action_in); 
+        $time_end = compare_max(touchtime($staff, $date)->door_out, actiontime($staff, $date)->action_out);
 
-        $over_in = over_in(time2second($wt->tt_gotime), time2second(date('H:i:s',strtotime($time_start))));
-        $over_out = over_out(time2second($wt->tt_backtime), time2second(date('H:i:s',strtotime($time_end))));
+        $over_in = over_in(time2second(@$wt['tt_gotime']), time2second(date('H:i:s',strtotime($time_start))));
+        $over_out = over_out(time2second(@$wt['tt_backtime']), time2second(date('H:i:s',strtotime($time_end))));
         ?>
       <td {{@style_overtime($over_in, $over_out)}}>{{ @time_over($over_in, $over_out) }}</td>
       	<td></td>
 		<td></td>
     </tr>
     <?php $row ++; ?>
+    	@if($ym != date('Y-m', strtotime($date))  || $row == 0)
+		</table>
+    	@endif
+
     @endforeach
   @endif
 
-  </table>
 </div>
+
 </body>
 </html>

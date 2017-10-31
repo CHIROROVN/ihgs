@@ -118,6 +118,7 @@ class WorkingTimeController extends BackendController
                 }
 			}											
 		}
+
 		return $arrResult;
 	}
 	public function get_over_time_year($id,$year)

@@ -83,7 +83,7 @@ class StaffModel
 
     public function search_staff($where=null){
 
-        $sql = DB::table($this->table)->where('t_staff.last_kind', '<>', DELETE);
+        $sql = DB::table($this->table)->select('staff_id', 'staff_id_no','staff_name' , 'staff_belong', 'staff_card1', 'staff_card2', 'staff_card3', 'staff_card4', 'staff_card5', 'staff_card6', 'staff_card7', 'staff_card8', 'staff_card9', 'staff_card10', 'staff_pc1', 'staff_pc2', 'staff_pc3', 'staff_pc4', 'staff_pc5', 'staff_pc6', 'staff_pc7', 'staff_pc8', 'staff_pc9', 'staff_pc10')->where('t_staff.last_kind', '<>', DELETE);
 
         if(!empty($where['belong_parent_id'])){
             $sql = $sql->whereIn('t_staff.staff_belong', $where['belong_parent_id']);

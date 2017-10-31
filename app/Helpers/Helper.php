@@ -308,12 +308,16 @@ if (!function_exists('hour_minute')) {
 
 if (!function_exists('time_over')) {
 	function time_over($start=null, $end=null){
-		$overtime = $start + $end;
-		$mins = $overtime / 60;
-		if( ($mins > 30) && ($mins <= 60) ){
-			return '30分超';	
-		}elseif( $mins > 60 ){
-			return '1時間超';
+		if(!empty($start)){
+			$overtime = $start + $end;
+			$mins = $overtime / 60;
+			if( ($mins > 30) && ($mins <= 60) ){
+				return '30分超';	
+			}elseif( $mins > 60 ){
+				return '1時間超';
+			}else{
+				return '';
+			}
 		}else{
 			return '';
 		}

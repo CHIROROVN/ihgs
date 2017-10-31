@@ -23,6 +23,7 @@ class SearchController extends BackendController
 		$clsSearch = new SearchModel();
 		$clsStaff = new StaffModel();
 		$clsBelong = new BelongModel();
+
 		$data = array();
 		$where = array();
 		$data['staffs'] = array();
@@ -32,16 +33,15 @@ class SearchController extends BackendController
 
 		$data['belong_id'] = Input::get('belong_id');
 		$data['year_from'] = !empty(Input::get('year_from')) ? Input::get('year_from') : date('Y');
-		$data['month_from'] = !empty(Input::get('month_from')) ? Input::get('month_from') : '04';
-		$data['year_to'] = !empty(Input::get('year_to')) ? Input::get('year_to') : date('Y')+1;
-		$data['month_to'] = !empty(Input::get('month_to')) ? Input::get('month_to') : '03';
+		$data['month_from'] = !empty(Input::get('month_from')) ? Input::get('month_from') : date('m');
+		$data['year_to'] = !empty(Input::get('year_to')) ? Input::get('year_to') : date('Y');
+		$data['month_to'] = !empty(Input::get('month_to')) ? Input::get('month_to') : date('m')+1;
 		$data['kw'] = Input::get('kw');
 
 		$belong_parent_id = array();
 		
 		if(!empty(Input::get('belong_id'))){
-			$data['belong_selected'] = Input::get('belong_id');
-			
+			$data['belong_selected'] = Input::get('belong_id');			
 			$where['belong_parent_id'] = $clsBelong->get_list_by_id(Input::get('belong_id'));
 		}else{
 			$data['belong_selected'] = 0;
@@ -102,6 +102,8 @@ class SearchController extends BackendController
 		$staff = $clsStaff->get_by_id(Input::get('staff_id'));
 		
 		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));
+
+	//return view('backend.search.index_pdf', $data);
 
 		$pdf = PDF::loadView('backend.search.index_pdf', $data);
 

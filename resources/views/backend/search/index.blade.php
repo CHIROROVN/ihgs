@@ -33,7 +33,7 @@
                     <td>
                       <div class="fl-left">
                         <select name="year_from" class="form-control form-control-date">
-                          @for($yf=($curr_year-5); $yf<=($curr_year); $yf++)
+                          @for($yf=($curr_year-3); $yf<=($curr_year); $yf++)
                           <option value="{{$yf}}" @if(isset($year_from) && $year_from == $yf) selected @endif>{{$yf}}年</option>
                           @endfor
                         </select>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="fl-left">
                           <select name="year_to" class="form-control form-control-date">
-                            @for($yt=($curr_year-4); $yt<=($curr_year + 1); $yt++)
+                            @for($yt=($curr_year-2); $yt<=($curr_year + 1); $yt++)
                             <option value="{{$yt}}" @if(isset($year_to) && $year_to == $yt) selected @endif>{{$yt}}年</option>
                           @endfor
                           </select>
@@ -101,29 +101,34 @@
                   </tr>
                 </thead>
                 <tbody>
-                 @if(count(search_work_time($staff->staff_id_no, $conditions)) > 0)
-                   @foreach(search_work_time($staff->staff_id_no, $conditions) as $wt)
-                   <?php $date = format_date($wt->tt_date, '-');?>
-                    <tr>
-                      <td>{{show_overtime(DayeJp($wt->tt_date))}}</td>
-                      <td>{{show_overtime(formatshortTime($wt->tt_gotime, ':'))}}</td>
-                      <td>{{show_overtime(formatshortTime($wt->tt_backtime, ':'))}}</td>
-                      <td>{{show_overtime(@hour_minute(touchtime($staff, $date)[0]->door_in))}}</td>
-                      <td>{{show_overtime(@hour_minute(touchtime($staff, $date)[0]->door_out))}}</td>
-                      <td>{{show_overtime(@hour_minute(actiontime($staff, $date)[0]->action_in))}}</td>
-                      <td>{{show_overtime(@hour_minute(actiontime($staff, $date)[0]->action_out))}}</td>
-                      <?php 
-                        $time_start = compare_min(touchtime($staff, $date)[0]->door_in, actiontime($staff, $date)[0]->action_in); 
-                        $time_end = compare_max(touchtime($staff, $date)[0]->door_out, actiontime($staff, $date)[0]->action_out);
+                <?php $wts = search_work_time($staff->staff_id_no, $conditions); ?>                
+                 
+                @if(count($wts['timecard']) > 0)
+                @foreach($wts['worktimes'] as $kd => $vald)
 
-                        $over_in = over_in(time2second($wt->tt_gotime), time2second(date('H:i:s',strtotime($time_start))));
-                        $over_out = over_out(time2second($wt->tt_backtime), time2second(date('H:i:s',strtotime($time_end))));
-                        ?>
-                      <td {{@style_overtime($over_in, $over_out)}}>{{ @time_over($over_in, $over_out) }}</td>
-                    </tr>
-                    @endforeach
+                <tr>
+                  <td>{{DayeJp($kd)}}</td>
+                  <td>@if(isset($vald['tt_gotime'])){{show_overtime(formatshortTime(@$vald['tt_gotime'], ':'))}} @else データ無し @endif </td>
+                  <td>@if(isset($vald['tt_backtime'])){{show_overtime(formatshortTime(@$vald['tt_backtime'], ':'))}} @else データ無し @endif</td>
+                  <td>@if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){{show_overtime(@hour_minute(touchtime($staff, $vald['tt_date'])->door_in))}} @else データ無し @endif </td>
+                  <td>@if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){{show_overtime(@hour_minute(touchtime($staff, $vald['tt_date'])->door_out))}} @else データ無し @endif </td>
+                  <td>@if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){{show_overtime(@hour_minute(actiontime($staff, $vald['tt_date'])->action_in))}} @else データ無し @endif </td>
+                  <td>@if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){{show_overtime(hour_minute(actiontime($staff, $vald['tt_date'])->action_out))}} @else データ無し @endif </td>
 
-                  @endif
+                  <?php $over_in = '';  $over_out = '';
+                    if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){ 
+                        $time_start = compare_min(touchtime($staff, $vald['tt_date'])->door_in, actiontime($staff, $vald['tt_date'])->action_in); 
+                        $time_end = compare_max(touchtime($staff, $vald['tt_date'])->door_out, actiontime($staff, $vald['tt_date'])->action_out);
+
+                        $over_in = over_in(time2second($vald['tt_date']), time2second(date('H:i:s',strtotime($time_start))));
+                        $over_out = over_out(time2second($vald['tt_date']), time2second(date('H:i:s',strtotime($time_end))));
+                    } ?>
+                    <td {{@style_overtime($over_in, $over_out)}}>{{ @time_over($over_in, $over_out) }}</td>
+
+                </tr>
+                @endforeach
+                @endif
+
                 </tbody>
               </table>              
 
@@ -135,6 +140,7 @@
 
               @endforeach
 
+
             </div>
           </div>
           @elseif(count($staffs) <= 0 && (isset($belong_id) || isset($kw)) )
@@ -145,6 +151,7 @@
             </div>
           </div>
           @endif
+
         </div>
 
 @endsection
