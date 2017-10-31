@@ -17,8 +17,9 @@
 	<?php $row = 0; $ym=''; $wts = search_work_time($staff->staff_id_no, $conditions);?>
 	  @if(count($wts['timecard']) > 0)
 	   @foreach($wts['worktimes'] as $date => $wt)
-   	<?php $ym = date('Y-m', strtotime($date)); ?>
-   	@if($ym != date('Y-m', strtotime($date)) || $row == 0)
+
+   	
+   	@if($row == 0 || $ym != date('Y-m', strtotime($date)))
   <table cellpadding=0 cellspacing=0>
 	<tr>
 			<td rowspan="2" class="bottom-line col-first header">年月日</td>
@@ -61,7 +62,8 @@
 		<td></td>
     </tr>
     <?php $row ++; ?>
-    	@if($ym != date('Y-m', strtotime($date))  || $row == 0)
+    <?php $ym = date('Y-m', strtotime($date)); ?>
+    	@if($row == 0 || $ym != date('Y-m', strtotime($date)))
 		</table>
     	@endif
 

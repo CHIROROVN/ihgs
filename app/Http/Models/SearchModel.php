@@ -24,7 +24,6 @@ class SearchModel extends Model
         $eTime = strtotime($date_to);
         $numDays = round(($eTime - $sTime) / $day) + 1;
 
-
         for ($d = 0; $d < $numDays; $d++) { 
             $dt = date($format, ($sTime + ($d * $day))); 
             $worktimes[$dt]['tt_date'] = date($format, ($sTime + ($d * $day))) . ' 00:00:00'; 
