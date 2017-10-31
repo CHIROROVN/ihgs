@@ -136,7 +136,7 @@
                         $over_out = over_out(time2second($tt_backtime), time2second($time_end));
 
                  ?>
-                    <td {{style_overtime($over_in, $over_out)}} title="{{time2second($tt_gotime)}}-{{time2second($tt_backtime)}}">{{ time_over($over_in, $over_out) }}</td>
+                    <td {{style_overtime($over_in, $over_out)}}>{{ time_over($over_in, $over_out) }}</td>
 
                 </tr>
                 @endforeach
