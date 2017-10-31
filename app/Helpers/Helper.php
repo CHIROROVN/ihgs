@@ -395,14 +395,11 @@ if (!function_exists('compare_max')) {
 if (!function_exists('time2second')) {
 	function time2second($time){
 		if(!empty($time)){
-			$timeArr = array_reverse(explode(":", $time));
-			$seconds = 0;
-			foreach ($timeArr as $key => $value)
-			{
-			    if ($key > 2) break;
-			    $seconds += pow(60, $key) * $value;
-			}
-			return $seconds;
+			$arrTmp = explode(' ', $time);
+			$t = !empty($arrTmp[1]) ? $arrTmp[1] : '00:00:00';
+			$sec = 0;
+			foreach (array_reverse(explode(':', $t)) as $k => $v) $sec += pow(60, $k) * $v;
+			return $sec;
 		}else{
 			return '';
 		}

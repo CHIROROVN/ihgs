@@ -15,8 +15,21 @@ class SearchModel extends Model
     public static function staffOfWorkTime($staff_id_no, $conditions){
         $date_from = date('Y-m-d' , strtotime($conditions['year_from'].'-'.$conditions['month_from'].'-'.'01'));
         $date_to = date('Y-m-d' , strtotime($conditions['year_to'].'-'.$conditions['month_to'].'-' . date('t', strtotime($conditions['year_to'].'-'.$conditions['month_to']))));
+        
         $result = array();
         $worktimes = array();
+        $day = 86400;
+        $format = 'Y-m-d'; 
+        $sTime = strtotime($date_from);
+        $eTime = strtotime($date_to);
+        $numDays = round(($eTime - $sTime) / $day) + 1;  
+
+
+        for ($d = 0; $d < $numDays; $d++) { 
+            $dt = date($format, ($sTime + ($d * $day))); 
+            $worktimes[$dt]['tt_date'] = date($format, ($sTime + ($d * $day))) . ' 00:00:00'; 
+        }
+
         $result['timecard'] = DB::table('t_staff')
         		->leftJoin('t_timecard', function($join){
         			$join->on('t_staff.staff_id_no', '=', 't_timecard.tt_staff_id_no');
@@ -28,21 +41,22 @@ class SearchModel extends Model
                 ->orderBy('t_timecard.tt_date', 'asc')
                 ->get()->toArray();
 
-        for($y=$conditions['year_from']; $y<=$conditions['year_to']; $y++){
-            for($m=$conditions['month_from']; $m<=$conditions['month_to']; $m++){
-                $dayOfMonth = date('t',strtotime($y.'-'.$m));
-                for($i=1; $i<=$dayOfMonth; $i++){
-                    $ymd_tmp = $y.'-'.c2digit($m) . '-' . c2digit($i);
-                   $worktimes[$ymd_tmp]['tt_date'] =  $ymd_tmp;
-                }                
-            }
-        }
+        // for($y=$conditions['year_from']; $y<=$conditions['year_to']; $y++){
+        //     for($m=$conditions['month_from']; $m<=$conditions['month_to']; $m++){
+        //         $dayOfMonth = date('t',strtotime($y.'-'.$m));
+        //         for($i=1; $i<=$dayOfMonth; $i++){
+        //             $ymd_tmp = $y.'-'.c2digit($m) . '-' . c2digit($i) . ' 00:00:00';
+        //            $worktimes[$y.'-'.c2digit($m) . '-' . c2digit($i)]['tt_date'] =  $ymd_tmp;
+        //         }
+        //     }
+        // }
+
 
         if(!empty($result['timecard'])){
             foreach ($result['timecard'] as $valtc) {
                 $tt_date = date('Y-m-d', strtotime($valtc->tt_date));
                 if(array_key_exists($tt_date, $worktimes)){
-                    $worktimes[$tt_date] = array('tt_date'=>$tt_date, 'tt_gotime'=>$valtc->tt_gotime, 'tt_backtime'=>$valtc->tt_backtime);
+                    $worktimes[$tt_date] = array('tt_date'=>date('Y-m-d H:i:s', strtotime($valtc->tt_date)), 'tt_gotime'=>$valtc->tt_gotime, 'tt_backtime'=>$valtc->tt_backtime);
                 }
             }
         }

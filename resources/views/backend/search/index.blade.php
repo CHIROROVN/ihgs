@@ -110,10 +110,10 @@
                   <td>{{DayeJp($kd)}}</td>
                   <td>@if(isset($vald['tt_gotime'])){{show_overtime(formatshortTime(@$vald['tt_gotime'], ':'))}} @else データ無し @endif </td>
                   <td>@if(isset($vald['tt_backtime'])){{show_overtime(formatshortTime(@$vald['tt_backtime'], ':'))}} @else データ無し @endif</td>
-                  <td>@if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){{show_overtime(@hour_minute(touchtime($staff, $vald['tt_date'])->door_in))}} @else データ無し @endif </td>
-                  <td>@if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){{show_overtime(@hour_minute(touchtime($staff, $vald['tt_date'])->door_out))}} @else データ無し @endif </td>
-                  <td>@if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){{show_overtime(@hour_minute(actiontime($staff, $vald['tt_date'])->action_in))}} @else データ無し @endif </td>
-                  <td>@if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){{show_overtime(hour_minute(actiontime($staff, $vald['tt_date'])->action_out))}} @else データ無し @endif </td>
+                  <td>{{show_overtime(@hour_minute(touchtime($staff, $vald['tt_date'])->door_in))}}</td>
+                  <td>{{show_overtime(@hour_minute(touchtime($staff, $vald['tt_date'])->door_out))}}</td>
+                  <td>{{show_overtime(@hour_minute(actiontime($staff, $vald['tt_date'])->action_in))}}</td>
+                  <td>{{show_overtime(@hour_minute(actiontime($staff, $vald['tt_date'])->action_out))}}</td>
 
                   <?php $over_in = '';  $over_out = '';
                     if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){ 

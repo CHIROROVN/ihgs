@@ -118,7 +118,17 @@ class BelongModel
     {
         // return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('belong_parent_id', '=', $id)->orderBy('belong_sort', 'asc')->pluck('belong_id')->toArray();
         $belong_parent = array();
-        $results = DB::table($this->table)->select('belong_id')->where('last_kind', '<>', DELETE)->where('belong_parent_id', '=', $id)->orderBy('belong_sort', 'asc')->get();
+        $results = DB::table($this->table)
+                        ->select('belong_id')
+                        ->where('last_kind', '<>', DELETE)
+                        //->where('belong_parent_id', '=', $id)
+                        ->where(function($query) use ($id){
+                                                 $query->where('m_belong.belong_id',  '=', $id)
+                                                       ->orWhere('m_belong.belong_parent_id','=', $id);
+                        })
+                        ->orderBy('belong_sort', 'asc')
+                        ->get();
+
         if(!empty($results)){
             foreach ($results as $val) {
                 $belong_parent[] = $val->belong_id;

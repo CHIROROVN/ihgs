@@ -13,29 +13,28 @@
 		<div class="staff-line">{!! division($staff->staff_belong) !!} ／ {{$staff->staff_id_no}} ／ {{$staff->staff_name}}</div>
 	</div>
 
-
 	<?php $row = 0; $ym=''; $wts = search_work_time($staff->staff_id_no, $conditions);?>
 	  @if(count($wts['timecard']) > 0)
 	   @foreach($wts['worktimes'] as $date => $wt)
-   	<?php $ym = date('Y-m', strtotime($date)); ?>
+
    	@if($ym != date('Y-m', strtotime($date)) || $row == 0)
   <table cellpadding=0 cellspacing=0>
 	<tr>
-			<td rowspan="2" class="bottom-line col-first header">年月日</td>
-			<td colspan="2" class="header">本⼈申告</td>
-			<td colspan="2" class="header">⼊退出</td>
-			<td colspan="2" class="header"> PC（テレワーク）</td>
-			<td rowspan="2" class="bottom-line width-normal header">分析</td>
-			<td rowspan="2" class="bottom-line col-reason header">乖離理由</td>
-			<td rowspan="2" class="bottom-line remark header">印</td>
+		<td rowspan="2" class="bottom-line col-first header">年月日</td>
+		<td colspan="2" class="header">本⼈申告</td>
+		<td colspan="2" class="header">⼊退出</td>
+		<td colspan="2" class="header"> PC（テレワーク）</td>
+		<td rowspan="2" class="bottom-line width-normal header">分析</td>
+		<td rowspan="2" class="bottom-line col-reason header">乖離理由</td>
+		<td rowspan="2" class="bottom-line remark header">印</td>
 	</tr>
 	<tr>
-			<td class="bottom-line width-normal header">出社</td>
-			<td class="bottom-line width-normal header">退社</td>
-			<td class="bottom-line width-normal header">最初</td>
-			<td class="bottom-line width-normal header">最後</td>
-			<td class="bottom-line top-line width-normal header">最初</td>
-			<td class="bottom-line width-normal header">最後</td>
+		<td class="bottom-line width-normal header">出社</td>
+		<td class="bottom-line width-normal header">退社</td>
+		<td class="bottom-line width-normal header">最初</td>
+		<td class="bottom-line width-normal header">最後</td>
+		<td class="bottom-line top-line width-normal header">最初</td>
+		<td class="bottom-line width-normal header">最後</td>
 	</tr>
    	@endif
 
@@ -58,13 +57,15 @@
       	<td></td>
 		<td></td>
     </tr>
-    <?php $row ++; ?>
+    <?php $row ++; $ym = date('Y-m', strtotime($date)); ?>
     	@if($ym != date('Y-m', strtotime($date))  || $row == 0)
 		</table>
     	@endif
 
     @endforeach
+    <pagebreak></pagebreak>
   @endif
+
 
 </div>
 
