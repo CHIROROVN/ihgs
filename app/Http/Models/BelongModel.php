@@ -116,12 +116,10 @@ class BelongModel
 
     public function get_list_by_id($id)
     {
-        // return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('belong_parent_id', '=', $id)->orderBy('belong_sort', 'asc')->pluck('belong_id')->toArray();
         $belong_parent = array();
         $results = DB::table($this->table)
                         ->select('belong_id')
                         ->where('last_kind', '<>', DELETE)
-                        //->where('belong_parent_id', '=', $id)
                         ->where(function($query) use ($id){
                                                  $query->where('m_belong.belong_id',  '=', $id)
                                                        ->orWhere('m_belong.belong_parent_id','=', $id);

@@ -101,29 +101,42 @@
                   </tr>
                 </thead>
                 <tbody>
-                <?php $wts = search_work_time($staff->staff_id_no, $conditions); ?>                
+                <?php $wts = search_work_time($staff, $conditions); ?>                
                  
-                @if(count($wts['timecard']) > 0)
+                @if(count($wts['worktimes']) > 0)
                 @foreach($wts['worktimes'] as $kd => $vald)
+
+                <?php  $tt_date =  date('Y-m-d', strtotime($vald['tt_date'])); 
+                $door_in = formatshortTime(hour_minute(touchtime($staff, $tt_date)->door_in));
+                $door_out = formatshortTime(hour_minute(touchtime($staff, $tt_date)->door_out));
+                $tt_gotime = formatshortTime(@$vald['tt_gotime'], ':');
+                $tt_backtime = formatshortTime(@$vald['tt_backtime'], ':');
+
+                ?>
 
                 <tr>
                   <td>{{DayeJp($kd)}}</td>
-                  <td>@if(isset($vald['tt_gotime'])){{show_overtime(formatshortTime(@$vald['tt_gotime'], ':'))}} @else データ無し @endif </td>
-                  <td>@if(isset($vald['tt_backtime'])){{show_overtime(formatshortTime(@$vald['tt_backtime'], ':'))}} @else データ無し @endif</td>
-                  <td>{{show_overtime(@hour_minute(touchtime($staff, $vald['tt_date'])->door_in))}}</td>
-                  <td>{{show_overtime(@hour_minute(touchtime($staff, $vald['tt_date'])->door_out))}}</td>
-                  <td>{{show_overtime(@hour_minute(actiontime($staff, $vald['tt_date'])->action_in))}}</td>
-                  <td>{{show_overtime(@hour_minute(actiontime($staff, $vald['tt_date'])->action_out))}}</td>
+                  <td>@if(!empty($tt_gotime)){{$tt_gotime}} @else データ無し @endif </td>
+                  <td>@if(!empty($tt_backtime)){{$tt_backtime}} @else データ無し @endif</td>
+                  
+                  <td>@if(isset($door_in)){{$door_in}} @else データ無し @endif </td>
 
-                  <?php $over_in = '';  $over_out = '';
-                    if(isset($vald['tt_gotime']) && isset($vald['tt_backtime'])){ 
-                        $time_start = compare_min(touchtime($staff, $vald['tt_date'])->door_in, actiontime($staff, $vald['tt_date'])->action_in); 
-                        $time_end = compare_max(touchtime($staff, $vald['tt_date'])->door_out, actiontime($staff, $vald['tt_date'])->action_out);
+                  <td>@if(isset($door_out)){{$door_out}} @else データ無し @endif</td>
+                  
+                  <td>@if(isset($vald['tp_logintime'])){{formatshortTime($vald['tp_logintime'])}} @else データ無し @endif</td>
+                  <td>@if(isset($vald['tp_logouttime'])){{formatshortTime($vald['tp_logouttime'])}} @else データ無し @endif</td>
 
-                        $over_in = over_in(time2second($vald['tt_date']), time2second(date('H:i:s',strtotime($time_start))));
-                        $over_out = over_out(time2second($vald['tt_date']), time2second(date('H:i:s',strtotime($time_end))));
-                    } ?>
-                    <td {{@style_overtime($over_in, $over_out)}}>{{ @time_over($over_in, $over_out) }}</td>
+                  <?php
+                        $time_start = compare_min($door_in, formatshortTime(@$vald['tp_logintime'])); 
+                        $time_end = compare_max($door_out, formatshortTime(@$vald['tp_logouttime']));
+
+
+                        $over_in = over_in( time2second($tt_gotime), time2second($time_start));
+
+                        $over_out = over_out(time2second($tt_backtime), time2second($time_end));
+
+                 ?>
+                    <td {{style_overtime($over_in, $over_out)}} title="{{time2second($tt_gotime)}}-{{time2second($tt_backtime)}}">{{ time_over($over_in, $over_out) }}</td>
 
                 </tr>
                 @endforeach
@@ -139,7 +152,6 @@
               </div>
 
               @endforeach
-
 
             </div>
           </div>

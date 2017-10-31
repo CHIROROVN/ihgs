@@ -307,7 +307,9 @@ if (!function_exists('hour_minute')) {
 }
 
 if (!function_exists('time_over')) {
+
 	function time_over($start=null, $end=null){
+
 		if(!empty($start)){
 			$overtime = $start + $end;
 			$mins = $overtime / 60;
@@ -349,20 +351,13 @@ if (!function_exists('time_over')) {
 // }
 
 if (!function_exists('compare_min')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function compare_min($time1=null, $time2=null)
-	{	
-		if(!empty($time1) && empty($time1)){
+	{
+		if(!empty($time1) && empty($time2)){
 			return $time1;
-		}elseif(empty($time1) && !empty($time1)){
+		}elseif(empty($time1) && !empty($time2)){
 			return $time2;
-		}
-		if(strtotime($time1) <= strtotime($time2)){
+		}elseif(strtotime($time1) <= strtotime($time2)){
 			return $time1;
 		}else{
 			return $time2;
@@ -371,20 +366,13 @@ if (!function_exists('compare_min')) {
 }
 
 if (!function_exists('compare_max')) {
-	/**
-	 * description
-	 *
-	 * @param
-	 * @return
-	 */
 	function compare_max($time1=null, $time2=null)
 	{
-		if(!empty($time1) && empty($time1)){
+		if(!empty($time1) && empty($time2)){
 			return $time1;
-		}elseif(empty($time1) && !empty($time1)){
+		}elseif(empty($time1) && !empty($time2)){
 			return $time2;
-		}
-		if(strtotime($time1) >= strtotime($time2)){
+		}elseif(strtotime($time1) >= strtotime($time2)){
 			return $time1;
 		}else{
 			return $time2;
@@ -395,11 +383,8 @@ if (!function_exists('compare_max')) {
 if (!function_exists('time2second')) {
 	function time2second($time){
 		if(!empty($time)){
-			$arrTmp = explode(' ', $time);
-			$t = !empty($arrTmp[1]) ? $arrTmp[1] : '00:00:00';
-			$sec = 0;
-			foreach (array_reverse(explode(':', $t)) as $k => $v) $sec += pow(60, $k) * $v;
-			return $sec;
+			$time = explode(':', $time);
+			return ($time[0]*3600) + ($time[1]*60);
 		}else{
 			return '';
 		}
@@ -408,13 +393,15 @@ if (!function_exists('time2second')) {
 
 if (!function_exists('over_in')) {
 	function over_in($time1, $time2){
-		return $time1 - $time2;
+		if(empty($time1) || empty($time2)) return 0;
+		if(!empty($time1) && !empty($time2)) return $time1 - $time2;
 	}
 }
 
 if (!function_exists('over_out')) {
 	function over_out($time1, $time2){
-		return $time2 - $time1;
+		if(empty($time1) || empty($time2)) return 0;
+		if(!empty($time2) && !empty($time1)) return $time2 - $time1;
 	}
 }
 if (!function_exists('get_time_diff')) {
