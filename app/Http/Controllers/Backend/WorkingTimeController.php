@@ -32,8 +32,7 @@ class WorkingTimeController extends BackendController
         $data['year']     = (isset($_GET['year']) && $_GET['year'] >2000)?$_GET['year']:date("Y");
 		$data['staff']    =  $clsWorkingTime->get_by_id($id);		
 		$arrTempt         = $this->get_work_time_array($id, $data['year'] );			
-		$data['worktimes']  = $arrTempt;
-		
+		$data['worktimes']  = $arrTempt;		
 		return view('backend.workingtime.detail',$data);
 	}
 
@@ -42,7 +41,6 @@ class WorkingTimeController extends BackendController
 	   $clsWorkingTime   		= new WorkingTimeModel();
 	   $clsBelong            	= new BelongModel();
 	   $data = array();
-
 		$data['staff_belong'] 	= !empty(Input::get('staff_belong')) ? Input::get('staff_belong') : null;
 		$data['cb_year'] 		= !empty(Input::get('cb_year')) ? Input::get('cb_year') : null ;
 		$data['worktimes']    	= $clsWorkingTime->get_all( $data['staff_belong'], $data['cb_year'] );
@@ -118,7 +116,6 @@ class WorkingTimeController extends BackendController
                 }
 			}											
 		}
-
 		return $arrResult;
 	}
 	public function get_over_time_year($id,$year)
