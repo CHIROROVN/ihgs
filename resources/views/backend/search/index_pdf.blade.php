@@ -39,8 +39,8 @@
       <?php $row = 0;?>
       @foreach($wt as $key => $val)
        <?php            
-             $time_start = isset($val['touchtime_in'])?compare_min($val['touchtime_in'], $val['pc_in']):(isset($val['pc_in'])?$val['pc_in']:''); 
-             $time_end   = isset($val['touchtime_out'])?compare_max($val['touchtime_out'], $val['pc_out']):(isset($val['pc_out'])?$val['pc_out']:'');
+             $time_start = isset($val['touchtime_in'])?compare_min($val['touchtime_in'], @$val['pc_in']):(isset($val['pc_in'])?$val['pc_in']:''); 
+             $time_end   = isset($val['touchtime_out'])?compare_max($val['touchtime_out'], @$val['pc_out']):(isset($val['pc_out'])?$val['pc_out']:'');
              $over_in    = isset($val['gotime'])?over_in( time2second($val['gotime']), time2second($time_start)):'';
              $over_out   = isset($val['backtime'])?over_out(time2second($val['backtime']), time2second($time_end)):'';
        ?>      

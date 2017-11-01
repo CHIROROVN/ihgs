@@ -49,7 +49,37 @@ class SearchModel extends Model
                 ->whereDate('t_timecard.tt_date', '<=', $date_to)
                 ->orderBy('t_timecard.tt_date', 'asc')
                 ->get()->toArray();
+        $result['doorcard'] =    DB::table('t_doorcard')
+                                    ->select(DB::raw('td_card,td_touchtime')) 
+                                    ->where( function($query) use ($staff){
+                                        $query->orWhere('td_card', $staff->staff_card1)
+                                               ->orWhere('td_card', $staff->staff_card2)
+                                               ->orWhere('td_card', $staff->staff_card3)
+                                               ->orWhere('td_card', $staff->staff_card4)
+                                               ->orWhere('td_card', $staff->staff_card5)
+                                               ->orWhere('td_card', $staff->staff_card6)
+                                               ->orWhere('td_card', $staff->staff_card7)
+                                               ->orWhere('td_card', $staff->staff_card8)
+                                               ->orWhere('td_card', $staff->staff_card9)
+                                               ->orWhere('td_card', $staff->staff_card10);
+                                    })->whereDate('td_touchtime', '>=', $date_from)->whereDate('td_touchtime', '<=', $date_to)->get()->toArray();
+        if(count($result['doorcard']) >0){
+            foreach ($result['doorcard'] as $key => $value) {
+                $tt_date = date('Y-m-d', strtotime($value->td_touchtime));
+                if(!isset($doorcard[$tt_date]['door_in'])){
+                     $doorcard[$tt_date]['door_in'] = date('H:i:s', strtotime($value->td_touchtime));
+                     $doorcard[$tt_date]['door_out'] = date('H:i:s', strtotime($value->td_touchtime)); 
+                }else{
+                    $door_in    = strtotime($tt_date.' '.$doorcard[$tt_date]['door_in']);
+                    $door_out   = strtotime($tt_date.' '.$doorcard[$tt_date]['door_out']);
+                    $tempt      = strtotime($value->td_touchtime);
+                    $doorcard[$tt_date]['door_in'] = ($tempt <$door_in)?date('H:i:s', strtotime($value->td_touchtime)):$doorcard[$tt_date]['door_in'];
+                    $doorcard[$tt_date]['door_out'] = ($tempt >$door_out)?date('H:i:s', strtotime($value->td_touchtime)):$doorcard[$tt_date]['door_out'];
+                }                
+            }
 
+        }                             
+        
         if(!empty($result['timecard'])){
             foreach ($result['timecard'] as $valtc) {
                 $tt_date = date('Y-m-d', strtotime($valtc->tt_date));
@@ -58,9 +88,18 @@ class SearchModel extends Model
                 }
             }
         }
-
+        if(count($result['doorcard']) >0){
+            foreach($doorcard as $k=>$v){
+              if(count($worktimes[$k]) >1){               
+                 $worktimes[$k] = array('tt_date'=>date('Y-m-d H:i:s', strtotime($k)), 'door_in'=>$v['door_in'], 'door_out'=>$v['door_out'], 'tt_gotime'=>@$worktimes[$k]['tt_gotime'], 'tt_backtime'=>@$worktimes[$k]['tt_backtime'], 'tp_logintime'=>@$worktimes[$k]['tp_logintime'], 'tp_logouttime'=>@$worktimes[$k]['tp_logouttime']);
+              }else{
+                 $worktimes[$tt_date] = array('tt_date'=>date('Y-m-d H:i:s', strtotime($k)), 'door_in'=>$v['door_in'], 'door_out'=>$v['door_out']);
+              }
+                
+            }
+        }              
         $result['worktimes'] = $worktimes;
-
+        
         return $result;
     }
     public static function staffOfWorkOverTime($staff, $conditions){
@@ -160,7 +199,7 @@ class SearchModel extends Model
                 $arrTempt[$temptDate]['pc_out'] = (!isset($arrTempt[$temptDate]['pc_out']))?date("H:i:s",strtotime($val->tp_logouttime)): date("H:i:s",strtotime(compare_max($arrTempt[$temptDate]['pc_out'], $val->tp_logouttime)));           
             }   
         }   
-        $arrResult = array();       
+        $arrResult = array();$intMonth =1;     
         for($i=$yearFrom;$i<=$yearTo;$i++){            
             $startMonth = ($i==$yearFrom)?$monthFrom+1:1;            
             $endMonth   = ($i==$yearFrom && $yearFrom<$yearTo)?12:$monthTo-1;
@@ -168,8 +207,9 @@ class SearchModel extends Model
                 $endDate = date("t",mktime(0,0,0,$j,1,$i));                 
                 for($k=1;$k<=$endDate;$k++){
                     $strDate = date("Y-m-d",mktime(0,0,0,$j,$k,$i));                    
-                    $arrResult[$j][$strDate] = (array_key_exists($strDate,$arrTempt))?$arrTempt[$strDate]:array();
+                    $arrResult[$intMonth][$strDate] = (array_key_exists($strDate,$arrTempt))?$arrTempt[$strDate]:array();
                 }
+                $intMonth++;
 
             }
         }

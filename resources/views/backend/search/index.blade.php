@@ -106,10 +106,11 @@
                 @foreach($wts['worktimes'] as $kd => $vald)
 
                 <?php  $tt_date =  date('Y-m-d', strtotime($vald['tt_date'])); 
-                    $door_in = formatshortTime(hour_minute(touchtime($staff, $tt_date)->door_in));
-                    $door_out = formatshortTime(hour_minute(touchtime($staff, $tt_date)->door_out));
-                    $tt_gotime = formatshortTime(@$vald['tt_gotime'], ':');
-                    $tt_backtime = formatshortTime(@$vald['tt_backtime'], ':');
+                       //$arrDoor =  touchtime($staff, $tt_date);                                              
+                    $door_in = isset($vald['door_in'])?formatshortTime(hour_minute(@$vald['door_in'])):'';
+                    $door_out = isset($vald['door_out'])?formatshortTime(hour_minute(@$vald['door_out'])):'';
+                    $tt_gotime = isset($vald['tt_gotime'])?formatshortTime(@$vald['tt_gotime'], ':'):'';
+                    $tt_backtime = isset($vald['tt_backtime'])?formatshortTime(@$vald['tt_backtime'], ':'):'';
                     $time_start = compare_min($door_in, formatshortTime(@$vald['tp_logintime'])); 
                     $time_end = compare_max($door_out, formatshortTime(@$vald['tp_logouttime']));
                     $over_in = over_in( time2second($tt_gotime), time2second($time_start));

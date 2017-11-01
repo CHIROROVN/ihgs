@@ -51,6 +51,7 @@ class WorkingTimeController extends BackendController
 				$data['overtimes'][$worktime->staff_id]  =  $this->get_over_time_year($worktime->staff_id,$data['cb_year']);					
 			}						
 		}
+		//return view('backend.workingtime.pdf',$data); 
 		$pdf = PDF::loadView('backend.workingtime.pdf', $data);	
 		$fileName = !empty(division($data['staff_belong'])) ? division($data['staff_belong']) : ALL;
 		return $pdf->download(mb_convert_encoding($fileName, 'UTF-8') . '_' . rand('9999',time()).'.pdf');

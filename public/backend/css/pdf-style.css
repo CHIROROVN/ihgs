@@ -6,11 +6,11 @@
 }
 * {
   font-family: 'Yu Gothic';
-  font-size: 10px;
+  font-size: 9px;
 }
 
 body {
-  font-size: 11px;
+  font-size: 9px;
   width: 700px;
 }
 
@@ -34,7 +34,7 @@ tr{
 td{
  text-align:center; 
  vertical-align:middle;
- height: 26px;
+ height: 28px;
 
  border-right: 0.5px solid #000000;
  border-bottom: 0.5px solid #000000;

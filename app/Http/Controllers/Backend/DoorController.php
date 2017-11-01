@@ -170,15 +170,14 @@ class DoorController extends BackendController
                         'last_date'         => date('Y-m-d H:i:s'),                        
                         'last_ipadrs'       => CLIENT_IP_ADRS,
                         'last_user'         => Auth::user()->u_id            
-                    );     
-                    //echo "<pre>";print_r($dataInsert );echo "</pre>";                                      
+                    );                                                 
                     $clsDoorcard->insert($dataInsert);
                 }   
                 Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));            
             unset($data); unset($date_formats);unset($inputs);                
         }else Session::flash('danger', trans('common.msg_regist_danger'));
-       return redirect()->route('backend.door.index');
+      return redirect()->route('backend.door.index');
     }
     public function getDelete($dataname)
     {
