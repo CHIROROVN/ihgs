@@ -120,17 +120,12 @@
                 <tr>
                   <td>{{DayeJp($kd)}}</td>
                   <td>@if(!empty($tt_gotime)){{$tt_gotime}} @else データ無し @endif </td>
-                  <td>@if(!empty($tt_backtime)){{$tt_backtime}} @else データ無し @endif</td>
-                  
+                  <td>@if(!empty($tt_backtime)){{$tt_backtime}} @else データ無し @endif</td>                  
                   <td>@if(isset($door_in)){{$door_in}} @else データ無し @endif </td>
-
-                  <td>@if(isset($door_out)){{$door_out}} @else データ無し @endif</td>
-                  
+                  <td>@if(isset($door_out)){{$door_out}} @else データ無し @endif</td>                  
                   <td>@if(isset($vald['tp_logintime'])){{formatshortTime($vald['tp_logintime'])}} @else データ無し @endif</td>
                   <td>@if(isset($vald['tp_logouttime'])){{formatshortTime($vald['tp_logouttime'])}} @else データ無し @endif</td>
-
                   <td {{style_overtime($over_in, $over_out)}}>{{ time_over($over_in, $over_out) }}</td>
-
                 </tr>
                 @endforeach
                 

@@ -52,7 +52,23 @@ class WorkingTimeController extends BackendController
 			}						
 		}
 		//return view('backend.workingtime.pdf',$data); 
-		$pdf = PDF::loadView('backend.workingtime.pdf', $data);	
+		$pdf = PDF::loadView('backend.workingtime.pdf', $data,array(),[
+										'mode'                 => 'utf-8',
+										'format'               => 'A4-L',
+										'default_font_size'    => '8',
+										'default_font'         => 'Yu Gothic',
+										'margin_left'          => 10,
+										'margin_right'         => 10,
+										'margin_top'           => 10,
+										'margin_bottom'        => 10,
+										'margin_header'        => 0,
+										'margin_footer'        => 0,
+										'orientation'          => 'P',
+										'title'                => 'IHGS',
+										'author'               => '',
+										'display_mode'         => 'fullpage'
+									]);	
+		
 		$fileName = !empty(division($data['staff_belong'])) ? division($data['staff_belong']) : ALL;
 		return $pdf->download(mb_convert_encoding($fileName, 'UTF-8') . '_' . rand('9999',time()).'.pdf');
 	}
