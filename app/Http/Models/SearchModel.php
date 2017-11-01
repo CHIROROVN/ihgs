@@ -32,10 +32,15 @@ class SearchModel extends Model
         			$join->on('t_staff.staff_id_no', '=', 't_timecard.tt_staff_id_no');
         		})
 
-                ->leftJoin('t_pc', function($query) use ($staff){
-                    $query->where('t_pc.tp_staff_id_no', $staff->staff_id_no);
-                            //->whereDate('t_pc.tp_date', 't_timecard.tt_date');
+                ->leftJoin('t_pc', function($join) use ($staff){
+                    $join->on('t_timecard.tt_date', '=', 't_pc.tp_date')
+                    ->where('t_pc.tp_staff_id_no', $staff->staff_id_no);
                 })
+
+                // ->leftJoin('t_pc', function($query) use ($staff){
+                //     $query->where('t_pc.tp_staff_id_no', $staff->staff_id_no);
+                //     //->whereRaw('Date(t_pc.tp_date'), 'Date(t_timecard.tt_date)');
+                // })
 
         		->select('t_timecard.tt_date', 't_timecard.tt_gotime', 't_timecard.tt_backtime', 't_pc.tp_logintime', 't_pc.tp_logouttime')
 
