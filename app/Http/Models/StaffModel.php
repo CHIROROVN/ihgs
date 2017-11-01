@@ -93,7 +93,7 @@ class StaffModel
             $sql = $sql->where('t_staff.staff_id_no', 'like', '%'.$where['kw'].'%')->orWhere('t_staff.staff_name', 'like', '%'.$where['kw'].'%');
         }
 
-    return $sql->get();
+        return $sql->get();
     }
     
 }

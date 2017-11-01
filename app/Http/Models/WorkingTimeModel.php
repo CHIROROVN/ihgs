@@ -110,17 +110,8 @@ class WorkingTimeModel
                                                         });                                                     
                                             })                                         
                                           ->where('t_staff.staff_id', $id)->select('t1.tp_date','t1.tp_logintime','t1.tp_logouttime','t1.tp_staff_id_no')->orderBy('t1.tp_date','asc')                                         
-                                          ->get();
-                                                                               
-           /* $results['timecards'] = DB::table('t_timecard')->where(function($query) use ($year){
-                                                                 $query->whereYear('t_timecard.tt_date', $year)->whereMonth('t_timecard.tt_date','>', '3');
-                                                              })->orWhere(function ($query) use ($year){
-                                                                 $query->whereYear('t_timecard.tt_date', $year + 1)->whereMonth('t_timecard.tt_date','<', '4');                                                                      
-                                                           })->where(function($query) use ($id){
-                                                                      $query->whereIn('tt_staff_id_no',function ($query) use ($id) {
-                                                                            $query->select('staff_id_no')->from('t_staff')->where('staff_id','=',$id);
-                                                                      });                                                                                                                   
-                                                            })->select('tt_staff_id_no','tt_date','tt_gotime','tt_backtime')->orderBy('tt_date','asc')->get(); */
+                                          ->get();                                                                          
+           
            $results['timecards']= DB::table($this->table)->join('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                            ->where(function($query) use ($year){
                                                 $query->where(function ($query) use ($year) {

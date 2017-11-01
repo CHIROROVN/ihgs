@@ -1,18 +1,18 @@
-
 @extends('backend.layouts.app')
 @section('content')
-
-        <!-- breadcrumbs -->
-          <div class="w3l_agileits_breadcrumbs">
-            <div class="w3l_agileits_breadcrumbs_inner">
-              <ul>
-                <li>個人ごと月次集計</li>
-
-              </ul>
-            </div>
-          </div>
-        <!-- //breadcrumbs -->
+<!-- breadcrumbs -->
+<div class="w3l_agileits_breadcrumbs">
+  <div class="w3l_agileits_breadcrumbs_inner">
+    <ul><li>個人ごと月次集計</li></ul>
+  </div>
+</div>
+<!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
+          <div class="flash-messages">
+            <div id="error" class="message" style="display: none">       
+            
+            </div>
+          </div>  
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
                 <table id="table" class="table-bordered">
@@ -32,7 +32,7 @@
                     </td>
                     <td>
                       <div class="fl-left">
-                        <select name="year_from" class="form-control form-control-date">
+                        <select name="year_from" class="form-control form-control-date" id="year_from">
                           @for($yf=($curr_year-3); $yf<=($curr_year); $yf++)
                           <option value="{{$yf}}" @if(isset($year_from) && $year_from == $yf) selected @endif>{{$yf}}年</option>
                           @endfor
@@ -46,7 +46,7 @@
                           <div class="fl-left mar-left15 line-height30 mar-right15">～</div>
                         </div>
                         <div class="fl-left">
-                          <select name="year_to" class="form-control form-control-date">
+                          <select name="year_to" class="form-control form-control-date" id="year_to">
                             @for($yt=($curr_year-2); $yt<=($curr_year + 1); $yt++)
                             <option value="{{$yt}}" @if(isset($year_to) && $year_to == $yt) selected @endif>{{$yt}}年</option>
                           @endfor
@@ -63,7 +63,7 @@
                       <input name="kw" type="text" class="form-control" size="20" value="{{@$kw}}">
                      </td>
                      <td>
-                        <input value="抽出する" type="submit" class="btn btn-primary btn-sm">
+                        <input value="抽出する" id="btnSubmit" type="button" class="btn btn-primary btn-sm" >
                       </td>
                   </tr>
                 </tbody>
@@ -148,7 +148,6 @@
             </div>
           </div>
           @elseif(count($staffs) <= 0 && (isset($belong_id) || isset($kw)) )
-
           <div class="agile-tables">
             <div class="agile_info_shadow" style="text-align: center;">
               <strong style="color: #777;">該当するデータがありません。</strong>
@@ -157,5 +156,18 @@
           @endif
 
         </div>
-
+<script type="text/javascript">
+$("#btnSubmit").on("click",function() { 
+   var flag = true; 
+   var $yearFrom = $("#year_from").val();
+   var $yearTo = $("#year_to").val();
+  if (parseInt($yearFrom) > parseInt($yearTo )) {  
+    $("#error").html('Please choose 日付 again.');             
+    $("#error").css('display','block');   
+    $("#year_from").focus();
+    flag = false;    
+  }   
+  if(flag) $( "#f_search" ).submit();
+});
+</script>   
 @endsection

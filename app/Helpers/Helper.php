@@ -27,6 +27,13 @@ if (!function_exists('search_work_time')) {
     }
 }
 
+if (!function_exists('search_work_time_pdf')) {
+	function search_work_time_pdf($staff_id_no, $conditions)
+	{
+		return App\Http\Models\SearchModel::staffOfWorkOverTime($staff_id_no, $conditions);		
+    }
+}
+
 if (!function_exists('touchtime')) {
 	function touchtime($staff, $date)
 	{
@@ -454,7 +461,7 @@ if (!function_exists('get_work_overtime')) {
 if (!function_exists('style_overtime')) {
 	function style_overtime($start=null, $end=null)
 	{
-		$overtime = ($start + $end)/60;
+		$overtime = ((int)$start + (int)$end)/60;
 		if(($overtime > 30) && ($overtime <= 60)){
 			return 'class=bg-yellow';
 		}elseif($overtime > 60){

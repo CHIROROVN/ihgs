@@ -63,5 +63,118 @@ class SearchModel extends Model
 
         return $result;
     }
+    public static function staffOfWorkOverTime($staff, $conditions){
+        $id = $staff->staff_id;
+        if((int)($id)<1) return array();
+        $yearFrom   = isset($conditions["year_from"])?(int)$conditions["year_from"]:date("Y");
+        $yearTo     = isset($conditions["year_to"])?(int)$conditions["year_to"]:date("Y");
+        $monthFrom  = isset($conditions["month_from"])?(int)$conditions["month_from"]-1:date("n");
+        $monthTo    = isset($conditions["month_to"])?(int)$conditions["month_to"]+1:date("n");
+        $arrTempt   = array();            
+        $results['doorcards'] = DB::table('t_doorcard')->where(function($query) use ($yearFrom,$yearTo,$monthFrom,$monthTo){
+                                          $query->where(function ($query) use ($yearFrom,$yearTo,$monthFrom,$monthTo) {
+                                                            $query->whereYear('td_touchtime', $yearFrom)
+                                                                  ->whereMonth('td_touchtime','>', $monthFrom);
+                                                        })
+                                                     ->orWhere(function ($query) use ($yearFrom,$yearTo,$monthFrom,$monthTo){
+                                                            $query->whereYear('td_touchtime', $yearTo)
+                                                                  ->whereMonth('td_touchtime','<', $monthTo);
+                                                        });
+                                    
+                                    })->where(function($query) use ($id){
+                                        $query->whereIn('td_card',function ($query) use ($id) {
+                                              $query->select('staff_card1')->from('t_staff')
+                                              ->where('staff_card1','<>','')->where('staff_id','=',$id);
+                                        });   
+                                        for($i=2;$i<=10;$i++){                                     
+                                            $query->orWhereIn('td_card',function ($query) use ($i,$id)  {
+                                                  $query->select('staff_card'.$i)->from('t_staff')
+                                                  ->where('staff_card'.$i,'<>','')->where('staff_id','=',$id);
+                                            });
+                                        }                                            
+                                    })->select('td_card','td_door','td_touchtime')->orderBy('td_touchtime', 'asc')->get();                                                                                                                                         
+          
+           $results['pcs'] = DB::table('t_staff')->join('t_pc as t1', function ($join) use ($yearFrom,$yearTo,$monthFrom,$monthTo) {
+                                                $join->on('t_staff.staff_id_no', '=', 't1.tp_staff_id_no')
+                                                     ->Where(function ($query) use ($yearFrom,$yearTo,$monthFrom,$monthTo) {
+                                                            $query->whereYear('t1.tp_date', $yearFrom)
+                                                                  ->whereMonth('t1.tp_date','>',$monthFrom);
+                                                        })
+                                                     ->orWhere(function ($query) use ($yearFrom,$yearTo,$monthFrom,$monthTo){
+                                                            $query->whereYear('t1.tp_date', $yearTo)
+                                                                  ->whereMonth('t1.tp_date','<', $monthTo);
+                                                        });                                                     
+                                            })                                         
+                                          ->where('t_staff.staff_id', $id)->select('t1.tp_date','t1.tp_logintime','t1.tp_logouttime','t1.tp_staff_id_no')->orderBy('t1.tp_date','asc')                                         
+                                          ->get();                                                                          
+           
+           $results['timecards']= DB::table('t_staff')->join('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
+                                           ->where(function($query) use ($yearFrom,$yearTo,$monthFrom,$monthTo){
+                                                $query->where(function ($query) use ($yearFrom,$yearTo,$monthFrom,$monthTo) {
+                                                                  $query->whereYear('t1.tt_date', $yearFrom)
+                                                                        ->whereMonth('t1.tt_date','>', $monthFrom);
+                                                              })
+                                                           ->orWhere(function ($query) use ($yearFrom,$yearTo,$monthFrom,$monthTo){
+                                                                  $query->whereYear('t1.tt_date', $yearTo)
+                                                                        ->whereMonth('t1.tt_date','<', $monthTo);
+                                                              });
+                                          })
+                                          ->where('t_staff.staff_id', $id)->select('t1.tt_date','t1.tt_gotime','t1.tt_backtime','t1.tt_staff_id_no')
+                                          ->orderBy('t1.tt_date', 'asc')                                          
+                                          ->get();
+        if(count($results['timecards']) >0){           
+            foreach($results['timecards'] as $val){
+                $temptDate     = date("Y-m-d",strtotime($val->tt_date));                                                
+                $arrTempt[$temptDate]['gotime']   = (!isset($arrTempt[$temptDate]['gotime']))?date("H:i:s",strtotime($val->tt_gotime)):date("H:i:s",strtotime(compare_min($arrTempt[$temptDate]['gotime'],$val->tt_gotime)));
+                $arrTempt[$temptDate]['backtime'] = (!isset($arrTempt[$temptDate]['backtime']))?date("H:i:s",strtotime($val->tt_backtime)):date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime'])));                                          
+            }           
+        }               
+        
+        if(count($results['doorcards']) >0){                   
+            foreach($results['doorcards'] as $val){
+                $temptDate = date("Y-m-d",strtotime($val->td_touchtime));
+                if(isset($arrTempt[$temptDate])){
+                    if(!isset($arrTempt[$temptDate]['touchtime_in']))
+                    {
+                        $arrTempt[$temptDate]['touchtime_in'] = date("H:i:s",strtotime($val->td_touchtime));
+                        $arrTempt[$temptDate]['touchtime_out'] = date("H:i:s",strtotime($val->td_touchtime));
+                    }else{
+                        $temptDateIn     = strtotime($temptDate.' '.$arrTempt[$temptDate]['touchtime_in']);
+                        $temptDateOut    = strtotime($temptDate.' '.$arrTempt[$temptDate]['touchtime_out']);
+                        $temptDateSource = strtotime($val->td_touchtime);
+                        if($temptDateSource < $temptDateIn)
+                            $arrTempt[$temptDate]['touchtime_in'] = date("H:i:s",strtotime($val->td_touchtime));
+                        if($temptDateSource > $temptDateOut)
+                            $arrTempt[$temptDate]['touchtime_out'] = date("H:i:s",strtotime($val->td_touchtime));
+                    } 
+                }else{
+                    $arrTempt[$temptDate]['touchtime_in'] = date("H:i:s",strtotime($val->td_touchtime));
+                    $arrTempt[$temptDate]['touchtime_out'] = date("H:i:s",strtotime($val->td_touchtime));
+                }               
+            }   
+        }
+        if(count($results['pcs']) >0){                     
+            foreach($results['pcs'] as $val){
+                $temptDate = date("Y-m-d",strtotime($val->tp_date));                
+                $arrTempt[$temptDate]['pc_in']  = (!isset($arrTempt[$temptDate]['pc_in']))?date("H:i:s",strtotime($val->tp_logintime)):date("H:i:s",strtotime(compare_min($val->tp_logintime, $arrTempt[$temptDate]['pc_in'])));
+                $arrTempt[$temptDate]['pc_out'] = (!isset($arrTempt[$temptDate]['pc_out']))?date("H:i:s",strtotime($val->tp_logouttime)): date("H:i:s",strtotime(compare_max($arrTempt[$temptDate]['pc_out'], $val->tp_logouttime)));           
+            }   
+        }   
+        $arrResult = array();       
+        for($i=$yearFrom;$i<=$yearTo;$i++){            
+            $startMonth = ($i==$yearFrom)?$monthFrom+1:1;            
+            $endMonth   = ($i==$yearFrom && $yearFrom<$yearTo)?12:$monthTo-1;
+            for($j=$startMonth;$j<=$endMonth;$j++){
+                $endDate = date("t",mktime(0,0,0,$j,1,$i));                 
+                for($k=1;$k<=$endDate;$k++){
+                    $strDate = date("Y-m-d",mktime(0,0,0,$j,$k,$i));                    
+                    $arrResult[$j][$strDate] = (array_key_exists($strDate,$arrTempt))?$arrTempt[$strDate]:array();
+                }
+
+            }
+        }
+        return $arrResult;
+       
+    }    
 
 }
