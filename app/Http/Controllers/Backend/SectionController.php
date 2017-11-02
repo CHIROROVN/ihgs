@@ -48,7 +48,12 @@ class SectionController extends BackendController
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
         if ($validator->fails()) {
-            return redirect()->route('backend.section.regist')->withErrors($validator)->withInput();
+            return redirect()->route('backend.section.regist',[$parent_id])->withErrors($validator)->withInput();
+        }
+        $belong = $clsBelong->get_by_belong_code(Input::get('belong_code'));
+        if(isset($belong->belong_id)){
+            $error['belong_code']      = trans('validation.error_section_code_unique');  
+            return redirect()->route('backend.section.regist',[$parent_id])->withErrors($error)->withInput();
         }
         // insert
         $max = $clsBelong->get_max($parent_id);
@@ -94,7 +99,11 @@ class SectionController extends BackendController
         if ($validator->fails()) {
             return redirect()->route('backend.section.edit', [$id])->withErrors($validator)->withInput();
         }
-
+        $belong = $clsBelong->get_by_belong_code(Input::get('belong_code'));
+        if(isset($belong->belong_id) && $belong->belong_id !=$id){
+            $error['belong_code']      = trans('validation.error_section_code_unique');  
+            return redirect()->route('backend.section.edit', [$id])->withErrors($error)->withInput();
+        }
         // update
         $dataUpdate = array(
             'belong_name'       => Input::get('belong_name'),

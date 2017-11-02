@@ -44,8 +44,14 @@ class DivisionController extends BackendController
         $clsBelong      = new BelongModel();
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
+
         if ($validator->fails()) {
             return redirect()->route('backend.division.regist')->withErrors($validator)->withInput();
+        }
+        $belong = $clsBelong->get_by_belong_code(Input::get('belong_code'));
+        if(isset($belong->belong_id)){
+            $error['belong_code']      = trans('validation.error_belong_code_unique');  
+            return redirect()->route('backend.division.regist')->withErrors($error)->withInput();
         }
         // insert
         $max = $clsBelong->get_max();
@@ -90,7 +96,11 @@ class DivisionController extends BackendController
         if ($validator->fails()) {
             return redirect()->route('backend.division.edit', [$id])->withErrors($validator)->withInput();
         }
-
+        $belong = $clsBelong->get_by_belong_code(Input::get('belong_code'));
+        if(isset($belong->belong_id) && $belong->belong_id != $id){
+            $error['belong_code']      = trans('validation.error_belong_code_unique');  
+            return redirect()->route('backend.division.edit')->withErrors($error)->withInput();
+        }
         // update
         $dataUpdate = array(
             'belong_name'       => Input::get('belong_name'),

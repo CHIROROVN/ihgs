@@ -31,7 +31,7 @@
             <td class="col-title col-md-3"><label for="">課の名称<span class="f_caution">(*)</span></label></td>
               <td class="col-md-9">
                 <div class="col-md-6">
-                  <input type="text" class="form-control" id="belong_name" name="belong_name">
+                  <input type="text" class="form-control" id="belong_name" name="belong_name" value="{{old('belong_name')}}">
                   <span class="help-block" id="error-belong-name">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
                 </div>
               </td>
@@ -40,7 +40,7 @@
               <td class="col-title col-md-3"><label for="">課のコード<span class="f_caution">(*)</span></label></td>
               <td class="col-md-9">
                 <div class="col-md-6">
-                  <input type="text" class="form-control" id="belong_code" name="belong_code">
+                  <input type="text" class="form-control" id="belong_code" name="belong_code" value="{{old('belong_code')}}">
                   <span class="help-block" id="error-belong_code">@if ($errors->first('belong_code')) ※{!! $errors->first('belong_code') !!} @endif</span>
                 </div>
               </td>
