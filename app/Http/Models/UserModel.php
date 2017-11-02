@@ -15,7 +15,7 @@ class UserModel
     {
         return array(
             'u_name'                       => 'required',
-            'u_login'                      => 'required',
+            'u_login'                      => 'required|unique:m_user',
             'u_passwd'                     => 'required',
             //'u_belong'                      => 'required',
          );
@@ -26,6 +26,7 @@ class UserModel
         return array(
             'u_name.required'              => trans('validation.error_u_name_required'),
             'u_login.required'             => trans('validation.error_u_login_required'),
+            'u_login.unique'               => trans('validation.error_u_login_unique'),
             'u_passwd.required'            => trans('validation.error_u_passwd_required'),
             //'u_belong.required'            => trans('validation.error_u_belong_required'),
         );

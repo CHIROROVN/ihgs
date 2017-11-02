@@ -27,6 +27,8 @@ return [
     'error_u_login_required'              => 'ログインIDを入力してください。',
     'error_u_passwd_required'             => 'パスワードを入力してください。',
     'error_u_belong_required'             => '所属を入力してください。',
+    'error_u_login_unique'                => 'ログインIDは存在しました。',
+
 
     /*
     |--------------------------------------------------------------------------
