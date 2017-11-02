@@ -99,7 +99,7 @@ class DivisionController extends BackendController
         $belong = $clsBelong->get_by_belong_code(Input::get('belong_code'));
         if(isset($belong->belong_id) && $belong->belong_id != $id){
             $error['belong_code']      = trans('validation.error_belong_code_unique');  
-            return redirect()->route('backend.division.edit')->withErrors($error)->withInput();
+            return redirect()->route('backend.division.edit', [$id])->withErrors($error)->withInput();
         }
         // update
         $dataUpdate = array(
