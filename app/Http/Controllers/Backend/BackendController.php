@@ -70,19 +70,19 @@ class BackendController extends Controller
                 break;
             }
         }
-
+         
         // update
         // swap cur->up
         $dataUpdate = array(
-            $field_sort => $up_belong->$field_sort
+            $field_sort => @$up_belong->$field_sort
         );
-        $clsObject->update($cur_belong->$field_primary, $dataUpdate);
+        $clsObject->update(@$cur_belong->$field_primary, $dataUpdate);
 
         // swap up->cur
         $dataUpdate = array(
-            $field_sort => $cur_belong->$field_sort
+            $field_sort => @$cur_belong->$field_sort
         );
-        $clsObject->update($up_belong->$field_primary, $dataUpdate);
+        $clsObject->update(@$up_belong->$field_primary, $dataUpdate);
     }
 
     protected function down($clsObject, $id, $array, $field_primary, $field_sort)
