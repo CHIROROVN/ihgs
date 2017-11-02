@@ -9,8 +9,7 @@
 <!-- //breadcrumbs -->
         <div class="inner_content_w3_agile_info two_in">
           <div class="flash-messages">
-            <div id="error" class="message" style="display: none">       
-            
+            <div id="error" class="message" style="display: none">            
             </div>
           </div>  
           <div class="graph-form agile_info_shadow">
@@ -67,7 +66,7 @@
                       </td>
                   </tr>
                 </tbody>
-                 </table>
+                </table>
                 
               </div>
            </div>
@@ -101,12 +100,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                <?php $wts = search_work_time($staff, $conditions); ?>                
+              <?php $wts = search_work_time($staff, $conditions); ?>
                  
                 @foreach($wts['worktimes'] as $kd => $vald)
-
                 <?php  $tt_date =  date('Y-m-d', strtotime($vald['tt_date'])); 
-                       //$arrDoor =  touchtime($staff, $tt_date);                                              
                     $door_in = isset($vald['door_in'])?formatshortTime(hour_minute(@$vald['door_in'])):'';
                     $door_out = isset($vald['door_out'])?formatshortTime(hour_minute(@$vald['door_out'])):'';
                     $tt_gotime = isset($vald['tt_gotime'])?formatshortTime(@$vald['tt_gotime'], ':'):'';
@@ -128,8 +125,6 @@
                   <td {{style_overtime($over_in, $over_out)}}>{{ time_over($over_in, $over_out) }}</td>
                 </tr>
                 @endforeach
-                
-
                 </tbody>
               </table>              
 
@@ -143,14 +138,13 @@
 
             </div>
           </div>
-          @elseif(count($staffs) <= 0 && (isset($belong_id) || isset($kw)) )
+          @elseif(count($staffs) <= 0 && (isset($belong_id) || isset($kw) || isset($conditions['year_from'])) )
           <div class="agile-tables">
             <div class="agile_info_shadow" style="text-align: center;">
               <strong style="color: #777;">該当するデータがありません。</strong>
             </div>
           </div>
           @endif
-
         </div>
 <script type="text/javascript">
 $("#btnSubmit").on("click",function() { 
