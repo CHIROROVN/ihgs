@@ -50,7 +50,7 @@ return [
     'error_belong_code_unique'          => '所属名を入力してください。',
     'error_section_name_required'          => '所属名を入力してください。',
     'error_section_code_unique'          => '所属名を入力してください。',
-    'error_belong_code_required'          => 'データ名称が存在しました。もう一度お試しください',
+    'error_section_code_required'          => 'データ名称が存在しました。もう一度お試しください',
     /* timecard*/
     'error_timecard_file_csv'              => '正しいcsv形式を選択してください。',   
     'error_tt_dataname_required'           => '所属名を入力してください。',
