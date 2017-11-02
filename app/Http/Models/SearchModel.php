@@ -27,23 +27,23 @@ class SearchModel extends Model
         }
         
         $result['timecard'] = DB::table('t_staff')
-        		->leftJoin('t_timecard', function($join){
-        			$join->on('t_staff.staff_id_no', '=', 't_timecard.tt_staff_id_no');
-        		})
+            ->leftJoin('t_timecard', function($join){
+              $join->on('t_staff.staff_id_no', '=', 't_timecard.tt_staff_id_no');
+            })
 
             ->leftJoin('t_pc', function($join) use ($staff){
                 $join->on('t_timecard.tt_date', '=', 't_pc.tp_date')
                 ->where('t_pc.tp_staff_id_no', $staff->staff_id_no);
             })
 
-        		->select('t_timecard.tt_date', 't_timecard.tt_gotime', 't_timecard.tt_backtime', 't_pc.tp_logintime', 't_pc.tp_logouttime')
-
+            ->select('t_timecard.tt_date', 't_timecard.tt_gotime', 't_timecard.tt_backtime', 't_pc.tp_logintime', 't_pc.tp_logouttime')
                 ->where('t_staff.staff_id_no', $staff_id_no)
                 ->whereDate('t_timecard.tt_date', '>=', $date_from)
                 ->whereDate('t_timecard.tt_date', '<=', $date_to)
                 ->orderBy('t_timecard.tt_date', 'asc')
                 ->get()->toArray();
-        $result['doorcard'] =    DB::table('t_doorcard')
+
+        $result['doorcard'] =  DB::table('t_doorcard')
                                     ->select(DB::raw('td_card,td_touchtime')) 
                                     ->where( function($query) use ($staff){
                                         $query->orWhere('td_card', $staff->staff_card1)
@@ -72,7 +72,6 @@ class SearchModel extends Model
                     $doorcard[$tt_date]['door_out'] = ($tempt >$door_out)?date('H:i:s', strtotime($value->td_touchtime)):$doorcard[$tt_date]['door_out'];
                 }                
             }
-
         }
         
         if(!empty($result['timecard'])){
@@ -83,16 +82,16 @@ class SearchModel extends Model
                 }
             }
         }
+
         if(count($result['doorcard']) >0){
             foreach($doorcard as $k=>$v){
               if(count($worktimes[$k]) >1){  
                  $worktimes[$k] = array('tt_date'=>date('Y-m-d H:i:s', strtotime($k)), 'door_in'=>$v['door_in'], 'door_out'=>$v['door_out'], 'tt_gotime'=>@$worktimes[$k]['tt_gotime'], 'tt_backtime'=>@$worktimes[$k]['tt_backtime'], 'tp_logintime'=>@$worktimes[$k]['tp_logintime'], 'tp_logouttime'=>@$worktimes[$k]['tp_logouttime']);
               }else{
                  $worktimes[$k] = array('tt_date'=>date('Y-m-d H:i:s', strtotime($k)), 'door_in'=>$v['door_in'], 'door_out'=>$v['door_out']);
-              }
-                
+              }                
             }
-        }            
+        }
         $result['worktimes'] = $worktimes;        
         return $result;
     }
@@ -126,7 +125,7 @@ class SearchModel extends Model
                                                   ->where('staff_card'.$i,'<>','')->where('staff_id','=',$id);
                                             });
                                         }                                            
-                                    })->select('td_card','td_door','td_touchtime')->orderBy('td_touchtime', 'asc')->get();                                                                                                                                         
+                                    })->select('td_card','td_door','td_touchtime')->orderBy('td_touchtime', 'asc')->get();
           
            $results['pcs'] = DB::table('t_staff')->join('t_pc as t1', function ($join) use ($yearFrom,$yearTo,$monthFrom,$monthTo) {
                                                 $join->on('t_staff.staff_id_no', '=', 't1.tp_staff_id_no')
@@ -160,7 +159,7 @@ class SearchModel extends Model
             foreach($results['timecards'] as $val){
                 $temptDate     = date("Y-m-d",strtotime($val->tt_date));                                                
                 $arrTempt[$temptDate]['gotime']   = (!isset($arrTempt[$temptDate]['gotime']))?date("H:i:s",strtotime($val->tt_gotime)):date("H:i:s",strtotime(compare_min($arrTempt[$temptDate]['gotime'],$val->tt_gotime)));
-                $arrTempt[$temptDate]['backtime'] = (!isset($arrTempt[$temptDate]['backtime']))?date("H:i:s",strtotime($val->tt_backtime)):date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime'])));                                          
+                $arrTempt[$temptDate]['backtime'] = (!isset($arrTempt[$temptDate]['backtime']))?date("H:i:s",strtotime($val->tt_backtime)):date("H:i:s",strtotime(compare_max($val->tt_backtime,$arrTempt[$temptDate]['backtime'])));
             }           
         }               
         
@@ -187,13 +186,15 @@ class SearchModel extends Model
                 }               
             }   
         }
+
         if(count($results['pcs']) >0){                     
             foreach($results['pcs'] as $val){
                 $temptDate = date("Y-m-d",strtotime($val->tp_date));                
                 $arrTempt[$temptDate]['pc_in']  = (!isset($arrTempt[$temptDate]['pc_in']))?date("H:i:s",strtotime($val->tp_logintime)):date("H:i:s",strtotime(compare_min($val->tp_logintime, $arrTempt[$temptDate]['pc_in'])));
                 $arrTempt[$temptDate]['pc_out'] = (!isset($arrTempt[$temptDate]['pc_out']))?date("H:i:s",strtotime($val->tp_logouttime)): date("H:i:s",strtotime(compare_max($arrTempt[$temptDate]['pc_out'], $val->tp_logouttime)));           
             }   
-        }   
+        } 
+
         $arrResult = array();$intMonth =1;     
         for($i=$yearFrom;$i<=$yearTo;$i++){            
             $startMonth = ($i==$yearFrom)?$monthFrom+1:1;            
@@ -205,12 +206,8 @@ class SearchModel extends Model
                     $arrResult[$intMonth][$strDate] = (array_key_exists($strDate,$arrTempt))?$arrTempt[$strDate]:array();
                 }
                 $intMonth++;
-
             }
         }
-
         return $arrResult;
-       
-    }    
-
+    }
 }

@@ -95,15 +95,10 @@ class SearchController extends BackendController
 			$where['month_to'] = Input::get('month_to');
 		}
 
-		$data['conditions'] = $where;
-		
+		$data['conditions'] = $where;		
 		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));		
 
-		//return view('backend.search.index_pdf', $data);
-
 		$pdf = PDF::loadView('backend.search.index_pdf', $data);
-		
-
 		return $pdf->download(mb_convert_encoding($data['staff']->staff_name, 'UTF-8') . '_' . rand('9999',time()).'.pdf');
 	}
 
