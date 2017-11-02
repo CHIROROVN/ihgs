@@ -158,11 +158,11 @@ $("#btnSubmit").on("click",function() {
    var $yearFrom = $("#year_from").val();
    var $yearTo = $("#year_to").val();
   if (parseInt($yearFrom) > parseInt($yearTo )) {  
-    $("#error").html('Please choose 日付 again.');             
+    $("#error").html('年月までは年月からより大きくなければなりません。');             
     $("#error").css('display','block');   
     $("#year_from").focus();
     flag = false;    
-  }   
+  }
   if(flag) $( "#f_search" ).submit();
 });
 </script>   
