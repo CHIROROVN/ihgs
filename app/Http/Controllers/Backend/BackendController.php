@@ -104,15 +104,15 @@ class BackendController extends Controller
         // update
         // swap cur->down
         $dataUpdate = array(
-            $field_sort => $down_belong->$field_sort
+            $field_sort => @$down_belong->$field_sort
         );
-        $clsObject->update($cur_belong->$field_primary, $dataUpdate);
+        $clsObject->update(@$cur_belong->$field_primary, $dataUpdate);
 
         // swap down->cur
         $dataUpdate = array(
-            $field_sort => $cur_belong->$field_sort
+            $field_sort => @$cur_belong->$field_sort
         );
-        $clsObject->update($down_belong->$field_primary, $dataUpdate);
+        $clsObject->update(@$down_belong->$field_primary, $dataUpdate);
     }    
     protected function  readFileCsv($filename)
     {       
