@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class SearchModel extends Model
 {
     protected $table   = 't_staff';
-
      //Search working time
     public static function staffOfWorkTime($staff, $conditions){
         $staff_id_no = $staff->staff_id_no;
@@ -32,15 +31,10 @@ class SearchModel extends Model
         			$join->on('t_staff.staff_id_no', '=', 't_timecard.tt_staff_id_no');
         		})
 
-                ->leftJoin('t_pc', function($join) use ($staff){
-                    $join->on('t_timecard.tt_date', '=', 't_pc.tp_date')
-                    ->where('t_pc.tp_staff_id_no', $staff->staff_id_no);
-                })
-
-                // ->leftJoin('t_pc', function($query) use ($staff){
-                //     $query->where('t_pc.tp_staff_id_no', $staff->staff_id_no);
-                //     //->whereRaw('Date(t_pc.tp_date'), 'Date(t_timecard.tt_date)');
-                // })
+            ->leftJoin('t_pc', function($join) use ($staff){
+                $join->on('t_timecard.tt_date', '=', 't_pc.tp_date')
+                ->where('t_pc.tp_staff_id_no', $staff->staff_id_no);
+            })
 
         		->select('t_timecard.tt_date', 't_timecard.tt_gotime', 't_timecard.tt_backtime', 't_pc.tp_logintime', 't_pc.tp_logouttime')
 
@@ -62,7 +56,8 @@ class SearchModel extends Model
                                                ->orWhere('td_card', $staff->staff_card8)
                                                ->orWhere('td_card', $staff->staff_card9)
                                                ->orWhere('td_card', $staff->staff_card10);
-                                    })->whereDate('td_touchtime', '>=', $date_from)->whereDate('td_touchtime', '<=', $date_to)->get()->toArray();
+                                    })->whereDate('td_touchtime', '>=', $date_from)->whereDate('td_touchtime', '<=', $date_to)->get()->toArray();                                     
+
         if(count($result['doorcard']) >0){
             foreach ($result['doorcard'] as $key => $value) {
                 $tt_date = date('Y-m-d', strtotime($value->td_touchtime));
@@ -78,7 +73,7 @@ class SearchModel extends Model
                 }                
             }
 
-        }                             
+        }
         
         if(!empty($result['timecard'])){
             foreach ($result['timecard'] as $valtc) {
@@ -90,18 +85,18 @@ class SearchModel extends Model
         }
         if(count($result['doorcard']) >0){
             foreach($doorcard as $k=>$v){
-              if(count($worktimes[$k]) >1){               
+              if(count($worktimes[$k]) >1){  
                  $worktimes[$k] = array('tt_date'=>date('Y-m-d H:i:s', strtotime($k)), 'door_in'=>$v['door_in'], 'door_out'=>$v['door_out'], 'tt_gotime'=>@$worktimes[$k]['tt_gotime'], 'tt_backtime'=>@$worktimes[$k]['tt_backtime'], 'tp_logintime'=>@$worktimes[$k]['tp_logintime'], 'tp_logouttime'=>@$worktimes[$k]['tp_logouttime']);
               }else{
-                 $worktimes[$tt_date] = array('tt_date'=>date('Y-m-d H:i:s', strtotime($k)), 'door_in'=>$v['door_in'], 'door_out'=>$v['door_out']);
+                 $worktimes[$k] = array('tt_date'=>date('Y-m-d H:i:s', strtotime($k)), 'door_in'=>$v['door_in'], 'door_out'=>$v['door_out']);
               }
                 
             }
-        }              
-        $result['worktimes'] = $worktimes;
-        
+        }            
+        $result['worktimes'] = $worktimes;        
         return $result;
     }
+
     public static function staffOfWorkOverTime($staff, $conditions){
         $id = $staff->staff_id;
         if((int)($id)<1) return array();
@@ -213,6 +208,7 @@ class SearchModel extends Model
 
             }
         }
+
         return $arrResult;
        
     }    

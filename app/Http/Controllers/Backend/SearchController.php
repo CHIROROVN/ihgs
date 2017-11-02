@@ -99,7 +99,7 @@ class SearchController extends BackendController
 		
 		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));		
 
-		//return view('backend.search.index_pdf', $data);    
+		//return view('backend.search.index_pdf', $data);
 
 		$pdf = PDF::loadView('backend.search.index_pdf', $data);
 		
