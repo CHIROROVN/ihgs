@@ -2,6 +2,7 @@
 use App\Http\Controllers\Controller;
 use Config;
 use Excel;
+use DB;
 
 class BackendController extends Controller
 {
@@ -33,6 +34,7 @@ class BackendController extends Controller
             $ipaddress = '';
 
         define('CLIENT_IP_ADRS', $ipaddress);
+        DB::enableQueryLog();
     }
     protected function top($clsObject, $id, $field_sort,$parent_id='')
     {
@@ -74,15 +76,15 @@ class BackendController extends Controller
         // update
         // swap cur->up
         $dataUpdate = array(
-            $field_sort => @$up_belong->$field_sort
+            $field_sort => isset($up_belong->$field_sort)?$up_belong->$field_sort:NULL            
         );
-        $clsObject->update(@$cur_belong->$field_primary, $dataUpdate);
+        $clsObject->update(isset($cur_belong->$field_primary)?$cur_belong->$field_primary:NULL, $dataUpdate);
 
         // swap up->cur
         $dataUpdate = array(
-            $field_sort => @$cur_belong->$field_sort
+            $field_sort => isset($cur_belong->$field_sort)?$cur_belong->$field_sort:NULL
         );
-        $clsObject->update(@$up_belong->$field_primary, $dataUpdate);
+        $clsObject->update(isset($up_belong->$field_primary)?$up_belong->$field_primary:NULL, $dataUpdate);
     }
 
     protected function down($clsObject, $id, $array, $field_primary, $field_sort)

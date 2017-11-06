@@ -77,30 +77,32 @@ class BelongModel
     }
     public function get_by_belong_code($belong_code)
     {
-        $results = DB::table($this->table)->where('belong_code','like', $belong_code)->where('last_kind', '<>', DELETE)->first();        
+        $results = DB::table($this->table)->where('belong_code','like', $belong_code)->where('last_kind', '<>', DELETE)->first(); 
+                
         return $results;
     }
     public function update($id, $data)
     {
         $results = DB::table($this->table)->where('belong_id', $id)->update($data);
+          
         return $results;
     }
     /*  Delete division and section*/
     public function delete($id, $data)
     {
-        $results = DB::table($this->table)->where('belong_id', $id)->orWhere('belong_parent_id', '=', $id)->update($data);        
+        $results = DB::table($this->table)->where('belong_id', $id)->orWhere('belong_parent_id', '=', $id)->update($data); 
         return $results;
     }
 
     public function get_min($parent_id='')
     {
-        $results = ($parent_id=='')?DB::table($this->table)->whereNull('belong_parent_id')->min('belong_sort'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->min('belong_sort');
+        $results = ($parent_id=='')?DB::table($this->table)->whereNull('belong_parent_id')->min('belong_sort'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->min('belong_sort');         
         return $results;
     }
 
     public function get_max($parent_id='')
     {
-        $results = ($parent_id=='')?DB::table($this->table)->whereNull('belong_parent_id')->max('belong_sort'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->max('belong_sort');
+        $results = ($parent_id=='')?DB::table($this->table)->whereNull('belong_parent_id')->max('belong_sort'):DB::table($this->table)->where('belong_parent_id', '=', $parent_id)->max('belong_sort');      
         return $results;
     } 
     public function get_list_section()

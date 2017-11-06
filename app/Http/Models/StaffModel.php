@@ -53,14 +53,11 @@ class StaffModel
         if(!empty($staff_id_no))     $results = $results->where('staff_id_no', 'like', '%' . $staff_id_no . '%');
 
         $count = $results->count();
-        $data  = $results->orderBy('staff_id', 'desc')->simplePaginate(LIMIT_PAGE);
-       // $data  = $results->orderBy('staff_id', 'desc')->Paginate(LIMIT_PAGE);
+        $data  = $results->orderBy('staff_id', 'desc')->simplePaginate(LIMIT_PAGE);       
         return [
             'count' => $count,
             'data' => $data
-        ];
-       /* $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('staff_id', 'desc')->simplePaginate(LIMIT_PAGE);
-        return $results;*/
+        ];       
     }
 
     public function insert($data)
