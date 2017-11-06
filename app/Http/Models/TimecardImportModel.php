@@ -74,9 +74,7 @@ class TimecardImportModel
                                        ->whereMonth('t1.tt_date','=', $month)
                                        ->where('t_staff.staff_id', $staff_id)->orderBy('t1.tt_date', 'asc')->orderBy('t1.tt_gotime', 'asc')
                                        ->get();
-
-        return $results;                     
-       
+        return $results;       
     }
 
     public function insert($data)
@@ -84,7 +82,8 @@ class TimecardImportModel
         $results = DB::table($this->table)->insert($data);
         return $results;
     }
-     public function delete($dataname)
+    
+    public function delete($dataname)
     {        
         $results = DB::table($this->table)->where('tt_dataname', $dataname)->delete();             
         return $results;

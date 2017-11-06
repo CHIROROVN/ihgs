@@ -30,14 +30,14 @@ class StaffModel
             'file_csv'    => 'required|mimes:csv,xls,xlsx', 
         );
     }
+
     public function MessagesImport()
     {
         return array(
             'file_csv.required'      => trans('validation.error_file_path_required'),
             'file_csv.mimes'         => trans('validation.error_timecard_file_csv'),
         );
-    }
-    
+    }    
     
     public function get_all($belong_id=null, $staff_name=null,$staff_id_no=null)
     {        

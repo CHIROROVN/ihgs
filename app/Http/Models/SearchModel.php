@@ -92,7 +92,7 @@ class SearchModel extends Model
               }                
             }
         }
-        $result['worktimes'] = $worktimes;        
+        $result['worktimes'] = $worktimes;
         return $result;
     }
 

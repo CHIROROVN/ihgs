@@ -11,6 +11,7 @@ use Session;
 use Config;
 use App;
 use PDF;
+use DB;
 
 class SearchController extends BackendController
 {
@@ -96,7 +97,7 @@ class SearchController extends BackendController
 		}
 
 		$data['conditions'] = $where;		
-		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));		
+		$data['staff'] = $clsStaff->get_by_id(Input::get('staff_id'));
 
 		$pdf = PDF::loadView('backend.search.index_pdf', $data);
 		return $pdf->download(mb_convert_encoding($data['staff']->staff_name, 'UTF-8') . '_' . rand('9999',time()).'.pdf');

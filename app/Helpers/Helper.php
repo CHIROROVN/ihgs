@@ -401,14 +401,14 @@ if (!function_exists('time2second')) {
 if (!function_exists('over_in')) {
 	function over_in($time1, $time2){
 		if(empty($time1) || empty($time2)) return 0;
-		if(!empty($time1) && !empty($time2)) return $time1 - $time2;
+		if(!empty($time1) && !empty($time2)) return abs($time1 - $time2);
 	}
 }
 
 if (!function_exists('over_out')) {
 	function over_out($time1, $time2){
 		if(empty($time1) || empty($time2)) return 0;
-		if(!empty($time2) && !empty($time1)) return $time2 - $time1;
+		if(!empty($time2) && !empty($time1)) return abs($time2 - $time1);
 	}
 }
 if (!function_exists('get_time_diff')) {

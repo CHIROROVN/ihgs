@@ -20,8 +20,7 @@ class DoorcardModel
     public function Messages()
     {
         return array(
-           'md_door_format.required'  => trans('validation.error_door_format_required'),
-            
+           'md_door_format.required'  => trans('validation.error_door_format_required')            
         );
     }
     

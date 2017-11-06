@@ -180,6 +180,9 @@ class UsersController extends BackendController
 		if(empty(Input::get('u_passwd'))){
 			unset($Rules['u_passwd']);
 		}
+		$user = $clsUser->get_by_id($id);
+
+		if($user->u_login == Input::get('u_login')) unset($Rules['u_login']);
 
 		$validator = Validator::make(Input::all(), $Rules, $clsUser->Messages());
 
@@ -253,7 +256,6 @@ class UsersController extends BackendController
 
 	}
 
-
 	/*
 	|-----------------------------------
 	| get user detail
@@ -265,7 +267,6 @@ class UsersController extends BackendController
 		$u_id = $id;
 		return view('backend.users.detail', compact('user', 'u_id'));
 	}
-
 
 	/*
 	|-----------------------------------

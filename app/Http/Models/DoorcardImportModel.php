@@ -28,8 +28,7 @@ class DoorcardImportModel
     
     public function get_all()
     {
-        $results = DB::table($this->table)->distinct('td_dataname')->orderBy('td_id', 'desc')->take(100)->get();//->groupBy('td_dataname')
-       
+        $results = DB::table($this->table)->distinct('td_dataname')->orderBy('td_id', 'desc')->take(100)->get();
         return $results;
     }
 
@@ -88,47 +87,6 @@ class DoorcardImportModel
                            ->orWhere('td_card', $staff->staff_card9)
                            ->orWhere('td_card', $staff->staff_card10);
                 });
-
-            // if(!empty($staff->staff_card1)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card1);
-            // }
-            // if(!empty($staff->staff_card2)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card2);
-            // }
-            // if(!empty($staff->staff_card3)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card3);
-            // }
-            // if(!empty($staff->staff_card4)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card4);
-            // }
-            // if(!empty($staff->staff_card5)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card5);
-            // }
-            // if(!empty($staff->staff_card6)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card6);
-            // }
-            // if(!empty($staff->staff_card7)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card7);
-            // }
-            // if(!empty($staff->staff_card8)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card8);
-            // }
-            // if(!empty($staff->staff_card9)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card9);
-            // }
-            // if(!empty($staff->staff_card10)){
-            //     $sql =  $sql->whereNotNull('td_card')
-            //     ->orWhere('td_card', $staff->staff_card10);
-            // }
             
             return $sql->first();
         }

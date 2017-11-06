@@ -65,12 +65,6 @@ class UserModel
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('u_id', $id)->first();
     }
 
-    // get u_login by id
-    // public function uBelong($id)
-    // {
-    //     return DB::table($this->table)->select('u_login')->where('u_id', $id)->first();
-    // }
-
     //users update
     public function update($id, $data)
     {
