@@ -12,7 +12,7 @@ class PcImportModel
     public function Rules()
     {
         return array(
-            'tp_dataname'               => 'required|unique:t_pc,tp_dataname',
+            'tp_dataname'               => 'required|unique:t_pc,tp_dataname|regex:/^[^\\p{Zs}]+$/u',
             'tp_file_csv'               => 'required|mimes:csv,xls,xlsx',
         );
     }
@@ -21,15 +21,17 @@ class PcImportModel
     {
         return array(
             'tp_dataname.required'      => trans('validation.error_tp_dataname_required'),
+            'tp_dataname.regex'         => trans('validation.error_tp_dataname_required'),
             'tp_dataname.unique'        => trans('validation.error_tp_dataname_unique'),
             'tp_file_csv.required'      => trans('validation.error_tp_file_csv_required'),
             'tp_file_csv.mimes'         => trans('validation.error_tp_file_csv_mimes'),
         );
     }
 
+   
    //Manage Pc format
     public function getPc(){
-        return DB::table($this->table)->get();        
+        return DB::table($this->table)->get();
     }
 
     public function get_all_by_dataname()
@@ -37,7 +39,7 @@ class PcImportModel
         $results = DB::table($this->table)
                ->select(DB::raw('tp_dataname, max(last_date) as last_date'))
                ->groupBy('tp_dataname')              
-               ->get();
+               ->get(); 
         return $results;
     }
 
@@ -50,7 +52,7 @@ class PcImportModel
     //pc update
     public function update($id, $data)
     {
-        DB::table($this->table)->where('tp_id', $id)->update($data);
+        return DB::table($this->table)->where('tp_id', $id)->update($data);
     }
 
     //pc delete by tp_dataname
@@ -69,6 +71,7 @@ class PcImportModel
         }
 
         return $sql->first();
+
     }
 
 }

@@ -30,14 +30,14 @@ class StaffModel
             'file_csv'    => 'required|mimes:csv,xls,xlsx', 
         );
     }
-
     public function MessagesImport()
     {
         return array(
             'file_csv.required'      => trans('validation.error_file_path_required'),
             'file_csv.mimes'         => trans('validation.error_timecard_file_csv'),
         );
-    }    
+    }
+    
     
     public function get_all($belong_id=null, $staff_name=null,$staff_id_no=null)
     {        
@@ -53,11 +53,13 @@ class StaffModel
         if(!empty($staff_id_no))     $results = $results->where('staff_id_no', 'like', '%' . $staff_id_no . '%');
 
         $count = $results->count();
-        $data  = $results->orderBy('staff_id', 'desc')->simplePaginate(LIMIT_PAGE);       
+        $data  = $results->orderBy('staff_id', 'desc')->simplePaginate(LIMIT_PAGE);
+       // $data  = $results->orderBy('staff_id', 'desc')->Paginate(LIMIT_PAGE);
         return [
             'count' => $count,
             'data' => $data
-        ];       
+        ];
+
     }
 
     public function insert($data)
@@ -90,7 +92,7 @@ class StaffModel
             $sql = $sql->where('t_staff.staff_id_no', 'like', '%'.$where['kw'].'%')->orWhere('t_staff.staff_name', 'like', '%'.$where['kw'].'%');
         }
 
-        return $sql->get();
+    return $sql->get();
     }
     
 }
