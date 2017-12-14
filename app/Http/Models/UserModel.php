@@ -16,7 +16,7 @@ class UserModel
         return array(
             'u_name'                       => 'required',
             'u_login'                      => 'required|unique:m_user',
-            'u_passwd'                     => 'required',
+            'u_passwd'                     => 'required|min:6',
             //'u_belong'                      => 'required',
          );
     }
@@ -28,6 +28,7 @@ class UserModel
             'u_login.required'             => trans('validation.error_u_login_required'),
             'u_login.unique'               => trans('validation.error_u_login_unique'),
             'u_passwd.required'            => trans('validation.error_u_passwd_required'),
+            'u_passwd.min'                 => trans('validation.error_u_passwd_min'),
             //'u_belong.required'            => trans('validation.error_u_belong_required'),
         );
     }
@@ -64,6 +65,12 @@ class UserModel
     {
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('u_id', $id)->first();
     }
+
+    // get u_login by id
+    // public function uBelong($id)
+    // {
+    //     return DB::table($this->table)->select('u_login')->where('u_id', $id)->first();
+    // }
 
     //users update
     public function update($id, $data)

@@ -154,7 +154,6 @@ class UsersController extends BackendController
 		
 	}
 
-
 	/*
 	|-----------------------------------
 	| get user edit

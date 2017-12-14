@@ -3450,4 +3450,8 @@ span.required {
     padding-left: 20px;
 }
 
+.btn-hide {
+    display: none;
+}
+
 /**************/

@@ -13,19 +13,19 @@
   <table cellpadding=0 cellspacing=0>
 	<tr>
 			<td class="bottom-line header col-name">氏名</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>4月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>5月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>6月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>7月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>8月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>9月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>10月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>11月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year}} 年<br>12月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year +1}} 年<br>1月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year +1}} 年<br>2月</td>
-			<td class="bottom-line header col-normal ">{{$cb_year +1}} 年<br>3月</td>
-			<td class="bottom-line header col-total ">合計</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>4月</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>5月</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>6月</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>7月</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>8月</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>9月</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>10月</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>11月</td>
+			<td class="bottom-line header col-normal">{{$cb_year}} 年<br>12月</td>
+			<td class="bottom-line header col-normal">{{$cb_year +1}} 年<br>1月</td>
+			<td class="bottom-line header col-normal">{{$cb_year +1}} 年<br>2月</td>
+			<td class="bottom-line header col-normal">{{$cb_year +1}} 年<br>3月</td>
+			<td class="bottom-line header col-total">合計</td>
 			<td class="bottom-line header col-normal">基準超</td>
 			<td class="bottom-line header remark">備考</td>
 	</tr>

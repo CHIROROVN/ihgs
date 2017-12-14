@@ -18,11 +18,13 @@ class PcModel
     {
         return array();
     }
+
    
   //Manage Pc format
     public function getPc(){
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->first();
-    }    
+    }
+    
 
     //pc insert
     public function insert($data)

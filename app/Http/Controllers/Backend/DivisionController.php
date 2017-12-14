@@ -16,8 +16,7 @@ use Session;
 use Config;
 
 class DivisionController extends BackendController
-{
-	
+{	
 	public function __construct()
     {
         parent::__construct();

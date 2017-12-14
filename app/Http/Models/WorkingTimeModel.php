@@ -27,7 +27,8 @@ class WorkingTimeModel
               $results = $results->Where(function ($query) use ($belong_id) {
                                                             $query->where('m_belong.belong_id',  '=', $belong_id)
                                                                   ->orWhere('m_belong.belong_parent_id','=', $belong_id);
-                                                        });                   
+                                                        });
+                   
         }             
 
         $count = $results->count();
@@ -37,20 +38,20 @@ class WorkingTimeModel
             'data' => $data
         ];      
     }
-
     public function get_by_id($id)
     {
 
         $results = DB::table($this->table)->join('m_belong', 't_staff.staff_belong', '=', 'm_belong.belong_id')                                                                                  
                                           ->where('t_staff.staff_id', $id)                                          
-                                          ->first();
+                                          ->first();         
 
         return $results;
     }
 
     public function get_timecard($id,$year)
     {
-      $results = DB::table($this->table)->join('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
+
+        $results = DB::table($this->table)->join('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                            ->where(function($query) use ($year){
                                                 $query->where(function ($query) use ($year) {
                                                                   $query->whereYear('t1.tt_date', $year)
@@ -63,7 +64,7 @@ class WorkingTimeModel
                                           })
                                           ->where('t_staff.staff_id', $id)->select('t1.tt_date','t1.tt_gotime','t1.tt_backtime','t1.tt_staff_id_no')
                                           ->orderBy('t1.tt_date', 'asc')                                          
-                                          ->get();
+                                          ->get();                                                 
 
         return $results;
     }
@@ -109,7 +110,7 @@ class WorkingTimeModel
                                                         });                                                     
                                             })                                         
                                           ->where('t_staff.staff_id', $id)->select('t1.tp_date','t1.tp_logintime','t1.tp_logouttime','t1.tp_staff_id_no')->orderBy('t1.tp_date','asc')                                         
-                                          ->get();
+                                          ->get();                                                                          
            
            $results['timecards']= DB::table($this->table)->join('t_timecard as t1', 't_staff.staff_id_no', '=', 't1.tt_staff_id_no')
                                            ->where(function($query) use ($year){
@@ -123,7 +124,7 @@ class WorkingTimeModel
                                                               });
                                           })
                                           ->where('t_staff.staff_id', $id)->select('t1.tt_date','t1.tt_gotime','t1.tt_backtime','t1.tt_staff_id_no')
-                                          ->orderBy('t1.tt_date', 'asc')
+                                          ->orderBy('t1.tt_date', 'asc')                                         
                                           ->get();
         }          
         return $results;    
