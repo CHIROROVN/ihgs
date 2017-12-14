@@ -83,6 +83,7 @@ class TimecardController extends BackendController
                                         'last_ipadrs'       => CLIENT_IP_ADRS,
                                         'last_user'         => Auth::user()->u_id            
                         );                                                                                                                                                               
+                       
                        $clsTimecard->insert($dataInsert);
                     } 
                 }                   

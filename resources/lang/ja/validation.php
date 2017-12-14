@@ -47,7 +47,7 @@ return [
     */
     'error_belong_name_required'           => '所属名を入力してください。',
     'error_belong_code_required'           => '所属コードを選択してください。',
-    'error_belong_code_unique'          => '所属名を入力してください。',
+    'error_belong_code_unique'              => '入力されたコードは既に使用中です。使用していないコードを入力してください。',
     'error_section_name_required'          => '所属名を入力してください。',
     'error_section_code_unique'          => '所属名を入力してください。',
     'error_section_code_required'          => 'データ名称が存在しました。もう一度お試しください',

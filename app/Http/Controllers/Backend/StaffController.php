@@ -119,9 +119,50 @@ class StaffController extends BackendController
         if ($validator->fails()) {
             return redirect()->route('backend.staff.import')->withErrors($validator)->withInput();
         }
+
         if (Input::hasFile('file_path'))
         {
-            ini_set('max_execution_time', 100);
+            $file_upload = Input::file('file_path');
+            $path = Input::file('file_path')->getRealPath();
+            $data   = array();
+            $data  = $this->readFileCsv($path); 
+            if(!empty($data) && count($data)){ 
+               foreach ($data as $key => $value) {
+                  
+                  $staff_belong_id   =  (isset($value[$staff_belong]) && !empty($value[$staff_belong]))?$clsBelong->get_by_belong_name($value[$staff_belong]):'NULL';
+                  if(isset($staff_belong->belong_id)){                                   
+                        $dataInsert             = array(
+                            'staff_id_no'       => isset($value[$staff_id_no])?$value[$staff_id_no]:'',
+                            'staff_name'        => isset($value[$staff_name])?$value[$staff_name]:'',                        
+                            'staff_belong'      => $staff_belong_id->belong_id,
+                            'staff_card1'       => isset($value[$staff_card])?$value[$staff_card]:'',                      
+                            'staff_pc1'         => isset($value[$staff_pc])?$value[$staff_pc]:'',                       
+                            'last_date'         => date('Y-m-d H:i:s'), 
+                            'last_kind'         => INSERT,                       
+                            'last_ipadrs'       => CLIENT_IP_ADRS,
+                            'last_user'         => Auth::user()->u_id            
+                        );  
+                    }else{
+                        $dataInsert             = array(
+                            'staff_id_no'       => isset($value[$staff_id_no])?$value[$staff_id_no]:'',
+                            'staff_name'        => isset($value[$staff_name])?$value[$staff_name]:'',                                                    
+                            'staff_card1'       => isset($value[$staff_card])?$value[$staff_card]:'',                      
+                            'staff_pc1'         => isset($value[$staff_pc])?$value[$staff_pc]:'',                       
+                            'last_date'         => date('Y-m-d H:i:s'), 
+                            'last_kind'         => INSERT,                       
+                            'last_ipadrs'       => CLIENT_IP_ADRS,
+                            'last_user'         => Auth::user()->u_id            
+                        );  
+                    } 
+                    if(!empty($dataInsert['staff_id_no']) && !empty($dataInsert['staff_name'])){
+                        $clsStaff->insert($dataInsert);     
+                    }    
+               }
+                Session::flash('success', trans('common.msg_regist_success'));
+            }else{
+                 Session::flash('danger', trans('common.msg_regist_danger'));
+            }    
+            /*ini_set('max_execution_time', 100);
             ini_set('memory_limit', '512M');
             $fn          = 'file'.'_'.rand(time(),time()).'.'.$extFile;                        
             $path        = '/uploads/';
@@ -129,13 +170,14 @@ class StaffController extends BackendController
             $data = array(); 
             $data = Excel::load(public_path().$path.$fn, function($reader) {
             }, 'UTF-8')->get();   
-            $data = $data->toArray();
+            $data = $data->toArray();           
             if(!empty($data) && count($data) >0){                    
-                foreach ($data[0] as $key => $value) {
+                foreach ($data[0] as $key => $value) {                     
                     $arr  =array(); 
-                    $arr = array_values($value);                
-                    
+                    $arr = (is_array($value))?array_values($value):$value;                
+                  
                     $staff_belong   =  isset($arr[$staff_belong])?$clsBelong->get_by_belong_name($arr[$staff_belong]):'NULL'; 
+
                     if(isset($staff_belong->belong_id)){                                   
                         $dataInsert             = array(
                             'staff_id_no'       => isset($arr[$staff_id_no])?$arr[$staff_id_no]:'',
@@ -160,12 +202,13 @@ class StaffController extends BackendController
                             'last_user'         => Auth::user()->u_id            
                         );  
                     }    
-                     
+                    echo "<pre>";print_r($dataInsert); echo "</pre>";          
                     $clsStaff->insert($dataInsert);
                 }//end foreach
                 Session::flash('success', trans('common.msg_regist_success'));
             }//end if empty
-            else Session::flash('danger', trans('common.msg_regist_danger'));       
+            else Session::flash('danger', trans('common.msg_regist_danger'));  
+            */     
         }//end if upload   
         else Session::flash('danger', trans('common.msg_regist_danger'));  
         return redirect()->route('backend.staff.import'); 
