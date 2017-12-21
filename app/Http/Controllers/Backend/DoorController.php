@@ -80,10 +80,10 @@ class DoorController extends BackendController
         return redirect()->route('backend.door.regist');
     }
     public function getEdit($id){
-        $data                 = array();
-        $clsDoorcard          = new DoorcardModel();
-        $data['date_formats'] = Config::get('constants.MD_TOUCHTIME_FORMAT');
-        $data['time_formats'] = Config::get('constants.MT_TIME_FORMAT');
+        $data                  = array();
+        $clsDoorcard           = new DoorcardModel();
+        $data['date_formats']  = Config::get('constants.MD_TOUCHTIME_FORMAT');
+        $data['time_formats']  = Config::get('constants.MT_TIME_FORMAT');
         $data['short_dates']   = Config::get('constants.MD_SHORT_DATE');
         $data['error']['error_door_format_required']    = trans('validation.error_door_format_required');
         $data['door']             = $clsDoorcard->get_by_id($id);
@@ -92,8 +92,8 @@ class DoorController extends BackendController
     public function postEdit($id)
     {
         $clsDoorcard      = new DoorcardModel();
-        $inputs         = Input::all();
-        $validator      = Validator::make($inputs, $clsDoorcard->Rules(), $clsDoorcard->Messages());
+        $inputs           = Input::all();
+        $validator        = Validator::make($inputs, $clsDoorcard->Rules(), $clsDoorcard->Messages());
         if ($validator->fails()) {
             return redirect()->route('backend.door.edit', [$id])->withErrors($validator)->withInput();
         }
@@ -135,30 +135,32 @@ class DoorController extends BackendController
             { 
                 $str = mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, $ary));            
                 $convert = explode("\n", $str);                
-                for ($i=1;$i<count($convert);$i++)  
-                {
-                    $arrTempt = explode(",",$convert[$i]);
-                    if(isset($arrTempt[$inputs['md_card_no_row']-1]) && !empty(str_replace('"','',$arrTempt[$inputs['md_card_no_row']-1])) && !empty(str_replace('"','',$arrTempt[$inputs['md_door_row']-1]))){
-                        if(isset($inputs['md_touchdate_row']) && $inputs['md_touchdate_row'] >0)                                            
-                            $touchtime    = isset($arrTempt[$inputs['md_touchdate_row']-1])?date("Y-m-d  H:i:s",strtotime($arrTempt[$inputs['md_touchdate_row']-1])):date("Y-m-d H:i:s");
-                        else{                                                                  
-                               $time           = isset($arrTempt[$inputs['md_touchtime_row']-1])?date("H:i:s",strtotime($arrTempt[$inputs['md_touchtime_row']-1])):'00:00:00';                       
-                               $date           = isset($arrTempt[$inputs['md_touchday_row']-1])?date("Y-m-d", strtotime(trim($arrTempt[$inputs['md_touchday_row']-1]))):date("Y-m-d"); 
-                               $touchtime      = $date.' '.$time;                     
-                            }                                                                                                                          
-                        $dataInsert             = array(
-                            'td_card'           => str_replace('"','',$arrTempt[$inputs['md_card_no_row']-1]),
-                            'td_door'           => isset($arrTempt[$inputs['md_door_row']-1])?str_replace('"','',$arrTempt[$inputs['md_door_row']-1]):'',           
-                            'td_touchtime'      => $touchtime,                         
-                            'td_dataname'       => Input::get('td_dataname'),
-                            'last_date'         => date('Y-m-d H:i:s'),                        
-                            'last_ipadrs'       => CLIENT_IP_ADRS,
-                            'last_user'         => Auth::user()->u_id            
-                        );     
-                            if(!empty($dataInsert['td_card']))      $clsDoorcard->insert($dataInsert);   
-                    }    
-                }
+            }else  $convert = explode("\n", $string);                 
+            for ($i=1;$i<count($convert);$i++)  
+            {
+                $arrTempt = explode(",",$convert[$i]);
+                if(isset($arrTempt[$inputs['md_card_no_row']-1]) && !empty(str_replace('"','',$arrTempt[$inputs['md_card_no_row']-1])) && !empty(str_replace('"','',$arrTempt[$inputs['md_door_row']-1]))){
+                    if(isset($inputs['md_touchdate_row']) && $inputs['md_touchdate_row'] >0)                                            
+                        $touchtime    = isset($arrTempt[$inputs['md_touchdate_row']-1])?date("Y-m-d  H:i:s",strtotime($arrTempt[$inputs['md_touchdate_row']-1])):date("Y-m-d H:i:s");
+                    else{                                                                  
+                           $time           = isset($arrTempt[$inputs['md_touchtime_row']-1])?date("H:i:s",strtotime($arrTempt[$inputs['md_touchtime_row']-1])):'00:00:00';                       
+                           $date           = isset($arrTempt[$inputs['md_touchday_row']-1])?date("Y-m-d", strtotime(trim($arrTempt[$inputs['md_touchday_row']-1]))):date("Y-m-d"); 
+                           $touchtime      = $date.' '.$time;                     
+                        }                                                                                                                          
+                    $dataInsert             = array(
+                        'td_card'           => str_replace('"','',$arrTempt[$inputs['md_card_no_row']-1]),
+                        'td_door'           => isset($arrTempt[$inputs['md_door_row']-1])?str_replace('"','',$arrTempt[$inputs['md_door_row']-1]):'',           
+                        'td_touchtime'      => $touchtime,                         
+                        'td_dataname'       => Input::get('td_dataname'),
+                        'last_date'         => date('Y-m-d H:i:s'),                        
+                        'last_ipadrs'       => CLIENT_IP_ADRS,
+                        'last_user'         => Auth::user()->u_id            
+                    );     
+                        if(!empty($dataInsert['td_card']))      $clsDoorcard->insert($dataInsert);   
+                }    
             }
+            unset($string); 
+            Session::flash('success', trans('common.msg_regist_success'));
                                    
           /*if(!empty($data) && count($data) >0){                
                 foreach ($data as $value) {

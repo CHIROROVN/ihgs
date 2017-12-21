@@ -38,23 +38,22 @@
     <p class="note">
       ●取り込むデータの形式●<br />
       PC番号：@if (isset($pc->mp_pc_no_row)) {{$pc->mp_pc_no_row}} @endif 列目<br />
-      アクション（ログイン or ログアウト）：00列目<br />
-      日時：00列目
+      アクション（ログイン or ログアウト）：@if (isset($pc->mp_logintime_row)) {{$pc->mp_logintime_row}} @endif - @if (isset($pc->mp_logouttime_row)) {{$pc->mp_logouttime_row}} @endif 列目<br />
+      日時：@if (isset($pc->mp_date_row)) {{$pc->mp_date_row}} @endif列目
     </p>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">
-        {!! Form::open(array('route' => ['backend.pc.import'], 'class' => 'form-horizontal', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
+        {!! Form::open(array('route' => ['backend.pc.import'], 'class' => 'form-horizontal','id'=>'frmUpload', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
           <table class="table table-bordered">
             <tr>
               <td class="col-title col-md-3"><label for="">データ名称<span class="required">必須</span></label></td>
                <td class="col-md-9">
                 <div class="col-md-6">
                   <input type="text" name="tp_dataname" class="form-control" id="tp_dataname" value="@if(old('tp_dataname')){{old('tp_dataname')}}@endif">
-                  @if ($errors->has('tp_dataname'))
-                      <span class="help-block">
-                          <strong>{{ $errors->first('tp_dataname') }}</strong>
-                      </span>
+                  <span class="help-block" id="error_dataname">@if ($errors->has('tp_dataname'))                      
+                          <strong>{{ $errors->first('tp_dataname') }}</strong>                      
                   @endif
+                  </span>
                 </div>
               </td>
             </tr>
@@ -62,17 +61,15 @@
               <td class="col-title col-md-3"><label for="">取り込むデータ<span class="required">必須</span></label></td>
               <td class="col-md-9">
                 <div class="bt-browser mar-left15">
-                  <input type="file" name="tp_file_csv" class="filestyle" data-btnClass="btn-primary" data-text="ファイルを選ぶ" data-placeholder="csvファイルを選択">
-
-                  @if ($errors->has('tp_file_csv'))
-                      <span class="help-block">
-                          <strong>{{ $errors->first('tp_file_csv') }}</strong>
-                      </span>
-                  @endif
-
+                  <input type="file" name="tp_file_csv" class="filestyle" data-btnClass="btn-primary" data-text="ファイルを選ぶ" data-placeholder="csvファイルを選択" id="tp_file_csv">
+                   <span class="help-block" id="error_file_path">@if ($errors->has('tp_file_csv'))                     
+                          <strong>{{ $errors->first('tp_file_csv') }}</strong>                      
+                          @endif
+                  </span>
+                  <span class="help-block" id="error_set_up"></span>
                 </div>
                 <div class="fl-left">
-                  <input name="btn_submit" value="取り込み開始" type="submit" class="btn btn-primary">
+                  <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
                   <input type="hidden" name="mp_pc_no_row" value="@if (isset($pc->mp_pc_no_row)) {{$pc->mp_pc_no_row}} @endif" id="mp_pc_no_row">
                   <input type="hidden" name="mp_staff_id_no_row" value="@if (isset($pc->mp_staff_id_no_row)) {{$pc->mp_staff_id_no_row}} @endif" id="mp_staff_id_no_row">
                   <input type="hidden" name="mp_date_row" value="@if (isset($pc->mp_date_row)) {{$pc->mp_date_row}} @endif" >
@@ -143,6 +140,38 @@
 </div>
 <!-- /.modal -->
 <script type="text/javascript">
+  $("#btnSend").on("click",function() {
+  var flag = true;
+  if (!$("#tp_dataname").val().replace(/ /g, "")) {  
+    $("#error_dataname").html('<strong><?php echo $error['error_td_dataname_required']?></strong>');             
+    $("#error_dataname").css('display','block');  
+    flag = false;  
+  }  
+  if (!$("#tp_file_csv").val().replace(/ /g, "")) {  
+    $("#error_file_path").html('<strong><?php echo $error['error_file_path_required']?></strong>');             
+    $("#error_file_path").css('display','block');    
+    flag = false; 
+  }else{
+     if(!validate($("#tp_file_csv").val())){
+        $("#error_file_path").html('<strong><?php echo $error['error_tp_file_csv_mimes']?></strong>');             
+        $("#error_file_path").css('display','block');  
+        flag = false; 
+     }
+  }
+
+  if (!$("#mp_pc_no_row").val().replace(/ /g, "")) {  
+    $("#error_set_up").html('<strong><?php echo $error['msg_import_setting_danger']?></strong>');             
+    $("#error_set_up").css('display','block');    
+    flag = false; 
+  }
+  if (!$("#mp_staff_id_no_row").val().replace(/ /g, "")) {  
+    $("#error_set_up").html('<strong><?php echo $error['msg_import_setting_danger']?></strong>');             
+    $("#error_set_up").css('display','block');    
+    flag = false; 
+  }
+ if(flag)   $( "#frmUpload" ).submit(); 
+
+});
   $('#btnDelete').on('click', function (e) {    
     var id = $(this).closest('tr').data('id');
     $('#myModal').data('id', id).modal('show');
@@ -156,6 +185,11 @@ $('#btnDelteYes').click(function () {
     var id = $('#myModal').data('id');   
     location.href="{{ asset('pc/import/delete/') }}"+"/"+ id ;  
 });
+function validate(fileupload){  
+  var reg = /(.*?)\.(xlsx|xls|csv|CSV)$/;
+  if(!fileupload.match(reg))       return false;
+  else return true;
+}
 </script>
 @endsection
 @section('js')

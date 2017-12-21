@@ -16,15 +16,18 @@ class PcController extends BackendController
 		$clsPcImport    = new PcImportModel();	
 		$clsPC 			= new PcModel();
 		$data['pc']     = $clsPC->getPC();
+		$data['error']['error_td_dataname_required']    = trans('validation.error_tp_dataname_required');
+        $data['error']['error_file_path_required']      = trans('validation.error_tp_file_csv_required');
+        $data['error']['error_tp_file_csv_mimes']       = trans('validation.error_tp_file_csv_mimes');
+        $data['error']['msg_import_setting_danger']     = trans('common.msg_import_setting_danger');
 		$data['pcs']    = $clsPcImport->get_all_by_dataname();         
 		return view('backend.pc.import', $data);
 	}
 
 	//post inport csv
 	public function postimport(){
-		//mpc format
-		
-
+		//mpc format		
+        $clsPC 			= new PcModel();		
 		$clsPcImport    = new PcImportModel();		
 		$Rules = $clsPcImport->Rules();
 
@@ -42,11 +45,11 @@ class PcController extends BackendController
 		if ($validator->fails()) {
 			return redirect()->route('backend.pc.import')->withErrors($validator)->withInput();
 		}
-		/*$config = $clsPC->getPc();		
+		$config = $clsPC->getPc();		
 		if(!isset($config->mp_id)){
             Session::flash('danger', trans('common.msg_import_setting_danger'));
             return redirect()->route('backend.pc.import');
-        } */      
+        }       
                    		 
         $flag = true;
 		if(Input::hasFile('tp_file_csv')){			
