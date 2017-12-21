@@ -114,7 +114,7 @@ class BackendController extends Controller
         );
         $clsObject->update(@$down_belong->$field_primary, $dataUpdate);
     }    
-    protected function  readFileCsv($filename)
+    protected function  readFileCsv($filename,$arrColumn=array())
     {       
         ini_set('max_execution_time', "3000");        
         set_time_limit(0);
@@ -125,11 +125,12 @@ class BackendController extends Controller
         $ary[] = "Shift-JIS";   
         $ary[] = "eucjp-win"; 
         $ary[] = "sjis-win";          
-        $string = file_get_contents($filename);               
-        if(mb_detect_encoding($string, 'auto') !=='UTF-8')
+        $string = file_get_contents($filename);                 
+        if(mb_detect_encoding($string) !=='UTF-8')
         {                               
-            $str = mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, $ary));
+            $str = mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, $ary));            
             $convert = explode("\n", $str);
+            $j=0;
             for ($i=1;$i<count($convert);$i++)  
             {
                 $arrTempt = array();            
@@ -139,7 +140,7 @@ class BackendController extends Controller
                     $arrResult[$i-1][] = $value;
                 }                                                        
             }
-            unset($convert);            
+            unset($convert);  unset($string);            
         }else{
             $data = Excel::load($filename,'UTF-8')->get();
             $data = $data->toArray();$i=0;

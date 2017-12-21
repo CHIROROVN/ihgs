@@ -7,6 +7,7 @@ use Input;
 use Validator;
 use Session;
 use Config;
+use Excel;
 
 class TimecardController extends BackendController
 {
@@ -20,17 +21,22 @@ class TimecardController extends BackendController
     public function index(){
         $data =array();
         $clsTimecard               = new TimecardImportModel();
-        $data['timecards']        = $clsTimecard->get_all_by_dataname();       
+        $clsTimecardModel          = new TimecardModel();
+        $data['timecards']         = $clsTimecard->get_all_by_dataname(); 
+        $data['time']             = $clsTimecardModel->getLastRow();      
 
         $data['error']['error_tt_dataname_required']    = trans('validation.error_tt_dataname_required');
         $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
+        $data['error']['error_timecard_file_csv']      = trans('validation.error_timecard_file_csv');
+        $data['error']['msg_import_setting_danger']     = trans('common.msg_import_setting_danger');
         return view('backend.timecard.index',$data);
     }
      public function import()
     {
         $dataInput              = array();
         $clsTimecard            = new TimecardImportModel();
-        $clsTimecardModel       = new TimecardModel();
+        $clsTimecardModel          = new TimecardModel();
+        $timecard             = $clsTimecardModel->getLastRow();
         $inputs                 = Input::all();    
         $tt_dataname            = Input::get('tt_dataname');
         $rules                  = $clsTimecard->Rules();
@@ -49,7 +55,7 @@ class TimecardController extends BackendController
             return redirect()->route('backend.timecard.index')->withErrors($validator)->withInput();
         }
 
-        $timecard  = $clsTimecardModel->getLastRow();
+        
        
         if(!isset($timecard->mt_gotime_row)){
             Session::flash('danger', trans('common.msg_import_setting_danger'));
@@ -57,38 +63,39 @@ class TimecardController extends BackendController
         }
         
         if (Input::hasFile('file_path'))
-        {    
-                              
+        {     
+                            
             $path = Input::file('file_path')->getRealPath();
             $data = array();
             $data  = $this->readFileCsv($path);                                                                             
             $fn = $tt_dataname.'_'.date("y_m_d_his").'.'.$extFile;                                
-            $path = '/uploads/';          
-           // $upload_file->move(public_path().$path, $fn);                                    
+            //$path = '/uploads/';          
+            //$upload_file->move(public_path().$path, $fn);                                    
                                 
             //get config                                        
-            $date_formats  = Config::get('constants.DATE_FORMAT');
-            $time_formats  = Config::get('constants.TIME_FORMAT');     
+           // $date_formats  = Config::get('constants.DATE_FORMAT');
+            //$time_formats  = Config::get('constants.TIME_FORMAT');     
             
             if(!empty($data) && count($data) >0){                
-                foreach ($data as $key => $value) {                              
-                    if(isset($value[$timecard->mt_gotime_row]) && (!empty(trim($value[$timecard->mt_gotime_row])) || !empty(trim($value[$timecard->mt_backtime_row])))){                        
-                       $dataInsert = array(
-                                        'tt_staff_id_no'    => isset($value[$timecard->mt_staff_id_row])?$value[$timecard->mt_staff_id_row]:'',
-                                        'tt_date'           => isset($value[$timecard->mt_date_row])?date("Y-m-d",strtotime($value[$timecard->mt_date_row])):'',           
-                                        'tt_gotime'         => isset($value[$timecard->mt_gotime_row])?date("H:i:s",strtotime($value[$timecard->mt_gotime_row])):'00:00:00', 
-                                        'tt_backtime'       => isset($value[$timecard->mt_backtime_row])?date("H:i:s",strtotime($value[$timecard->mt_backtime_row])):'00:00:00',
-                                        'tt_dataname'       => $tt_dataname,
-                                        'last_date'         => date('Y-m-d H:i:s'),                        
-                                        'last_ipadrs'       => CLIENT_IP_ADRS,
-                                        'last_user'         => Auth::user()->u_id            
-                        );                                                                                                                                                               
-                       
-                       $clsTimecard->insert($dataInsert);
+                foreach ($data as $key => $value) { 
+                    if(isset($value[$timecard->mt_staff_id_row]) && !empty($value[$timecard->mt_staff_id_row])) {                            
+                        if(isset($value[$timecard->mt_gotime_row]) && (!empty(trim($value[$timecard->mt_gotime_row])) || !empty(trim($value[$timecard->mt_backtime_row])))){                       
+                           $dataInsert = array(
+                                            'tt_staff_id_no'    => $value[$timecard->mt_staff_id_row],
+                                            'tt_date'           => isset($value[$timecard->mt_date_row])?date("Y-m-d",strtotime($value[$timecard->mt_date_row])):'',           
+                                            'tt_gotime'         => isset($value[$timecard->mt_gotime_row])?date("H:i:s",strtotime($value[$timecard->mt_gotime_row])):'00:00:00', 
+                                            'tt_backtime'       => isset($value[$timecard->mt_backtime_row])?date("H:i:s",strtotime($value[$timecard->mt_backtime_row])):'00:00:00',
+                                            'tt_dataname'       => $tt_dataname,
+                                            'last_date'         => date('Y-m-d H:i:s'),                        
+                                            'last_ipadrs'       => CLIENT_IP_ADRS,
+                                            'last_user'         => Auth::user()->u_id            
+                            );                                                                                                                                                               
+                           if(!empty($dataInsert['tt_staff_id_no']))              $clsTimecard->insert($dataInsert);
+                        }   
                     } 
                 }                   
                 Session::flash('success', trans('common.msg_regist_success'));             
-            }else Session::flash('danger', trans('common.msg_regist_danger'));          
+            }else Session::flash('danger', trans('common.msg_regist_danger'));    
                             
         }else Session::flash('danger', trans('common.msg_regist_danger'));               
         return redirect()->route('backend.timecard.index');

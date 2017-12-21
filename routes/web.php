@@ -100,7 +100,6 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
 	Route::get('/staff/delete/{id}', ['as' => 'backend.staff.delete', 'uses' => 'StaffController@getDelete']);
 	Route::get('/staff/edit/{id}', ['as' => 'backend.staff.edit', 'uses' => 'StaffController@getEdit']);
 	Route::post('/staff/edit/{id}', ['as' => 'backend.staff.edit', 'uses' => 'StaffController@postEdit']);
-	
 
 });
 

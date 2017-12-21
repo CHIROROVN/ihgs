@@ -67,7 +67,9 @@ class DoorcardImportModel
     
     public function delete($dataname)
     {
-        $results = DB::table($this->table)->where('td_dataname', $dataname)->delete();        
+       // DB::enableQueryLog();
+        $results = DB::table($this->table)->where('td_dataname', $dataname)->delete();    
+       //dd(DB::getQueryLog());
         return $results;
     }
 

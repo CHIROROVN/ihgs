@@ -31,17 +31,17 @@
             ※ユニークキーがないため、データは重複されて取り込まれます。データ変更（差し替え）の場合は、必ず、削除して登録してください。</p>
           <p class="note">
             ●取り込むデータの形式●<br />
-            社員番号：00列目<br />
-            日付：00列目<br />
-            出社時刻：00列目<br />
-            退社時刻：00列目
+            社員番号  ：@if (isset($time->mt_staff_id_row)) {{$time->mt_staff_id_row}} @endif 列目<br />
+            日付     ：@if (isset($time->mt_date_row)) {{$time->mt_date_row}} @endif 列目<br />
+            出社時刻  ：@if (isset($time->mt_gotime_row)) {{$time->mt_gotime_row}} @endif 列目<br />
+            退社時刻  ：@if (isset($time->mt_backtime_row)) {{$time->mt_backtime_row}} @endif 列目
           </p>
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
-              {!! Form::open(array('route' => 'backend.timecard.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'UTF-8')) !!} 
+              {!! Form::open(array('route' => 'backend.timecard.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data')) !!} 
                 <table class="table table-bordered">
                   <tr>
-                    <td class="col-title col-md-3"><label for="">データ名称</label></td>
+                    <td class="col-title col-md-3"><label for="">データ名称<span class="required">必須</span></label></td>
                     <td class="col-md-9">
                       <div class="col-md-6">
                         <input type="text" class="form-control" id="tt_dataname" name="tt_dataname" value="@if(old('tt_dataname')){{old('tt_dataname')}}@endif">
@@ -50,14 +50,19 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
+                    <td class="col-title col-md-3"><label for="">取り込むデータ<span class="required">必須</span></label></td>
                     <td class="col-md-9">
                       <div class="bt-browser mar-left15">
                         <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l" id="file_path"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
                         <span class="help-block" id="error_file_path">@if ($errors->has('file_csv'))<strong>{{ $errors->first('file_csv') }}</strong>@endif</span>
+                        <span class="help-block" id="error_set_up"></span>
                       </div>
                       <div class="fl-left">
                         <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
+                        <input type="hidden" name="mt_staff_id_row" value="@if (isset($time->mt_staff_id_row)) {{$time->mt_staff_id_row}} @endif " id="mt_staff_id_row">
+                        <input type="hidden" name="mt_date_row" value="@if (isset($time->mt_date_row)) {{$time->mt_date_row}} @endif " id="mt_date_row">
+                        <input type="hidden" name="mt_gotime_row" value="@if (isset($time->mt_gotime_row)) {{$time->mt_gotime_row}} @endif ">
+                        <input type="hidden" name="mt_backtime_row" value="@if (isset($time->mt_backtime_row)) {{$time->mt_backtime_row}} @endif ">                        
                       </div>
                     </td>
                   </tr>
@@ -151,9 +156,25 @@ $("#btnSend").on("click",function() {
     $("#error_file_path").html('<strong><?php echo $error['error_file_path_required']?></strong>');             
     $("#error_file_path").css('display','block');    
     flag = false; 
+  }else{
+     if(!validate($("#file_path").val())){
+        $("#error_file_path").html('<strong><?php echo $error['error_timecard_file_csv']?></strong>');             
+        $("#error_file_path").css('display','block');  
+        flag = false; 
+     }
+  }
+   if (!$("#mt_staff_id_row").val().replace(/ /g, "")) {  
+    $("#error_set_up").html('<strong><?php echo $error['msg_import_setting_danger']?></strong>');             
+    $("#error_set_up").css('display','block');    
+    flag = false; 
   }
   if(flag)   $( "#frmUpload" ).submit(); 
 });
+function validate(fileupload){  
+  var reg = /(.*?)\.(xlsx|xls|csv|CSV)$/;
+  if(!fileupload.match(reg))       return false;
+  else return true;
+}
 </script>
 @endsection
 @section('js')

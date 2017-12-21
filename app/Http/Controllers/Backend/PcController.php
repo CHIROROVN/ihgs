@@ -13,16 +13,17 @@ class PcController extends BackendController
 {
 	//get import csv
 	public function import(){
-		$clsPcImport    = new PcImportModel();		
-		$pcs= $clsPcImport->get_all_by_dataname();         
-		return view('backend.pc.import', compact('pcs'));
+		$clsPcImport    = new PcImportModel();	
+		$clsPC 			= new PcModel();
+		$data['pc']     = $clsPC->getPC();
+		$data['pcs']    = $clsPcImport->get_all_by_dataname();         
+		return view('backend.pc.import', $data);
 	}
 
 	//post inport csv
 	public function postimport(){
 		//mpc format
-		$clsPC 			= new PcModel();
-		$mp_format = $clsPC->getPC();
+		
 
 		$clsPcImport    = new PcImportModel();		
 		$Rules = $clsPcImport->Rules();
@@ -41,11 +42,11 @@ class PcController extends BackendController
 		if ($validator->fails()) {
 			return redirect()->route('backend.pc.import')->withErrors($validator)->withInput();
 		}
-		$config = $clsPC->getPc();		
+		/*$config = $clsPC->getPc();		
 		if(!isset($config->mp_id)){
             Session::flash('danger', trans('common.msg_import_setting_danger'));
             return redirect()->route('backend.pc.import');
-        }       
+        } */      
                    		 
         $flag = true;
 		if(Input::hasFile('tp_file_csv')){			
@@ -67,8 +68,7 @@ class PcController extends BackendController
 					   $data['last_ipadrs']            = CLIENT_IP_ADRS;
 					   $data['last_date']              = date('Y-m-d H:i:s');
 					   $data['last_user']              = Auth::user()->u_id;						  				   				   				   				   					 
-
-					   $clsPcImport->insert($data);
+                       if(!empty($data['tp_pc_no']))     $clsPcImport->insert($data);
 					}   
                 }//end foreach value   	
 			}

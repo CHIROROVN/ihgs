@@ -21,10 +21,14 @@ class DoorController extends BackendController
     public function index(){
 
         $data =array();
-        $clsDoorcard               = new DoorcardImportModel();
-        $data['doorcards']         = $clsDoorcard->get_all_by_dataname(); 
+        $clsDoorcard            = new DoorcardImportModel();
+        $clsDoorcardModel       = new DoorcardModel();
+        $data['door']           = $clsDoorcardModel->getLastRow();   
+        $data['doorcards']      = $clsDoorcard->get_all_by_dataname(); 
         $data['error']['error_td_dataname_required']    = trans('validation.error_td_dataname_required');
         $data['error']['error_file_path_required']      = trans('validation.error_file_path_required');
+        $data['error']['error_timecard_file_csv']       = trans('validation.error_timecard_file_csv');
+        $data['error']['msg_import_setting_danger']     = trans('common.msg_import_setting_danger');
         return view('backend.door.index',$data);
     }
 
@@ -120,69 +124,74 @@ class DoorController extends BackendController
     public function importDoorcard()
     {
         $dataInput              = array();
-        $clsDoorcard            = new DoorcardImportModel();
-        $clsDoorcardModel       = new DoorcardModel();
-        $inputs                 = Input::all();
-        $rules                  = $clsDoorcard->Rules();
-        if(!Input::hasFile('file_path')){
-            unset($rules['file_path']);
-        }else{
-            $upload_file = Input::file('file_path');
-            $extFile  = $upload_file->getClientOriginalExtension();
-            if($extFile == 'csv' || $extFile == 'CSV' || $extFile == 'xls' || $extFile == 'xlsx'){
-                unset($rules['file_csv']);
-            }
-        }
-        $validator              = Validator::make($inputs, $rules, $clsDoorcard->Messages());
-        if ($validator->fails()) {
-            return redirect()->route('backend.door.index')->withErrors($validator)->withInput();
-        }
-        $doorcardModel = $clsDoorcardModel->getLastRow();   
-        if(!isset($doorcardModel->md_card_no_row)){
-            Session::flash('danger', trans('common.msg_import_setting_danger'));
-            return redirect()->route('backend.door.index');
-        }           
-        
+        $clsDoorcard            = new DoorcardImportModel();        
+        $inputs                 = Input::all();               
         if (Input::hasFile('file_path'))
-        {          
-            
-            $fn     = Input::get('td_dataname').'_'.rand(time(),time()).'.'.$extFile;
-            $path   = Input::file('file_path')->getRealPath();
+        {   $path   = Input::file('file_path')->getRealPath();
             $data   = array();
-            $data   = $this->readFileCsv($path);                           
-            $path   = '/uploads/';
-            $upload_file->move(public_path().$path, $fn);                                
+            $ary[] = "ASCII";$ary[] = "JIS";$ary[] = "EUC-JP";$ary[] = "Shift-JIS";$ary[] = "eucjp-win";$ary[] = "sjis-win";          
+            $string = file_get_contents($path); 
+            if(mb_detect_encoding($string) !=='UTF-8')
+            { 
+                $str = mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, $ary));            
+                $convert = explode("\n", $str);                
+                for ($i=1;$i<count($convert);$i++)  
+                {
+                    $arrTempt = explode(",",$convert[$i]);
+                    if(isset($arrTempt[$inputs['md_card_no_row']-1]) && !empty(str_replace('"','',$arrTempt[$inputs['md_card_no_row']-1])) && !empty(str_replace('"','',$arrTempt[$inputs['md_door_row']-1]))){
+                        if(isset($inputs['md_touchdate_row']) && $inputs['md_touchdate_row'] >0)                                            
+                            $touchtime    = isset($arrTempt[$inputs['md_touchdate_row']-1])?date("Y-m-d  H:i:s",strtotime($arrTempt[$inputs['md_touchdate_row']-1])):date("Y-m-d H:i:s");
+                        else{                                                                  
+                               $time           = isset($arrTempt[$inputs['md_touchtime_row']-1])?date("H:i:s",strtotime($arrTempt[$inputs['md_touchtime_row']-1])):'00:00:00';                       
+                               $date           = isset($arrTempt[$inputs['md_touchday_row']-1])?date("Y-m-d", strtotime(trim($arrTempt[$inputs['md_touchday_row']-1]))):date("Y-m-d"); 
+                               $touchtime      = $date.' '.$time;                     
+                            }                                                                                                                          
+                        $dataInsert             = array(
+                            'td_card'           => str_replace('"','',$arrTempt[$inputs['md_card_no_row']-1]),
+                            'td_door'           => isset($arrTempt[$inputs['md_door_row']-1])?str_replace('"','',$arrTempt[$inputs['md_door_row']-1]):'',           
+                            'td_touchtime'      => $touchtime,                         
+                            'td_dataname'       => Input::get('td_dataname'),
+                            'last_date'         => date('Y-m-d H:i:s'),                        
+                            'last_ipadrs'       => CLIENT_IP_ADRS,
+                            'last_user'         => Auth::user()->u_id            
+                        );     
+                            if(!empty($dataInsert['td_card']))      $clsDoorcard->insert($dataInsert);   
+                    }    
+                }
+            }
                                    
-            if(!empty($data) && count($data) >0){                
-                foreach ($data as $value) {                        
-                   if(isset($doorcardModel->md_touchdate_row) && $doorcardModel->md_touchdate_row >0)                                            
-                        $touchtime    = isset($value[$doorcardModel->md_touchdate_row])?date("Y-m-d  H:i:s",strtotime($value[$doorcardModel->md_touchdate_row])):date("Y-m-d H:i:s");
-                    else{                                                                  
-                       $time           = isset($value[$doorcardModel->md_touchtime_row])?date("H:i:s",strtotime($value[$doorcardModel->md_touchtime_row])):'00:00:00';                       
-                       $date           = isset($value[$doorcardModel->md_touchday_row])?date("Y-m-d", strtotime(trim($value[$doorcardModel->md_touchday_row]))):date("Y-m-d"); 
-                       $touchtime      = $date.' '.$time;                     
-                    }                                                                                                                          
-                    $dataInsert             = array(
-                        'td_card'           => isset($value[$doorcardModel->md_card_no_row])?$value[$doorcardModel->md_card_no_row]:'',
-                        'td_door'           => isset($value[$doorcardModel->md_door_row])?$value[$doorcardModel->md_door_row]:'',           
-                        'td_touchtime'      => $touchtime,                         
-                        'td_dataname'       => Input::get('td_dataname'),
-                        'last_date'         => date('Y-m-d H:i:s'),                        
-                        'last_ipadrs'       => CLIENT_IP_ADRS,
-                        'last_user'         => Auth::user()->u_id            
-                    );     
-                    //echo "<pre>";print_r($dataInsert );echo "</pre>";                                      
-                    $clsDoorcard->insert($dataInsert);
-                }   
+          /*if(!empty($data) && count($data) >0){                
+                foreach ($data as $value) {
+                   if(isset($value[$inputs['md_card_no_row']]) && !empty($value[$inputs['md_card_no_row']]) && !empty($value[$inputs['md_door_row']])){
+                        if(isset($inputs['md_touchdate_row']) && $inputs['md_touchdate_row'] >0)                                            
+                            $touchtime    = isset($value[$inputs['md_touchdate_row']])?date("Y-m-d  H:i:s",strtotime($value[$inputs['md_touchdate_row']])):date("Y-m-d H:i:s");
+                        else{                                                                  
+                               $time           = isset($value[$inputs['md_touchtime_row']])?date("H:i:s",strtotime($value[$inputs['md_touchtime_row']])):'00:00:00';                       
+                               $date           = isset($value[$inputs['md_touchday_row']])?date("Y-m-d", strtotime(trim($value[$inputs['md_touchday_row']]))):date("Y-m-d"); 
+                               $touchtime      = $date.' '.$time;                     
+                            }                                                                                                                          
+                        $dataInsert             = array(
+                            'td_card'           => $value[$inputs['md_card_no_row']],
+                            'td_door'           => isset($value[$inputs['md_door_row']])?$value[$inputs['md_door_row']]:'',           
+                            'td_touchtime'      => $touchtime,                         
+                            'td_dataname'       => Input::get('td_dataname'),
+                            'last_date'         => date('Y-m-d H:i:s'),                        
+                            'last_ipadrs'       => CLIENT_IP_ADRS,
+                            'last_user'         => Auth::user()->u_id            
+                        );     
+                            if(!empty($dataInsert['td_card']))      $clsDoorcard->insert($dataInsert); 
+                   }                        
+                   
+                } 
                 Session::flash('success', trans('common.msg_regist_success'));             
             }else Session::flash('danger', trans('common.msg_regist_danger'));            
-            unset($data); unset($date_formats);unset($inputs);                
+            unset($data); unset($date_formats);unset($inputs);  */            
         }else Session::flash('danger', trans('common.msg_regist_danger'));
        return redirect()->route('backend.door.index');
     }
     public function getDelete($dataname)
     {
-        $clsDoorcard            = new DoorcardImportModel();        
+        $clsDoorcard            = new DoorcardImportModel();         
         if ( $clsDoorcard->delete($dataname) ) {
             Session::flash('success', trans('common.msg_delete_success'));
         } else {

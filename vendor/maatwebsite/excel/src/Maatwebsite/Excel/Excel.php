@@ -105,7 +105,7 @@ class Excel {
     {
         // Reader instance
         $reader = clone $this->reader;
-
+        
         // Inject excel object
         $reader->injectExcel($this->excel);
 
@@ -113,7 +113,7 @@ class Excel {
         $reader->setFilters($this->filters);
 
         // Set the encoding
-        $encoding = is_string($callback) ? $callback : $encoding;
+        $encoding = is_string($callback) ? $callback : $encoding;       
 
         // Start loading
         $reader->load($file, $encoding, $noBasePath, $callbackConfigReader);

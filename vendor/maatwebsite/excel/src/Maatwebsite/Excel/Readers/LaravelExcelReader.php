@@ -271,6 +271,7 @@ class LaravelExcelReader
      */
     public function load($file, $encoding = false, $noBasePath = false, $callbackConfigReader = null)
     {
+
         // init the loading
         $this->_init($file, $encoding, $noBasePath);
 
@@ -279,10 +280,11 @@ class LaravelExcelReader
         }
 
         // Only fetch selected sheets if necessary
-        if ($this->sheetsSelected()) {
+        if ($this->sheetsSelected()) {           
             $this->reader->setLoadSheetsOnly($this->selectedSheets);
         }
-
+         
+        
         // Load the file
         $this->excel = $this->reader->load($this->file);
 

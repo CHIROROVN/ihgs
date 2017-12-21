@@ -32,30 +32,36 @@
           ※ユニークキーがないため、データは重複されて取り込まれます。データ変更（差し替え）の場合は、必ず、削除して登録してください。</p>
           <p class="note">
             ●取り込むデータの形式●<br />
-            カード番号：00列目<br />
-            扉番号：00列目<br />
-            タッチした時刻：00列目
+            カード番号 ：@if (isset($door->md_card_no_row)){{$door->md_card_no_row}} @endif 列目<br />
+            扉番号   ：@if (isset($door->md_door_row)){{$door->md_door_row}} @endif 列目<br />
+            タッチした時刻：@if(isset($door->md_touchdate_row)) @if($door->md_touchdate_row >0) {{$door->md_touchdate_row}} @else {{$door->md_touchday_row}} - {{$door->md_touchtime_row}} @endif @endif 列目
     </p>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">
-        {!! Form::open(array('route' => 'backend.door.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data', 'accept-charset'=>'UTF-8')) !!} 
+        {!! Form::open(array('route' => 'backend.door.import','id'=>'frmUpload', 'enctype'=>'multipart/form-data')) !!} 
           <table class="table table-bordered">
             <tr>
-              <td class="col-title col-md-3"><label for="">データ名称</label></td>
+              <td class="col-title col-md-3"><label for="">データ名称<span class="required">必須</span></label></td>
               <td class="col-md-9">
                 <div class="col-md-6"><input type="text" class="form-control" id="td_dataname" name="td_dataname" value="@if(old('td_dataname')){{old('td_dataname')}}@endif">
                 <span class="help-block" id="error_dataname">@if ($errors->has('td_dataname'))<strong>{{ $errors->first('td_dataname') }}</strong>@endif</span></div>
               </td>
             </tr>
             <tr>
-              <td class="col-title col-md-3"><label for="">取り込むデータ</label></td>
+              <td class="col-title col-md-3"><label for="">取り込むデータ<span class="required">必須</span></label></td>
               <td class="col-md-9">
                 <div class="bt-browser mar-left15">
                   <button type="button" class="bfs btn btn-primary" data-style="fileStyle-l" id="file_path"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> ファイルを選ぶ</button>
                   <span class="help-block" id="error_file_path">@if ($errors->has('file_csv'))<strong>{{ $errors->first('file_csv') }}</strong>@endif</span>
+                  <span class="help-block" id="error_set_up"></span>
                 </div>
                 <div class="fl-left">
-                  <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
+                  <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">                  
+                  <input type="hidden" name="md_card_no_row" value="@if (isset($door->md_card_no_row)) {{$door->md_card_no_row}} @endif" id="md_card_no_row">
+                  <input type="hidden" name="md_door_row" value="@if (isset($door->md_door_row)){{$door->md_door_row}}@endif" id="md_door_row">
+                  <input type="hidden" name="md_touchday_row" value="@if (isset($door->md_touchday_row)){{$door->md_touchday_row}}@endif">
+                  <input type="hidden" name="md_touchtime_row" value="@if (isset($door->md_touchtime_row)){{$door->md_touchtime_row}}@endif">
+                  <input type="hidden" name="md_touchdate_row" value="@if (isset($door->md_touchdate_row)){{$door->md_touchdate_row}}@endif">
                 </div>
               </td>
             </tr>
@@ -94,7 +100,7 @@
         </table>
       </div>
   </div>
- </div> 
+ </div>  
 <!-- start: Delete Coupon Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
@@ -134,8 +140,25 @@ $("#btnSend").on("click",function() {
     $("#error_file_path").html('<strong><?php echo $error['error_file_path_required']?></strong>');             
     $("#error_file_path").css('display','block');    
     flag = false; 
+  }else{
+     if(!validate($("#file_path").val())){
+        $("#error_file_path").html('<strong><?php echo $error['error_timecard_file_csv']?></strong>');             
+        $("#error_file_path").css('display','block');  
+        flag = false; 
+     }
   }
-  if(flag)   $( "#frmUpload" ).submit(); 
+  if (!$("#md_card_no_row").val().replace(/ /g, "")) {  
+    $("#error_set_up").html('<strong><?php echo $error['msg_import_setting_danger']?></strong>');             
+    $("#error_set_up").css('display','block');    
+    flag = false; 
+  }
+  if (!$("#md_door_row").val().replace(/ /g, "")) {  
+    $("#error_set_up").html('<strong><?php echo $error['msg_import_setting_danger']?></strong>');             
+    $("#error_set_up").css('display','block');    
+    flag = false; 
+  }
+ if(flag)   $( "#frmUpload" ).submit(); 
+
 });
 $('#btnDelete').on('click', function (e) {    
     var id = $(this).closest('tr').data('id');
@@ -150,6 +173,11 @@ $('#btnDelteYes').click(function () {
     var id = $('#myModal').data('id');   
     location.href='{{ asset('door/delete/') }}'+'/'+ id ;    
 });
+function validate(fileupload){  
+  var reg = /(.*?)\.(xlsx|xls|csv|CSV)$/;
+  if(!fileupload.match(reg))       return false;
+  else return true;
+}
 </script>
 @endsection
 @section('js')
