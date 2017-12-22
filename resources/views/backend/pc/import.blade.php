@@ -43,7 +43,7 @@
     </p>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">
-        {!! Form::open(array('route' => ['backend.pc.import'], 'class' => 'form-horizontal','id'=>'frmUpload', 'method' => 'post', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8')) !!}
+        {!! Form::open(array('route' => ['backend.pc.import'], 'class' => 'form-horizontal','id'=>'frmUpload', 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
           <table class="table table-bordered">
             <tr>
               <td class="col-title col-md-3"><label for="">データ名称<span class="required">必須</span></label></td>
@@ -75,6 +75,7 @@
                   <input type="hidden" name="mp_date_row" value="@if (isset($pc->mp_date_row)) {{$pc->mp_date_row}} @endif" >
                   <input type="hidden" name="mp_logintime_row" value="@if (isset($pc->mp_logintime_row)) {{$pc->mp_logintime_row}} @endif" >
                   <input type="hidden" name="mp_logouttime_row" value="@if (isset($pc->mp_logouttime_row)) {{$pc->mp_logouttime_row}} @endif" >
+                  <input type="hidden" name="mp_datetime_row" value="@if (isset($pc->mp_datetime_row)) {{$pc->mp_datetime_row}} @endif" >
                 </div>
               </td>
             </tr>

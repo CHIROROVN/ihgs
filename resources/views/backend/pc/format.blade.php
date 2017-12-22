@@ -75,7 +75,8 @@
                     <tr>
                       <td class="col-title col-md-3"><label for="">日付</label></td>
                       <td class="col-md-2">
-                        <select name="mp_date_row" id="mp_date_row"  class="form-control">                          
+                        <select name="mp_date_row" id="mp_date_row"  class="form-control"> 
+                        <option selected="" value="">該当なし<!-- NO use this field --></option>                          
                           @for($i=1; $i<=40; $i++)
                               <option value="{{$i}}" @if(isset($mpc->mp_date_row) && $mpc->mp_date_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor
@@ -95,7 +96,8 @@
                     <tr>
                       <td class="col-title col-md-3"><label for="">出社時刻</label></td>
                       <td class="col-md-2">
-                        <select name="mp_logintime_row" id="mp_logintime_row"  class="form-control">                          
+                        <select name="mp_logintime_row" id="mp_logintime_row"  class="form-control">                                                  
+                          <option selected="" value="">該当なし<!-- NO use this field --></option> 
                           @for($i=1; $i<=40; $i++)
                               <option value="{{$i}}" @if(isset($mpc->mp_logintime_row) && $mpc->mp_logintime_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor
@@ -103,7 +105,7 @@
                       </td>
                       <td class="col-md-6">
                         <div class="col-md-6">
-                          <select name="mp_logintime_format" id="mp_logintime_format" class="form-control">
+                          <select name="mp_logintime_format" id="mp_logintime_format" class="form-control">                           
                             @foreach($time_formats as $key=>$date_format)                           
                             <option value="{{ $key }}" @if(isset($mpc->mp_logintime_format) && $mpc->mp_logintime_format == $i) selected @endif>{{ $date_format }}</option>
                           @endforeach
@@ -114,7 +116,8 @@
                     <tr>
                       <td class="col-title col-md-3"><label for="">退社時刻</label></td>
                       <td class="col-md-2">
-                        <select name="mp_logouttime_row" id="mp_logouttime_row"  class="form-control">                          
+                        <select name="mp_logouttime_row" id="mp_logouttime_row"  class="form-control">
+                        <option selected="" value="">該当なし<!-- NO use this field --></option>                          
                          @for($i=1; $i<=40; $i++)
                               <option value="{{$i}}" @if(isset($mpc->mp_logouttime_row) && $mpc->mp_logouttime_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor
@@ -134,6 +137,7 @@
                       <td class="col-title col-md-3"><label for="">日時</label></td>
                       <td class="col-md-2">
                         <select name="mp_datetime_row" id="mp_datetime_row" class="form-control">
+                          <option selected="" value="">該当なし<!-- NO use this field --></option> 
                           @for($i=1; $i<=40; $i++)
                             <option value="{{$i}}" @if(isset($mpc->mp_datetime_row) && $mpc->mp_datetime_row == $i) selected @endif>{{$i}}列目</option>
                           @endfor                          

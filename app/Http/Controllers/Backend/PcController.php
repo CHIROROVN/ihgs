@@ -27,9 +27,11 @@ class PcController extends BackendController
 	//post inport csv
 	public function postimport(){
 		//mpc format		
-        $clsPC 			= new PcModel();		
+        	
+        $inputs         = Input::all();	
 		$clsPcImport    = new PcImportModel();		
-		$Rules = $clsPcImport->Rules();
+		/*$Rules = $clsPcImport->Rules();
+		$clsPC 			= new PcModel();
 
 		if(Input::hasFile('tp_file_csv')){
 			$file = Input::file('tp_file_csv');
@@ -49,15 +51,37 @@ class PcController extends BackendController
 		if(!isset($config->mp_id)){
             Session::flash('danger', trans('common.msg_import_setting_danger'));
             return redirect()->route('backend.pc.import');
-        }       
+        } */      
                    		 
         $flag = true;
-		if(Input::hasFile('tp_file_csv')){			
-			$file_upload = Input::file('tp_file_csv');
+		if(Input::hasFile('tp_file_csv')){						
 			$path = Input::file('tp_file_csv')->getRealPath();
 			$file_csv   = array();
-            $file_csv  = $this->readFileCsv($path);   
-             
+            $ary[] = "ASCII";$ary[] = "JIS";$ary[] = "EUC-JP";$ary[] = "Shift-JIS";$ary[] = "eucjp-win";$ary[] = "sjis-win";          
+            $string = file_get_contents($path); 
+            if(mb_detect_encoding($string) !=='UTF-8')
+            {             	
+                $str = mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, $ary));            
+                $convert = explode("\n", $str);   
+            }else $convert = explode("\n", $string);  
+            for ($i=1;$i<count($convert);$i++)  
+            {
+                $arrTempt = explode(",",$convert[$i]);
+                
+                if(isset($arrTempt[$inputs['mp_pc_no_row']-1]) && !empty($arrTempt[$inputs['mp_pc_no_row']-1]) && !empty($arrTempt[$inputs['mp_staff_id_no_row']-1])){			 			                     				   
+					   $data['tp_dataname']            = $inputs['tp_dataname'];
+					   $data['tp_pc_no']			   = $arrTempt[$inputs['mp_pc_no_row']-1];
+					   $data['tp_staff_id_no']		   = $arrTempt[$inputs['mp_staff_id_no_row']-1];					   
+					   $data['tp_date']		   		   = date('Y-m-d', strtotime($arrTempt[$inputs['mp_date_row']-1])) ;
+					   $data['tp_logintime']		   = date('H:i:s', strtotime($arrTempt[$inputs['mp_logintime_row']-1])) ;
+					   $data['tp_logouttime']		   = date('H:i:s', strtotime($arrTempt[$inputs['mp_logouttime_row']-1])) ;
+					   $data['last_ipadrs']            = CLIENT_IP_ADRS;
+					   $data['last_date']              = date('Y-m-d H:i:s');
+					   $data['last_user']              = Auth::user()->u_id;						  				   				   				   				   					 					
+                      if(!empty($data['tp_pc_no']))     $clsPcImport->insert($data);
+				}   
+            }    
+            /*$file_csv  = $this->readFileCsv($path);                
 
 			if(!empty($file_csv) && count($file_csv)){ 				
 				foreach ($file_csv as  $value) {				    
@@ -74,13 +98,13 @@ class PcController extends BackendController
                        if(!empty($data['tp_pc_no']))     $clsPcImport->insert($data);
 					}   
                 }//end foreach value   	
-			}
+			}*/
 		}else $flag = false;
         
 		if($flag)	Session::flash('success', trans('common.msg_import_success'));			
 		else		Session::flash('danger', trans('common.msg_import_danger'));			
 		
-		return redirect()->route('backend.pc.import');
+		//return redirect()->route('backend.pc.import');
 	}
 
 	/*
