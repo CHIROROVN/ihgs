@@ -83,7 +83,8 @@ Route::group(['prefix' => '', 'namespace' => 'Backend'], function () {
     Route::get('/timecard/{staff_id}/list/{year}/{month}', ['as' => 'backend.timecard.list', 'uses' => 'TimecardController@getList']);
     //door
     Route::get('/door', ['as' => 'backend.door.index', 'uses' => 'DoorController@index']);
-    Route::post('/door/import', ['as' => 'backend.door.import', 'uses' => 'DoorController@importDoorcard']);
+    Route::post('/door/upload', ['as' => 'backend.door.upload', 'uses' => 'DoorController@uploadDoorcard']);//31-01-2018
+    Route::get('/door/import', ['as' => 'backend.door.import', 'uses' => 'DoorController@importDoorcard']);
     Route::get('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@getRegist']);
     Route::post('/door/regist', ['as' => 'backend.door.regist', 'uses' => 'DoorController@postRegist']);
     Route::get('/door/delete/{dataname}', ['as' => 'backend.door.delete', 'uses' => 'DoorController@getDelete']);

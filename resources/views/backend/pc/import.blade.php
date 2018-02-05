@@ -37,9 +37,9 @@
       ※ユニークキーがないため、データは重複されて取り込まれます。データ変更（差し替え）の場合は、必ず、削除して登録してください。</p>
     <p class="note">
       ●取り込むデータの形式●<br />
-      PC番号：@if (isset($pc->mp_pc_no_row)) {{$pc->mp_pc_no_row}} @endif 列目<br />
-      アクション（ログイン or ログアウト）：@if (isset($pc->mp_logintime_row)) {{$pc->mp_logintime_row}} @endif - @if (isset($pc->mp_logouttime_row)) {{$pc->mp_logouttime_row}} @endif 列目<br />
-      日時：@if (isset($pc->mp_date_row)) {{$pc->mp_date_row}} @endif列目
+      PC番号： @if(isset($pc->mp_pc_no_row)) {{$pc->mp_pc_no_row}} @endif 列目<br />
+      アクション（ログイン or ログアウト）： @if(isset($pc->mp_logintime_row)) {{$pc->mp_logintime_row}} @endif - @if (isset($pc->mp_logouttime_row)) {{$pc->mp_logouttime_row}} @endif 列目<br />
+      日時： @if(isset($pc->mp_date_row)) {{$pc->mp_date_row}} @endif 列目
     </p>
     <div class="graph-form agile_info_shadow">
       <div class="form-body">
@@ -50,7 +50,7 @@
                <td class="col-md-9">
                 <div class="col-md-6">
                   <input type="text" name="tp_dataname" class="form-control" id="tp_dataname" value="@if(old('tp_dataname')){{old('tp_dataname')}}@endif">
-                  <span class="help-block" id="error_dataname">@if ($errors->has('tp_dataname'))                      
+                  <span class="help-block" id="error_dataname"> @if ($errors->has('tp_dataname'))                      
                           <strong>{{ $errors->first('tp_dataname') }}</strong>                      
                   @endif
                   </span>
@@ -70,12 +70,12 @@
                 </div>
                 <div class="fl-left">
                   <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
-                  <input type="hidden" name="mp_pc_no_row" value="@if (isset($pc->mp_pc_no_row)) {{$pc->mp_pc_no_row}} @endif" id="mp_pc_no_row">
-                  <input type="hidden" name="mp_staff_id_no_row" value="@if (isset($pc->mp_staff_id_no_row)) {{$pc->mp_staff_id_no_row}} @endif" id="mp_staff_id_no_row">
-                  <input type="hidden" name="mp_date_row" value="@if (isset($pc->mp_date_row)) {{$pc->mp_date_row}} @endif" >
-                  <input type="hidden" name="mp_logintime_row" value="@if (isset($pc->mp_logintime_row)) {{$pc->mp_logintime_row}} @endif" >
-                  <input type="hidden" name="mp_logouttime_row" value="@if (isset($pc->mp_logouttime_row)) {{$pc->mp_logouttime_row}} @endif" >
-                  <input type="hidden" name="mp_datetime_row" value="@if (isset($pc->mp_datetime_row)) {{$pc->mp_datetime_row}} @endif" >
+                  <input type="hidden" name="mp_pc_no_row" value="@if (isset($pc->mp_pc_no_row)) {{$pc->mp_pc_no_row}} @endif " id="mp_pc_no_row">
+                  <input type="hidden" name="mp_staff_id_no_row" value="@if (isset($pc->mp_staff_id_no_row)) {{$pc->mp_staff_id_no_row}} @endif " id="mp_staff_id_no_row">
+                  <input type="hidden" name="mp_date_row" value="@if (isset($pc->mp_date_row)) {{$pc->mp_date_row}} @endif " >
+                  <input type="hidden" name="mp_logintime_row" value="@if (isset($pc->mp_logintime_row)) {{$pc->mp_logintime_row}} @endif " >
+                  <input type="hidden" name="mp_logouttime_row" value="@if (isset($pc->mp_logouttime_row)) {{$pc->mp_logouttime_row}} @endif " >
+                  <input type="hidden" name="mp_datetime_row" value="@if (isset($pc->mp_datetime_row)) {{$pc->mp_datetime_row}} @endif " >
                 </div>
               </td>
             </tr>

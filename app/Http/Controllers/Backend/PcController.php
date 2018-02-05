@@ -66,19 +66,24 @@ class PcController extends BackendController
             }else $convert = explode("\n", $string);  
             for ($i=1;$i<count($convert);$i++)  
             {
-                $arrTempt = explode(",",$convert[$i]);
-                
-                if(isset($arrTempt[$inputs['mp_pc_no_row']-1]) && !empty($arrTempt[$inputs['mp_pc_no_row']-1]) && !empty($arrTempt[$inputs['mp_staff_id_no_row']-1])){			 			                     				   
-					   $data['tp_dataname']            = $inputs['tp_dataname'];
-					   $data['tp_pc_no']			   = $arrTempt[$inputs['mp_pc_no_row']-1];
-					   $data['tp_staff_id_no']		   = $arrTempt[$inputs['mp_staff_id_no_row']-1];					   
-					   $data['tp_date']		   		   = date('Y-m-d', strtotime($arrTempt[$inputs['mp_date_row']-1])) ;
-					   $data['tp_logintime']		   = date('H:i:s', strtotime($arrTempt[$inputs['mp_logintime_row']-1])) ;
-					   $data['tp_logouttime']		   = date('H:i:s', strtotime($arrTempt[$inputs['mp_logouttime_row']-1])) ;
-					   $data['last_ipadrs']            = CLIENT_IP_ADRS;
-					   $data['last_date']              = date('Y-m-d H:i:s');
-					   $data['last_user']              = Auth::user()->u_id;						  				   				   				   				   					 					
-                      if(!empty($data['tp_pc_no']))     $clsPcImport->insert($data);
+                $arrTempt = explode(",",$convert[$i]);                
+                if(isset($arrTempt[(int)$inputs['mp_pc_no_row']-1]) && !empty($arrTempt[(int)$inputs['mp_pc_no_row']-1]) && !empty($arrTempt[(int)$inputs['mp_staff_id_no_row']-1])){                    		 			                     				   
+				   $data['tp_dataname']            = $inputs['tp_dataname'];
+				   $data['tp_pc_no']			   = $arrTempt[(int)$inputs['mp_pc_no_row']-1];
+				   $data['tp_staff_id_no']		   = $arrTempt[(int)$inputs['mp_staff_id_no_row']-1];
+				   if((int)$inputs['mp_datetime_row'] >0){
+                      $data['tp_date']		   		   = date('Y-m-d', strtotime($arrTempt[(int)$inputs['mp_datetime_row']-1])) ;
+					   $data['tp_logintime']		   = date('H:i:s', strtotime($arrTempt[(int)$inputs['mp_datetime_row']-1])) ;
+					   $data['tp_logouttime']		   = date('H:i:s', strtotime($arrTempt[(int)$inputs['mp_datetime_row']-1])) ;
+				   }else{					   
+					   $data['tp_date']		   		   = date('Y-m-d', strtotime($arrTempt[(int)$inputs['mp_date_row']-1])) ;
+					   $data['tp_logintime']		   = date('H:i:s', strtotime($arrTempt[(int)$inputs['mp_logintime_row']-1])) ;
+					   $data['tp_logouttime']		   = date('H:i:s', strtotime($arrTempt[(int)$inputs['mp_logouttime_row']-1])) ;
+					}   
+				   $data['last_ipadrs']            = CLIENT_IP_ADRS;
+				   $data['last_date']              = date('Y-m-d H:i:s');
+				   $data['last_user']              = Auth::user()->u_id;						  				   				   				   				   					 					
+                  if(!empty($data['tp_pc_no']))     $clsPcImport->insert($data);
 				}   
             }    
             /*$file_csv  = $this->readFileCsv($path);                

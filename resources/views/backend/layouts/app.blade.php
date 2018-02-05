@@ -10,7 +10,8 @@
   addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
   function hideURLbar(){ window.scrollTo(0,1); } 
 </script>
-<script type="text/javascript" src="{{ asset('') }}public/backend/js/jquery-2.1.4.min.js"></script>
+<!--<script type="text/javascript" src="{{ asset('') }}public/backend/js/jquery-2.1.4.min.js"></script>-->
+<script type="text/javascript" src="{{ asset('') }}public/backend/js/jquery-3.2.1.min.js"></script>
 <link href="{{ asset('') }}public/backend/css/import.css" rel="stylesheet" />
 <!-- //font-awesome-icons -->
 <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">

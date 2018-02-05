@@ -31,10 +31,10 @@
             ※ユニークキーがないため、データは重複されて取り込まれます。データ変更（差し替え）の場合は、必ず、削除して登録してください。</p>
           <p class="note">
             ●取り込むデータの形式●<br />
-            社員番号  ：@if (isset($time->mt_staff_id_row)) {{$time->mt_staff_id_row}} @endif 列目<br />
-            日付     ：@if (isset($time->mt_date_row)) {{$time->mt_date_row}} @endif 列目<br />
-            出社時刻  ：@if (isset($time->mt_gotime_row)) {{$time->mt_gotime_row}} @endif 列目<br />
-            退社時刻  ：@if (isset($time->mt_backtime_row)) {{$time->mt_backtime_row}} @endif 列目
+            社員番号  ： @if (isset($time->mt_staff_id_row)) {{$time->mt_staff_id_row}} @endif 列目<br />
+            日付     ： @if (isset($time->mt_date_row)) {{$time->mt_date_row}} @endif 列目<br />
+            出社時刻  ： @if (isset($time->mt_gotime_row)) {{$time->mt_gotime_row}} @endif 列目<br />
+            退社時刻  ： @if (isset($time->mt_backtime_row)) {{$time->mt_backtime_row}} @endif 列目
           </p>
           <div class="graph-form agile_info_shadow">
             <div class="form-body">
