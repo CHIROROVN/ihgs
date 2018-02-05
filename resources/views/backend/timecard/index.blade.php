@@ -61,8 +61,8 @@
                         <input name="btnSend" id="btnSend" value="取り込み開始" type="button" class="btn btn-primary">
                         <input type="hidden" name="mt_staff_id_row" value="@if (isset($time->mt_staff_id_row)) {{$time->mt_staff_id_row}} @endif " id="mt_staff_id_row">
                         <input type="hidden" name="mt_date_row" value="@if (isset($time->mt_date_row)) {{$time->mt_date_row}} @endif " id="mt_date_row">
-                        <input type="hidden" name="mt_gotime_row" value="@if (isset($time->mt_gotime_row)) {{$time->mt_gotime_row}} @endif ">
-                        <input type="hidden" name="mt_backtime_row" value="@if (isset($time->mt_backtime_row)) {{$time->mt_backtime_row}} @endif ">                        
+                        <input type="hidden" name="mt_gotime_row" value="@if (isset($time->mt_gotime_row)) {{$time->mt_gotime_row}} @endif " id="mt_gotime_row">
+                        <input type="hidden" name="mt_backtime_row" value="@if (isset($time->mt_backtime_row)) {{$time->mt_backtime_row}} @endif " id="mt_backtime_row">                        
                       </div>
                     </td>
                   </tr>
@@ -79,6 +79,7 @@
                     <th>削除</th>
                     <th>データ名称</th>
                     <th>取り込み日時</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -90,10 +91,33 @@
               </tr>
                 @else  
                 @foreach($timecards as $timecard)
-                  <tr data-id='{{$timecard->tt_dataname}}'>
-                    <td align="center" style="width: 150px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$timecard->tt_dataname}}');"></td>
-                    <td>{{$timecard->tt_dataname}}</td>
+                  <tr data-id='{{$timecard->mf_dataname}}'>
+                    <td align="center" style="width: 150px;"><input value="削除" type="button" class="btn btn-primary btn-xs" name="btnDelete" id="btnDelete" value="削除" type="button" class="btn btn-primary btn-xs" onclick="btnDelete('{{$timecard->mf_dataname}}');"></td>
+                    <td>{{$timecard->mf_dataname}}</td>
                     <td>{{date_time($timecard->last_date)}}</td>
+                    <td>@if($timecard->mf_status_import ==0) <script type="text/javascript"> 
+                                                                                                $.ajax({
+                                                                                                    url : "{{route('backend.door.import')}}",
+                                                                                                    type : "GET",
+                                                                                                   // dataType:"text",
+                                                                                                    cache: false,
+                                                                                                    data : {
+                                                                                                      "dataname" : '{{$timecard->mf_dataname}}',
+                                                                                                      "mt_staff_id_row" :$("#mt_staff_id_row").val(),
+                                                                                                      "mt_date_row" :$("#mt_date_row").val(),
+                                                                                                      "mt_gotime_row" :$("#mt_gotime_row").val(),  
+                                                                                                      "mt_backtime_row" :$("#mt_backtime_row").val()
+                                                                                                    },
+                                                                                                     success: function (data, status)
+                                                                                                      {
+                                                                                                          
+                                                                                                      },
+                                                                                                      error: function (xhr, desc, err)
+                                                                                                      {
+                                                                                                          console.log("error");
+
+                                                                                                      }
+                                                                                                  }) ;</script> @endif </td>
                   </tr> 
                  @endforeach
                  @endif                      
@@ -174,6 +198,35 @@ function validate(fileupload){
   var reg = /(.*?)\.(xlsx|xls|csv|CSV)$/;
   if(!fileupload.match(reg))       return false;
   else return true;
+}
+function btnImport(filename1)
+{
+ 
+   $.ajax({
+            url : "{{route('backend.door.import')}}",
+            type : "GET",
+           // dataType:"text",
+            cache: false,
+            data : {
+              "dataname" : filename1,
+              "md_card_no_row" :$("#md_card_no_row").val(),
+              "md_door_row" :$("#md_door_row").val(),
+              "md_touchday_row" :$("#md_touchday_row").val(),  
+              "md_touchtime_row" :$("#md_touchtime_row").val(),
+              "md_touchdate_row" :$("#md_touchdate_row").val()
+            },
+             success: function (data, status)
+              {
+                  $("#result").html(data);
+              },
+              error: function (xhr, desc, err)
+              {
+                  console.log("error");
+
+              }
+          }) ;
+  
+
 }
 </script>
 @endsection

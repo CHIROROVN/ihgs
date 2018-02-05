@@ -84,6 +84,49 @@ ALTER TABLE m_doorcard_md_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE m_doorcard_md_id_seq OWNED BY m_doorcard.md_id;
 
+CREATE TABLE m_file (
+    mf_id integer NOT NULL,
+    mf_dataname text,
+    mf_type_import smallint,
+    mf_status_import smallint,
+    mf_free1 text,
+    mf_free2 text,
+    mf_free3 text,
+    mf_free4 text,
+    mf_free5 text,
+    last_date timestamp without time zone,
+    last_kind smallint,
+    last_ipadrs text,
+    last_user integer,
+    mf_date_import date,
+    mf_file text
+);
+
+
+ALTER TABLE m_file OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 49181)
+-- Name: m_file_mf_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE m_file_mf_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE m_file_mf_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2248 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: m_file_mf_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE m_file_mf_id_seq OWNED BY m_file.mf_id;
 
 CREATE TABLE m_pc (
     mp_id integer NOT NULL,
@@ -410,6 +453,8 @@ ALTER TABLE ONLY m_belong ALTER COLUMN belong_id SET DEFAULT nextval('m_belong_b
 
 ALTER TABLE ONLY m_doorcard ALTER COLUMN md_id SET DEFAULT nextval('m_doorcard_md_id_seq'::regclass);
 
+ALTER TABLE ONLY m_file ALTER COLUMN mf_id SET DEFAULT nextval('m_file_mf_id_seq'::regclass);
+
 
 
 ALTER TABLE ONLY m_pc ALTER COLUMN mp_id SET DEFAULT nextval('m_pc_mp_id_seq'::regclass);
@@ -438,7 +483,8 @@ ALTER TABLE ONLY t_timecard ALTER COLUMN tt_id SET DEFAULT nextval('t_timecard_t
 ALTER TABLE ONLY m_doorcard
     ADD CONSTRAINT m_doorcard_pkey PRIMARY KEY (md_id);
 
-
+ALTER TABLE ONLY m_file
+    ADD CONSTRAINT m_file_pkey PRIMARY KEY (mf_id);
 
 ALTER TABLE ONLY m_timecard
     ADD CONSTRAINT m_timecard_pkey PRIMARY KEY (mt_id);
